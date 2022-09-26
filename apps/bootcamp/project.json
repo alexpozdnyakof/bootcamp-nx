@@ -1,0 +1,81 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/bootcamp/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/bootcamp",
+        "index": "apps/bootcamp/src/index.html",
+        "baseHref": "/",
+        "main": "apps/bootcamp/src/main.tsx",
+        "polyfills": "apps/bootcamp/src/polyfills.ts",
+        "tsConfig": "apps/bootcamp/tsconfig.app.json",
+        "assets": ["apps/bootcamp/src/favicon.ico", "apps/bootcamp/src/assets"],
+        "styles": ["apps/bootcamp/src/styles.less"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/bootcamp/src/environments/environment.ts",
+              "with": "apps/bootcamp/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "bootcamp:build",
+        "hmr": true,
+        "proxyConfig": "apps/bootcamp/proxy.conf.json"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "bootcamp:build:development"
+        },
+        "production": {
+          "buildTarget": "bootcamp:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/bootcamp/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/bootcamp"],
+      "options": {
+        "jestConfig": "apps/bootcamp/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
