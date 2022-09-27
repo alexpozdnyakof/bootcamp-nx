@@ -67,9 +67,9 @@
 	},
 	"lint-staged": {
 		"*{apps,libs}/**/*.{js,ts,tsx,json,css,less,md,html,graphql}": [
-			"npm run affected:lint  -- --uncommitted --parallel -- --fix",
-			"npm run format:write -- --uncommitted",
-			"npm run affected:test -- --uncommitted",
+			"yarn run affected:lint  -- --uncommitted --parallel -- --fix",
+			"yarn run format:write -- --uncommitted",
+			"yarn run affected:test -- --uncommitted",
 			"git add"
 		]
 	},
