@@ -1,16 +1,16 @@
-import { Message } from '@bootcamp-nx/api-interfaces'
-import { useEffect, useState } from 'react'
+import { Message } from '@bootcamp-nx/api-interfaces';
+import { useEffect, useState } from 'react';
 
 export default function App() {
-	const [m, setMessage] = useState<Message>({ message: '' })
+  const [m, setMessage] = useState<Message>({ message: '' });
 
-	useEffect(() => {
-		fetch('/api')
-			.then(r => r.json())
-			.then(setMessage)
-	}, [])
+  useEffect(() => {
+    fetch('/api')
+      .then(r => r.json())
+      .then(setMessage);
+  }, []);
 
-	return (
+  return (
 		<>
 			<div style={{ textAlign: 'center' }}>
 				<h1>Welcome to bootcamp!</h1>
@@ -22,5 +22,5 @@ export default function App() {
 			</div>
 			<div>{m.message}</div>
 		</>
-	)
+  );
 }
