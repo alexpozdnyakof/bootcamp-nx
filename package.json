@@ -5,7 +5,10 @@
 	"scripts": {
 		"start": "nx serve",
 		"build": "nx build",
-		"test": "nx test"
+		"test": "nx test",
+		"lint": "nx affected:lint  --uncommitted --parallel --fix",
+		"format": "nx format:write  --uncommitted",
+		"affected-test": "nx affected:test --uncommitted"
 	},
 	"private": true,
 	"dependencies": {
@@ -42,6 +45,7 @@
 		"cz-customizable": "^7.0.0",
 		"eslint": "~8.15.0",
 		"eslint-config-airbnb": "^19.0.4",
+		"eslint-config-airbnb-typescript": "^17.0.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-cypress": "^2.10.3",
 		"eslint-plugin-import": "2.26.0",

@@ -1,13 +1,17 @@
 {
 	"extends": [
-    "plugin:@nrwl/nx/react",
-    "../../.eslintrc.json",
-    "airbnb",
-    "plugin:react-hooks/recommended",
-    "plugin:react/recommended",
-    "eslint-config-prettier"
-  ],
-	"ignorePatterns": ["!**/*"],
+		"plugin:@nrwl/nx/react",
+		"../../.eslintrc.json",
+		"airbnb",
+		"plugin:react-hooks/recommended",
+		"plugin:react/recommended",
+		"eslint-config-prettier",
+		"airbnb-typescript"
+	],
+	"parserOptions": {
+		"project": "tsconfig.base.json"
+	},
+	"ignorePatterns": ["!**/*", ".eslintrc.json", "environments/*"],
 	"overrides": [
 		{
 			"files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
@@ -16,10 +20,13 @@
 		{
 			"files": ["*.ts", "*.tsx"],
 			"rules": {
-        "import/no-unresolved": "off",
-        "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
-        "react/react-in-jsx-scope": "off"
-      }
+				"import/no-unresolved": "off",
+				"react/jsx-filename-extension": [
+					1,
+					{ "extensions": [".ts", ".tsx"] }
+				],
+				"react/react-in-jsx-scope": "off"
+			}
 		},
 		{
 			"files": ["*.js", "*.jsx"],

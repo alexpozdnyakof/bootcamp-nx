@@ -1,7 +1,7 @@
 import { Message } from '@bootcamp-nx/api-interfaces'
 import { useEffect, useState } from 'react'
 
-export function App() {
+export default function App() {
 	const [m, setMessage] = useState<Message>({ message: '' })
 
 	useEffect(() => {
@@ -24,5 +24,3 @@ export function App() {
 		</>
 	)
 }
-
-export default App
