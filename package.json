@@ -17,6 +17,7 @@
 		"tslib": "^2.3.0"
 	},
 	"devDependencies": {
+		"@commitlint/cli": "^17.1.2",
 		"@nrwl/cli": "14.7.13",
 		"@nrwl/cypress": "14.7.13",
 		"@nrwl/eslint-plugin-nx": "14.7.13",
@@ -36,7 +37,9 @@
 		"@typescript-eslint/eslint-plugin": "^5.36.1",
 		"@typescript-eslint/parser": "^5.36.1",
 		"babel-jest": "28.1.1",
+		"commitizen": "^4.2.5",
 		"cypress": "^10.7.0",
+		"cz-customizable": "^7.0.0",
 		"eslint": "~8.15.0",
 		"eslint-config-airbnb": "^19.0.4",
 		"eslint-config-prettier": "^8.5.0",
@@ -69,5 +72,13 @@
 			"npm run affected:test -- --uncommitted",
 			"git add"
 		]
+	},
+	"config": {
+		"commitizen": {
+			"path": "node_modules/cz-customizable"
+		},
+		"cz-customizable": {
+			"config": ".config/git/commitizen.js"
+		}
 	}
 }
