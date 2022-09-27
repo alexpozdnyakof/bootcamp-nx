@@ -63,26 +63,5 @@
 		"ts-jest": "28.0.5",
 		"ts-node": "10.9.1",
 		"typescript": "~4.8.2"
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "lint-staged"
-		}
-	},
-	"lint-staged": {
-		"*{apps,libs}/**/*.{js,ts,tsx,json,css,less,md,html,graphql}": [
-			"yarn run affected:lint  -- --uncommitted --parallel -- --fix",
-			"yarn run format:write -- --uncommitted",
-			"yarn run affected:test -- --uncommitted",
-			"git add"
-		]
-	},
-	"config": {
-		"commitizen": {
-			"path": "node_modules/cz-customizable"
-		},
-		"cz-customizable": {
-			"config": ".config/git/commitizen.js"
-		}
 	}
 }
