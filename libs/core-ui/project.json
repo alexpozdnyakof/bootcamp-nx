@@ -65,7 +65,7 @@
 			"options": {
 				"commands": [
 					{
-						"command": "stylelint '**/*.less'"
+						"command": "stylelint '**/*.less' --fix"
 					}
 				]
 			}
