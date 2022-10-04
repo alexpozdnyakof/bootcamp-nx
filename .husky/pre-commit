@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-yarn run format
-yarn run lint
-yarn run affected-test
-yarn run type-check
+yarn format
+yarn style-lint
+yarn lint
+yarn affected-test
+yarn type-check

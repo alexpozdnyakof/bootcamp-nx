@@ -88,6 +88,16 @@
 					}
 				]
 			}
+		},
+		"stylelint": {
+			"executor": "nx:run-commands",
+			"options": {
+				"commands": [
+					{
+						"command": "stylelint '**/*.less'"
+					}
+				]
+			}
 		}
 	},
 	"tags": []
