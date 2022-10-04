@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react'
 
-import CoreUi from './core-ui'
+import Button from './button'
 
-describe('CoreUi', () => {
+describe('Button', () => {
 	it('should render successfully', () => {
-		const { baseElement } = render(<CoreUi />)
+		const { baseElement } = render(<Button>Button</Button>)
 		expect(baseElement).toBeTruthy()
 	})
 })
