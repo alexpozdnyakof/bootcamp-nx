@@ -7,4 +7,5 @@ export default {
 	},
 	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
 	coverageDirectory: '../../coverage/libs/core-ui',
+	setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
 }
