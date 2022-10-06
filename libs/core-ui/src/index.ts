@@ -1,1 +1,2 @@
-export * from './lib/core-ui'
+export * from './lib/heading'
+export * from './lib/box'

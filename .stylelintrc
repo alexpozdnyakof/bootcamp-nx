@@ -6,6 +6,9 @@
 	],
 	"customSyntax": "postcss-less",
 	"rules": {
-		"selector-class-pattern": null
+		"selector-class-pattern": null,
+    "color-function-notation": null,
+    "custom-property-empty-line-before": null,
+    "alpha-value-notation": null
 	}
 }
