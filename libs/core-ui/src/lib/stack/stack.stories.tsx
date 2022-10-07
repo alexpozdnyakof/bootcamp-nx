@@ -1,16 +1,15 @@
-import { DividerWeight } from '../box/box'
 import { Heading } from '../heading'
 import {
-	selectSize,
-	selectWithNone,
-	reusableBoxProps,
-	Wrapper,
+	disableResponsiveProps,
 	PartialProps,
 	Placeholder,
-	times,
-	selectCount,
-	disableResponsiveProps,
 	ResponsiveWidthRef,
+	reusableBoxProps,
+	selectCount,
+	selectSize,
+	selectWithNone,
+	times,
+	Wrapper,
 } from '../storybook-helpers'
 import Stack from './stack'
 
@@ -20,11 +19,6 @@ export default {
 	argTypes: {
 		space: selectSize(),
 		align: selectWithNone(['start', 'center', 'end']),
-		dividers: selectWithNone<DividerWeight>([
-			'primary',
-			'secondary',
-			'tertiary',
-		]),
 		...reusableBoxProps(),
 	},
 	parameters: {
@@ -94,7 +88,6 @@ ResponsiveStory.argTypes = {
 	itemCount: selectCount('Item count'),
 	space: { control: false },
 	align: { control: false },
-	dividers: { control: false },
 	...disableResponsiveProps,
 }
 
@@ -129,6 +122,5 @@ export function NestedStacksStory(args: PartialProps<typeof Stack>) {
 
 NestedStacksStory.argTypes = {
 	space: selectSize('xlarge'),
-	dividers: { control: false },
 	...disableResponsiveProps,
 }
