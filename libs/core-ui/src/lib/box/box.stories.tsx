@@ -3,6 +3,8 @@ import { Space, SpaceWithNegatives } from '../common-types'
 import { Heading } from '../heading'
 import { Text } from '../text'
 import { Stack } from '../stack'
+import { Inline } from '../inline'
+
 import {
 	PartialProps,
 	Placeholder,
@@ -136,17 +138,17 @@ export function PaddingStory({ padding }: { padding: Space }) {
 			<Heading level='2'>
 				The transparent bordered box has padding
 			</Heading>
-			{/* <Inline space="large" align="center" alignY="center"> */}
-			<PaddedBox prop='padding' value={padding} />
-			<PaddedBox prop='paddingX' value={padding} />
-			<PaddedBox prop='paddingY' value={padding} />
-			{/* </Inline> */}
-			{/* <Inline space="large" align="center" alignY="center"> */}
-			<PaddedBox prop='paddingTop' value={padding} />
-			<PaddedBox prop='paddingRight' value={padding} />
-			<PaddedBox prop='paddingBottom' value={padding} />
-			<PaddedBox prop='paddingLeft' value={padding} />
-			{/* </Inline> */}
+			<Inline space='large' align='center' alignY='center'>
+				<PaddedBox prop='padding' value={padding} />
+				<PaddedBox prop='paddingX' value={padding} />
+				<PaddedBox prop='paddingY' value={padding} />
+			</Inline>
+			<Inline space='large' align='center' alignY='center'>
+				<PaddedBox prop='paddingTop' value={padding} />
+				<PaddedBox prop='paddingRight' value={padding} />
+				<PaddedBox prop='paddingBottom' value={padding} />
+				<PaddedBox prop='paddingLeft' value={padding} />
+			</Inline>
 		</Stack>
 	)
 }
@@ -213,19 +215,19 @@ export function MarginStory({ margin }: { margin: Space }) {
 				appear to be inside the shaded box.
 			</Text>
 			<Box padding='large'>
-				{/* <Inline space="large" align="center" alignY="center"> */}
-				<MarginBox prop='margin' value={margin} />
-				<MarginBox prop='marginX' value={margin} />
-				<MarginBox prop='marginY' value={margin} />
-				{/* </Inline> */}
+				<Inline space='large' align='center' alignY='center'>
+					<MarginBox prop='margin' value={margin} />
+					<MarginBox prop='marginX' value={margin} />
+					<MarginBox prop='marginY' value={margin} />
+				</Inline>
 			</Box>
 			<Box padding='large'>
-				{/* <Inline space="large" align="center" alignY="center"> */}
-				<MarginBox prop='marginTop' value={margin} />
-				<MarginBox prop='marginRight' value={margin} />
-				<MarginBox prop='marginBottom' value={margin} />
-				<MarginBox prop='marginLeft' value={margin} />
-				{/* </Inline> */}
+				<Inline space='large' align='center' alignY='center'>
+					<MarginBox prop='marginTop' value={margin} />
+					<MarginBox prop='marginRight' value={margin} />
+					<MarginBox prop='marginBottom' value={margin} />
+					<MarginBox prop='marginLeft' value={margin} />
+				</Inline>
 			</Box>
 		</Stack>
 	)
