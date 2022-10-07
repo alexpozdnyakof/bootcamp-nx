@@ -68,7 +68,7 @@ interface BorderProps {
 	border?: DividerWeight
 }
 
-interface ReusableBoxProps extends BorderProps, BoxPaddingProps {
+export interface ReusableBoxProps extends BorderProps, BoxPaddingProps {
 	minWidth?: BoxMinWidth
 	maxWidth?: BoxMaxWidth
 	width?: BoxWidth
