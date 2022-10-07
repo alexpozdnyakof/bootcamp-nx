@@ -23,6 +23,7 @@ import { Space, SpaceWithNegatives } from '../common-types'
 
 export default {
 	component: Box,
+
 	title: 'Design system/Box',
 } as ComponentMeta<typeof Box>
 
