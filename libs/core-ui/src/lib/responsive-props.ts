@@ -26,4 +26,24 @@ function getClassNames(
 
 	return classList
 }
-export { getClassNames, ResponsiveProp }
+
+function mapResponsiveProp<From extends Atom, To extends Atom>(
+	fromValue: ResponsiveProp<From> | undefined,
+	mapper: (from: From) => To
+): ResponsiveProp<To> | undefined {
+	if (!fromValue) {
+		return undefined
+	}
+
+	if (typeof fromValue !== 'object') {
+		return mapper(fromValue)
+	}
+
+	return {
+		mobile: fromValue.mobile ? mapper(fromValue.mobile) : undefined,
+		tablet: fromValue.tablet ? mapper(fromValue.tablet) : undefined,
+		desktop: fromValue.desktop ? mapper(fromValue.desktop) : undefined,
+	}
+}
+
+export { getClassNames, ResponsiveProp, mapResponsiveProp }

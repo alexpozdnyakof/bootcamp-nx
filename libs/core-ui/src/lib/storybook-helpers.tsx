@@ -157,3 +157,24 @@ export function selectSize(defaultValue: Space | 'none' = 'none') {
 		defaultValue
 	)
 }
+
+export function selectCount(label: string, defaultValue = 5) {
+	return {
+		control: {
+			type: 'number',
+			min: 1,
+		},
+		name: label,
+		defaultValue,
+	}
+}
+
+export function times(count: number): number[] {
+	// eslint-disable-next-line prefer-spread
+	return Array.apply(null, Array(count)).map((_x, i) => i)
+}
+
+export const disableResponsiveProps = Object.keys(reusableBoxProps()).reduce(
+	(accumulator, key) => ({ ...accumulator, [key]: { control: false } }),
+	{}
+)
