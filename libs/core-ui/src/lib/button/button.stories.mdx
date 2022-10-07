@@ -1,0 +1,548 @@
+import { Meta, Story, Canvas, ArgsTable, Description } from '@storybook/addon-docs'
+import Button from './button'
+import { Box } from '../box'
+import { Inline } from '../inline'
+import { Stack } from '../stack'
+import { Text } from '../text'
+import { Heading } from '../heading'
+
+<Meta
+    title="Design system/Button"
+    component={Button}
+    parameters={{
+        badges: ['accessible'],
+    }}
+/>
+
+# Button
+
+A semantic button that provides all the necessary visual variants. It follows the
+[WAI-ARIA Button Pattern](https://www.w3.org/TR/wai-aria-practices/#button).
+
+<Canvas>
+    <Story parameters={{ docs: { source: { type: 'code' } } }} name="Main demo">
+        <Stack space="xxlarge">
+            <Stack space="large">
+                <pre>tone="normal"</pre>
+                <Inline space="large">
+                    <Box>
+                        <Button variant="primary">Primary</Button>
+                    </Box>
+                    <Box>
+                        <Button variant="secondary">Secondary</Button>
+                    </Box>
+                    <Box>
+                        <Button variant="tertiary">Tertiary</Button>
+                    </Box>
+                    <Box>
+                        <Button variant="quaternary">Quaternary</Button>
+                    </Box>
+                </Inline>
+                <Inline space="large">
+                    <Box>
+                        <Button variant="primary" disabled>
+                            Primary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="secondary" disabled>
+                            Secondary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="tertiary" disabled>
+                            Tertiary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="quaternary" disabled>
+                            Quaternary
+                        </Button>
+                    </Box>
+                </Inline>
+            </Stack>
+            <Stack space="large">
+                <pre>tone="destructive"</pre>
+                <Inline space="large">
+                    <Box>
+                        <Button variant="primary" tone="destructive">
+                            Primary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="secondary" tone="destructive">
+                            Secondary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="tertiary" tone="destructive">
+                            Tertiary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="quaternary" tone="destructive">
+                            Quaternary
+                        </Button>
+                    </Box>
+                </Inline>
+                <Inline space="large">
+                    <Box>
+                        <Button variant="primary" tone="destructive" disabled>
+                            Primary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="secondary" tone="destructive" disabled>
+                            Secondary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="tertiary" tone="destructive" disabled>
+                            Tertiary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="quaternary" tone="destructive" disabled>
+                            Quaternary
+                        </Button>
+                    </Box>
+                </Inline>
+            </Stack>
+        </Stack>
+    </Story>
+</Canvas>
+
+
+### With different size
+
+Buttons have a default `normal` size, but they can also be larger or smaller. Use the `size` prop
+for this purpose.
+
+<Canvas>
+    <Story parameters={{ docs: { source: { type: 'code' } } }} name="With different size">
+        <Stack space="xxlarge">
+            <Stack space="large">
+                <pre>size="small"</pre>
+                <Inline space="large">
+                    <Box>
+                        <Button variant="primary" size="small">
+                            Primary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="secondary" size="small">
+                            Secondary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="tertiary" size="small">
+                            Tertiary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="quaternary" size="small">
+                            Quaternary
+                        </Button>
+                    </Box>
+                </Inline>
+                <Inline space="large">
+                    <Box>
+                        <Button variant="primary" size="small" disabled>
+                            Primary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="secondary" size="small" disabled>
+                            Secondary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="tertiary" size="small" disabled>
+                            Tertiary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="quaternary" size="small" disabled>
+                            Quaternary
+                        </Button>
+                    </Box>
+                </Inline>
+            </Stack>
+            <Stack space="large">
+                <pre>size="normal"</pre>
+                <Inline space="large">
+                    <Box>
+                        <Button variant="primary" size="normal">
+                            Primary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="secondary" size="normal">
+                            Secondary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="tertiary" size="normal">
+                            Tertiary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="quaternary" size="normal">
+                            Quaternary
+                        </Button>
+                    </Box>
+                </Inline>
+                <Inline space="large">
+                    <Box>
+                        <Button variant="primary" size="normal" disabled>
+                            Primary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="secondary" size="normal" disabled>
+                            Secondary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="tertiary" size="normal" disabled>
+                            Tertiary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="quaternary" size="normal" disabled>
+                            Quaternary
+                        </Button>
+                    </Box>
+                </Inline>
+            </Stack>
+            <Stack space="large">
+                <pre>size="large"</pre>
+                <Inline space="large">
+                    <Box>
+                        <Button variant="primary" size="large">
+                            Primary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="secondary" size="large">
+                            Secondary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="tertiary" size="large">
+                            Tertiary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="quaternary" size="large">
+                            Quaternary
+                        </Button>
+                    </Box>
+                </Inline>
+                <Inline space="large">
+                    <Box>
+                        <Button variant="primary" size="large" disabled>
+                            Primary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="secondary" size="large" disabled>
+                            Secondary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="tertiary" size="large" disabled>
+                            Tertiary
+                        </Button>
+                    </Box>
+                    <Box>
+                        <Button variant="quaternary" size="large" disabled>
+                            Quaternary
+                        </Button>
+                    </Box>
+                </Inline>
+            </Stack>
+        </Stack>
+    </Story>
+</Canvas>
+
+### Customized colors
+
+Though probably not the final official way to do it, this is a way to achieve one-off alternative
+styles for buttons.
+
+```jsx
+<Button
+    variant="primary"
+    style={{
+        '--bootcamp-btn-idle-tint': '#eee',
+        '--bootcamp-btn-idle-fill': '#666',
+        '--bootcamp-btn-hover-tint': '#fff',
+        '--bootcamp-btn-hover-fill': '#777',
+        '--bootcamp-btn-disabled-tint': '#fff',
+        '--bootcamp-btn-disabled-fill': '#ccc',
+    }}
+>
+    Click me
+</Button>
+```
+
+And here's how that look like:
+
+<Canvas>
+    <Story parameters={{ docs: { source: { type: 'code' } } }} name="Customized colors">
+        <Inline space="large">
+            <Box>
+                <Button
+                    variant="primary"
+                    style={{
+                        '--bootcamp-btn-idle-tint': '#eee',
+                        '--bootcamp-btn-idle-fill': '#666',
+                        '--bootcamp-btn-hover-tint': '#fff',
+                        '--bootcamp-btn-hover-fill': '#777',
+                        '--bootcamp-btn-disabled-tint': '#fff',
+                        '--bootcamp-btn-disabled-fill': '#ccc',
+                    }}
+                >
+                    Enabled
+                </Button>
+            </Box>
+            <Box>
+                <Button
+                    variant="primary"
+                    disabled
+                    style={{
+                        '--bootcamp-btn-idle-tint': '#eee',
+                        '--bootcamp-btn-idle-fill': '#666',
+                        '--bootcamp-btn-hover-tint': '#fff',
+                        '--bootcamp-btn-hover-fill': '#777',
+                        '--bootcamp-btn-disabled-tint': '#fff',
+                        '--bootcamp-btn-disabled-fill': '#ccc',
+                    }}
+                >
+                    Disabled
+                </Button>
+            </Box>
+        </Inline>
+    </Story>
+</Canvas>
+
+
+export function Template({ label, variant, tone, size }) {
+    let textLabel = label
+    if (label === 'Click me <em>now</em>') {
+        label = (
+            <>
+                Click me <em>now</em>
+            </>
+        )
+        textLabel = 'Click me now'
+    }
+    return (
+        <Stack space="large">
+            <Heading level="2">Click on the buttons to see the loading state</Heading>
+            <Inline space="large">
+                <Stack space="large">
+                    <Box maxWidth="xsmall">
+                        <Button variant={variant} tone={tone} size={size}>
+                            {label}
+                        </Button>
+                    </Box>
+                    <Box maxWidth="xsmall">
+                        <Button variant={variant} tone={tone} size={size} disabled>
+                            {label}
+                        </Button>
+                    </Box>
+                </Stack>
+                <Stack space="large">
+                    <Box maxWidth="xsmall">
+                        <Button
+                            variant={variant}
+                            tone={tone}
+                            size={size}
+                        >
+                            {label}
+                        </Button>
+                    </Box>
+                    <Box maxWidth="xsmall">
+                        <Button
+                            variant={variant}
+                            tone={tone}
+                            size={size}
+                            disabled
+                        >
+                            {label}
+                        </Button>
+                    </Box>
+                </Stack>
+                <Stack space="large">
+                    <Box maxWidth="xsmall">
+                        <Button variant={variant} tone={tone} size={size}>
+                            {label}
+                        </Button>
+                    </Box>
+                    <Box maxWidth="xsmall">
+                        <Button
+                            variant={variant}
+                            tone={tone}
+                            size={size}
+                            disabled
+                        >
+                            {label}
+                        </Button>
+                    </Box>
+                </Stack>
+                <Stack space="large">
+                    <Box>
+                        <Button
+                            variant={variant}
+                            tone={tone}
+                            size={size}
+                            aria-label={textLabel}
+                        />
+                    </Box>
+                    <Box>
+                        <Button
+                            variant={variant}
+                            tone={tone}
+                            size={size}
+                            aria-label={textLabel}
+                            disabled
+                        />
+                    </Box>
+                </Stack>
+            </Inline>
+        </Stack>
+    )
+}
+
+
+<Canvas>
+    <Story
+        parameters={{ docs: { source: { type: 'code' } } }}
+        argTypes={{
+            label: {
+                control: { type: 'select' },
+                options: [
+                    'OK',
+                    'Submit',
+                    'Mark as done',
+                    'Yes, cancel my subscription',
+                    'Click me <em>now</em>',
+                    'If you click me now, youʼll take away the biggest part of me',
+                ],
+                defaultValue: 'Submit',
+            },
+            variant: {
+                options: ['primary', 'secondary', 'tertiary', 'quaternary'],
+                control: { type: 'select' },
+                defaultValue: 'primary',
+            },
+            tone: {
+                options: ['normal', 'destructive'],
+                control: { type: 'inline-radio' },
+                defaultValue: 'normal',
+            },
+            size: {
+                options: ['small', 'normal', 'large'],
+                control: { type: 'inline-radio' },
+                defaultValue: 'normal',
+            },
+            disabled: { control: false },
+        }}
+        name="Playground"
+    >
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+### Dark mode
+
+export function DarkModeTemplate(props) {
+    return (
+        <Box
+            padding="xlarge"
+            style={{
+                backgroundColor: 'rgb(31, 31, 31)',
+                '--bootcamp-content-primary': 'rgba(255, 255, 255, 0.88)',
+                // variant="primary"
+                '--bootcamp-actionable-primary-idle-tint': '#eceeee',
+                '--bootcamp-actionable-primary-idle-fill': '#008099',
+                '--bootcamp-actionable-primary-hover-tint': '#eceeee',
+                '--bootcamp-actionable-primary-hover-fill': '#1f8fa5',
+                '--bootcamp-actionable-primary-disabled-tint': '#767777',
+                '--bootcamp-actionable-primary-disabled-fill': '#00404c',
+                // variant="secondary"
+                '--bootcamp-actionable-secondary-idle-tint': '#eceeee',
+                '--bootcamp-actionable-secondary-idle-fill': '#283233',
+                '--bootcamp-actionable-secondary-hover-tint': '#eceeee',
+                '--bootcamp-actionable-secondary-hover-fill': '#31393b',
+                '--bootcamp-actionable-secondary-disabled-tint': '#767777',
+                '--bootcamp-actionable-secondary-disabled-fill': '#283233',
+                // variant="tertiary"
+                '--bootcamp-actionable-tertiary-idle-tint': '#22a5bf',
+                '--bootcamp-actionable-tertiary-hover-tint': '#22a5bf',
+                '--bootcamp-actionable-tertiary-hover-fill': '#283233',
+                '--bootcamp-actionable-tertiary-disabled-tint': '#11525f',
+                // variant="quaternary"
+                '--bootcamp-actionable-quaternary-idle-tint': '#8fa0a3',
+                '--bootcamp-actionable-quaternary-hover-tint': '#eceeee',
+                '--bootcamp-actionable-quaternary-hover-fill': '#283233',
+                '--bootcamp-actionable-quaternary-disabled-tint': '#444d4f',
+                // colour for the desctructive tone (used in certain ways by all variants)
+                '--bootcamp-actionable-primary-destructive-idle-tint': '#fff',
+                '--bootcamp-actionable-primary-destructive-idle-fill': '#d26160',
+                '--bootcamp-actionable-primary-destructive-hover-tint': '#fff',
+                '--bootcamp-actionable-primary-destructive-hover-fill': '#e98786',
+                '--bootcamp-actionable-primary-destructive-disabled-tint': '#767777',
+                '--bootcamp-actionable-primary-destructive-disabled-fill': '#7f2c24',
+                /* secondary destructive button colors (no fill, as these are transparent and bordered) */
+                '--bootcamp-actionable-secondary-destructive-idle-tint': '#f68584',
+                '--bootcamp-actionable-secondary-destructive-hover-tint': '#eFa9a9',
+                '--bootcamp-actionable-secondary-destructive-disabled-tint': '#8a5853',
+            }}
+        >
+            <Template {...props} />
+        </Box>
+    )
+}
+
+Even though Reactist does not yet owns the concept of dark mode, and leaves it for apps to set it
+up, here's a demo on how easily you can set it up by manipulating color variables only.
+
+<Canvas>
+    <Story
+        parameters={{ docs: { source: { type: 'dynamic' } } }}
+        name="Dark mode"
+        argTypes={{
+            label: {
+                control: { type: 'select' },
+                options: [
+                    'Submit',
+                    'Mark as done',
+                    'Yes, cancel my subscription',
+                    'Click me <em>now</em>',
+                ],
+                defaultValue: 'Submit',
+            },
+            variant: {
+                options: ['primary', 'secondary', 'tertiary', 'quaternary'],
+                control: { type: 'select' },
+                defaultValue: 'primary',
+            },
+            tone: {
+                options: ['normal', 'destructive'],
+                control: { type: 'inline-radio' },
+                defaultValue: 'normal',
+            },
+            size: {
+                options: ['small', 'normal', 'large'],
+                control: { type: 'inline-radio' },
+                defaultValue: 'normal',
+            },
+            disabled: { control: false },
+        }}
+    >
+        {DarkModeTemplate.bind({})}
+    </Story>
+</Canvas>
