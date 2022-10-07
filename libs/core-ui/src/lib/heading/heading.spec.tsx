@@ -73,4 +73,146 @@ describe('Heading', () => {
 			}
 		})
 	})
+
+	describe('weight="…"', () => {
+		it('adds the appropriate class names', () => {
+			const { rerender } = render(
+				<Heading
+					level='1'
+					data-testid='heading-element'
+					weight='regular'
+				>
+					Heading
+				</Heading>
+			)
+			const textElement = screen.getByTestId('heading-element')
+			expect(textElement).not.toHaveClass('weight-regular')
+			expect(textElement).not.toHaveClass('weight-light')
+
+			rerender(
+				<Heading level='1' data-testid='heading-element' weight='light'>
+					Heading
+				</Heading>
+			)
+			expect(textElement).toHaveClass('weight-light')
+		})
+	})
+	describe('tone="…"', () => {
+		it('adds the appropriate class names', () => {
+			const { rerender } = render(
+				<Heading level='1' data-testid='heading-element' tone='normal'>
+					Heading
+				</Heading>
+			)
+			const textElement = screen.getByTestId('heading-element')
+			expect(textElement).not.toHaveClass('tone-normal')
+			expect(textElement).not.toHaveClass('tone-secondary')
+			expect(textElement).not.toHaveClass('tone-danger')
+
+			for (const tone of ['secondary', 'danger'] as const) {
+				rerender(
+					<Heading
+						level='1'
+						data-testid='heading-element'
+						tone={tone}
+					>
+						Heading
+					</Heading>
+				)
+				expect(textElement).toHaveClass(`tone-${tone}`)
+			}
+		})
+	})
+	describe('align="…"', () => {
+		it('adds the appropriate class names', () => {
+			const { rerender } = render(
+				<Heading level='1' data-testid='heading-element'>
+					Heading
+				</Heading>
+			)
+			const textElement = screen.getByTestId('heading-element')
+			expect(textElement).not.toHaveClass('textAlign-start')
+			expect(textElement).not.toHaveClass('textAlign-center')
+			expect(textElement).not.toHaveClass('textAlign-end')
+			expect(textElement).not.toHaveClass('textAlign-justify')
+
+			for (const align of [
+				'start',
+				'center',
+				'end',
+				'justify',
+			] as const) {
+				rerender(
+					<Heading
+						level='1'
+						data-testid='heading-element'
+						align={align}
+					>
+						Heading
+					</Heading>
+				)
+				expect(textElement).toHaveClass(`textAlign-${align}`)
+			}
+		})
+	})
+	it('supports responsive values', () => {
+		render(
+			<Heading
+				level='1'
+				data-testid='heading-element'
+				align={{
+					mobile: 'start',
+					tablet: 'center',
+					desktop: 'end',
+				}}
+			>
+				Heading
+			</Heading>
+		)
+		const textElement = screen.getByTestId('heading-element')
+		expect(textElement).toHaveClass('textAlign-start')
+		expect(textElement).toHaveClass('tablet-textAlign-center')
+		expect(textElement).toHaveClass('desktop-textAlign-end')
+	})
+
+	describe('lineClamp="…"', () => {
+		it('adds the expected class names', () => {
+			const { rerender } = render(
+				<Heading level='1' data-testid='heading-element'>
+					Heading
+				</Heading>
+			)
+			const textElement = screen.getByTestId('heading-element')
+			expect(textElement.className).not.toMatch(/lineClamp/)
+			expect(textElement).not.toHaveClass('paddingRight-xsmall')
+
+			for (const lineClamp of [1, '1'] as const) {
+				rerender(
+					<Heading
+						level='1'
+						data-testid='heading-element'
+						lineClamp={lineClamp}
+					>
+						Heading
+					</Heading>
+				)
+				expect(textElement).toHaveClass(`lineClamp-${lineClamp}`)
+				expect(textElement).not.toHaveClass(`lineClampMultipleLines`)
+			}
+
+			for (const lineClamp of [2, 3, 4, 5, '2', '3', '4', '5'] as const) {
+				rerender(
+					<Heading
+						level='1'
+						data-testid='heading-element'
+						lineClamp={lineClamp}
+					>
+						Heading
+					</Heading>
+				)
+				expect(textElement).toHaveClass(`lineClamp-${lineClamp}`)
+				expect(textElement).toHaveClass(`lineClampMultipleLines`)
+			}
+		})
+	})
 })

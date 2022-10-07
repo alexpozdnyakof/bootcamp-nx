@@ -72,16 +72,44 @@ export type HeadingProps = {
  */
 
 export function Heading(
-	{ level, children, size, ...props }: HeadingProps,
+	{
+		level,
+		weight,
+		tone,
+		lineClamp,
+		children,
+		size,
+		align,
+		...props
+	}: HeadingProps,
 	ref: ForwardedRef<HTMLHeadingElement>
 ) {
 	const headingElementName = `h${level}` as HeadingElement
+	const lineClampMultipleLines =
+		typeof lineClamp === 'string'
+			? parseInt(lineClamp, 10) > 1
+			: (lineClamp || 0) > 1
+
 	return (
 		<Box
 			{...props}
-			className={[styles['heading'], getClassNames(styles, 'size', size)]}
+			className={[
+				styles['heading'],
+				getClassNames(styles, 'size', size),
+				tone !== 'normal' ? getClassNames(styles, 'tone', tone) : null,
+				weight !== 'regular'
+					? getClassNames(styles, 'weight', weight)
+					: null,
+				lineClamp
+					? getClassNames(styles, 'lineClamp', lineClamp.toString())
+					: null,
+				lineClampMultipleLines
+					? styles['lineClampMultipleLines']
+					: null,
+			]}
 			as={headingElementName}
 			ref={ref}
+			textAlign={align}
 		>
 			{children}
 		</Box>

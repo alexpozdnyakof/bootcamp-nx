@@ -1,3 +1,8 @@
+import {
+	ResponsiveWidthRef,
+	select,
+	selectWithNone,
+} from '../storybook-helpers'
 import Heading from './heading'
 
 export default {
@@ -52,4 +57,75 @@ export function HeadingStory() {
 			<Heading level={4}>Heading level 4 / 5 / 6</Heading>
 		</section>
 	)
+}
+
+export function TruncatedHeadingStory() {
+	return (
+		<section className='story'>
+			<Heading level={1} size='largest' lineClamp={1}>
+				This is a long title which we will use demonstrate truncating
+				content. When this overflows and begins to drop to a new line,
+				its overflowing content will be replaced by ellipses.
+			</Heading>
+			<Heading level={2} lineClamp={2}>
+				Now we have a subtitle which we will use to demostrate
+				truncating to multiple lines. Sometimes we need to provide more
+				context yet still remain skimmable to users, and subtitles are a
+				good way to do this. As it&rsquo;s much longer now we can allow
+				a second line to be displayed before truncating it at two lines.
+			</Heading>
+		</section>
+	)
+}
+
+export function ResponsiveHeadingStory(
+	props: React.ComponentProps<typeof Heading>
+) {
+	return (
+		<>
+			<ResponsiveWidthRef />
+			<Heading
+				{...props}
+				align={{ mobile: 'end', tablet: 'center', desktop: 'start' }}
+			/>
+		</>
+	)
+}
+
+ResponsiveHeadingStory.argTypes = {
+	level: select(['1', '2', '3', '4', '5', '6'], '1'),
+	size: selectWithNone(['largest', 'larger', 'smaller'], 'none'),
+	weight: select(['regular', 'light'], 'regular'),
+	lineClamp: selectWithNone([1, 2, 3, 4, 5], 'none'),
+	tone: select(['normal', 'secondary', 'danger'], 'normal'),
+	align: { control: false },
+	children: {
+		control: { type: 'text' },
+		defaultValue:
+			'Lorem ipsum dolor, sit amet consectetur adipisicing elit',
+	},
+}
+
+export function HeadingPlaygroundStory(
+	props: React.ComponentProps<typeof Heading>
+) {
+	return (
+		<section className='story playground'>
+			<Heading {...props} />
+		</section>
+	)
+}
+
+HeadingPlaygroundStory.argTypes = {
+	level: select(['1', '2', '3', '4', '5', '6'], '1'),
+	size: selectWithNone(['largest', 'larger', 'smaller'], 'none'),
+	weight: select(['regular', 'light'], 'regular'),
+	lineClamp: selectWithNone([1, 2, 3, 4, 5], 'none'),
+	tone: select(['normal', 'secondary', 'danger'], 'normal'),
+	align: selectWithNone(['start', 'center', 'end', 'justify'], 'none'),
+	children: {
+		control: { type: 'text' },
+		defaultValue:
+			'Lorem ipsum dolor, sit amet consectetur adipisicing elit',
+	},
 }
