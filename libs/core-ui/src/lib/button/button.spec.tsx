@@ -193,4 +193,43 @@ describe('Button', () => {
 			`"<span class=\\"label\\">Click me <strong>now</strong></span>"`
 		)
 	})
+
+	describe('when loading={true}', () => {
+		it('ignores clicks', () => {
+			const onClick = jest.fn()
+			render(
+				<Button variant='primary' loading onClick={onClick}>
+					Click me
+				</Button>
+			)
+			fireEvent.click(screen.getByRole('button', { name: 'Click me' }))
+			expect(onClick).not.toHaveBeenCalled()
+		})
+		it('does not submit a form', () => {
+			const onSubmit = jest.fn(event => event.preventDefault())
+			render(
+				<form onSubmit={onSubmit}>
+					<Button variant='primary' type='submit' loading>
+						Submit
+					</Button>
+				</form>
+			)
+			const button = screen.getByRole('button', { name: 'Submit' })
+			expect(button).toHaveAttribute('aria-disabled', 'true')
+			expect(button).toHaveAttribute('type', 'submit')
+			expect(onSubmit).not.toHaveBeenCalled()
+			fireEvent.click(button)
+			expect(onSubmit).not.toHaveBeenCalled()
+		})
+		it('renders the button with aria-disabled="true"', () => {
+			render(
+				<Button variant='primary' loading>
+					Click me
+				</Button>
+			)
+			expect(
+				screen.getByRole('button', { name: 'Click me' })
+			).toHaveAttribute('aria-disabled', 'true')
+		})
+	})
 })

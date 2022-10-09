@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 
 import { Box } from '../box'
+import { Loader } from '../loader'
 import { polymorphicComponent } from '../polymorphic'
 import styles from './button.module.less'
 
@@ -59,6 +60,15 @@ const Button = polymorphicComponent<'button', ButtonProps>(
 				{children ? (
 					<span className={styles['label']}>{children}</span>
 				) : null}
+				{loading && (
+					<Box
+						display='flex'
+						className={styles['endIcon']}
+						aria-hidden
+					>
+						<Loader />
+					</Box>
+				)}
 			</Box>
 		)
 	}

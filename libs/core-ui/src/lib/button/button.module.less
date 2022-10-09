@@ -35,253 +35,285 @@
 	transition: 'all ease 200ms';
 }
 
-
-
 :root {
-  /* size="small" */
-  --bootcamp-button-small-font-size: var(--bootcamp-font-size-caption);
-  --bootcamp-button-small-spacing: var(--bootcamp-spacing-small);
-  --bootcamp-button-small-height: 28px;
+	/* size="small" */
+	--bootcamp-button-small-font-size: var(--bootcamp-font-size-caption);
+	--bootcamp-button-small-spacing: var(--bootcamp-spacing-small);
+	--bootcamp-button-small-height: 28px;
 
-  /* size="normal" (default) */
-  --bootcamp-button-normal-font-size: var(--bootcamp-font-size-copy);
-  --bootcamp-button-normal-spacing: var(--bootcamp-spacing-medium);
-  --bootcamp-button-normal-height: 32px;
+	/* size="normal" (default) */
+	--bootcamp-button-normal-font-size: var(--bootcamp-font-size-copy);
+	--bootcamp-button-normal-spacing: var(--bootcamp-spacing-medium);
+	--bootcamp-button-normal-height: 32px;
 
-  /* size="large" */
-  --bootcamp-button-large-font-size: var(--bootcamp-font-size-body);
-  --bootcamp-button-large-spacing: var(--bootcamp-spacing-large);
-  --bootcamp-button-large-height: 36px;
+	/* size="large" */
+	--bootcamp-button-large-font-size: var(--bootcamp-font-size-body);
+	--bootcamp-button-large-spacing: var(--bootcamp-spacing-large);
+	--bootcamp-button-large-height: 36px;
 
-  /* variant="primary" */
-  --bootcamp-actionable-primary-idle-tint: #ffffff;
-  --bootcamp-actionable-primary-idle-fill: #008aa6;
-  --bootcamp-actionable-primary-hover-tint: #ffffff;
-  --bootcamp-actionable-primary-hover-fill: #007992;
-  --bootcamp-actionable-primary-disabled-tint: #ffffff;
-  --bootcamp-actionable-primary-disabled-fill: #99d0db;
+	/* variant="primary" */
+	--bootcamp-actionable-primary-idle-tint: #fff;
+	--bootcamp-actionable-primary-idle-fill: #008aa6;
+	--bootcamp-actionable-primary-hover-tint: #fff;
+	--bootcamp-actionable-primary-hover-fill: #007992;
+	--bootcamp-actionable-primary-disabled-tint: #fff;
+	--bootcamp-actionable-primary-disabled-fill: #99d0db;
 
-  /* variant="secondary" */
-  --bootcamp-actionable-secondary-idle-tint: #282f30;
-  --bootcamp-actionable-secondary-idle-fill: #f2f6f7;
-  --bootcamp-actionable-secondary-hover-tint: #282f30;
-  --bootcamp-actionable-secondary-hover-fill: #e3e7e8;
-  --bootcamp-actionable-secondary-disabled-tint: #a9acac;
-  --bootcamp-actionable-secondary-disabled-fill: #f2f6f7;
+	/* variant="secondary" */
+	--bootcamp-actionable-secondary-idle-tint: #282f30;
+	--bootcamp-actionable-secondary-idle-fill: #f2f6f7;
+	--bootcamp-actionable-secondary-hover-tint: #282f30;
+	--bootcamp-actionable-secondary-hover-fill: #e3e7e8;
+	--bootcamp-actionable-secondary-disabled-tint: #a9acac;
+	--bootcamp-actionable-secondary-disabled-fill: #f2f6f7;
 
-  /* variant="tertiary" (only has fill when hovered) */
-  --bootcamp-actionable-tertiary-idle-tint: #006f85;
-  --bootcamp-actionable-tertiary-hover-tint: #006f85;
-  --bootcamp-actionable-tertiary-hover-fill: #f2f6f7;
-  --bootcamp-actionable-tertiary-disabled-tint: #99c5ce;
+	/* variant="tertiary" (only has fill when hovered) */
+	--bootcamp-actionable-tertiary-idle-tint: #006f85;
+	--bootcamp-actionable-tertiary-hover-tint: #006f85;
+	--bootcamp-actionable-tertiary-hover-fill: #f2f6f7;
+	--bootcamp-actionable-tertiary-disabled-tint: #99c5ce;
 
-  /* variant="quaternary" (only has fill when hovered) */
-  --bootcamp-actionable-quaternary-idle-tint: #6c777a;
-  --bootcamp-actionable-quaternary-hover-tint: #282f30;
-  --bootcamp-actionable-quaternary-hover-fill: #e0e7e8;
-  --bootcamp-actionable-quaternary-disabled-tint: #c4c9ca;
+	/* variant="quaternary" (only has fill when hovered) */
+	--bootcamp-actionable-quaternary-idle-tint: #6c777a;
+	--bootcamp-actionable-quaternary-hover-tint: #282f30;
+	--bootcamp-actionable-quaternary-hover-fill: #e0e7e8;
+	--bootcamp-actionable-quaternary-disabled-tint: #c4c9ca;
 
-  /* variant="primary" tone="destructive" */
-  --bootcamp-actionable-primary-destructive-idle-tint: #ffffff;
-  --bootcamp-actionable-primary-destructive-idle-fill: #dc4c3e;
-  --bootcamp-actionable-primary-destructive-hover-tint: #ffffff;
-  --bootcamp-actionable-primary-destructive-hover-fill: #b03d32;
-  --bootcamp-actionable-primary-destructive-disabled-tint: #ffffff;
-  --bootcamp-actionable-primary-destructive-disabled-fill: #f1b7b2;
+	/* variant="primary" tone="destructive" */
+	--bootcamp-actionable-primary-destructive-idle-tint: #fff;
+	--bootcamp-actionable-primary-destructive-idle-fill: #dc4c3e;
+	--bootcamp-actionable-primary-destructive-hover-tint: #fff;
+	--bootcamp-actionable-primary-destructive-hover-fill: #b03d32;
+	--bootcamp-actionable-primary-destructive-disabled-tint: #fff;
+	--bootcamp-actionable-primary-destructive-disabled-fill: #f1b7b2;
 
-  /* variant="secondary" tone="destructive" (optionally filled only when hovered) */
-  --bootcamp-actionable-secondary-destructive-idle-tint: #dc4c3e;
-  --bootcamp-actionable-secondary-destructive-hover-tint: #b03d32;
-  --bootcamp-actionable-secondary-destructive-hover-fill: transparent;
-  --bootcamp-actionable-secondary-destructive-disabled-tint: #f1b7b2;
+	/* variant="secondary" tone="destructive" (optionally filled only when hovered) */
+	--bootcamp-actionable-secondary-destructive-idle-tint: #dc4c3e;
+	--bootcamp-actionable-secondary-destructive-hover-tint: #b03d32;
+	--bootcamp-actionable-secondary-destructive-hover-fill: transparent;
+	--bootcamp-actionable-secondary-destructive-disabled-tint: #f1b7b2;
 }
 
 .label {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 /* general styles for all buttons */
 .baseButton {
-  max-width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  user-select: none;
-  color: inherit;
-  background-color: transparent;
-  border-radius: 5px;
-  white-space: nowrap;
-  font-family: var(--bootcamp-font-family);
-  font-weight: var(--bootcamp-font-weight-medium);
-  text-decoration: none;
+	max-width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	user-select: none;
+	color: inherit;
+	background-color: transparent;
+	border-radius: 5px;
+	white-space: nowrap;
+	font-family: var(--bootcamp-font-family);
+	font-weight: var(--bootcamp-font-weight-medium);
+	text-decoration: none;
 
-  /* border is always on, but transparent, so that it does not enlarge buttons when we actually color it */
-  border: 1px solid transparent;
+	/* border is always on, but transparent, so that it does not enlarge buttons when we actually color it */
+	border: 1px solid transparent;
 
-  /* smooth color transitions */
-  transition-duration: 0.3s;
-  transition-property: color, background-color;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  padding: 0 var(--bootcamp-btn-spacing);
-  font-size: var(--bootcamp-btn-font-size);
-  height: var(--bootcamp-btn-height);
-  line-height: var(--bootcamp-btn-height);
+	/* smooth color transitions */
+	transition-duration: 0.3s;
+	transition-property: color, background-color;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	padding: 0 var(--bootcamp-btn-spacing);
+	font-size: var(--bootcamp-btn-font-size);
+	height: var(--bootcamp-btn-height);
+	line-height: var(--bootcamp-btn-height);
 
-  /* spinner */
-  --bootcamp-spinner-tint: var(--bootcamp-btn-idle-tint);
-  --bootcamp-spinner-fill: var(--bootcamp-btn-idle-fill);
+	/* spinner */
+	--bootcamp-spinner-tint: var(--bootcamp-btn-idle-tint);
+	--bootcamp-spinner-fill: var(--bootcamp-btn-idle-fill);
 }
 
 .baseButton:not(.iconButton) {
-  min-width: 68px;
+	min-width: 68px;
 }
 
 .baseButton:not(.disabled) {
-  color: var(--bootcamp-btn-idle-tint);
-  background-color: var(--bootcamp-btn-idle-fill);
+	color: var(--bootcamp-btn-idle-tint);
+	background-color: var(--bootcamp-btn-idle-fill);
 }
 
 /* nice little animation when clicked to give some visual feedback */
 .baseButton:active:not([aria-disabled='true']) {
-  transform: scale(0.97);
-  transition: transform 0.2s cubic-bezier(0.02, 1.505, 0.745, 1.235);
+	transform: scale(0.97);
+	transition: transform 0.2s cubic-bezier(0.02, 1.505, 0.745, 1.235);
 }
 
-
 .baseButton.size-small {
-  --bootcamp-btn-height: var(--bootcamp-button-small-height);
-  --bootcamp-btn-spacing: var(--bootcamp-button-small-spacing);
-  --bootcamp-btn-font-size: var(--bootcamp-button-small-font-size);
+	--bootcamp-btn-height: var(--bootcamp-button-small-height);
+	--bootcamp-btn-spacing: var(--bootcamp-button-small-spacing);
+	--bootcamp-btn-font-size: var(--bootcamp-button-small-font-size);
 }
 
 .baseButton.size-normal {
-  --bootcamp-btn-height: var(--bootcamp-button-normal-height);
-  --bootcamp-btn-spacing: var(--bootcamp-button-normal-spacing);
-  --bootcamp-btn-font-size: var(--bootcamp-button-normal-font-size);
+	--bootcamp-btn-height: var(--bootcamp-button-normal-height);
+	--bootcamp-btn-spacing: var(--bootcamp-button-normal-spacing);
+	--bootcamp-btn-font-size: var(--bootcamp-button-normal-font-size);
 }
 
 .baseButton.size-large {
-  --bootcamp-btn-height: var(--bootcamp-button-large-height);
-  --bootcamp-btn-spacing: var(--bootcamp-button-large-spacing);
-  --bootcamp-btn-font-size: var(--bootcamp-button-large-font-size);
+	--bootcamp-btn-height: var(--bootcamp-button-large-height);
+	--bootcamp-btn-spacing: var(--bootcamp-button-large-spacing);
+	--bootcamp-btn-font-size: var(--bootcamp-button-large-font-size);
 }
 
 /* setup the color variables for all the different states */
+
 /* variables are then set per variant and tone so that we do not repeat these definitions below */
-
-
 
 .baseButton[aria-expanded='true'],
 .baseButton:focus:not([aria-disabled='true']),
 .baseButton:hover:not([aria-disabled='true']) {
-  color: var(--bootcamp-btn-hover-tint);
-  background-color: var(--bootcamp-btn-hover-fill);
+	color: var(--bootcamp-btn-hover-tint);
+	background-color: var(--bootcamp-btn-hover-fill);
 }
 
 .baseButton.disabled {
-  cursor: not-allowed;
-  color: var(--bootcamp-btn-disabled-tint);
-  background-color: var(--bootcamp-btn-disabled-fill);
+	cursor: not-allowed;
+	color: var(--bootcamp-btn-disabled-tint);
+	background-color: var(--bootcamp-btn-disabled-fill);
 }
 
 /* icons */
 
-
-
 .baseButton.iconButton {
-  width: var(--bootcamp-btn-height);
-  height: var(--bootcamp-btn-height);
-  padding: 0;
+	width: var(--bootcamp-btn-height);
+	height: var(--bootcamp-btn-height);
+	padding: 0;
 }
 
 .baseButton .startIcon {
-  margin-right: calc(var(--bootcamp-btn-spacing) - 6px);
-  margin-left: -6px;
+	margin-right: calc(var(--bootcamp-btn-spacing) - 6px);
+	margin-left: -6px;
 }
 
 .baseButton .endIcon {
-  margin-left: calc(var(--bootcamp-btn-spacing) - 6px);
-  margin-right: -6px;
+	margin-left: calc(var(--bootcamp-btn-spacing) - 6px);
+	margin-right: -6px;
 }
 
 /* variants with normal tone */
 
 .variant-primary {
-  --bootcamp-btn-idle-tint: var(--bootcamp-actionable-primary-idle-tint);
-  --bootcamp-btn-idle-fill: var(--bootcamp-actionable-primary-idle-fill);
-  --bootcamp-btn-hover-tint: var(--bootcamp-actionable-primary-hover-tint);
-  --bootcamp-btn-hover-fill: var(--bootcamp-actionable-primary-hover-fill);
-  --bootcamp-btn-disabled-tint: var(--bootcamp-actionable-primary-disabled-tint);
-  --bootcamp-btn-disabled-fill: var(--bootcamp-actionable-primary-disabled-fill);
+	--bootcamp-btn-idle-tint: var(--bootcamp-actionable-primary-idle-tint);
+	--bootcamp-btn-idle-fill: var(--bootcamp-actionable-primary-idle-fill);
+	--bootcamp-btn-hover-tint: var(--bootcamp-actionable-primary-hover-tint);
+	--bootcamp-btn-hover-fill: var(--bootcamp-actionable-primary-hover-fill);
+	--bootcamp-btn-disabled-tint: var(
+		--bootcamp-actionable-primary-disabled-tint
+	);
+	--bootcamp-btn-disabled-fill: var(
+		--bootcamp-actionable-primary-disabled-fill
+	);
 }
 
 .variant-secondary {
-  --bootcamp-btn-idle-tint: var(--bootcamp-actionable-secondary-idle-tint);
-  --bootcamp-btn-idle-fill: var(--bootcamp-actionable-secondary-idle-fill);
-  --bootcamp-btn-hover-tint: var(--bootcamp-actionable-secondary-hover-tint);
-  --bootcamp-btn-hover-fill: var(--bootcamp-actionable-secondary-hover-fill);
-  --bootcamp-btn-disabled-tint: var(--bootcamp-actionable-secondary-disabled-tint);
-  --bootcamp-btn-disabled-fill: var(--bootcamp-actionable-secondary-disabled-fill);
+	--bootcamp-btn-idle-tint: var(--bootcamp-actionable-secondary-idle-tint);
+	--bootcamp-btn-idle-fill: var(--bootcamp-actionable-secondary-idle-fill);
+	--bootcamp-btn-hover-tint: var(--bootcamp-actionable-secondary-hover-tint);
+	--bootcamp-btn-hover-fill: var(--bootcamp-actionable-secondary-hover-fill);
+	--bootcamp-btn-disabled-tint: var(
+		--bootcamp-actionable-secondary-disabled-tint
+	);
+	--bootcamp-btn-disabled-fill: var(
+		--bootcamp-actionable-secondary-disabled-fill
+	);
 }
 
 .variant-tertiary {
-  --bootcamp-btn-idle-tint: var(--bootcamp-actionable-tertiary-idle-tint);
-  --bootcamp-btn-idle-fill: transparent;
-  --bootcamp-btn-hover-tint: var(--bootcamp-actionable-tertiary-hover-tint);
-  --bootcamp-btn-hover-fill: var(--bootcamp-actionable-tertiary-hover-fill);
-  --bootcamp-btn-disabled-tint: var(--bootcamp-actionable-tertiary-disabled-tint);
-  --bootcamp-btn-disabled-fill: transparent;
+	--bootcamp-btn-idle-tint: var(--bootcamp-actionable-tertiary-idle-tint);
+	--bootcamp-btn-idle-fill: transparent;
+	--bootcamp-btn-hover-tint: var(--bootcamp-actionable-tertiary-hover-tint);
+	--bootcamp-btn-hover-fill: var(--bootcamp-actionable-tertiary-hover-fill);
+	--bootcamp-btn-disabled-tint: var(
+		--bootcamp-actionable-tertiary-disabled-tint
+	);
+	--bootcamp-btn-disabled-fill: transparent;
 }
 
 .variant-quaternary {
-  --bootcamp-btn-idle-tint: var(--bootcamp-actionable-quaternary-idle-tint);
-  --bootcamp-btn-idle-fill: transparent;
-  --bootcamp-btn-hover-tint: var(--bootcamp-actionable-quaternary-hover-tint);
-  --bootcamp-btn-hover-fill: var(--bootcamp-actionable-quaternary-hover-fill);
-  --bootcamp-btn-disabled-tint: var(--bootcamp-actionable-quaternary-disabled-tint);
-  --bootcamp-btn-disabled-fill: transparent;
+	--bootcamp-btn-idle-tint: var(--bootcamp-actionable-quaternary-idle-tint);
+	--bootcamp-btn-idle-fill: transparent;
+	--bootcamp-btn-hover-tint: var(--bootcamp-actionable-quaternary-hover-tint);
+	--bootcamp-btn-hover-fill: var(--bootcamp-actionable-quaternary-hover-fill);
+	--bootcamp-btn-disabled-tint: var(
+		--bootcamp-actionable-quaternary-disabled-tint
+	);
+	--bootcamp-btn-disabled-fill: transparent;
 }
 
 /* variants with destructive tone */
 
 .variant-primary.tone-destructive {
-  --bootcamp-btn-idle-tint: var(--bootcamp-actionable-primary-destructive-idle-tint);
-  --bootcamp-btn-idle-fill: var(--bootcamp-actionable-primary-destructive-idle-fill);
-  --bootcamp-btn-hover-tint: var(--bootcamp-actionable-primary-destructive-hover-tint);
-  --bootcamp-btn-hover-fill: var(--bootcamp-actionable-primary-destructive-hover-fill);
-  --bootcamp-btn-disabled-tint: var(--bootcamp-actionable-primary-destructive-disabled-tint);
-  --bootcamp-btn-disabled-fill: var(--bootcamp-actionable-primary-destructive-disabled-fill);
+	--bootcamp-btn-idle-tint: var(
+		--bootcamp-actionable-primary-destructive-idle-tint
+	);
+	--bootcamp-btn-idle-fill: var(
+		--bootcamp-actionable-primary-destructive-idle-fill
+	);
+	--bootcamp-btn-hover-tint: var(
+		--bootcamp-actionable-primary-destructive-hover-tint
+	);
+	--bootcamp-btn-hover-fill: var(
+		--bootcamp-actionable-primary-destructive-hover-fill
+	);
+	--bootcamp-btn-disabled-tint: var(
+		--bootcamp-actionable-primary-destructive-disabled-tint
+	);
+	--bootcamp-btn-disabled-fill: var(
+		--bootcamp-actionable-primary-destructive-disabled-fill
+	);
 }
 
 .variant-secondary.tone-destructive {
-  --bootcamp-btn-idle-tint: var(--bootcamp-actionable-secondary-destructive-idle-tint);
-  --bootcamp-btn-idle-fill: transparent;
-  --bootcamp-btn-hover-tint: var(--bootcamp-actionable-secondary-destructive-hover-tint);
-  --bootcamp-btn-hover-fill: var(--bootcamp-actionable-secondary-destructive-hover-fill);
-  --bootcamp-btn-disabled-tint: var(--bootcamp-actionable-secondary-destructive-disabled-tint);
-  --bootcamp-btn-disabled-fill: transparent;
+	--bootcamp-btn-idle-tint: var(
+		--bootcamp-actionable-secondary-destructive-idle-tint
+	);
+	--bootcamp-btn-idle-fill: transparent;
+	--bootcamp-btn-hover-tint: var(
+		--bootcamp-actionable-secondary-destructive-hover-tint
+	);
+	--bootcamp-btn-hover-fill: var(
+		--bootcamp-actionable-secondary-destructive-hover-fill
+	);
+	--bootcamp-btn-disabled-tint: var(
+		--bootcamp-actionable-secondary-destructive-disabled-tint
+	);
+	--bootcamp-btn-disabled-fill: transparent;
 }
 
 /* the secondary destructive variant has border around it */
 .variant-secondary.tone-destructive {
-  border-color: var(--bootcamp-btn-idle-tint);
+	border-color: var(--bootcamp-btn-idle-tint);
 }
 
 .variant-secondary.tone-destructive:hover {
-  border-color: var(--bootcamp-btn-hover-tint);
+	border-color: var(--bootcamp-btn-hover-tint);
 }
 
 .variant-secondary.tone-destructive.disabled {
-  border-color: var(--bootcamp-btn-disabled-tint);
+	border-color: var(--bootcamp-btn-disabled-tint);
 }
 
 .variant-tertiary.tone-destructive,
 .variant-quaternary.tone-destructive {
-  --bootcamp-btn-idle-tint: var(--bootcamp-actionable-secondary-destructive-idle-tint);
-  --bootcamp-btn-hover-tint: var(--bootcamp-actionable-secondary-destructive-hover-tint);
-  --bootcamp-btn-disabled-tint: var(--bootcamp-actionable-secondary-destructive-disabled-tint);
+	--bootcamp-btn-idle-tint: var(
+		--bootcamp-actionable-secondary-destructive-idle-tint
+	);
+	--bootcamp-btn-hover-tint: var(
+		--bootcamp-actionable-secondary-destructive-hover-tint
+	);
+	--bootcamp-btn-disabled-tint: var(
+		--bootcamp-actionable-secondary-destructive-disabled-tint
+	);
 }
