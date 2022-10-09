@@ -1,3 +1,4 @@
+export * from './lib/loader'
 export * from './lib/inline'
 export * from './lib/stack'
 export * from './lib/text'
