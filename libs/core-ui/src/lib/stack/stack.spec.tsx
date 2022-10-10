@@ -1,7 +1,6 @@
 import { screen, render } from '@testing-library/react'
-
 import Stack from './stack'
-
+import { runSpaceTests } from '../test-helpers'
 describe('Stack', () => {
 	it('should not set className from same name prop', () => {
 		const { baseElement } = render(
@@ -120,4 +119,5 @@ describe('Stack', () => {
 			)
 		})
 	})
+	runSpaceTests(Stack)
 })

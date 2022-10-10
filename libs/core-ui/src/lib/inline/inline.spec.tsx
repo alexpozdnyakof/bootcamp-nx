@@ -1,4 +1,5 @@
 import { screen, render } from '@testing-library/react'
+import { runSpaceTests } from '../test-helpers'
 
 import Inline from './inline'
 
@@ -124,4 +125,5 @@ describe('Inline', () => {
 			)
 		})
 	})
+	runSpaceTests(Inline)
 })
