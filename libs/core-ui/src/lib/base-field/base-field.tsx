@@ -32,6 +32,12 @@ export type BaseFieldProps = {
 	'id' | 'hidden' | 'aria-describedby'
 >
 
+export type FieldComponentProps<T extends HTMLElement> = Omit<
+	BaseFieldProps,
+	'children' | 'className'
+> &
+	Omit<HtmlInputFieldProps<T>, 'className' | 'style'>
+
 export function BaseField({
 	label,
 	secondaryLabel,
