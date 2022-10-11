@@ -9,8 +9,16 @@ type HtmlInputFieldProps<T extends HTMLElement> = DetailedHTMLProps<
 	InputHTMLAttributes<T>,
 	T
 >
+type HintProps = {
+	id: string
+	children: ReactNode
+	hidden?: boolean
+}
 
-/* eslint-disable-next-line */
+const FieldHint = (props: HintProps) => (
+	<Text as='p' tone='secondary' size='copy' {...props} />
+)
+
 export type BaseFieldProps = {
 	label?: ReactNode
 	secondaryLabel?: ReactNode
@@ -37,6 +45,8 @@ export function BaseField({
 	id: originalId,
 }: BaseFieldProps) {
 	const id = useUniqueId(originalId)
+	const hintId = useUniqueId()
+
 	return (
 		<Stack space='small'>
 			<Box
@@ -72,8 +82,13 @@ export function BaseField({
 						</Box>
 					) : null}
 				</Box>
+				{children({ id })}
 			</Box>
-			{children({ id })}
+			{hint ? (
+				<FieldHint hidden={hidden} id={hintId}>
+					{hint}
+				</FieldHint>
+			) : null}
 		</Stack>
 	)
 }
