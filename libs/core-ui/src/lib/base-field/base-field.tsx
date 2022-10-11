@@ -25,7 +25,7 @@ export type BaseFieldProps = {
 	auxiliaryLabel?: ReactNode
 	hint?: ReactNode
 	maxWidth?: BoxProps['maxWidth']
-	className: BoxProps['className']
+	className?: BoxProps['className']
 	children: (props: { id: string; 'aria-describedby'?: string }) => ReactNode
 } & Pick<
 	HtmlInputFieldProps<HTMLInputElement>,
