@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "../todo-ts"
+		},
+		{
+			"path": "../reactist"
 		}
 	],
 	"settings": {
