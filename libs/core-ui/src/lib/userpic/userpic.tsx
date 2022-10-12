@@ -1,4 +1,5 @@
-import { ResponsiveProp } from '../responsive-props'
+import { Box } from '../box'
+import { getClassNames, ResponsiveProp } from '../responsive-props'
 import styles from './userpic.module.less'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -31,12 +32,9 @@ export type UserpicProps = {
 	user: { name?: string; email: string }
 }
 
-export function Userpic(props: UserpicProps) {
-	return (
-		<div className={styles['container']}>
-			<h1>Welcome to Userpic!</h1>
-		</div>
-	)
+export function Userpic({ size = 'l' }: UserpicProps) {
+	const sizeClassName = getClassNames(styles, 'size', size)
+	return <Box className={[styles['avatar'], sizeClassName]}></Box>
 }
 
 export default Userpic
