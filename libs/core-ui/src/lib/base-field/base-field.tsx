@@ -77,6 +77,8 @@ const FieldMessage = ({ id, children, tone }: MessageProps) => {
 	)
 }
 
+type FieldVariant = 'default' | 'bordered'
+
 export type BaseFieldProps = {
 	label?: ReactNode
 	secondaryLabel?: ReactNode
@@ -86,6 +88,7 @@ export type BaseFieldProps = {
 	className?: BoxProps['className']
 	message?: React.ReactNode
 	tone?: FieldTone
+	variant?: FieldVariant
 	children: (props: { id: string; 'aria-describedby'?: string }) => ReactNode
 } & Pick<
 	HtmlInputFieldProps<HTMLInputElement>,
@@ -109,6 +112,7 @@ export function BaseField({
 	hidden,
 	message,
 	tone = 'neutral',
+	variant = 'default',
 	'aria-describedby': originalAriaDescribedBy,
 	id: originalId,
 }: BaseFieldProps) {
@@ -119,7 +123,12 @@ export function BaseField({
 	return (
 		<Stack space='small' hidden={hidden}>
 			<Box
-				className={[className, styles['container']]}
+				className={[
+					className,
+					styles['container'],
+					tone === 'error' ? styles['error'] : null,
+					variant === 'bordered' ? styles['bordered'] : null,
+				]}
 				maxWidth={maxWidth}
 			>
 				<Box
@@ -129,7 +138,11 @@ export function BaseField({
 					alignItems='flexEnd'
 					paddingBottom='small'
 				>
-					<Text size='body' as='label' htmlFor={id}>
+					<Text
+						size={variant === 'bordered' ? 'caption' : 'body'}
+						as='label'
+						htmlFor={id}
+					>
 						{label ? (
 							<span className={styles['primaryLabel']}>
 								{label}
