@@ -53,7 +53,7 @@ type BoxOverflow = 'hidden' | 'auto' | 'visible' | 'scroll'
 
 type BoxMaxMinWidth = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
 type BoxMinWidth = 0 | BoxMaxMinWidth
-type BoxMaxWidth = BoxMaxMinWidth | 'full'
+export type BoxMaxWidth = BoxMaxMinWidth | 'full'
 type BoxWidth =
 	| 0
 	| BoxMaxMinWidth
