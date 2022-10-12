@@ -1,3 +1,4 @@
+export * from './lib/spinner'
 export * from './lib/text-field'
 export * from './lib/loader'
 export * from './lib/inline'
