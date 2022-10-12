@@ -5,9 +5,13 @@ describe('get initials', () => {
 		expect(result).toBe('')
 	})
 
-  it('returns uppercased initials for two names', () => {
+	it('returns uppercased initials for two names', () => {
 		const result = getInitials('alex pozdnyakof')
 		expect(result).toBe('AP')
-  })
+	})
 
+  it('return first and last name initials for more than two names', () => {
+		const result = getInitials('alex is cool pozdnyakof')
+		expect(result).toBe('AP')
+  })
 })
