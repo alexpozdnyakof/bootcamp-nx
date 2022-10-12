@@ -117,11 +117,10 @@ export function BaseField({
 	const messageId = useUniqueId()
 
 	return (
-		<Stack space='small'>
+		<Stack space='small' hidden={hidden}>
 			<Box
 				className={[className, styles['container']]}
 				maxWidth={maxWidth}
-				hidden={hidden}
 			>
 				<Box
 					as='span'
