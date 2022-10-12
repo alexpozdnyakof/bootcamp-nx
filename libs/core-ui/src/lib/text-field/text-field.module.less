@@ -1,11 +1,15 @@
-.inputWrapper {
+.inputWrapper:not(.bordered) {
 	border-radius: var(--bootcamp-border-radius-small);
 	border: 1px solid var(--bootcamp-divider-secondary);
 	overflow: clip;
 }
 
-.inputWrapper:focus-within {
+.inputWrapper:not(.bordered):focus-within {
 	border-color: var(--bootcamp-divider-primary);
+}
+
+.inputWrapper:not(.bordered).error {
+	border-color: var(--bootcamp-alert-tone-critical-border) !important;
 }
 
 .inputWrapper input {
@@ -38,6 +42,14 @@
 
 	font-size: var(--bootcamp-font-size-body);
 	line-height: calc(var(--bootcamp-font-size-body) + 4px);
-	padding: var(--tmp-vertical-padding) 10px;
 	margin: 0;
+}
+
+.inputWrapper.bordered input {
+	padding: 0;
+	height: 24px;
+}
+
+.inputWrapper:not(.bordered) input {
+	padding: var(--tmp-vertical-padding) 10px;
 }

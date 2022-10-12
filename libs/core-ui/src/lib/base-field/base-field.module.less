@@ -1,67 +1,65 @@
 .container {
-  font-family: var(--bootcamp-font-family);
+	font-family: var(--bootcamp-font-family);
 }
 
 .auxiliaryLabel {
-  text-align: right;
+	text-align: right;
 }
 
 .container label,
 .container .auxiliaryLabel {
-  padding-bottom: var(--bootcamp-spacing-small);
+	padding-bottom: var(--bootcamp-spacing-small);
 }
 
 .container.bordered {
-  border-radius: var(--bootcamp-border-radius-large);
-  border: 1px solid var(--bootcamp-divider-secondary);
-  padding: var(--bootcamp-spacing-small);
-  padding-bottom: var(--bootcamp-spacing-xsmall);
-  overflow: clip;
+	border-radius: var(--bootcamp-border-radius-large);
+	border: 1px solid var(--bootcamp-divider-secondary);
+	padding: var(--bootcamp-spacing-small);
+	padding-bottom: var(--bootcamp-spacing-xsmall);
+	overflow: clip;
 }
 
 .container.bordered label {
-  /* so that clicking in blank areas to the right of the label will focus the field element */
-  flex-grow: 1;
+	/* so that clicking in blank areas to the right of the label will focus the field element */
+	flex-grow: 1;
 
-  /* to convey that clicking in blank area to the right of the label places focus on the text field */
-  cursor: text;
+	/* to convey that clicking in blank area to the right of the label places focus on the text field */
+	cursor: text;
 }
 
 .container.bordered label span {
-  /* overrides the cursor set above, so that hovering over the non-blank parts of the label stay unaffected */
-  cursor: default;
+	/* overrides the cursor set above, so that hovering over the non-blank parts of the label stay unaffected */
+	cursor: default;
 }
 
 .container.bordered:focus-within {
-  border-color: var(--bootcamp-divider-primary) !important;
+	border-color: var(--bootcamp-divider-primary) !important;
 }
 
 .container.bordered.error {
-  border-color: var(--bootcamp-alert-tone-critical-border) !important;
+	border-color: var(--bootcamp-alert-tone-critical-border) !important;
 }
 
 .container.bordered .primaryLabel {
-  font-weight: 500;
+	font-weight: 500;
 }
 
 .container.bordered .auxiliaryLabel {
-  font-size: var(--bootcamp-font-size-caption);
+	font-size: var(--bootcamp-font-size-caption);
 }
 
 .container:not(.bordered) .primaryLabel {
-  font-weight: var(--bootcamp-font-weight-strong);
+	font-weight: var(--bootcamp-font-weight-strong);
 }
 
 .container:not(.bordered) .auxiliaryLabel {
-  font-size: var(--bootcamp-font-size-body);
+	font-size: var(--bootcamp-font-size-body);
 }
 
 .secondaryLabel {
-  color: var(--bootcamp-content-secondary);
+	color: var(--bootcamp-content-secondary);
 }
 
-
-
 .messageIcon {
-  vertical-align: text-bottom;
+	vertical-align: text-bottom;
 }
