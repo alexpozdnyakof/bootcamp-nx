@@ -65,7 +65,7 @@ const FieldMessage = ({ id, children, tone }: MessageProps) => {
 				as='span'
 				marginRight='xsmall'
 				display='inlineFlex'
-				className={styles['messgeIcon']}
+				className={styles['messageIcon']}
 			>
 				{tone === 'loading' ? (
 					<Spinner size={16} />
@@ -73,6 +73,7 @@ const FieldMessage = ({ id, children, tone }: MessageProps) => {
 					<MessageIcon aria-hidden />
 				)}
 			</Box>
+			{children}
 		</Text>
 	)
 }
