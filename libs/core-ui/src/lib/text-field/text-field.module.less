@@ -1,23 +1,23 @@
 .inputWrapper {
-  border-radius: var(--bootcamp-border-radius-small);
-  border: 1px solid var(--bootcamp-divider-secondary);
-  overflow: clip;
+	border-radius: var(--bootcamp-border-radius-small);
+	border: 1px solid var(--bootcamp-divider-secondary);
+	overflow: clip;
 }
 
 .inputWrapper:focus-within {
-  border-color: var(--bootcamp-divider-primary);
+	border-color: var(--bootcamp-divider-primary);
 }
 
 .inputWrapper input {
-  color: var(--bootcamp-content-primary);
-  flex: 1;
-  outline: none; /* we take care of the focus state above */
-  box-sizing: border-box;
-  width: 100%;
-  background: transparent;
-  border: none;
+	color: var(--bootcamp-content-primary);
+	flex: 1;
+	outline: none; /* we take care of the focus state above */
+	box-sizing: border-box;
+	width: 100%;
+	background: transparent;
+	border: none;
 
-  /**
+	/**
     * The desired height below is 30px. This is so that, with +2px from the wrapper borders
     * we obtain a 32px height on the wrapper.
     *
@@ -27,17 +27,17 @@
     * the perceived text field be of height 32px we need the actual `input` to be of height
     * 30px.
     */
-  --tmp-desired-height: 30px;
-  --tmp-line-height-increase: 4px;
-  --tmp-vertical-padding: calc(
-      (
-              var(--tmp-desired-height) - var(--bootcamp-font-size-body) -
-                  var(--tmp-line-height-increase)
-          ) / 2
-  );
+	--tmp-desired-height: 30px;
+	--tmp-line-height-increase: 4px;
+	--tmp-vertical-padding: calc(
+		(
+				var(--tmp-desired-height) - var(--bootcamp-font-size-body) -
+					var(--tmp-line-height-increase)
+			) / 2
+	);
 
-  font-size: var(--bootcamp-font-size-body);
-  line-height: calc(var(--bootcamp-font-size-body) + 4px);
-  padding: var(--tmp-vertical-padding) 10px;
-  margin: 0;
+	font-size: var(--bootcamp-font-size-body);
+	line-height: calc(var(--bootcamp-font-size-body) + 4px);
+	padding: var(--tmp-vertical-padding) 10px;
+	margin: 0;
 }
