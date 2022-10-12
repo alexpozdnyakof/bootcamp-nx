@@ -143,7 +143,7 @@ ResponsiveTextStory.argTypes = {
 	size: select(['caption', 'copy', 'body', 'subtitle'], 'body'),
 	weight: select(['regular', 'semibold', 'bold'], 'regular'),
 	lineClamp: selectWithNone([1, 2, 3, 4, 5], 'none'),
-	tone: select(['normal', 'secondary', 'danger'], 'normal'),
+	tone: select(['normal', 'secondary', 'danger', 'positive'], 'normal'),
 	align: { control: false },
 	children: {
 		control: { type: 'text' },
@@ -164,7 +164,7 @@ TextPlaygroundStory.argTypes = {
 	size: select(['caption', 'copy', 'body', 'subtitle'], 'body'),
 	weight: select(['regular', 'semibold', 'bold'], 'regular'),
 	lineClamp: selectWithNone([1, 2, 3, 4, 5], 'none'),
-	tone: select(['normal', 'secondary', 'danger'], 'normal'),
+	tone: select(['normal', 'secondary', 'danger', 'positive'], 'normal'),
 	align: selectWithNone(['start', 'center', 'end', 'justify'], 'none'),
 	children: {
 		control: { type: 'text' },
