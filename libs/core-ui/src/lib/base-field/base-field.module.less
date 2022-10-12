@@ -1,49 +1,48 @@
 .container.bordered label {
-  /* so that clicking in blank areas to the right of the label will focus the field element */
-  flex-grow: 1;
+	/* so that clicking in blank areas to the right of the label will focus the field element */
+	flex-grow: 1;
 
-  /* to convey that clicking in blank area to the right of the label places focus on the text field */
-  cursor: text;
+	/* to convey that clicking in blank area to the right of the label places focus on the text field */
+	cursor: text;
 }
 
 .container.bordered label span {
-  /* overrides the cursor set above, so that hovering over the non-blank parts of the label stay unaffected */
-  cursor: default;
+	/* overrides the cursor set above, so that hovering over the non-blank parts of the label stay unaffected */
+	cursor: default;
 }
 
 .container.bordered:focus-within {
-  border-color: var(--reactist-divider-primary) !important;
+	border-color: var(--reactist-divider-primary) !important;
 }
 
 .container.bordered.error {
-  border-color: var(--reactist-alert-tone-critical-border) !important;
+	border-color: var(--reactist-alert-tone-critical-border) !important;
 }
 
 .container.bordered .primaryLabel {
-  font-weight: 500;
+	font-weight: 500;
 }
 
 .auxiliaryLabel {
-  text-align: right;
+	text-align: right;
 }
 
 .container.bordered .auxiliaryLabel {
-  font-size: var(--reactist-font-size-caption);
+	font-size: var(--reactist-font-size-caption);
 }
 
 .container:not(.bordered) .primaryLabel {
-  font-weight: var(--reactist-font-weight-strong);
+	font-weight: var(--reactist-font-weight-strong);
 }
 
 .container:not(.bordered) .auxiliaryLabel {
-  font-size: var(--reactist-font-size-body);
+	font-size: var(--reactist-font-size-body);
 }
 
 .secondaryLabel {
-  color: var(--reactist-content-secondary);
+	color: var(--reactist-content-secondary);
 }
 
-
 .messageIcon {
-  vertical-align: bottom;
+	vertical-align: bottom;
 }
