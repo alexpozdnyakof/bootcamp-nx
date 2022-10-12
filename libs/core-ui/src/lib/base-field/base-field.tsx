@@ -131,38 +131,40 @@ export function BaseField({
 				]}
 				maxWidth={maxWidth}
 			>
-				<Box
-					as='span'
-					display='flex'
-					justifyContent='spaceBetween'
-					alignItems='flexEnd'
-					paddingBottom='small'
-				>
-					<Text
-						size={variant === 'bordered' ? 'caption' : 'body'}
-						as='label'
-						htmlFor={id}
+				{label || secondaryLabel || auxiliaryLabel ? (
+					<Box
+						as='span'
+						display='flex'
+						justifyContent='spaceBetween'
+						alignItems='flexEnd'
+						paddingBottom='small'
 					>
-						{label ? (
-							<span className={styles['primaryLabel']}>
-								{label}
-							</span>
-						) : null}
-						{secondaryLabel ? (
-							<span className={styles['secondaryLabel']}>
-								&nbsp;({secondaryLabel})
-							</span>
-						) : null}
-					</Text>
-					{auxiliaryLabel ? (
-						<Box
-							className={styles['auxiliaryLabel']}
-							paddingLeft='small'
+						<Text
+							size={variant === 'bordered' ? 'caption' : 'body'}
+							as='label'
+							htmlFor={id}
 						>
-							{auxiliaryLabel}
-						</Box>
-					) : null}
-				</Box>
+							{label ? (
+								<span className={styles['primaryLabel']}>
+									{label}
+								</span>
+							) : null}
+							{secondaryLabel ? (
+								<span className={styles['secondaryLabel']}>
+									&nbsp;({secondaryLabel})
+								</span>
+							) : null}
+						</Text>
+						{auxiliaryLabel ? (
+							<Box
+								className={styles['auxiliaryLabel']}
+								paddingLeft='small'
+							>
+								{auxiliaryLabel}
+							</Box>
+						) : null}
+					</Box>
+				) : null}
 				{children({ id })}
 			</Box>
 			{message ? (
