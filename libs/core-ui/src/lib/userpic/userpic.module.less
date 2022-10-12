@@ -1,7 +1,127 @@
-/*
- * Replace this with your own classes
- *
- * e.g.
- * .container {
- * }
-*/
+:root {
+	--bootcamp-userpic-size-xxsmall: 16px;
+	--bootcamp-userpic-size-xsmall: 20px;
+	--bootcamp-userpic-size-small: 30px;
+	--bootcamp-userpic-size-medium: 32px;
+	--bootcamp-userpic-size-large: 34px;
+	--bootcamp-userpic-size-xlarge: 48px;
+	--bootcamp-userpic-size-xxlarge: 70px;
+	--bootcamp-userpic-size-xxxlarge: 100px;
+
+	--bootcamp-userpic-size: var(--bootcamp-userpic-size-large);
+}
+
+.userpic {
+	flex-shrink: 0;
+	background-position: center;
+	color: white;
+	text-align: center;
+	border-radius: 50%;
+	width: var(--bootcamp-userpic-size);
+	height: var(--bootcamp-userpic-size);
+	line-height: var(--bootcamp-userpic-size);
+	background-size: var(--bootcamp-userpic-size);
+	font-size: calc(var(--bootcamp-userpic-size) / 2);
+}
+
+.size-xxs {
+	--bootcamp-userpic-size: var(--bootcamp-userpic-size-xxsmall);
+}
+
+.size-xs {
+	--bootcamp-userpic-size: var(--bootcamp-userpic-size-xsmall);
+}
+
+.size-s {
+	--bootcamp-userpic-size: var(--bootcamp-userpic-size-small);
+}
+
+.size-m {
+	--bootcamp-userpic-size: var(--bootcamp-userpic-size-medium);
+}
+
+.size-l {
+	--bootcamp-userpic-size: var(--bootcamp-userpic-size-large);
+}
+
+.size-xl {
+	--bootcamp-userpic-size: var(--bootcamp-userpic-size-xlarge);
+}
+
+.size-xxl {
+	--bootcamp-userpic-size: var(--bootcamp-userpic-size-xxlarge);
+}
+
+.size-xxxl {
+	--bootcamp-userpic-size: var(--bootcamp-userpic-size-xxxlarge);
+}
+
+/* userpic size for tablet */
+@media (min-width: 768px /* --bootcamp-breakpoint-tablet */) {
+	.tablet-size-xxs {
+		--bootcamp-userpic-size: var(--bootcamp-userpic-size-xxsmall);
+	}
+
+	.tablet-size-xs {
+		--bootcamp-userpic-size: var(--bootcamp-userpic-size-xsmall);
+	}
+
+	.tablet-size-s {
+		--bootcamp-userpic-size: var(--bootcamp-userpic-size-small);
+	}
+
+	.tablet-size-m {
+		--bootcamp-userpic-size: var(--bootcamp-userpic-size-medium);
+	}
+
+	.tablet-size-l {
+		--bootcamp-userpic-size: var(--bootcamp-userpic-size-large);
+	}
+
+	.tablet-size-xl {
+		--bootcamp-userpic-size: var(--bootcamp-userpic-size-xlarge);
+	}
+
+	.tablet-size-xxl {
+		--bootcamp-userpic-size: var(--bootcamp-userpic-size-xxlarge);
+	}
+
+	.tablet-size-xxxl {
+		--bootcamp-userpic-size: var(--bootcamp-userpic-size-xxxlarge);
+	}
+}
+
+/* userpic size for desktop */
+@media (min-width: 992px /* --bootcamp-breakpoint-desktop */) {
+	.desktop-size-xxs {
+		--bootcamp-userpic-size: var(--bootcamp-userpic-size-xxsmall);
+	}
+
+	.desktop-size-xs {
+		--bootcamp-userpic-size: var(--bootcamp-userpic-size-xsmall);
+	}
+
+	.desktop-size-s {
+		--bootcamp-userpic-size: var(--bootcamp-userpic-size-small);
+	}
+
+	.desktop-size-m {
+		--bootcamp-userpic-size: var(--bootcamp-userpic-size-medium);
+	}
+
+	.desktop-size-l {
+		--bootcamp-userpic-size: var(--bootcamp-userpic-size-large);
+	}
+
+	.desktop-size-xl {
+		--bootcamp-userpic-size: var(--bootcamp-userpic-size-xlarge);
+	}
+
+	.desktop-size-xxl {
+		--bootcamp-userpic-size: var(--bootcamp-userpic-size-xxlarge);
+	}
+
+	.desktop-size-xxxl {
+		--bootcamp-userpic-size: var(--bootcamp-userpic-size-xxxlarge);
+	}
+}
