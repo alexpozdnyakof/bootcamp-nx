@@ -7,4 +7,4 @@ export type Space =
 	| 'xxlarge'
 export type SpaceWithNegatives = Space | `-${Space}`
 
-export type Tone = 'normal' | 'secondary' | 'danger'
+export type Tone = 'normal' | 'secondary' | 'danger' | 'positive'
