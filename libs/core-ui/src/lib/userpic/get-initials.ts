@@ -1,4 +1,7 @@
 export default function getInitials(aName?: string) {
 	if (!aName) return ''
-	return aName
+
+  const words = aName.split(' ')
+
+  return [words[0][0], words[1][0]].join('').toUpperCase()
 }

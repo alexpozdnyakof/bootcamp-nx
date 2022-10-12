@@ -4,4 +4,10 @@ describe('get initials', () => {
 		const result = getInitials('')
 		expect(result).toBe('')
 	})
+
+  it('returns uppercased initials for two names', () => {
+		const result = getInitials('alex pozdnyakof')
+		expect(result).toBe('AP')
+  })
+
 })
