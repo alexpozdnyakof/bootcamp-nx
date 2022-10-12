@@ -29,12 +29,12 @@ type UserpicSize = 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl' | 'xxxl'
 export type UserpicProps = {
 	size?: ResponsiveProp<UserpicSize>
 	userpicUrl?: string
-	user: { name?: string; email: string }
+	user?: { name?: string; email: string }
 }
 
-export function Userpic({ size = 'l' }: UserpicProps) {
+export function Userpic({ size = 'l', ...props }: UserpicProps) {
 	const sizeClassName = getClassNames(styles, 'size', size)
-	return <Box className={[styles['avatar'], sizeClassName]}></Box>
+	return <Box className={[styles['avatar'], sizeClassName]} {...props}></Box>
 }
 
 export default Userpic
