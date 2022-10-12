@@ -79,6 +79,10 @@ const FieldMessage = ({ id, children, tone }: MessageProps) => {
 
 type FieldVariant = 'default' | 'bordered'
 
+export type FieldVariantProps = {
+	variant?: FieldVariant
+}
+
 export type BaseFieldProps = {
 	label?: ReactNode
 	secondaryLabel?: ReactNode
