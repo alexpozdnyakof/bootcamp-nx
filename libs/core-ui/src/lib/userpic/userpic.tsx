@@ -53,16 +53,26 @@ const emailToColor = (email: string): string => {
 
 export type UserpicProps = {
 	size?: ResponsiveProp<UserpicSize>
-	userpicUrl?: string
+	imageUrl?: string
 	user: { name?: string; email: string }
 }
 
-export function Userpic({ size = 'l', user, ...props }: UserpicProps) {
+export function Userpic({
+	size = 'l',
+	user,
+	imageUrl,
+	...props
+}: UserpicProps) {
 	const sizeClassName = getClassNames(styles, 'size', size)
 	const initials = getInitials(user.name) || getInitials(user.email)
-	const backgroundStyle = {
-		backgroundColor: emailToColor(user.email),
-	}
+	const backgroundStyle = imageUrl
+		? {
+				backgroundImage: `url(${imageUrl})`,
+				textIndent: '-999px',
+		  }
+		: {
+				backgroundColor: emailToColor(user.email),
+		  }
 
 	return (
 		<Box

@@ -149,4 +149,26 @@ describe('Userpic', () => {
 			expect(userpic).toHaveStyle({ backgroundColor: '#e9952c' })
 		})
 	})
+	it('renders a background image when imageUrl prop passed', () => {
+		render(
+			<Userpic
+				data-testid='userpic'
+				imageUrl='https://company.url/userpic.jpg'
+				user={{
+					email: 'alexpozdnyakof@gmail.com',
+				}}
+			/>
+		)
+		const userpic = screen.getByTestId('userpic')
+
+		expect(userpic).toMatchInlineSnapshot(`
+		<div
+		  class="avatar size-l Box"
+		  data-testid="userpic"
+		  style="background-image: url(https://company.url/userpic.jpg); text-indent: -999px;"
+		>
+		  A
+		</div>
+	`)
+	})
 })
