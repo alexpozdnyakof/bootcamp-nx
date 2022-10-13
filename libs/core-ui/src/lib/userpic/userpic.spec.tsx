@@ -86,4 +86,67 @@ describe('Userpic', () => {
 			expect(userpic.innerHTML).toBe('A')
 		})
 	})
+	describe('background colors', () => {
+		it('set first color for invalid email', () => {
+			render(
+				<Userpic
+					data-testid='userpic'
+					user={{
+						email: 'alexpozdnyakofgmail.com',
+					}}
+				/>
+			)
+			const userpic = screen.getByTestId('userpic')
+			expect(userpic).toHaveStyle({ backgroundColor: '#fcc652' })
+		})
+
+		it('set first color if first email part is empty', () => {
+			render(
+				<Userpic
+					data-testid='userpic'
+					user={{
+						email: '@gmail.com',
+					}}
+				/>
+			)
+			const userpic = screen.getByTestId('userpic')
+			expect(userpic).toHaveStyle({ backgroundColor: '#fcc652' })
+		})
+
+		it('set color in colors range for given valid email', () => {
+			render(
+				<Userpic
+					data-testid='userpic'
+					user={{
+						email: 'alexpozdnyakof@gmail.com',
+					}}
+				/>
+			)
+			const userpic = screen.getByTestId('userpic')
+			expect(userpic).toHaveStyle({ backgroundColor: '#e9952c' })
+		})
+
+		it('set same color for same emails', () => {
+			const { rerender } = render(
+				<Userpic
+					data-testid='userpic'
+					user={{
+						email: 'alexpozdnyakof@gmail.com',
+					}}
+				/>
+			)
+			const userpic = screen.getByTestId('userpic')
+			expect(userpic).toHaveStyle({ backgroundColor: '#e9952c' })
+
+			rerender(
+				<Userpic
+					data-testid='userpic'
+					user={{
+						email: 'alexpozdnyakof@gmail.com',
+					}}
+				/>
+			)
+			expect(userpic).toHaveStyle({ backgroundColor: '#e9952c' })
+		})
+	})
 })
