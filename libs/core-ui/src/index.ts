@@ -1,3 +1,4 @@
+export * from './lib/checkbox'
 export * from './lib/userpic'
 export * from './lib/spinner'
 export * from './lib/text-field'
