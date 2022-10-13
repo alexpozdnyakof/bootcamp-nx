@@ -94,7 +94,11 @@ export type BaseFieldProps = {
 	message?: React.ReactNode
 	tone?: FieldTone
 	variant?: FieldVariant
-	children: (props: { id: string; 'aria-describedby'?: string }) => ReactNode
+	children: (props: {
+		id: string
+		'aria-describedby'?: string
+		'aria-invalid'?: boolean
+	}) => ReactNode
 } & Pick<
 	HtmlInputFieldProps<HTMLInputElement>,
 	'id' | 'hidden' | 'aria-describedby'
@@ -124,9 +128,10 @@ export function BaseField({
 	const id = useUniqueId(originalId)
 	const hintId = useUniqueId()
 	const messageId = useUniqueId()
-  const ariaDescribedBy =
+	const ariaDescribedBy =
 		originalAriaDescribedBy ??
 		[message ? messageId : null, hintId].filter(Boolean).join(' ')
+	const ariaInvalid = tone === 'error' ? true : undefined
 
 	return (
 		<Stack space='small' hidden={hidden}>
@@ -173,7 +178,11 @@ export function BaseField({
 						) : null}
 					</Box>
 				) : null}
-				{children({ id, 'aria-describedby': ariaDescribedBy })}
+				{children({
+					id,
+					'aria-describedby': ariaDescribedBy,
+					'aria-invalid': ariaInvalid,
+				})}
 			</Box>
 			{message ? (
 				<FieldMessage id={messageId} tone={tone}>
