@@ -163,7 +163,7 @@ describe('Userpic', () => {
 
 		expect(userpic).toMatchInlineSnapshot(`
 		<div
-		  class="avatar size-l Box"
+		  class="userpic size-l Box"
 		  data-testid="userpic"
 		  style="background-image: url(https://company.url/userpic.jpg); text-indent: -999px;"
 		>

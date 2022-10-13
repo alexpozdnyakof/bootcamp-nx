@@ -76,7 +76,7 @@ export function Userpic({
 
 	return (
 		<Box
-			className={[styles['avatar'], sizeClassName]}
+			className={[styles['userpic'], sizeClassName]}
 			{...props}
 			style={backgroundStyle}
 		>
