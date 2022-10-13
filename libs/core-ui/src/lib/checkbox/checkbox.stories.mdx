@@ -1,0 +1,47 @@
+import {
+	Meta,
+	Story,
+	Canvas,
+	ArgsTable,
+	Description,
+} from '@storybook/addon-docs'
+import { PartialProps } from '../storybook-helpers'
+import Checkbox from './checkbox'
+import { Stack } from '../stack'
+import { Text } from '../text'
+import { Inline } from '../inline'
+
+<Meta
+	title='Design system/Checkbox'
+	component={Checkbox}
+	parameters={{
+		badges: ['accessible'],
+	}}
+/>
+
+# Checkbox
+
+A checkbox field with a built-in label element.
+
+<Canvas>
+	<Story
+		parameters={{ docs: { source: { type: 'dynamic' } } }}
+		name='Basic Example'
+		args={{
+			label: 'Default label',
+		}}
+	>
+		{Template.bind({})}
+	</Story>
+</Canvas>
+
+---
+
+<Description of={Checkbox} />
+<ArgsTable of={Checkbox} />
+
+## Stories
+
+export const Template = ({ disabled, label }) => (
+	<Checkbox disabled={disabled} label={label} />
+)
