@@ -1,3 +1,4 @@
+export * from './lib/password-field'
 export * from './lib/select-field'
 export * from './lib/checkbox'
 export * from './lib/userpic'
