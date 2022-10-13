@@ -1,7 +1,13 @@
 export default function getInitials(aName?: string) {
 	if (!aName) return ''
 
-	const words = aName.split(' ')
+	const words = aName.trim().split(' ')
+	const [firstInitial, lastInital] = [words[0][0], words[words.length - 1][0]]
 
-	return [words[0][0], words[words.length - 1][0]].join('').toUpperCase()
+	const result =
+		firstInitial === lastInital
+			? [firstInitial]
+			: [firstInitial, lastInital]
+
+	return result.join('').toUpperCase()
 }
