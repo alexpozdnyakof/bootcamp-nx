@@ -1,36 +1,53 @@
-import { forwardRef } from 'react'
+import { forwardRef, useState } from 'react'
+import { Box } from '../box'
+import { Text } from '../text'
 import styles from './checkbox.module.less'
 
 type CheckboxProps = Omit<
 	JSX.IntrinsicElements['input'],
-	| 'type'
-	| 'className'
-	| 'disabled'
-	| 'aria-controls'
-	| 'aria-describedby'
-	| 'aria-label'
-	| 'aria-labelledby'
+	'type' | 'className' | 'disabled'
 > & {
-	'aria-checked'?: never
-	/** Identifies the set of checkboxes controlled by the mixed checkbox for assistive technologies. */
-	'aria-controls'?: string
-	/** Identifies the element (or elements) that describes the checkbox for assistive technologies. */
-	'aria-describedby'?: string
-	/** Defines a string value that labels the current checkbox for assistive technologies. */
-	'aria-label'?: string
-	/** Identifies the element (or elements) that labels the current checkbox for assistive technologies. */
-	'aria-labelledby'?: string
 	disabled?: boolean
 	label?: React.ReactNode
-	indeterminate?: boolean
 }
-
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
-	(props: CheckboxProps) => {
+	({ label, disabled, defaultChecked, onChange, ...props }, ref) => {
+		const [checkedState, setChecked] = useState(
+			props.checked ?? defaultChecked ?? false
+		)
+		const isChecked = props.checked ?? checkedState
+
 		return (
-			<div className={styles['container']}>
-				<h1>Welcome to Checkbox!</h1>
-			</div>
+			<Box
+				as='label'
+				display='flex'
+				alignItems='center'
+				className={[
+					styles['container'],
+					disabled ? styles['disabled'] : null,
+					isChecked ? styles['checked'] : null,
+				]}
+			>
+				<input
+					{...props}
+					ref={ref}
+					type='checkbox'
+					checked={isChecked}
+					onChange={event => {
+						onChange?.(event)
+						if (!event.defaultPrevented) {
+							setChecked(event.currentTarget.checked)
+						}
+					}}
+					onBlur={event => {
+						props?.onBlur?.(event)
+					}}
+					onKeyUp={event => {
+						props?.onKeyUp?.(event)
+					}}
+				/>
+				{label ? <Text>{label}</Text> : null}
+			</Box>
 		)
 	}
 )
