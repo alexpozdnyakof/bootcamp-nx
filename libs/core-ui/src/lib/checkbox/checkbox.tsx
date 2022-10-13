@@ -31,6 +31,8 @@ const CheckboxIcon = ({ checked, disabled, ...props }: IconProps) => {
 	)
 }
 
+CheckboxIcon.displayName = 'CheckboxIcon'
+
 type CheckboxProps = Omit<
 	JSX.IntrinsicElements['input'],
 	'type' | 'className' | 'disabled'
@@ -85,5 +87,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 		)
 	}
 )
+
+Checkbox.displayName = 'Checkbox'
 
 export default Checkbox
