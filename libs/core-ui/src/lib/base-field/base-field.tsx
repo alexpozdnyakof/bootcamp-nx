@@ -124,6 +124,9 @@ export function BaseField({
 	const id = useUniqueId(originalId)
 	const hintId = useUniqueId()
 	const messageId = useUniqueId()
+  const ariaDescribedBy =
+		originalAriaDescribedBy ??
+		[message ? messageId : null, hintId].filter(Boolean).join(' ')
 
 	return (
 		<Stack space='small' hidden={hidden}>
@@ -170,7 +173,7 @@ export function BaseField({
 						) : null}
 					</Box>
 				) : null}
-				{children({ id })}
+				{children({ id, 'aria-describedby': ariaDescribedBy })}
 			</Box>
 			{message ? (
 				<FieldMessage id={messageId} tone={tone}>
