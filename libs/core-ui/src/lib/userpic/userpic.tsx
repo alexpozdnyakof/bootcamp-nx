@@ -26,15 +26,34 @@ const USERPIC_COLORS = [
 
 type UserpicSize = 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl' | 'xxxl'
 
+const getInitials = (aName?: string) => {
+	if (!aName) return ''
+
+	const words = aName.trim().split(' ')
+	const [firstInitial, lastInital] = [words[0][0], words[words.length - 1][0]]
+
+	const result =
+		firstInitial === lastInital
+			? [firstInitial]
+			: [firstInitial, lastInital]
+
+	return result.join('').toUpperCase()
+}
+
 export type UserpicProps = {
 	size?: ResponsiveProp<UserpicSize>
 	userpicUrl?: string
-	user?: { name?: string; email: string }
+	user: { name?: string; email: string }
 }
 
-export function Userpic({ size = 'l', ...props }: UserpicProps) {
+export function Userpic({ size = 'l', user, ...props }: UserpicProps) {
 	const sizeClassName = getClassNames(styles, 'size', size)
-	return <Box className={[styles['avatar'], sizeClassName]} {...props}></Box>
+	const initials = getInitials(user.name) || getInitials(user.email)
+	return (
+		<Box className={[styles['avatar'], sizeClassName]} {...props}>
+			{initials}
+		</Box>
+	)
 }
 
 export default Userpic

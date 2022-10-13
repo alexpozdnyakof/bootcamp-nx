@@ -12,11 +12,78 @@ describe('Userpic', () => {
 					desktop: 'xl',
 					tablet: 'xxl',
 				}}
+				user={{ email: 'alexpozdnyakof@gmail.com' }}
 			/>
 		)
-		const avatar = screen.getByTestId('userpic')
-		expect(avatar).toHaveClass('size-s')
-		expect(avatar).toHaveClass('desktop-size-xl')
-		expect(avatar).toHaveClass('tablet-size-xxl')
+		const userpic = screen.getByTestId('userpic')
+		expect(userpic).toHaveClass('size-s')
+		expect(userpic).toHaveClass('desktop-size-xl')
+		expect(userpic).toHaveClass('tablet-size-xxl')
+	})
+
+	describe('initials', () => {
+		it('create initials from email when username is empty', () => {
+			render(
+				<Userpic
+					data-testid='userpic'
+					user={{ email: 'alexpozdnyakof@gmail.com' }}
+				/>
+			)
+			const userpic = screen.getByTestId('userpic')
+			expect(userpic.innerHTML).toBe('A')
+		})
+
+		it('create uppercased initials when user have first and last name', () => {
+			render(
+				<Userpic
+					data-testid='userpic'
+					user={{
+						name: 'alex pozdnyakof',
+						email: 'alexpozdnyakof@gmail.com',
+					}}
+				/>
+			)
+			const userpic = screen.getByTestId('userpic')
+			expect(userpic.innerHTML).toBe('AP')
+		})
+		it('create uppercased initials from first and last name when username have more than two words', () => {
+			render(
+				<Userpic
+					data-testid='userpic'
+					user={{
+						name: 'alex the great pozdnyakof',
+						email: 'alexpozdnyakof@gmail.com',
+					}}
+				/>
+			)
+			const userpic = screen.getByTestId('userpic')
+			expect(userpic.innerHTML).toBe('AP')
+		})
+		it('create single uppercased initial when username have one name', () => {
+			render(
+				<Userpic
+					data-testid='userpic'
+					user={{
+						name: 'alex',
+						email: 'alexpozdnyakof@gmail.com',
+					}}
+				/>
+			)
+			const userpic = screen.getByTestId('userpic')
+			expect(userpic.innerHTML).toBe('A')
+		})
+		it('create single uppercased initial when first and last name have same first symbol', () => {
+			render(
+				<Userpic
+					data-testid='userpic'
+					user={{
+						name: 'alex abramov',
+						email: 'alexpozdnyakof@gmail.com',
+					}}
+				/>
+			)
+			const userpic = screen.getByTestId('userpic')
+			expect(userpic.innerHTML).toBe('A')
+		})
 	})
 })
