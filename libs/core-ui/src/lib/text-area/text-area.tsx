@@ -2,7 +2,7 @@ import { forwardRef } from 'react'
 import { FieldComponentProps } from '../base-field'
 import BaseField, { FieldVariantProps } from '../base-field/base-field'
 import { Box } from '../box'
-import styles from './textarea.module.less'
+import styles from './text-area.module.less'
 
 type TextareaProps = FieldComponentProps<HTMLTextAreaElement> &
 	FieldVariantProps & { rows?: number }
