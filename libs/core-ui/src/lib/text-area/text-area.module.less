@@ -1,33 +1,33 @@
 .textAreaContainer textarea {
-  outline: none; /* we're taking care of the outline styles ourselves */
-  border: none;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: var(--bootcamp-font-family);
-  width: 100%;
-  resize: vertical;
+	outline: none; /* we're taking care of the outline styles ourselves */
+	border: none;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: var(--bootcamp-font-family);
+	width: 100%;
+	resize: vertical;
 }
 
 .textAreaContainer:not(.bordered) textarea {
-  border-radius: var(--bootcamp-border-radius-small);
-  padding: var(--bootcamp-spacing-small);
+	border-radius: var(--bootcamp-border-radius-small);
+	padding: var(--bootcamp-spacing-small);
 }
 
 .textAreaContainer.bordered {
-  border-radius: var(--bootcamp-border-radius-large);
+	border-radius: var(--bootcamp-border-radius-large);
 }
 
 .textAreaContainer:not(.bordered) textarea,
 .textAreaContainer.bordered {
-  border: 1px solid var(--bootcamp-divider-secondary);
+	border: 1px solid var(--bootcamp-divider-secondary);
 }
 
 .textAreaContainer:not(.bordered) textarea:focus,
 .textAreaContainer.bordered:focus-within {
-  border-color: var(--bootcamp-divider-primary);
+	border-color: var(--bootcamp-divider-primary);
 }
 
 .textAreaContainer.error:not(.bordered) textarea,
 .textAreaContainer.bordered.error {
-  border-color: var(--bootcamp-alert-tone-critical-border) !important;
+	border-color: var(--bootcamp-alert-tone-critical-border) !important;
 }
