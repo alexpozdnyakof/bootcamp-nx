@@ -14,5 +14,29 @@
 			"files": ["*.js", "*.jsx"],
 			"rules": {}
 		}
-	]
+	],
+  "rules":
+    {
+      "@nrwl/nx/enforce-module-boundaries": [ "error",
+        {
+          "depConstraints": [
+            {
+              "sourceTag": "type:app",
+              "onlyDependOnLibsWithTags": ["type:feature", "type:data", "type:util"]
+            },
+            {
+              "sourceTag": "type:feature",
+              "onlyDependOnLibsWithTags": ["type:feature", "type:ui", "type:util"]
+            },
+            {
+              "sourceTag": "type:data",
+              "onlyDependOnLibsWithTags": ["type:util"]
+            },
+            {
+              "sourceTag": "type:util",
+              "onlyDependOnLibsWithTags": ["type:util"]
+            }]
+        }]
+}
+
 }
