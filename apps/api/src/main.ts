@@ -3,7 +3,7 @@ import { Message } from '@bootcamp-nx/api-interfaces'
 
 const app = express()
 
-const greeting: Message = { message: 'Welcome to api!', undef: 123 }
+const greeting: Message = { message: 'Welcome to api!' }
 
 app.get('/api', (req, res) => {
 	res.send(greeting)
