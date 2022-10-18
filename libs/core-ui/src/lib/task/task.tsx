@@ -1,4 +1,6 @@
 import { Box } from '../box'
+import { Inline } from '../inline'
+import { Text } from '../text'
 import styles from './task.module.less'
 
 function CheckboxIcon(props: JSX.IntrinsicElements['svg']) {
@@ -19,24 +21,27 @@ export type TaskProps = {
 	done: boolean
 	id: number
 	text: string
-	onClick: (event?: React.MouseEvent) => any
+	onClick: () => any
 }
 
 const Toggle = ({ done, onClick }: Pick<TaskProps, 'done' | 'onClick'>) => {
 	return (
 		<Box
 			as='button'
-			className={[
-				styles['toggle'],
-				done ? styles['toggle_icon__done'] : null,
-			]}
-			borderRadius='standard'
+			className={[styles['toggle'], done ? styles['toggle__done'] : null]}
+			onClick={onClick}
+			aria-label='Complete'
 		>
 			<CheckboxIcon />
 		</Box>
 	)
 }
 
-export default function Task(props: TaskProps) {
-	return <Toggle {...props} />
+export default function Task({ done, id, text, onClick }: TaskProps) {
+	return (
+		<Inline space='small'>
+			<Toggle done={done} onClick={onClick} />
+			<Text>{text}</Text>
+		</Inline>
+	)
 }

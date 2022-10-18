@@ -1,4 +1,4 @@
-import { ComponentProps } from 'react'
+import { ComponentProps, useState } from 'react'
 import Task from './task'
 
 export default {
@@ -6,15 +6,20 @@ export default {
 	component: Task,
 }
 
-export function InteractivePropsStory({
-	id,
-	text,
-	done,
-}: ComponentProps<typeof Task>) {
-	return <Task id={id} text={text} done={done} onClick={() => 0} />
+export function Interactive({ id, text }: ComponentProps<typeof Task>) {
+	const [done, setDone] = useState(false)
+
+	return (
+		<Task
+			id={id}
+			text={text}
+			done={done}
+			onClick={() => setDone(v => !v)}
+		/>
+	)
 }
 
-InteractivePropsStory.argTypes = {
+Interactive.argTypes = {
 	id: {
 		control: { type: 'number' },
 		defaultValue: 0,
