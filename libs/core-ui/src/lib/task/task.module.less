@@ -1,13 +1,12 @@
 :root {
 	--toggle-size: 18px;
-	--toogle-background-done: rgb(52, 199, 89);
 }
 
 .toggle {
 	background-color: transparent;
 	width: var(--toggle-size);
 	height: var(--toggle-size);
-	border: 2px solid #d7d8de;
+	border: 2px solid var(--bootcamp-border-light);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -17,8 +16,8 @@
 }
 
 .toggle__done {
-	background-color: var(--toogle-background-done);
-	border-color: rgb(0, 223, 166);
+	background-color: var(--bootcamp-switch-checked);
+	border-color: var(--bootcamp-switch-checked-border);
 }
 
 .toggle_icon {
