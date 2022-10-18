@@ -1,0 +1,33 @@
+:root{
+  --toggle-size: 18px;
+  --toogle-background-done: rgb(52, 199, 89);
+}
+
+.toggle{
+  background-color: transparent;
+  width: var(--toggle-size);
+  height: var(--toggle-size);
+  border: 2px solid #d7d8de;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle_icon {
+  min-width: var(--toggle-size);
+	min-height: var(--toggle-size);
+  width: var(--toggle-size);
+	height: var(--toggle-size);
+  margin: calc(var(--toggle-size) / 5) 0 0 calc(var(--toggle-size) / 5);
+  opacity: 0;
+}
+
+.toggle_icon__done {
+  background-color: var(--toogle-background-done);
+  border-color: rgb(0, 223, 166);
+}
+
+
+.toggle_icon__done > .toggle_icon {
+  opacity: 1;
+}

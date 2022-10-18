@@ -1,4 +1,4 @@
-export * from './lib/visually-hidden/visually-hidden'
+export * from './lib/task'
 export * from './lib/text-area'
 export * from './lib/password-field'
 export * from './lib/select-field'

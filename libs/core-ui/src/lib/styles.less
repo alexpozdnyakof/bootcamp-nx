@@ -13,20 +13,16 @@
 	--color-error: @color-red;
 	--color-surface: hsl(220deg 4% 14%);
 	--color-on-surface: @color-white-1;
+
 	--box-shadow-shape-default: @box-shadow-shape-default;
 	--box-shadow-shape-dark: @box-shadow-shape-dark;
 	--box-shadow-shape-dark-focus: @box-shadow-shape-dark-focus;
+
 	--font-family: -apple-system, system-ui, 'Segoe UI', roboto, noto,
 		oxygen-sans, ubuntu, cantrell, 'Helvetica Neue', sans-serif,
 		'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-	--bootcamp-border-radius-small: 5px;
-	--bootcamp-border-radius-large: 10px;
-	--font-size-micro: 10;
-	--font-size-small: 12;
-	--font-size-body: 14;
-	--font-size-medium: 15;
-	--font-size-large: 18;
-	--font-size-huge: 28;
+	--bootcamp-border-radius-small: 6px;
+	--bootcamp-border-radius-large: 12px;
 
 	/* background color */
 	--bootcamp-bg-default: @color-black-9;
@@ -71,23 +67,23 @@
 	--bootcamp-width-xlarge: 1280px;
 
 	// TODO: reset colors from original
-	--bootcamp-content-primary: rgba(0, 0, 0, 0.88);
-	--bootcamp-content-secondary: rgba(0, 0, 0, 0.56);
+	--bootcamp-content-primary: rgba(255, 255, 255, 0.88);
+	--bootcamp-content-secondary: rgba(255, 255, 255, 0.56);
 	--bootcamp-content-tertiary: rgba(0, 0, 0, 0.4);
 	--bootcamp-content-light-on-dark: rgb(255, 255, 255);
-	--bootcamp-content-positive: rgb(5, 133, 39);
-	--bootcamp-content-danger: rgb(209, 69, 59);
+	--bootcamp-content-positive: rgb(52, 199, 89);
+	--bootcamp-content-danger: rgb(212, 68, 46);
 
-	--bootcamp-framework-fill-background: rgb(250, 250, 250);
-	--bootcamp-framework-fill-crest: rgb(230, 230, 230);
-	--bootcamp-framework-fill-selected: rgb(236, 236, 236);
+	--bootcamp-framework-fill-background: rgb(26, 26, 26);
+	--bootcamp-framework-fill-crest:  rgba(255, 255, 255, 0.08);
+	--bootcamp-framework-fill-selected:#222325;
 	--bootcamp-framework-fill-summit: rgb(214, 214, 214);
 
 	--bootcamp-alert-tone-info-icon: #1d438c;
 	--bootcamp-alert-tone-info-border: rgb(36, 111, 224);
 	--bootcamp-alert-tone-info-background: rgba(36, 111, 224, 0.1);
 
-	--bootcamp-alert-tone-positive-icon: #035017;
+	--bootcamp-alert-tone-positive-icon: rgb(52, 199, 89);
 	--bootcamp-alert-tone-positive-border: rgb(5, 133, 39);
 	--bootcamp-alert-tone-positive-background: rgba(5, 133, 39, 0.1);
 
@@ -100,6 +96,21 @@
 	--bootcamp-alert-tone-critical-background: rgba(209, 69, 59, 0.1);
 
 	--bootcamp-switch-checked: rgb(5, 133, 39);
+}
+
+.theme-light {
+	--bootcamp-content-primary: rgba(0, 0, 0, 0.88);
+	--bootcamp-content-secondary: rgba(0, 0, 0, 0.56);
+	--bootcamp-content-tertiary: rgba(0, 0, 0, 0.4);
+	--bootcamp-content-light-on-dark: rgb(255, 255, 255);
+	--bootcamp-content-positive: rgb(5, 133, 39);
+	--bootcamp-content-danger: rgb(209, 69, 59);
+
+  --bootcamp-framework-fill-background: rgb(250, 250, 250);
+	--bootcamp-framework-fill-crest: rgb(230, 230, 230);
+	--bootcamp-framework-fill-selected: rgb(236, 236, 236);
+	--bootcamp-framework-fill-summit: rgb(214, 214, 214);
+
 }
 
 html,
