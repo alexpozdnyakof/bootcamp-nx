@@ -3,7 +3,7 @@ import { Inline } from '../inline'
 import Userpic from './userpic'
 
 export default {
-	title: 'Components/Userpic',
+	title: 'Content/Userpic',
 	component: Userpic,
 }
 

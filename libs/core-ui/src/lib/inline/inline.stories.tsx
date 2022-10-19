@@ -13,7 +13,7 @@ import {
 } from '../storybook-helpers'
 
 export default {
-	title: 'Design system/Inline',
+	title: 'Content/Inline',
 	component: Inline,
 	argTypes: {
 		space: selectSize('medium'),

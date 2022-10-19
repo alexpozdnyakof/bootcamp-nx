@@ -1,12 +1,11 @@
 import React from 'react'
 import { BoxMaxWidth } from '../box'
 import { Stack } from '../stack'
-import { Text } from '../text'
 import { PartialProps, selectWithNone } from '../storybook-helpers'
 import TextField from './text-field'
 
 export default {
-	title: 'Design system/TextField',
+	title: 'Controls/TextField',
 	component: TextField,
 	parameters: {
 		badges: ['accessible'],
@@ -17,7 +16,7 @@ const preventDefault = (event: React.SyntheticEvent) => {
 	event.preventDefault()
 }
 
-export function InteractivePropsStory({
+export function Overview({
 	label,
 	auxiliaryLabel,
 	...props
@@ -38,7 +37,7 @@ export function InteractivePropsStory({
 	)
 }
 
-InteractivePropsStory.argTypes = {
+Overview.argTypes = {
 	label: {
 		control: { type: 'text' },
 		defaultValue: 'Your name',
@@ -84,7 +83,7 @@ InteractivePropsStory.argTypes = {
 	},
 }
 
-export function MessageToneStory() {
+export function Tone() {
 	return (
 		<Stack space='xxlarge'>
 			<TextField
@@ -113,34 +112,6 @@ export function MessageToneStory() {
 				tone='neutral'
 				maxWidth='small'
 			/>
-		</Stack>
-	)
-}
-
-export function WithoutLabelStory() {
-	return (
-		<Stack space='xlarge' maxWidth='small'>
-			<Stack as='label' htmlFor='custom-textarea' space='small'>
-				<Text size='subtitle'>Custom label is up here</Text>
-				<Text size='caption' tone='secondary' aria-hidden>
-					<em>(click me to focus the input element)</em>
-				</Text>
-			</Stack>
-			<TextField
-				label={null}
-				id='custom-textarea'
-				aria-describedby='custom-description'
-				placeholder='Text field without a built-in label'
-			/>
-			<Stack space='small' id='custom-description'>
-				<Text size='body'>Custom description is down here</Text>
-				<Text size='caption' tone='secondary' aria-hidden>
-					<em>
-						(inspect the input element accessibility properties if
-						you are curious)
-					</em>
-				</Text>
-			</Stack>
 		</Stack>
 	)
 }

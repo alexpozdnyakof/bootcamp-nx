@@ -1,4 +1,5 @@
 import { ComponentProps, useState } from 'react'
+import { Stack } from '../stack'
 import Task from './task'
 
 export default {
@@ -32,4 +33,25 @@ Interactive.argTypes = {
 		control: { type: 'boolean' },
 		defaultValue: true,
 	},
+}
+
+export function States({ id, text }: ComponentProps<typeof Task>) {
+	return (
+		<Stack space='small'>
+			<Task
+				key='Done task'
+				id={1}
+				text='Done task'
+				done={true}
+				onClick={() => 0}
+			/>
+			<Task
+				key='Undone task'
+				id={2}
+				text='Undone task'
+				done={false}
+				onClick={() => 0}
+			/>
+		</Stack>
+	)
 }

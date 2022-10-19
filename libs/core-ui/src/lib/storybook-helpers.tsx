@@ -66,7 +66,8 @@ export function Placeholder({
 	return (
 		<Box
 			background='action'
-			border='primary'
+			border='secondary'
+			borderRadius='full'
 			style={{
 				width,
 				height,

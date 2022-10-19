@@ -7,7 +7,7 @@ import {
 import Heading from './heading'
 
 export default {
-	title: 'Design system/Heading',
+	title: 'Content/Heading',
 	component: Heading,
 	parameters: {
 		badges: ['accessible'],

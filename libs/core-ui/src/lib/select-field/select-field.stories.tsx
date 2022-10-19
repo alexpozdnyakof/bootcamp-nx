@@ -1,12 +1,11 @@
 import { SyntheticEvent } from 'react'
 import { BoxMaxWidth } from '../box'
 import { Stack } from '../stack'
-import { Text } from '../text'
 import { PartialProps, selectWithNone } from '../storybook-helpers'
 import SelectField from './select-field'
 
 export default {
-	title: 'Design system/SelectField',
+	title: 'Controls/SelectField',
 	component: SelectField,
 	parametrs: {
 		badges: ['accessible'],
@@ -17,7 +16,7 @@ const preventDefault = (event: SyntheticEvent) => {
 	event.preventDefault()
 }
 
-export function InteractivePropsStory({
+export function Overview({
 	label,
 	auxiliaryLabel,
 	...props
@@ -51,7 +50,7 @@ export function InteractivePropsStory({
 	)
 }
 
-InteractivePropsStory.argTypes = {
+Overview.argTypes = {
 	label: {
 		control: { type: 'text' },
 		defaultValue: 'Theme',
@@ -84,7 +83,7 @@ InteractivePropsStory.argTypes = {
 	),
 }
 
-export function MessageToneStory() {
+export function Tone() {
 	return (
 		<Stack space='xxlarge'>
 			<SelectField
@@ -132,37 +131,6 @@ export function MessageToneStory() {
 					–
 				</option>
 			</SelectField>
-		</Stack>
-	)
-}
-
-export function WithoutLabelStory() {
-	return (
-		<Stack space='xlarge' maxWidth='small'>
-			<Stack as='label' htmlFor='custom-textarea' space='small'>
-				<Text size='subtitle'>Custom label is up here</Text>
-				<Text size='caption' tone='secondary' aria-hidden>
-					<em>(click me to focus the select element)</em>
-				</Text>
-			</Stack>
-			<SelectField
-				label={null}
-				id='custom-textarea'
-				aria-describedby='custom-description'
-			>
-				<option value='none' disabled>
-					–
-				</option>
-			</SelectField>
-			<Stack space='small' id='custom-description'>
-				<Text size='body'>Custom description is down here</Text>
-				<Text size='caption' tone='secondary' aria-hidden>
-					<em>
-						(inspect the select element accessibility properties if
-						you are curious)
-					</em>
-				</Text>
-			</Stack>
 		</Stack>
 	)
 }

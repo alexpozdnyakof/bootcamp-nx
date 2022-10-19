@@ -28,7 +28,7 @@ import Box, {
 
 export default {
 	component: Box,
-	title: 'Design system/Box',
+	title: 'Content/Box',
 } as ComponentMeta<typeof Box>
 
 export function InteractivePropsStory(args: PartialProps<typeof Box>) {

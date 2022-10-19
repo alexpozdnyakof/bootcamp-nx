@@ -7,7 +7,7 @@ import {
 import Text from './text'
 
 export default {
-	title: 'Design system/Text',
+	title: 'Content/Text',
 	component: Text,
 	parameters: {
 		badges: ['accessible'],

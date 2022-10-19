@@ -14,7 +14,7 @@ import {
 import Stack from './stack'
 
 export default {
-	title: 'Design system/Stack',
+	title: 'Content/Stack',
 	component: Stack,
 	argTypes: {
 		space: selectSize(),
