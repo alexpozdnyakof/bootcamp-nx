@@ -37,12 +37,12 @@
 
 :root {
 	/* size="small" */
-	--bootcamp-button-small-font-size: var(--bootcamp-font-size-caption);
+	--bootcamp-button-small-font-size: var(--bootcamp-font-size-copy);
 	--bootcamp-button-small-spacing: var(--bootcamp-spacing-small);
 	--bootcamp-button-small-height: 28px;
 
 	/* size="normal" (default) */
-	--bootcamp-button-normal-font-size: var(--bootcamp-font-size-copy);
+	--bootcamp-button-normal-font-size: var(--bootcamp-font-size-body);
 	--bootcamp-button-normal-spacing: var(--bootcamp-spacing-medium);
 	--bootcamp-button-normal-height: 32px;
 
@@ -53,31 +53,31 @@
 
 	/* variant="primary" */
 	--bootcamp-actionable-primary-idle-tint: #fff;
-	--bootcamp-actionable-primary-idle-fill: #008aa6;
+	--bootcamp-actionable-primary-idle-fill: #34c759;
 	--bootcamp-actionable-primary-hover-tint: #fff;
-	--bootcamp-actionable-primary-hover-fill: #007992;
+	--bootcamp-actionable-primary-hover-fill: #2aa248;
 	--bootcamp-actionable-primary-disabled-tint: #fff;
-	--bootcamp-actionable-primary-disabled-fill: #99d0db;
+	--bootcamp-actionable-primary-disabled-fill: #8de2a3;
 
 	/* variant="secondary" */
-	--bootcamp-actionable-secondary-idle-tint: #282f30;
-	--bootcamp-actionable-secondary-idle-fill: #f2f6f7;
-	--bootcamp-actionable-secondary-hover-tint: #282f30;
-	--bootcamp-actionable-secondary-hover-fill: #e3e7e8;
-	--bootcamp-actionable-secondary-disabled-tint: #a9acac;
-	--bootcamp-actionable-secondary-disabled-fill: #f2f6f7;
+	--bootcamp-actionable-secondary-idle-tint: #34c759;
+	--bootcamp-actionable-secondary-idle-fill: #111;
+	--bootcamp-actionable-secondary-hover-tint: #34c759;
+	--bootcamp-actionable-secondary-hover-fill: #222;
+	--bootcamp-actionable-secondary-disabled-tint: #d7d8de;
+	--bootcamp-actionable-secondary-disabled-fill: #111;
 
 	/* variant="tertiary" (only has fill when hovered) */
-	--bootcamp-actionable-tertiary-idle-tint: #006f85;
-	--bootcamp-actionable-tertiary-hover-tint: #006f85;
-	--bootcamp-actionable-tertiary-hover-fill: #f2f6f7;
-	--bootcamp-actionable-tertiary-disabled-tint: #99c5ce;
+	--bootcamp-actionable-tertiary-idle-tint: #34c759;
+	--bootcamp-actionable-tertiary-hover-tint: #fff;
+	--bootcamp-actionable-tertiary-hover-fill: rgba(40, 246, 129, 0.25);
+	--bootcamp-actionable-tertiary-disabled-tint: #8de2a3;
 
 	/* variant="quaternary" (only has fill when hovered) */
-	--bootcamp-actionable-quaternary-idle-tint: #6c777a;
-	--bootcamp-actionable-quaternary-hover-tint: #282f30;
-	--bootcamp-actionable-quaternary-hover-fill: #e0e7e8;
-	--bootcamp-actionable-quaternary-disabled-tint: #c4c9ca;
+	--bootcamp-actionable-quaternary-idle-tint: #34c759;
+	--bootcamp-actionable-quaternary-hover-tint: #2aa248;
+	--bootcamp-actionable-quaternary-hover-fill: transparent;
+	--bootcamp-actionable-quaternary-disabled-tint: #5dd57b;
 
 	/* variant="primary" tone="destructive" */
 	--bootcamp-actionable-primary-destructive-idle-tint: #fff;
@@ -111,14 +111,16 @@
 	user-select: none;
 	color: inherit;
 	background-color: transparent;
-	border-radius: 5px;
+	border-radius: 8px;
 	white-space: nowrap;
 	font-family: var(--bootcamp-font-family);
-	font-weight: var(--bootcamp-font-weight-medium);
+	font-weight: var(--bootcamp-font-weight-strong);
 	text-decoration: none;
+	letter-spacing: -0.15px;
 
 	/* border is always on, but transparent, so that it does not enlarge buttons when we actually color it */
 	border: 1px solid transparent;
+	border-color: var(--bootcamp-btn-idle-fill);
 
 	/* smooth color transitions */
 	transition-duration: 0.3s;
@@ -166,10 +168,6 @@
 	--bootcamp-btn-spacing: var(--bootcamp-button-large-spacing);
 	--bootcamp-btn-font-size: var(--bootcamp-button-large-font-size);
 }
-
-/* setup the color variables for all the different states */
-
-/* variables are then set per variant and tone so that we do not repeat these definitions below */
 
 .baseButton[aria-expanded='true'],
 .baseButton:focus:not([aria-disabled='true']),
@@ -239,6 +237,8 @@
 		--bootcamp-actionable-tertiary-disabled-tint
 	);
 	--bootcamp-btn-disabled-fill: transparent;
+
+	border-color: var(--bootcamp-btn-idle-tint);
 }
 
 .variant-quaternary {
