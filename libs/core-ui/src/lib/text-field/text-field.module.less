@@ -1,3 +1,9 @@
+.inputWrapper {
+	transition-duration: 0.3s;
+	transition-property: border-color, box-shadow, background-color;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .inputWrapper:not(.bordered) {
 	border-radius: var(--bootcamp-border-radius-small);
 	border: 1px solid var(--bootcamp-divider-secondary);
@@ -6,6 +12,10 @@
 
 .inputWrapper:not(.bordered):focus-within {
 	border-color: var(--bootcamp-divider-primary);
+	box-shadow: rgba(0, 0, 0, 0) 0 0 0 0, rgba(48, 186, 108, 0.36) 0 0 0 4px,
+		rgba(0, 0, 0, 0.12) 0 1px 1px 0, rgba(48, 187, 107) 0 0 0 1px,
+		rgba(0, 0, 0, 0) 0 0 0 0, rgba(0, 0, 0, 0) 0 0 0 0,
+		rgba(64, 68, 82, 0.8) 0 2px 5px 0;
 }
 
 .inputWrapper:not(.bordered).error {
@@ -15,22 +25,12 @@
 .inputWrapper input {
 	color: var(--bootcamp-content-primary);
 	flex: 1;
-	outline: none; /* we take care of the focus state above */
+	outline: none;
 	box-sizing: border-box;
 	width: 100%;
 	background: transparent;
 	border: none;
 
-	/**
-    * The desired height below is 30px. This is so that, with +2px from the wrapper borders
-    * we obtain a 32px height on the wrapper.
-    *
-    * Unlike with buttons, the `input` does not own the visible border, as this is set in
-    * the parent container. This is so that we can place other stuff to appear to be
-    * "inside" the input (e.g. the toggle password visibility button). So in order to have
-    * the perceived text field be of height 32px we need the actual `input` to be of height
-    * 30px.
-    */
 	--tmp-desired-height: 30px;
 	--tmp-line-height-increase: 4px;
 	--tmp-vertical-padding: calc(

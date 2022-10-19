@@ -48,8 +48,8 @@
 	--bootcamp-breakpoint-desktop: 992px;
 
 	/* standard divider colors */
-	--bootcamp-divider-primary: #c4c7c8;
-	--bootcamp-divider-secondary: #dde2e3;
+	--bootcamp-divider-primary: #d7d8de;
+	--bootcamp-divider-secondary: #555;
 	--bootcamp-divider-tertiary: #edf2f3;
 
 	/* spacing sizes */
@@ -67,7 +67,6 @@
 	--bootcamp-width-large: 940px;
 	--bootcamp-width-xlarge: 1280px;
 
-	// TODO: reset colors from original
 	--bootcamp-content-primary: rgba(255, 255, 255, 0.88);
 	--bootcamp-content-secondary: rgba(255, 255, 255, 0.56);
 	--bootcamp-content-tertiary: rgba(0, 0, 0, 0.4);
@@ -113,6 +112,10 @@
 	--bootcamp-framework-fill-crest: rgb(230, 230, 230);
 	--bootcamp-framework-fill-selected: rgb(236, 236, 236);
 	--bootcamp-framework-fill-summit: rgb(214, 214, 214);
+
+	--bootcamp-divider-primary: #c4c7c8;
+	--bootcamp-divider-secondary: #dde2e3;
+	--bootcamp-divider-tertiary: #edf2f3;
 }
 
 html,
@@ -135,4 +138,9 @@ body {
 
 p {
 	margin-block-end: 0;
+}
+
+a {
+	color: rgb(52, 199, 89);
+	font-weight: var(--bootcamp-font-weight-medium);
 }
