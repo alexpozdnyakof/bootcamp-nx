@@ -14,7 +14,7 @@ export default {
 	},
 }
 
-export function HeadingStory() {
+export function Overview() {
 	return (
 		<section className='story'>
 			<Stack space='medium'>
@@ -71,28 +71,7 @@ export function HeadingStory() {
 	)
 }
 
-export function TruncatedHeadingStory() {
-	return (
-		<section className='story'>
-			<Heading level={1} size='largest' lineClamp={1}>
-				This is a long title which we will use demonstrate truncating
-				content. When this overflows and begins to drop to a new line,
-				its overflowing content will be replaced by ellipses.
-			</Heading>
-			<Heading level={2} lineClamp={2}>
-				Now we have a subtitle which we will use to demostrate
-				truncating to multiple lines. Sometimes we need to provide more
-				context yet still remain skimmable to users, and subtitles are a
-				good way to do this. As it&rsquo;s much longer now we can allow
-				a second line to be displayed before truncating it at two lines.
-			</Heading>
-		</section>
-	)
-}
-
-export function ResponsiveHeadingStory(
-	props: React.ComponentProps<typeof Heading>
-) {
+export function Responsive(props: React.ComponentProps<typeof Heading>) {
 	return (
 		<>
 			<ResponsiveWidthRef />
@@ -104,12 +83,10 @@ export function ResponsiveHeadingStory(
 	)
 }
 
-ResponsiveHeadingStory.argTypes = {
+Responsive.argTypes = {
 	level: select(['1', '2', '3', '4', '5', '6'], '1'),
 	size: selectWithNone(['largest', 'larger', 'smaller'], 'none'),
-	weight: select(['regular', 'light'], 'regular'),
-	lineClamp: selectWithNone([1, 2, 3, 4, 5], 'none'),
-	tone: select(['normal', 'secondary', 'danger'], 'normal'),
+	tone: select(['normal', 'secondary', 'danger', 'positive'], 'positive'),
 	align: { control: false },
 	children: {
 		control: { type: 'text' },
@@ -118,9 +95,7 @@ ResponsiveHeadingStory.argTypes = {
 	},
 }
 
-export function HeadingPlaygroundStory(
-	props: React.ComponentProps<typeof Heading>
-) {
+export function Playground(props: React.ComponentProps<typeof Heading>) {
 	return (
 		<section className='story playground'>
 			<Heading {...props} />
@@ -128,12 +103,11 @@ export function HeadingPlaygroundStory(
 	)
 }
 
-HeadingPlaygroundStory.argTypes = {
+Playground.argTypes = {
 	level: select(['1', '2', '3', '4', '5', '6'], '1'),
 	size: selectWithNone(['largest', 'larger', 'smaller'], 'none'),
-	weight: select(['regular', 'light'], 'regular'),
 	lineClamp: selectWithNone([1, 2, 3, 4, 5], 'none'),
-	tone: select(['normal', 'secondary', 'danger'], 'normal'),
+	tone: select(['normal', 'secondary', 'danger', 'positive'], 'normal'),
 	align: selectWithNone(['start', 'center', 'end', 'justify'], 'none'),
 	children: {
 		control: { type: 'text' },

@@ -73,30 +73,6 @@ describe('Heading', () => {
 			}
 		})
 	})
-
-	describe('weight="…"', () => {
-		it('adds the appropriate class names', () => {
-			const { rerender } = render(
-				<Heading
-					level='1'
-					data-testid='heading-element'
-					weight='regular'
-				>
-					Heading
-				</Heading>
-			)
-			const textElement = screen.getByTestId('heading-element')
-			expect(textElement).not.toHaveClass('weight-regular')
-			expect(textElement).not.toHaveClass('weight-light')
-
-			rerender(
-				<Heading level='1' data-testid='heading-element' weight='light'>
-					Heading
-				</Heading>
-			)
-			expect(textElement).toHaveClass('weight-light')
-		})
-	})
 	describe('tone="…"', () => {
 		it('adds the appropriate class names', () => {
 			const { rerender } = render(
@@ -108,8 +84,9 @@ describe('Heading', () => {
 			expect(textElement).not.toHaveClass('tone-normal')
 			expect(textElement).not.toHaveClass('tone-secondary')
 			expect(textElement).not.toHaveClass('tone-danger')
+			expect(textElement).not.toHaveClass('tone-positive')
 
-			for (const tone of ['secondary', 'danger'] as const) {
+			for (const tone of ['secondary', 'danger', 'positive'] as const) {
 				rerender(
 					<Heading
 						level='1'
@@ -173,46 +150,5 @@ describe('Heading', () => {
 		expect(textElement).toHaveClass('textAlign-start')
 		expect(textElement).toHaveClass('tablet-textAlign-center')
 		expect(textElement).toHaveClass('desktop-textAlign-end')
-	})
-
-	describe('lineClamp="…"', () => {
-		it('adds the expected class names', () => {
-			const { rerender } = render(
-				<Heading level='1' data-testid='heading-element'>
-					Heading
-				</Heading>
-			)
-			const textElement = screen.getByTestId('heading-element')
-			expect(textElement.className).not.toMatch(/lineClamp/)
-			expect(textElement).not.toHaveClass('paddingRight-xsmall')
-
-			for (const lineClamp of [1, '1'] as const) {
-				rerender(
-					<Heading
-						level='1'
-						data-testid='heading-element'
-						lineClamp={lineClamp}
-					>
-						Heading
-					</Heading>
-				)
-				expect(textElement).toHaveClass(`lineClamp-${lineClamp}`)
-				expect(textElement).not.toHaveClass(`lineClampMultipleLines`)
-			}
-
-			for (const lineClamp of [2, 3, 4, 5, '2', '3', '4', '5'] as const) {
-				rerender(
-					<Heading
-						level='1'
-						data-testid='heading-element'
-						lineClamp={lineClamp}
-					>
-						Heading
-					</Heading>
-				)
-				expect(textElement).toHaveClass(`lineClamp-${lineClamp}`)
-				expect(textElement).toHaveClass(`lineClampMultipleLines`)
-			}
-		})
 	})
 })
