@@ -1,4 +1,4 @@
-export * from './lib/keyboard-shorcut/keyboard-shorcut'
+export * from './lib/keyboard-shortcut'
 export * from './lib/task'
 export * from './lib/text-area'
 export * from './lib/password-field'
