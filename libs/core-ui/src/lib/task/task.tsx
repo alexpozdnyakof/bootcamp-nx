@@ -6,7 +6,7 @@ import styles from './task.module.less'
 const CheckboxIcon = (props: JSX.IntrinsicElements['svg']) => (
 	<svg
 		xmlns='http://www.w3.org/2000/svg'
-		className={styles['checkbox_icon']}
+		className={styles['toggle_icon']}
 		{...props}
 	>
 		<g fill='#fff' fillRule='evenodd'>
@@ -19,26 +19,23 @@ export type TaskProps = {
 	done: boolean
 	id: number
 	text: string
-	onClick: () => any
-}
-
-const Toggle = ({ done, onClick }: Pick<TaskProps, 'done' | 'onClick'>) => {
-	return (
-		<Box
-			as='button'
-			className={[styles['toggle'], done ? styles['toggle__done'] : null]}
-			onClick={onClick}
-			aria-label='Complete'
-		>
-			<CheckboxIcon />
-		</Box>
-	)
+	onClick: (id: number) => void
 }
 
 export default function Task({ done, id, text, onClick }: TaskProps) {
 	return (
 		<Inline space='small'>
-			<Toggle done={done} onClick={onClick} />
+			<Box
+				as='button'
+				className={[
+					styles['toggle'],
+					done ? styles['toggle__done'] : null,
+				]}
+				onClick={() => onClick(id)}
+				aria-label='Complete'
+			>
+				<CheckboxIcon />
+			</Box>
 			<Text>{text}</Text>
 		</Inline>
 	)

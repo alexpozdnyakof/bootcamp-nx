@@ -3,7 +3,7 @@ import { Stack } from '../stack'
 import Task from './task'
 
 export default {
-	title: 'Features/Task',
+	title: 'Tasks/Task',
 	component: Task,
 }
 
