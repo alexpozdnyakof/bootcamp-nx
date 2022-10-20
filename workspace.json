@@ -6,6 +6,7 @@
 		"api-interfaces": "libs/api-interfaces",
 		"bootcamp": "apps/bootcamp",
 		"bootcamp-e2e": "apps/bootcamp-e2e",
-		"core-ui": "libs/core-ui"
+		"core-ui": "libs/core-ui",
+		"todos": "libs/todos"
 	}
 }

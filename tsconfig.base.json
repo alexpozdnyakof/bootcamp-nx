@@ -16,7 +16,8 @@
 		"baseUrl": ".",
 		"paths": {
 			"@bootcamp-nx/api-interfaces": ["libs/api-interfaces/src/index.ts"],
-			"@bootcamp-nx/core-ui": ["libs/core-ui/src/index.ts"]
+			"@bootcamp-nx/core-ui": ["libs/core-ui/src/index.ts"],
+			"@bootcamp-nx/todos": ["libs/todos/src/index.ts"]
 		}
 	},
 	"exclude": ["node_modules", "tmp"]
