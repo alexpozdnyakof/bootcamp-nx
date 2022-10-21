@@ -10,18 +10,21 @@ describe('KeyboardShorcut', () => {
 	it('should render multiple keys', () => {
 		render(<KeyboardShorcut>{['cmd', 'shift']}</KeyboardShorcut>)
 
-		expect(screen.getByText('cmd')).toBeInTheDocument()
-		expect(screen.getByText('shift')).toBeInTheDocument()
+		expect(screen.getByText('Cmd')).toBeInTheDocument()
+		expect(screen.getByText('Shift')).toBeInTheDocument()
 	})
-	it('should render every shortcut in own kbd element', () => {
+	it('should capitalize special keys', () => {
 		render(
-			<KeyboardShorcut>{['Cmd + Alt + Shift + e', 'q']}</KeyboardShorcut>
+			<KeyboardShorcut>
+				{['mod', 'cmd', 'alt', 'shift', 'ctrl', 'control', 'space']}
+			</KeyboardShorcut>
 		)
-
+		expect(screen.getByText('Mod')).toBeInTheDocument()
 		expect(screen.getByText('Cmd')).toBeInTheDocument()
 		expect(screen.getByText('Alt')).toBeInTheDocument()
 		expect(screen.getByText('Shift')).toBeInTheDocument()
-		expect(screen.getByText('e')).toBeInTheDocument()
-		expect(screen.getByText('q')).toBeInTheDocument()
+		expect(screen.getByText('Ctrl')).toBeInTheDocument()
+		expect(screen.getByText('Control')).toBeInTheDocument()
+		expect(screen.getByText('Space')).toBeInTheDocument()
 	})
 })
