@@ -27,4 +27,25 @@ describe('KeyboardShorcut', () => {
 		expect(screen.getByText('Control')).toBeInTheDocument()
 		expect(screen.getByText('Space')).toBeInTheDocument()
 	})
+
+	it('should capitalize keys with modifiers', () => {
+		render(
+			<KeyboardShorcut>
+				{[
+					'mod + z',
+					'cmd + x',
+					'alt + y',
+					'shift + c',
+					'ctrl + v',
+					'control + b',
+				]}
+			</KeyboardShorcut>
+		)
+		expect(screen.getByText('Z')).toBeInTheDocument()
+		expect(screen.getByText('X')).toBeInTheDocument()
+		expect(screen.getByText('Y')).toBeInTheDocument()
+		expect(screen.getByText('C')).toBeInTheDocument()
+		expect(screen.getByText('V')).toBeInTheDocument()
+		expect(screen.getByText('B')).toBeInTheDocument()
+	})
 })
