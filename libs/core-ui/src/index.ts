@@ -1,3 +1,4 @@
+export * from './lib/key-capturer'
 export * from './lib/keyboard-shortcut'
 export * from './lib/task'
 export * from './lib/text-area'
