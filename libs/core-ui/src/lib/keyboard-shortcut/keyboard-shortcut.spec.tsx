@@ -1,23 +1,25 @@
 import { screen, render } from '@testing-library/react'
 
-import KeyboardShorcut from './keyboard-shortcut'
+import KeyboardShortcut from './keyboard-shortcut'
 
 describe('KeyboardShorcut', () => {
 	it('should render successfully', () => {
-		const { baseElement } = render(<KeyboardShorcut>cmd</KeyboardShorcut>)
+		const { baseElement } = render(<KeyboardShortcut>cmd</KeyboardShortcut>)
 		expect(baseElement).toBeTruthy()
 	})
 	it('should render multiple keys', () => {
-		render(<KeyboardShorcut>{['cmd', 'shift']}</KeyboardShorcut>)
+		render(<KeyboardShortcut>{['cmd + e', 'shift', 'q']}</KeyboardShortcut>)
 
 		expect(screen.getByText('Cmd')).toBeInTheDocument()
 		expect(screen.getByText('Shift')).toBeInTheDocument()
+		expect(screen.getByText('E')).toBeInTheDocument()
+		expect(screen.getByText('q')).toBeInTheDocument()
 	})
 	it('should capitalize special keys', () => {
 		render(
-			<KeyboardShorcut>
+			<KeyboardShortcut>
 				{['mod', 'cmd', 'alt', 'shift', 'ctrl', 'control', 'space']}
-			</KeyboardShorcut>
+			</KeyboardShortcut>
 		)
 		expect(screen.getByText('Mod')).toBeInTheDocument()
 		expect(screen.getByText('Cmd')).toBeInTheDocument()
@@ -30,7 +32,7 @@ describe('KeyboardShorcut', () => {
 
 	it('should capitalize keys with modifiers', () => {
 		render(
-			<KeyboardShorcut>
+			<KeyboardShortcut>
 				{[
 					'mod + z',
 					'cmd + x',
@@ -39,7 +41,7 @@ describe('KeyboardShorcut', () => {
 					'ctrl + v',
 					'control + b',
 				]}
-			</KeyboardShorcut>
+			</KeyboardShortcut>
 		)
 		expect(screen.getByText('Z')).toBeInTheDocument()
 		expect(screen.getByText('X')).toBeInTheDocument()
@@ -47,5 +49,17 @@ describe('KeyboardShorcut', () => {
 		expect(screen.getByText('C')).toBeInTheDocument()
 		expect(screen.getByText('V')).toBeInTheDocument()
 		expect(screen.getByText('B')).toBeInTheDocument()
+	})
+	it('should translate special keys for mac', () => {
+		render(
+			<KeyboardShortcut isMac={true}>
+				{['mod', 'cmd', 'alt', 'shift', 'ctrl', 'control', 'space']}
+			</KeyboardShortcut>
+		)
+		expect(screen.getAllByText('⌘')).toHaveLength(2)
+		expect(screen.getByText('⌥')).toBeInTheDocument()
+		expect(screen.getByText('⇧')).toBeInTheDocument()
+		expect(screen.getAllByText('⌃')).toHaveLength(2)
+		expect(screen.getByText('␣')).toBeInTheDocument()
 	})
 })
