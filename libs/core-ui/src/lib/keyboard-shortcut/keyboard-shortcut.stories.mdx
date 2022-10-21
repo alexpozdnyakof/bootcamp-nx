@@ -1,0 +1,101 @@
+import { KeyboardShortcut } from './keyboard-shortcut'
+import {
+	Meta,
+	Story,
+	Canvas,
+	ArgsTable,
+	Description,
+} from '@storybook/addon-docs'
+import { Stack } from '../stack'
+import { Text } from '../text'
+
+<Meta title='Content/Keyboard Shortcut' component={KeyboardShortcut} />
+
+# Shortcut
+
+Component for display shortcut
+
+<Canvas>
+	<Story parameters={{ docs: { source: { type: 'code' } } }} name='Overview'>
+		<Stack space='small'>
+			<KeyboardShortcut>
+				{['Cmd + Alt + Shift + e', 'q']}
+			</KeyboardShortcut>
+		</Stack>
+	</Story>
+</Canvas>
+
+---
+
+<Description of={KeyboardShortcut} />
+<ArgsTable of={KeyboardShortcut} />
+
+## Platform support
+
+Can translate keys for mac Platform
+
+<Canvas>
+	<Story
+		parameters={{ docs: { source: { type: 'code' } } }}
+		name='Platform support'
+	>
+		<Stack space='large'>
+			<Stack space='small'>
+				<Text>For mac: cmd, mod, control, ctrl, alt, shift, space</Text>
+				<KeyboardShortcut isMac={true}>
+					{['cmd', 'mod', 'control', 'ctrl', 'alt', 'shift', 'space']}
+				</KeyboardShortcut>
+			</Stack>
+			<Stack space='small'>
+				<Text>For win: cmd, mod, control, ctrl, alt, shift, space</Text>
+				<KeyboardShortcut isMac={false}>
+					{['cmd', 'mod', 'control', 'ctrl', 'alt', 'shift', 'space']}
+				</KeyboardShortcut>
+			</Stack>
+		</Stack>
+	</Story>
+</Canvas>
+
+export function PlaygroundStory(props) {
+	const shortcut = props.shortcut.split(',')
+	const shortcutToDisplay =
+		typeof shortcut === 'string' ? shortcut : JSON.stringify(shortcut)
+	return (
+		<>
+			<pre>
+				<code>
+					&lt;KeyboardShortcut&gt;
+					<br />
+					&nbsp;&nbsp;
+					{JSON.stringify(shortcut)}
+					<br />
+					&lt;/KeyboardShortcut&gt;
+				</code>
+			</pre>
+			<p>
+				<KeyboardShortcut isMac={props.isMac}>
+					{shortcut}
+				</KeyboardShortcut>
+			</p>
+		</>
+	)
+}
+
+<Canvas>
+	<Story
+		parameters={{ docs: { source: { type: 'code' } } }}
+		argTypes={{
+			shortcut: {
+				control: { type: 'text' },
+				defaultValue: 'cmd + k + cmd + s, q',
+			},
+			isMac: {
+				control: { type: 'boolean' },
+				defaultValue: false,
+			},
+		}}
+		name='Playground Story'
+	>
+		{PlaygroundStory.bind({})}
+	</Story>
+</Canvas>
