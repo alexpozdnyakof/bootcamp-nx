@@ -1,6 +1,6 @@
-import { Stack, Task } from '@bootcamp-nx/core-ui'
 import styles from './task-list.module.less'
-
+import { Stack } from '../stack'
+import { Task } from '../task'
 export type Task = {
 	done: boolean
 	id: number
