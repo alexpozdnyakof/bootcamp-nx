@@ -1,4 +1,4 @@
-import { screen, render, fireEvent } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { useState } from 'react'
 import TextField from './text-field'
