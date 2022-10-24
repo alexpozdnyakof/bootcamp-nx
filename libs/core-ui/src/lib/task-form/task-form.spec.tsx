@@ -9,7 +9,18 @@ describe('TaskForm', () => {
 		expect(baseElement).toBeTruthy()
 	})
 
-	it.todo('should call onCreate when enter pressed')
+	it('should call onCreate when enter pressed', async () => {
+		const spy = jest.fn()
+		render(<TaskForm onCreate={spy} />)
+		const taskField = screen.getByRole('textbox', {
+			name: 'Create new task',
+		})
+
+		await userEvent.type(taskField, 'task title{enter}')
+
+		expect(spy).toHaveBeenCalledWith('task title')
+	})
+
 	it('should call onCreate when create button clicked', async () => {
 		const spy = jest.fn()
 		render(<TaskForm onCreate={spy} />)
@@ -31,4 +42,5 @@ describe('TaskForm', () => {
 	it.todo('should disabled cancle button when field is empty')
 	it.todo('should have placeholder text')
 	it.todo('should be labelled')
+	it.todo('should trim whitespaces')
 })

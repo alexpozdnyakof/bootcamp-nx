@@ -18,7 +18,7 @@ export function TaskForm({ onCreate }: TaskFormProps) {
 			<Text size='subtitle' weight='bold'>
 				Add new task
 			</Text>
-			<KeyCapturer>
+			<KeyCapturer onEnter={() => onCreate(task)}>
 				<TextField
 					aria-label='Create new task'
 					onChange={event => setTask(event.currentTarget.value)}
