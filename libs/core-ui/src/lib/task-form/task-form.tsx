@@ -1,14 +1,42 @@
-import styles from './task-form.module.less'
+import { useState } from 'react'
+import Button from '../button/button'
+import { Inline } from '../inline'
+import { KeyCapturer } from '../key-capturer'
+import { KeyboardShortcut } from '../keyboard-shortcut'
+import { Stack } from '../stack'
+import { Text } from '../text'
+import { TextField } from '../text-field'
 
 type TaskFormProps = {
 	onCreate: (title: string) => void
 }
 
 export function TaskForm({ onCreate }: TaskFormProps) {
+	const [task, setTask] = useState<string>('')
 	return (
-		<div className={styles['container']}>
-			<h1>Welcome to TaskForm!</h1>
-		</div>
+		<Stack space='small'>
+			<Text size='subtitle' weight='bold'>
+				Add new task
+			</Text>
+			<KeyCapturer>
+				<TextField
+					aria-label='Create new task'
+					onChange={event => setTask(event.currentTarget.value)}
+					value={task}
+					hint={
+						<Text>
+							Press <KeyboardShortcut>Enter</KeyboardShortcut> to
+							create or <KeyboardShortcut>Esc</KeyboardShortcut>{' '}
+							to cancel
+						</Text>
+					}
+				/>
+			</KeyCapturer>
+			<Inline space='small' align='left'>
+				<Button onClick={() => onCreate(task)}>Create task</Button>
+				<Button variant='secondary'>Cancel</Button>
+			</Inline>
+		</Stack>
 	)
 }
 
