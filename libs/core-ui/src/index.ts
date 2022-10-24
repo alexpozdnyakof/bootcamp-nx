@@ -1,3 +1,4 @@
+export * from './lib/task-form'
 export * from './lib/key-capturer'
 export * from './lib/keyboard-shortcut'
 export * from './lib/task'
