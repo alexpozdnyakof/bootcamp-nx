@@ -59,7 +59,7 @@ function resolveByKey(eventKey: string): Key | null {
 			return 'Backspace'
 		}
 		case 'esc':
-		case 'Escape': {
+		case 'escape': {
 			return 'Escape'
 		}
 		default: {
