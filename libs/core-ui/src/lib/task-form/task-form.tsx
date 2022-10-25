@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Button from '../button/button'
 import { Inline } from '../inline'
 import { KeyCapturer } from '../key-capturer'
@@ -12,6 +12,11 @@ type TaskFormProps = {
 }
 
 export function TaskForm({ onCreate }: TaskFormProps) {
+	const ref = useRef<HTMLInputElement>(null)
+	useEffect(() => {
+		ref.current?.focus()
+	}, [])
+
 	const [task, setTask] = useState<string>('')
 
 	const submitForm = (task: string) => {
@@ -43,6 +48,7 @@ export function TaskForm({ onCreate }: TaskFormProps) {
 							to cancel
 						</Text>
 					}
+					ref={ref}
 				/>
 			</KeyCapturer>
 			<Inline space='small' align='left'>
