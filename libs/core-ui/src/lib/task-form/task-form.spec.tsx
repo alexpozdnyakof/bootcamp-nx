@@ -66,11 +66,48 @@ describe('TaskForm', () => {
 		expect(spy).not.toHaveBeenCalled()
 	})
 
-	it.todo('should clear input field when cancel clicked')
-	it.todo('should clear input field when escape pressed')
-	it.todo('should disabled cancle button when field is empty')
+	it('should clear field after submit', async () => {
+		render(<TaskForm onCreate={() => 0} />)
+
+		const taskField = screen.getByRole('textbox', {
+			name: 'Create new task',
+		})
+
+		await userEvent.type(taskField, 'task title{enter}')
+
+		expect(taskField).toHaveValue('')
+	})
+
+	it('should clear field when cancel pressed', async () => {
+		render(<TaskForm onCreate={() => 0} />)
+
+		const taskField = screen.getByRole('textbox', {
+			name: 'Create new task',
+		})
+		const cancelButton = screen.getByRole('button', { name: 'Cancel' })
+
+		await userEvent.type(taskField, 'task title')
+
+		expect(taskField).toHaveValue('task title')
+
+		await userEvent.click(cancelButton)
+
+		expect(taskField).toHaveValue('')
+	})
+	it('should trim whitespaces when form submitted', async () => {
+		const spy = jest.fn()
+		render(<TaskForm onCreate={spy} />)
+
+		const taskField = screen.getByRole('textbox', {
+			name: 'Create new task',
+		})
+
+		await userEvent.type(taskField, ' task title {enter}')
+
+		expect(spy).toHaveBeenCalledWith('task title')
+	})
 
 	it.todo('should have placeholder text')
 	it.todo('should be labelled')
-	it.todo('should trim whitespaces')
+
 })
