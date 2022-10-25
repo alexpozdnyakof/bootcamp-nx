@@ -37,7 +37,7 @@ export function TaskForm({ onCreate }: TaskFormProps) {
 					onChange={event => setTask(event.currentTarget.value)}
 					value={task}
 					hint={
-						<Text>
+						<Text as='span'>
 							Press <KeyboardShortcut>Enter</KeyboardShortcut> to
 							create or <KeyboardShortcut>Esc</KeyboardShortcut>{' '}
 							to cancel
