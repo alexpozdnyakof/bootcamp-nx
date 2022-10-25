@@ -13,12 +13,19 @@ type TaskFormProps = {
 
 export function TaskForm({ onCreate }: TaskFormProps) {
 	const [task, setTask] = useState<string>('')
-	return (
+
+  const submitForm = (task: string) => {
+		if (!task) return
+
+		return onCreate(task), setTask('')
+  }
+
+  return (
 		<Stack space='small'>
 			<Text size='subtitle' weight='bold'>
 				Add new task
 			</Text>
-			<KeyCapturer onEnter={() => onCreate(task)}>
+			<KeyCapturer onEnter={() => submitForm(task)}>
 				<TextField
 					aria-label='Create new task'
 					onChange={event => setTask(event.currentTarget.value)}
@@ -33,11 +40,11 @@ export function TaskForm({ onCreate }: TaskFormProps) {
 				/>
 			</KeyCapturer>
 			<Inline space='small' align='left'>
-				<Button onClick={() => onCreate(task)}>Create task</Button>
+				<Button onClick={() => submitForm(task)}>Create task</Button>
 				<Button variant='secondary'>Cancel</Button>
 			</Inline>
 		</Stack>
-	)
+  )
 }
 
 export default TaskForm

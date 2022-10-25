@@ -35,11 +35,41 @@ describe('TaskForm', () => {
 
 		expect(spy).toHaveBeenCalledWith('task title')
 	})
-	it.todo('should not call onCreate when task title field is empty')
-	it.todo('should disable create button when field is empty')
+
+	it('should not call onCreate when task title field is empty and button clicked', async () => {
+		const spy = jest.fn()
+		render(<TaskForm onCreate={spy} />)
+
+		const createButton = screen.getByRole('button', {
+			name: 'Create task',
+		})
+		const taskField = screen.getByRole('textbox', {
+			name: 'Create new task',
+		})
+
+		expect(taskField).toHaveValue('')
+
+		await userEvent.click(createButton)
+		expect(spy).not.toHaveBeenCalled()
+	})
+	it('should not call onCreate when task title field is empty and enter pressed', async () => {
+		const spy = jest.fn()
+		render(<TaskForm onCreate={spy} />)
+
+		const taskField = screen.getByRole('textbox', {
+			name: 'Create new task',
+		})
+
+		expect(taskField).toHaveValue('')
+
+		await userEvent.type(taskField, '{enter}')
+		expect(spy).not.toHaveBeenCalled()
+	})
+
 	it.todo('should clear input field when cancel clicked')
 	it.todo('should clear input field when escape pressed')
 	it.todo('should disabled cancle button when field is empty')
+
 	it.todo('should have placeholder text')
 	it.todo('should be labelled')
 	it.todo('should trim whitespaces')
