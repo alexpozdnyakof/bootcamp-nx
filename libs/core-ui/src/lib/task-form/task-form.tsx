@@ -22,14 +22,18 @@ export function TaskForm({ onCreate }: TaskFormProps) {
 
 	const clearForm = () => setTask('')
 
-  return (
+	return (
 		<Stack space='small'>
 			<Text size='subtitle' weight='bold'>
 				Add new task
 			</Text>
-			<KeyCapturer onEnter={() => submitForm(task)}>
+			<KeyCapturer
+				onEnter={() => submitForm(task)}
+				onEscape={() => clearForm()}
+			>
 				<TextField
 					aria-label='Create new task'
+					placeholder='Enter task name'
 					onChange={event => setTask(event.currentTarget.value)}
 					value={task}
 					hint={
@@ -48,7 +52,7 @@ export function TaskForm({ onCreate }: TaskFormProps) {
 				</Button>
 			</Inline>
 		</Stack>
-  )
+	)
 }
 
 export default TaskForm

@@ -94,6 +94,17 @@ describe('TaskForm', () => {
 
 		expect(taskField).toHaveValue('')
 	})
+	it('should clear field when escape pressed', async () => {
+		render(<TaskForm onCreate={() => 0} />)
+
+		const taskField = screen.getByRole('textbox', {
+			name: 'Create new task',
+		})
+
+		await userEvent.type(taskField, 'task title{esc}')
+
+		expect(taskField).toHaveValue('')
+	})
 	it('should trim whitespaces when form submitted', async () => {
 		const spy = jest.fn()
 		render(<TaskForm onCreate={spy} />)
@@ -107,7 +118,13 @@ describe('TaskForm', () => {
 		expect(spy).toHaveBeenCalledWith('task title')
 	})
 
-	it.todo('should have placeholder text')
-	it.todo('should be labelled')
+	it('should have placeholder text', () => {
+		render(<TaskForm onCreate={() => 0} />)
 
+		expect(
+			screen.getByRole('textbox', {
+				name: 'Create new task',
+			})
+		).toBe(screen.getByPlaceholderText('Enter task name'))
+	})
 })
