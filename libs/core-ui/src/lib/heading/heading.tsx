@@ -24,7 +24,7 @@ export type HeadingProps = {
  * Умеет в размеры, семантику, начертание, тон и обрезку текста
  */
 
-export function Heading(
+function Heading(
 	{ level, tone, children, size, align, ...props }: HeadingProps,
 	ref: ForwardedRef<HTMLHeadingElement>
 ) {
