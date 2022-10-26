@@ -1,19 +1,19 @@
 {
-	"name": "todos-e2e",
+	"name": "tasks-e2e",
 	"$schema": "../../node_modules/nx/schemas/project-schema.json",
-	"sourceRoot": "apps/todos-e2e/src",
+	"sourceRoot": "apps/tasks-e2e/src",
 	"projectType": "application",
 	"targets": {
 		"e2e": {
 			"executor": "@nrwl/cypress:cypress",
 			"options": {
-				"cypressConfig": "apps/todos-e2e/cypress.config.ts",
-				"devServerTarget": "todos:storybook",
+				"cypressConfig": "apps/tasks-e2e/cypress.config.ts",
+				"devServerTarget": "tasks:storybook",
 				"testingType": "e2e"
 			},
 			"configurations": {
 				"ci": {
-					"devServerTarget": "todos:storybook:ci"
+					"devServerTarget": "tasks:storybook:ci"
 				}
 			}
 		},
@@ -21,10 +21,10 @@
 			"executor": "@nrwl/linter:eslint",
 			"outputs": ["{options.outputFile}"],
 			"options": {
-				"lintFilePatterns": ["apps/todos-e2e/**/*.{js,ts}"]
+				"lintFilePatterns": ["apps/tasks-e2e/**/*.{js,ts}"]
 			}
 		}
 	},
 	"tags": [],
-	"implicitDependencies": ["todos"]
+	"implicitDependencies": ["tasks"]
 }

@@ -7,7 +7,7 @@
 		"bootcamp": "apps/bootcamp",
 		"bootcamp-e2e": "apps/bootcamp-e2e",
 		"core-ui": "libs/core-ui",
-		"todos": "libs/todos",
-		"todos-e2e": "apps/todos-e2e"
+		"tasks": "libs/tasks",
+		"tasks-e2e": "apps/tasks-e2e"
 	}
 }
