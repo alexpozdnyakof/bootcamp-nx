@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import Button from '../button/button'
-import { Inline } from '../inline'
 import { KeyCapturer } from '../key-capturer'
 import { KeyboardShortcut } from '../keyboard-shortcut'
 import { Stack } from '../stack'
@@ -29,9 +27,6 @@ export function TaskForm({ onCreate }: TaskFormProps) {
 
 	return (
 		<Stack space='small'>
-			<Text size='subtitle' weight='bold'>
-				Add new task
-			</Text>
 			<KeyCapturer
 				onEnter={() => submitForm(task)}
 				onEscape={() => clearForm()}
@@ -51,12 +46,6 @@ export function TaskForm({ onCreate }: TaskFormProps) {
 					ref={ref}
 				/>
 			</KeyCapturer>
-			<Inline space='small' align='left'>
-				<Button onClick={() => submitForm(task)}>Create task</Button>
-				<Button variant='secondary' onClick={() => clearForm()}>
-					Cancel
-				</Button>
-			</Inline>
 		</Stack>
 	)
 }

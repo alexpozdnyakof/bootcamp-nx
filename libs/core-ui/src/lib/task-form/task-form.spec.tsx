@@ -20,38 +20,6 @@ describe('TaskForm', () => {
 
 		expect(spy).toHaveBeenCalledWith('task title')
 	})
-
-	it('should call onCreate when create button clicked', async () => {
-		const spy = jest.fn()
-		render(<TaskForm onCreate={spy} />)
-
-		const createButton = screen.getByRole('button', { name: 'Create task' })
-		const taskField = screen.getByRole('textbox', {
-			name: 'Create new task',
-		})
-
-		await userEvent.type(taskField, 'task title')
-		await userEvent.click(createButton)
-
-		expect(spy).toHaveBeenCalledWith('task title')
-	})
-
-	it('should not call onCreate when task title field is empty and button clicked', async () => {
-		const spy = jest.fn()
-		render(<TaskForm onCreate={spy} />)
-
-		const createButton = screen.getByRole('button', {
-			name: 'Create task',
-		})
-		const taskField = screen.getByRole('textbox', {
-			name: 'Create new task',
-		})
-
-		expect(taskField).toHaveValue('')
-
-		await userEvent.click(createButton)
-		expect(spy).not.toHaveBeenCalled()
-	})
 	it('should not call onCreate when task title field is empty and enter pressed', async () => {
 		const spy = jest.fn()
 		render(<TaskForm onCreate={spy} />)
@@ -78,22 +46,6 @@ describe('TaskForm', () => {
 		expect(taskField).toHaveValue('')
 	})
 
-	it('should clear field when cancel pressed', async () => {
-		render(<TaskForm onCreate={() => 0} />)
-
-		const taskField = screen.getByRole('textbox', {
-			name: 'Create new task',
-		})
-		const cancelButton = screen.getByRole('button', { name: 'Cancel' })
-
-		await userEvent.type(taskField, 'task title')
-
-		expect(taskField).toHaveValue('task title')
-
-		await userEvent.click(cancelButton)
-
-		expect(taskField).toHaveValue('')
-	})
 	it('should clear field when escape pressed', async () => {
 		render(<TaskForm onCreate={() => 0} />)
 
