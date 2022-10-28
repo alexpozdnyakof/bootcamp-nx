@@ -8,12 +8,12 @@
 			"executor": "@nrwl/cypress:cypress",
 			"options": {
 				"cypressConfig": "apps/tasks-e2e/cypress.config.ts",
-				"devServerTarget": "tasks:storybook",
+				"devServerTarget": "tasks-ui:storybook",
 				"testingType": "e2e"
 			},
 			"configurations": {
 				"ci": {
-					"devServerTarget": "tasks:storybook:ci"
+					"devServerTarget": "tasks-ui:storybook:ci"
 				}
 			}
 		},
@@ -26,5 +26,5 @@
 		}
 	},
 	"tags": [],
-	"implicitDependencies": ["tasks"]
+	"implicitDependencies": ["tasks-ui"]
 }

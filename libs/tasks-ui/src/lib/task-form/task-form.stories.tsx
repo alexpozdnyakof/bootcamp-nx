@@ -1,5 +1,6 @@
+import { Box } from '@bootcamp-nx/core-ui'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import { Box } from '../box'
+
 import { TaskForm } from './task-form'
 
 const Story: ComponentMeta<typeof TaskForm> = {

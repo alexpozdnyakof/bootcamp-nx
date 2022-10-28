@@ -1,9 +1,11 @@
+import {
+	KeyCapturer,
+	KeyboardShortcut,
+	Stack,
+	Text,
+	TextField,
+} from '@bootcamp-nx/core-ui'
 import { useEffect, useRef } from 'react'
-import { KeyCapturer } from '../key-capturer'
-import { KeyboardShortcut } from '../keyboard-shortcut'
-import { Stack } from '../stack'
-import { Text } from '../text'
-import { TextField } from '../text-field'
 
 type TaskFormProps = {
 	onCreate: (title: string) => void

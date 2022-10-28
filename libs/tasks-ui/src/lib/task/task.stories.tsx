@@ -1,5 +1,6 @@
+import { Stack } from '@bootcamp-nx/core-ui'
 import { ComponentProps, useState } from 'react'
-import { Stack } from '../stack'
+
 import Task from './task'
 
 export default {
