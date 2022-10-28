@@ -1,0 +1,22 @@
+:root {
+  --opt-size: 32;
+  --font-size: 32px;
+  --fill: 0;
+}
+
+.Icon_small {
+  --font-size: 24px;
+  --opt-size: 24;
+}
+
+.Icon_large {
+  --font-size: 48px;
+  --opt-size: 48;
+}
+
+.Icon_large,
+.Icon_small,
+.Icon_medium{
+  font-size: var(--font-size);
+  font-variation-settings: 'FILL' var(--fill), 'wght' 200, 'GRAD' 0, 'opsz' var(--opt-size);
+}
