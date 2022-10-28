@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { KeyCapturer } from '../key-capturer'
 import { KeyboardShortcut } from '../keyboard-shortcut'
 import { Stack } from '../stack'
@@ -15,27 +15,28 @@ export function TaskForm({ onCreate }: TaskFormProps) {
 		ref.current?.focus()
 	}, [])
 
-	const [task, setTask] = useState<string>('')
+	const submitForm = () => {
+		const value = ref.current?.value
+		if (!value) return
 
-	const submitForm = (task: string) => {
-		if (!task) return
-
-		return onCreate(task.trim()), clearForm()
+		return onCreate(value.trim()), clearForm()
 	}
 
-	const clearForm = () => setTask('')
+	const clearForm = () => {
+		if (ref.current) {
+			ref.current.value = ''
+		}
+	}
 
 	return (
 		<Stack space='small'>
 			<KeyCapturer
-				onEnter={() => submitForm(task)}
+				onEnter={() => submitForm()}
 				onEscape={() => clearForm()}
 			>
 				<TextField
 					aria-label='Create new task'
 					placeholder='Enter task name'
-					onChange={event => setTask(event.currentTarget.value)}
-					value={task}
 					hint={
 						<Text as='span'>
 							Press <KeyboardShortcut>Enter</KeyboardShortcut> to
