@@ -24,7 +24,7 @@ export type TaskProps = {
 
 export default function Task({ done, id, text, onClick }: TaskProps) {
 	return (
-		<Inline space='small'>
+		<Inline space='small' style={{ whiteSpace: 'nowrap' }}>
 			<Box
 				as='button'
 				className={[

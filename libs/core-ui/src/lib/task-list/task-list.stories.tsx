@@ -1,4 +1,4 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react'
+import { ComponentProps, useState } from 'react'
 import { TaskList } from './task-list'
 
 const tasks = [
@@ -29,15 +29,35 @@ const tasks = [
 	},
 ]
 
-const Story: ComponentMeta<typeof TaskList> = {
+export default {
 	component: TaskList,
 	title: 'Tasks/TaskList',
 }
-export default Story
 
-const Template: ComponentStory<typeof TaskList> = args => <TaskList {...args} />
+export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
+	const [state, setState] = useState(tasks)
+	const createTask = (text: string) => ({
+		id: state[state.length - 1].id++,
+		text,
+		done: false,
+	})
 
-export const Primary = Template.bind({})
-Primary.args = {
+	return (
+		<TaskList
+			tasks={state}
+			title={title}
+			onCreate={text => setState(t => t.concat(createTask(text)))}
+			onComplete={id =>
+				setState(t =>
+					t.map(it => (it.id === id ? { ...it, done: true } : it))
+				)
+			}
+			onDelete={id => setState(t => t.filter(it => it.id !== id))}
+		/>
+	)
+}
+
+Interactive.args = {
 	tasks,
+	title: 'Awesome task list',
 }
