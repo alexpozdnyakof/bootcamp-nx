@@ -1,0 +1,34 @@
+:root {
+	--bootcamp-bg-selected: #222;
+	--bootcamp-border-radius-medium: 8px;
+}
+
+.ListItem {
+	padding: 4px 0 4px 12px;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: -2px -12px;
+}
+
+.ListItem:hover {
+	background-color: var(--bootcamp-bg-selected);
+	border-radius: var(--bootcamp-border-radius-medium);
+}
+
+.ListItem-Controls {
+	visibility: hidden;
+}
+
+.ListItem:hover .ListItem-Controls {
+	visibility: visible;
+}
+
+.ListItem-Content {
+	width: 100%;
+}
+
+.ListWrapper {
+	position: relative;
+}
