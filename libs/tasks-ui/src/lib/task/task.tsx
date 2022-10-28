@@ -1,6 +1,4 @@
-import { Box } from '../box'
-import { Inline } from '../inline'
-import { Text } from '../text'
+import { Inline, Box, Text } from '@bootcamp-nx/core-ui'
 import styles from './task.module.less'
 
 const CheckboxIcon = (props: JSX.IntrinsicElements['svg']) => (

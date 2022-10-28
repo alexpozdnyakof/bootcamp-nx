@@ -1,13 +1,15 @@
+import {
+	Button,
+	ListItem,
+	List,
+	Icon,
+	Stack,
+	Heading,
+	Text,
+} from '@bootcamp-nx/core-ui'
 import { memo } from 'react'
-import { Button } from '../button'
-import { Heading } from '../heading'
-import { Icon } from '../icon'
-import { List } from '../list'
-import { ListItem } from '../list-item'
-import { Stack } from '../stack'
-import { Task } from '../task'
 import { TaskForm } from '../task-form'
-import { Text } from '../text'
+import Task from '../task/task'
 
 export type ViewTask = {
 	done: boolean
