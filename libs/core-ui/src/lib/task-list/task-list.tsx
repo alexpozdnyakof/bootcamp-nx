@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react'
+import { memo } from 'react'
 import { Button } from '../button'
 import { Heading } from '../heading'
 import { Icon } from '../icon'

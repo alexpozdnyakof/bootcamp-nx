@@ -44,11 +44,6 @@ export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
 		},
 		[setState]
 	)
-	const createTask = (text: string) => ({
-		id: state[state.length - 1].id++,
-		text,
-		done: false,
-	})
 
 	const onDelete = useCallback(
 		(id: number) => {
@@ -57,11 +52,23 @@ export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
 		[setState]
 	)
 
+	const onCreate = useCallback(
+		(text: string) => {
+			const createTask = (text: string) => ({
+				id: state[state.length - 1].id++,
+				text,
+				done: false,
+			})
+			setState(t => t.concat(createTask(text)))
+		},
+		[setState, state]
+	)
+
 	return (
 		<TaskList
 			tasks={state}
 			title={title}
-			onCreate={text => setState(t => t.concat(createTask(text)))}
+			onCreate={onCreate}
 			onComplete={onComplete}
 			onDelete={onDelete}
 		/>
