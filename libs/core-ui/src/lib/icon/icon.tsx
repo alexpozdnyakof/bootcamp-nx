@@ -30,6 +30,7 @@ const Icon = polymorphicComponent<'span', IconProps>(
 				as={as}
 				className={[
 					'material-symbols-outlined',
+					styles['icon'],
 					styles['size-'.concat(sizeModifier)],
 					styles['tone-'.concat(tone)],
 				]}
