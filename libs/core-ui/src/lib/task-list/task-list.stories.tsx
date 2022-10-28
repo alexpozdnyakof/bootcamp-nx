@@ -39,7 +39,7 @@ export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
 	const onComplete = useCallback(
 		(id: number) => {
 			setState(t =>
-				t.map(it => (it.id === id ? { ...it, done: true } : it))
+				t.map(it => (it.id === id ? { ...it, done: !it.done } : it))
 			)
 		},
 		[setState]
@@ -69,7 +69,7 @@ export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
 			tasks={state}
 			title={title}
 			onCreate={onCreate}
-			onComplete={onComplete}
+			toggleComplete={onComplete}
 			onDelete={onDelete}
 		/>
 	)

@@ -17,7 +17,7 @@ export type ViewTask = {
 
 type Handlers = {
 	onDelete?: (id: ViewTask['id']) => void
-	onComplete?: (id: ViewTask['id']) => void
+	toggleComplete?: (id: ViewTask['id']) => void
 	onCreate?: (text: ViewTask['text']) => void
 }
 
@@ -30,7 +30,7 @@ const TaskListItem = memo(
 	({
 		task,
 		onDelete,
-		onComplete,
+		toggleComplete,
 	}: { task: ViewTask } & Omit<Handlers, 'onCreate'>) => {
 		return (
 			<ListItem
@@ -44,7 +44,10 @@ const TaskListItem = memo(
 					</Button>
 				}
 			>
-				<Task {...task} onClick={() => onComplete?.(task.id)}></Task>
+				<Task
+					{...task}
+					onClick={() => toggleComplete?.(task.id)}
+				></Task>
 			</ListItem>
 		)
 	}
@@ -56,7 +59,7 @@ export function TaskList({
 	tasks,
 	title,
 	onDelete,
-	onComplete,
+	toggleComplete,
 	onCreate,
 }: TaskListProps) {
 	return (
@@ -76,7 +79,7 @@ export function TaskList({
 						key={task.id}
 						task={task}
 						onDelete={onDelete}
-						onComplete={onComplete}
+						toggleComplete={toggleComplete}
 					/>
 				))}
 			</List>
