@@ -1,5 +1,4 @@
 import { screen, render } from '@testing-library/react'
-
 import Icon from './icon'
 
 describe('Icon', () => {
@@ -11,7 +10,7 @@ describe('Icon', () => {
 	it('should be medium size by default', () => {
 		render(<Icon data-testid='iconElement'>delete</Icon>)
 
-		expect(screen.getByTestId('iconElement')).toHaveClass('Icon_medium')
+		expect(screen.getByTestId('iconElement')).toHaveClass('size-medium')
 	})
 
 	it('should set small size', () => {
@@ -20,7 +19,7 @@ describe('Icon', () => {
 		)
 		const iconElement = screen.getByTestId('iconElement')
 
-		expect(iconElement).not.toHaveClass('Icon_small')
+		expect(iconElement).not.toHaveClass('size-small')
 
 		rerender(
 			<Icon data-testid='iconElement' size='small'>
@@ -28,7 +27,7 @@ describe('Icon', () => {
 			</Icon>
 		)
 
-		expect(iconElement).toHaveClass('Icon_small')
+		expect(iconElement).toHaveClass('size-small')
 	})
 
 	it('should set large size', () => {
@@ -37,7 +36,7 @@ describe('Icon', () => {
 		)
 		const iconElement = screen.getByTestId('iconElement')
 
-		expect(iconElement).not.toHaveClass('Icon_large')
+		expect(iconElement).not.toHaveClass('size-large')
 
 		rerender(
 			<Icon data-testid='iconElement' size='large'>
@@ -45,6 +44,79 @@ describe('Icon', () => {
 			</Icon>
 		)
 
-		expect(iconElement).toHaveClass('Icon_large')
+		expect(iconElement).toHaveClass('size-large')
+	})
+
+	it('should set normal tone by default', () => {
+		render(<Icon data-testid='iconElement'>delete</Icon>)
+		const iconElement = screen.getByTestId('iconElement')
+
+		expect(iconElement).not.toHaveClass('tone-secondary')
+		expect(iconElement).not.toHaveClass('tone-danger')
+		expect(iconElement).not.toHaveClass('tone-positive')
+		expect(iconElement).toHaveClass('tone-normal')
+	})
+
+	it('should set secondary tone', () => {
+		const { rerender } = render(
+			<Icon data-testid='iconElement'>delete</Icon>
+		)
+		const iconElement = screen.getByTestId('iconElement')
+
+		expect(iconElement).not.toHaveClass('tone-danger')
+		expect(iconElement).not.toHaveClass('tone-positive')
+		expect(iconElement).not.toHaveClass('tone-secondary')
+
+		rerender(
+			<Icon data-testid='iconElement' tone='secondary'>
+				delete
+			</Icon>
+		)
+
+		expect(iconElement).not.toHaveClass('tone-danger')
+		expect(iconElement).not.toHaveClass('tone-positive')
+		expect(iconElement).toHaveClass('tone-secondary')
+	})
+
+	it('should set positive tone', () => {
+		const { rerender } = render(
+			<Icon data-testid='iconElement'>delete</Icon>
+		)
+		const iconElement = screen.getByTestId('iconElement')
+
+		expect(iconElement).not.toHaveClass('tone-danger')
+		expect(iconElement).not.toHaveClass('tone-positive')
+		expect(iconElement).not.toHaveClass('tone-secondary')
+
+		rerender(
+			<Icon data-testid='iconElement' tone='positive'>
+				delete
+			</Icon>
+		)
+
+		expect(iconElement).not.toHaveClass('tone-danger')
+		expect(iconElement).toHaveClass('tone-positive')
+		expect(iconElement).not.toHaveClass('tone-secondary')
+	})
+
+	it('should set positive tone', () => {
+		const { rerender } = render(
+			<Icon data-testid='iconElement'>delete</Icon>
+		)
+		const iconElement = screen.getByTestId('iconElement')
+
+		expect(iconElement).not.toHaveClass('tone-danger')
+		expect(iconElement).not.toHaveClass('tone-positive')
+		expect(iconElement).not.toHaveClass('tone-secondary')
+
+		rerender(
+			<Icon data-testid='iconElement' tone='danger'>
+				delete
+			</Icon>
+		)
+
+		expect(iconElement).toHaveClass('tone-danger')
+		expect(iconElement).not.toHaveClass('tone-positive')
+		expect(iconElement).not.toHaveClass('tone-secondary')
 	})
 })

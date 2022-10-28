@@ -1,4 +1,5 @@
 import { Box } from '../box'
+import { Tone } from '../common-types'
 import { polymorphicComponent } from '../polymorphic'
 import styles from './icon.module.less'
 
@@ -9,17 +10,28 @@ type IconProps = {
 	 * @default 'medium'
 	 */
 	size?: 'small' | 'medium' | 'large'
+	tone?: Tone
 }
 
 const Icon = polymorphicComponent<'span', IconProps>(
-	({ children, size: sizeModifier = 'medium', ...props }, ref) => {
+	(
+		{
+			as = 'span',
+			children,
+			size: sizeModifier = 'medium',
+			tone = 'normal',
+			...props
+		},
+		ref
+	) => {
 		return (
 			<Box
 				{...props}
-				as='span'
+				as={as}
 				className={[
 					'material-symbols-outlined',
-					styles['Icon_'.concat(sizeModifier)],
+					styles['size-'.concat(sizeModifier)],
+					styles['tone-'.concat(tone)],
 				]}
 				ref={ref}
 			>
