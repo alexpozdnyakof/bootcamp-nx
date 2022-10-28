@@ -10,4 +10,5 @@ export default {
 	},
 	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
 	coverageDirectory: '../../coverage/libs/tasks',
+	setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
 }
