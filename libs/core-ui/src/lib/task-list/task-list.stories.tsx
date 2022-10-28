@@ -1,4 +1,4 @@
-import { ComponentProps, useState } from 'react'
+import { ComponentProps, useCallback, useState } from 'react'
 import { TaskList } from './task-list'
 
 const tasks = [
@@ -36,23 +36,34 @@ export default {
 
 export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
 	const [state, setState] = useState(tasks)
+	const onComplete = useCallback(
+		(id: number) => {
+			setState(t =>
+				t.map(it => (it.id === id ? { ...it, done: true } : it))
+			)
+		},
+		[setState]
+	)
 	const createTask = (text: string) => ({
 		id: state[state.length - 1].id++,
 		text,
 		done: false,
 	})
 
+	const onDelete = useCallback(
+		(id: number) => {
+			setState(t => t.filter(it => it.id !== id))
+		},
+		[setState]
+	)
+
 	return (
 		<TaskList
 			tasks={state}
 			title={title}
 			onCreate={text => setState(t => t.concat(createTask(text)))}
-			onComplete={id =>
-				setState(t =>
-					t.map(it => (it.id === id ? { ...it, done: true } : it))
-				)
-			}
-			onDelete={id => setState(t => t.filter(it => it.id !== id))}
+			onComplete={onComplete}
+			onDelete={onDelete}
 		/>
 	)
 }

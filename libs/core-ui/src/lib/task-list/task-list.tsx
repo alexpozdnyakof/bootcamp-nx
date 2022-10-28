@@ -1,3 +1,4 @@
+import { memo, useCallback, useMemo } from 'react'
 import { Button } from '../button'
 import { Heading } from '../heading'
 import { Icon } from '../icon'
@@ -25,6 +26,32 @@ type TaskListProps = {
 	title: string
 } & Partial<Handlers>
 
+const TaskListItem = memo(
+	({
+		task,
+		onDelete,
+		onComplete,
+	}: { task: ViewTask } & Omit<Handlers, 'onCreate'>) => {
+		return (
+			<ListItem
+				actions={
+					<Button
+						size='small'
+						variant='quaternary'
+						onClick={() => onDelete?.(task.id)}
+					>
+						<Icon size='small'>delete</Icon>
+					</Button>
+				}
+			>
+				<Task {...task} onClick={() => onComplete?.(task.id)}></Task>
+			</ListItem>
+		)
+	}
+)
+
+TaskListItem.displayName = 'TaskListItem'
+
 export function TaskList({
 	tasks,
 	title,
@@ -44,24 +71,13 @@ export function TaskList({
 				<TaskForm onCreate={text => onCreate?.(text)} />
 			</Stack>
 			<List>
-				{tasks.map((task, i) => (
-					<ListItem
+				{tasks.map(task => (
+					<TaskListItem
 						key={task.id}
-						actions={
-							<Button
-								size='small'
-								variant='quaternary'
-								onClick={() => onDelete?.(task.id)}
-							>
-								<Icon size='small'>delete</Icon>
-							</Button>
-						}
-					>
-						<Task
-							{...task}
-							onClick={() => onComplete?.(task.id)}
-						></Task>
-					</ListItem>
+						task={task}
+						onDelete={onDelete}
+						onComplete={onComplete}
+					/>
 				))}
 			</List>
 		</Stack>
