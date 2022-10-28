@@ -1,38 +1,20 @@
-import { ReactElement, ReactNode } from 'react'
-import { Box } from '../box'
-import { Inline } from '../inline'
+import { ReactElement } from 'react'
+import { ReusableBoxProps } from '../box'
+import { polymorphicComponent } from '../polymorphic'
 import { Stack } from '../stack'
-import styles from './list.module.less'
 
-type ListItemProps = {
-	children: ReactNode
-	actions?: ReactNode | Array<ReactNode>
-}
+type ListProps = {
+	children: ReactElement | Array<ReactElement>
+} & ReusableBoxProps
 
-export function ListItem({ children, actions }: ListItemProps) {
-	return (
-		<Box className={styles['ListItem']}>
-			<Box className={styles['ListItem-Content']}>{children}</Box>
-			<Box className={styles['ListItem-Controls']}>
-				<Inline>{actions}</Inline>
-			</Box>
-		</Box>
-	)
-}
-
-/* eslint-disable-next-line */
-export interface ListProps {
-	children:
-		| ReactElement<typeof ListItem>
-		| Array<ReactElement<typeof ListItem>>
-}
-
-export function List({ children }: ListProps) {
-	return (
-		<Box className={styles['ListWrapper']}>
-			<Stack>{children}</Stack>
-		</Box>
-	)
-}
+const List = polymorphicComponent<'div', ListProps>(
+	({ children, ...props }, ref) => {
+		return (
+			<Stack ref={ref} {...props}>
+				{children}
+			</Stack>
+		)
+	}
+)
 
 export default List
