@@ -1,5 +1,5 @@
 import { ComponentProps, useCallback, useState } from 'react'
-import { TaskList } from './task-list'
+import { TaskList, ViewTask } from './task-list'
 
 const tasks = [
 	{
@@ -34,20 +34,32 @@ export default {
 	title: 'Tasks/TaskList',
 }
 
+type TaskListState = {
+	tasks: Array<ViewTask>
+	active: ViewTask['id'] | null
+}
+
 export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
-	const [state, setState] = useState(tasks)
+	const [state, setState] = useState<TaskListState>({ tasks, active: null })
+
 	const onComplete = useCallback(
 		(id: number) => {
-			setState(t =>
-				t.map(it => (it.id === id ? { ...it, done: !it.done } : it))
-			)
+			setState(({ tasks, ...s }) => ({
+				tasks: tasks.map(it =>
+					it.id === id ? { ...it, done: !it.done } : it
+				),
+				...s,
+			}))
 		},
 		[setState]
 	)
 
 	const onDelete = useCallback(
 		(id: number) => {
-			setState(t => t.filter(it => it.id !== id))
+			setState(({ tasks, ...s }) => ({
+				tasks: tasks.filter(it => it.id !== id),
+				...s,
+			}))
 		},
 		[setState]
 	)
@@ -55,18 +67,28 @@ export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
 	const onCreate = useCallback(
 		(text: string) => {
 			const createTask = (text: string) => ({
-				id: state[state.length - 1].id++,
+				id: state.tasks[state.tasks.length - 1].id++,
 				text,
 				done: false,
 			})
-			setState(t => t.concat(createTask(text)))
+			setState(({ tasks, ...s }) => ({
+				tasks: tasks.concat(createTask(text)),
+				...s,
+			}))
 		},
 		[setState, state]
 	)
 
+	const setActive = (idOrNull: TaskListState['active']) => {
+		setState(({ active, ...s }) => ({
+			active: active === idOrNull ? active : idOrNull,
+			...s,
+		}))
+	}
+
 	return (
 		<TaskList
-			tasks={state}
+			tasks={state.tasks}
 			title={title}
 			onCreate={onCreate}
 			toggleComplete={onComplete}
