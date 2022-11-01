@@ -21,21 +21,28 @@ const registerPortalRoot = (root: Element, name = DEFAULT_CONTAINER_NAME) => {
  * 4. paste in special root if needed
  */
 
+ function createDefaultContainer(id: string) {
+		const result = document.createElement('div')
+		result.setAttribute('id', id)
+		result.style.position = 'absolute'
+		result.style.top = '0'
+		result.style.left = '0'
+
+		return result
+ }
+
+
 const safeDefaultPortal = () => {
 	const existingContainer = rootRegistry[DEFAULT_CONTAINER_NAME]
 	if (!existingContainer || !document.body.contains(existingContainer)) {
-		let newDefaultContainer = document.getElementById(PORTAL_ROOT_ID)
-		if (!(newDefaultContainer instanceof Element)) {
-			newDefaultContainer = document.createElement('div')
-			newDefaultContainer.setAttribute('id', PORTAL_ROOT_ID)
-			newDefaultContainer.style.position = 'absolute'
-			newDefaultContainer.style.top = '0'
-			newDefaultContainer.style.left = '0'
-
-			document.body.appendChild(newDefaultContainer)
+		let defaultContainer = document.getElementById(PORTAL_ROOT_ID)
+		if (!(defaultContainer instanceof Element)) {
+			defaultContainer = createDefaultContainer(PORTAL_ROOT_ID)
+			document.body.appendChild(defaultContainer)
 		}
-		registerPortalRoot(newDefaultContainer)
+		registerPortalRoot(defaultContainer)
 	}
+
 }
 
 export function Portal({ children }: PortalProps) {
