@@ -1,11 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ReactNode } from 'react'
-import { createPortal } from 'react-dom'
 import { Box } from '../box'
+import { Portal } from '../portal'
 import styles from './modal.module.less'
-
-function Portal({ children }: { children: ReactNode }) {
-	return createPortal(children, document.body)
-}
 
 const Backdrop = ({ children }: { children: ReactNode }) => {
 	return <Box className={styles['backdrop']}>{children}</Box>
@@ -26,10 +23,10 @@ export function Modal({ isOpen, ...props }: ModalProps) {
 			<Backdrop>
 				<Center>
 					<Box className={styles['dialog']} {...props}>
-						<Box className={styles['dialog-content']} {...props}>
-							<Box className={styles['center']}>
-								<h1>Welcome to Modal!</h1>
-							</Box>
+						<Box className={styles['dialog-content']}>
+							<Center>
+								<h1>モーダルウィンドウ!</h1>
+							</Center>
 						</Box>
 					</Box>
 				</Center>

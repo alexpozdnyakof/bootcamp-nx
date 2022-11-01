@@ -11,7 +11,7 @@ export function Interactive({ isOpen: _isOpen }: ComponentProps<typeof Modal>) {
 	const [isOpen, setOpen] = useState(_isOpen)
 	return (
 		<>
-			<Button onClick={() => setOpen(o => !o)}>Open Modal</Button>
+			<Button onClick={() => setOpen(o => !o)}>モーダルを開く</Button>
 			<Modal isOpen={isOpen} />
 		</>
 	)
