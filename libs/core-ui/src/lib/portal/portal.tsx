@@ -1,7 +1,7 @@
 import { ReactNode, useLayoutEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
-type PortalProps = {
+export type PortalProps = {
 	children: ReactNode
 	containerName?: string
 }
@@ -31,6 +31,8 @@ function createDefaultContainer(id: string) {
 	result.style.position = 'absolute'
 	result.style.top = '0'
 	result.style.left = '0'
+	result.style.width = '100vw'
+	result.style.height = '100vh'
 
 	return result
 }
@@ -54,6 +56,9 @@ export function Portal({
 	const hostElement = document.createElement('div')
 	hostElement.style.position = 'relative'
 	hostElement.style.zIndex = '1'
+	hostElement.style.width = '100%'
+	hostElement.style.height = '100%'
+
 	const elementRef = useRef(hostElement)
 
 	useLayoutEffect(() => {
