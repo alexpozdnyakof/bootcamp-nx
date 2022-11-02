@@ -1,5 +1,7 @@
 import { ReactNode } from 'react'
 import { Box } from '../box'
+import { Button } from '../button'
+import FocusLock from 'react-focus-lock'
 import { Portal } from '../portal'
 import { PortalProps, registerPortalRoot } from '../portal/portal'
 import styles from './modal.module.less'
@@ -23,6 +25,7 @@ function checkCustomContainer(containerName: string | undefined) {
 type ModalProps = {
 	isOpen: boolean
 	children: ReactNode
+	onClose?: () => void
 } & JSX.IntrinsicElements['div'] &
 	Pick<PortalProps, 'containerName'>
 
@@ -30,6 +33,7 @@ export function Modal({
 	isOpen,
 	containerName,
 	children,
+	onClose,
 	...props
 }: ModalProps) {
 	if (!isOpen) return null
@@ -40,11 +44,18 @@ export function Modal({
 		<Portal containerName={containerName}>
 			<Backdrop>
 				<Center>
-					<Box className={styles['dialog']} {...props}>
-						<Box className={styles['dialog-content']}>
-							<Center>{children}</Center>
+					<FocusLock>
+						<Box className={styles['dialog']} {...props}>
+							<Box className={styles['dialog-header']}>
+								<Button onClick={() => onClose?.()}>
+									閉じる
+								</Button>
+							</Box>
+							<Box className={styles['dialog-content']}>
+								<Center>{children}</Center>
+							</Box>
 						</Box>
-					</Box>
+					</FocusLock>
 				</Center>
 			</Backdrop>
 		</Portal>
