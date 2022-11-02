@@ -31,18 +31,36 @@ describe('Portal', () => {
 	})
 
 	it('should render in named container', () => {
-		let { baseElement } = render(<div id='__anotherRoot__'></div>)
-		const anotherRoot = baseElement.querySelector(
-			'#__anotherRoot__'
-		) as Element
+		let { baseElement } = render(
+			<>
+				<div id='customRoot'></div>
+				<div id='anotherRoot'></div>
+			</>
+		)
+		const queryBaseElement = (selector: string) =>
+			baseElement.querySelector(selector) as Element
+
+		const customRoot = queryBaseElement('#customRoot')
+		const anotherRoot = queryBaseElement('#anotherRoot')
+
+		expect(customRoot).toBeInstanceOf(HTMLElement)
 		expect(anotherRoot).toBeInstanceOf(HTMLElement)
 
-		registerPortalRoot(anotherRoot, '__anotherRoot__')
+		registerPortalRoot(customRoot, 'customRoot')
+		registerPortalRoot(anotherRoot, 'anotherRoot')
 		;({ baseElement } = render(
-			<Portal containerName='__anotherRoot__'>123test123</Portal>
+			<>
+				<Portal>default</Portal>
+				<Portal containerName='customRoot'>custom</Portal>
+				<Portal containerName='anotherRoot'>another</Portal>
+			</>
 		))
 
-		expect(anotherRoot?.textContent?.trim()).toEqual('123test123')
+		const generatedDefaultRoot = queryBaseElement('#__portalRoot__')
+
+		expect(generatedDefaultRoot?.textContent?.trim()).toEqual('default')
+		expect(customRoot?.textContent?.trim()).toEqual('custom')
+		expect(anotherRoot?.textContent?.trim()).toEqual('another')
 
 		baseElement.innerHTML = ''
 	})
