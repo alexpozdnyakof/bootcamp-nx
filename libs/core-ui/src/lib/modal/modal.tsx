@@ -23,6 +23,12 @@ function checkCustomContainer(containerName: string | undefined) {
 	}
 }
 
+/**
+ * TODO: add width
+ * TODO: add height expanded or fit-content
+ * TODO: make stacking modals
+ * TODO: add scrolling with stickye header and footer
+ */
 type ModalProps = {
 	isOpen: boolean
 	children: ReactNode
