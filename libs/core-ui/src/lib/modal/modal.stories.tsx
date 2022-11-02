@@ -11,6 +11,7 @@ export function Interactive({ isOpen: _isOpen }: ComponentProps<typeof Modal>) {
 	const [isOpen, setOpen] = useState(_isOpen)
 	return (
 		<>
+			<div id='__anotherRoot__'></div>
 			<Button onClick={() => setOpen(o => !o)}>モーダルを開く</Button>
 			<Modal isOpen={isOpen} />
 		</>
