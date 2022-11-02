@@ -5,6 +5,7 @@ import FocusLock from 'react-focus-lock'
 import { Portal } from '../portal'
 import { PortalProps, registerPortalRoot } from '../portal/portal'
 import styles from './modal.module.less'
+import { KeyCapturer } from '../key-capturer'
 
 const Backdrop = ({ children }: { children: ReactNode }) => {
 	return <Box className={styles['backdrop']}>{children}</Box>
@@ -45,16 +46,21 @@ export function Modal({
 			<Backdrop>
 				<Center>
 					<FocusLock>
-						<Box className={styles['dialog']} {...props}>
-							<Box className={styles['dialog-header']}>
-								<Button onClick={() => onClose?.()}>
-									閉じる
-								</Button>
+						<KeyCapturer onEscape={onClose}>
+							<Box className={styles['dialog']} {...props}>
+								<Box className={styles['dialog-header']}>
+									<Button
+										onClick={onClose}
+										variant='tertiary'
+									>
+										閉じる
+									</Button>
+								</Box>
+								<Box className={styles['dialog-content']}>
+									<Center>{children}</Center>
+								</Box>
 							</Box>
-							<Box className={styles['dialog-content']}>
-								<Center>{children}</Center>
-							</Box>
-						</Box>
+						</KeyCapturer>
 					</FocusLock>
 				</Center>
 			</Backdrop>

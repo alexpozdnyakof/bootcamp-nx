@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "../reactist"
+		},
+		{
+			"path": "../primer"
 		}
 	],
 	"settings": {

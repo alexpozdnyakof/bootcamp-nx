@@ -15,7 +15,7 @@ export function Interactive({ isOpen: _isOpen }: ComponentProps<typeof Modal>) {
 			<div id='__anotherRoot__'></div>
 			<Button onClick={toggleModal}>モーダルを開く</Button>
 			<Modal isOpen={isOpen} onClose={toggleModal}>
-				モーダルウィンドウ!
+				<h1>モーダルウィンドウ!</h1>
 			</Modal>
 		</>
 	)
