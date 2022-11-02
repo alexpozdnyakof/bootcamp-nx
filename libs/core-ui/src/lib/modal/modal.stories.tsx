@@ -9,11 +9,14 @@ export default {
 
 export function Interactive({ isOpen: _isOpen }: ComponentProps<typeof Modal>) {
 	const [isOpen, setOpen] = useState(_isOpen)
+	const toggleModal = () => setOpen(o => !o)
 	return (
 		<>
 			<div id='__anotherRoot__'></div>
-			<Button onClick={() => setOpen(o => !o)}>モーダルを開く</Button>
-			<Modal isOpen={isOpen} />
+			<Button onClick={toggleModal}>モーダルを開く</Button>
+			<Modal isOpen={isOpen} onClose={toggleModal}>
+				モーダルウィンドウ!
+			</Modal>
 		</>
 	)
 }
