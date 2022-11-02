@@ -20,7 +20,7 @@ describe('Modal', () => {
 		)
 		expect(screen.queryByTestId('modalElement')).toBeInTheDocument()
 	})
-	it('should render in named container', () => {
+	xit('should render in named container', () => {
 		let { baseElement } = render(<div id='customRoot'></div>)
 
 		const customRoot = baseElement.querySelector('#customRoot') as Element
