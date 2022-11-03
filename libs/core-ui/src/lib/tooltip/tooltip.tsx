@@ -17,15 +17,26 @@ type TooltipProps = {
  * @returns
  */
 
+type Position = {
+	x: number
+	y: number
+}
 const Tooltip = polymorphicComponent<'div', TooltipProps>(
-	({ children, ...props }) => {
-		const [visible, setVisible] = useState<boolean>(false)
+	({ children, ...props }, ref) => {
+		const [position, setPosition] = useState<Position | null>(null)
+
 		if (!children) return null
-		const onMouseOver = (e: MouseEvent) => {
-			setVisible(true)
+
+		const onMouseOver = (event: MouseEvent<HTMLElement>) => {
+			const bounds = event.currentTarget.getBoundingClientRect()
+			setPosition({
+				x: bounds.x,
+				y: bounds.y + bounds.height,
+			})
 		}
-		const onMouseOut = (e: MouseEvent) => {
-			setVisible(false)
+
+		const onMouseOut = () => {
+			setPosition(null)
 		}
 
 		const withMouseListeners = cloneElement(children, {
@@ -37,10 +48,19 @@ const Tooltip = polymorphicComponent<'div', TooltipProps>(
 			<>
 				{withMouseListeners}
 				<Portal>
-					{visible && (
-						<Box className={styles['container']} {...props}>
+					{position && (
+						<div
+							className={styles['tooltip']}
+							{...props}
+							style={{
+								left: position?.x,
+								top: position?.y,
+								position: 'fixed',
+							}}
+							ref={ref}
+						>
 							Welcome to Tooltip!
-						</Box>
+						</div>
 					)}
 				</Portal>
 			</>
