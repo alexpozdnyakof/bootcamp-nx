@@ -1,3 +1,4 @@
+export * from './lib/tooltip'
 export * from './lib/list-item'
 export * from './lib/icon'
 export * from './lib/list'
