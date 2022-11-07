@@ -10,7 +10,7 @@ export default {
 export function Interactive(props: PartialProps<typeof Tooltip>) {
 	return (
 		<div style={{ width: '600px', height: '300px' }}>
-			<Tooltip>
+			<Tooltip content='ツールチップへようこそ'>
 				<Button style={{ marginLeft: '100px', marginTop: '30px' }}>
 					私を指して
 				</Button>

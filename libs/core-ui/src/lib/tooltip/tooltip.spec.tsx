@@ -1,6 +1,5 @@
-import { screen, render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { Box } from '../box'
 import { Button } from '../button'
 
 import Tooltip from './tooltip'
@@ -15,38 +14,42 @@ describe('Tooltip', () => {
 		expect(baseElement).toBeTruthy()
 	})
 
-	xit('should show tooltip', async () => {
+	it('should show and hide tooltip for mouse actions', async () => {
 		render(
-			<Tooltip data-testid='tooltip'>
+			<Tooltip>
 				<Button>私を指して</Button>
 			</Tooltip>
 		)
 
-		const tooltip = screen.getByTestId('tooltip')
-		expect(tooltip).not.toBeInTheDocument()
+		expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
 
 		const buttonElement = screen.getByRole('button', { name: '私を指して' })
 
 		await userEvent.hover(buttonElement)
-		expect(tooltip).toBeInTheDocument()
+		expect(screen.queryByRole('tooltip')).toBeInTheDocument()
 
 		await userEvent.unhover(buttonElement)
-		expect(tooltip).not.toBeInTheDocument()
+		expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
 	})
 
 	it('should render tooltip in portal', async () => {
 		const { baseElement } = render(
-			<Tooltip data-testid='tooltip'>
+			<Tooltip id='tooltip' content='ツールチップへようこそ'>
 				<Button>私を指して</Button>
 			</Tooltip>
 		)
 
 		const portal = baseElement.querySelector('#__portalRoot__')
+		expect(portal?.querySelector('#tooltip')).toBeFalsy()
+		expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
 
 		const buttonElement = screen.getByRole('button', { name: '私を指して' })
 
 		await userEvent.hover(buttonElement)
-		expect(portal?.textContent?.trim()).toBe('Welcome to Tooltip!')
+
+		expect(portal?.querySelector('#tooltip')).toBe(
+			screen.getByRole('tooltip')
+		)
 	})
 
 	it('should render position tooltip near to element', async () => {
@@ -61,7 +64,7 @@ describe('Tooltip', () => {
 		)
 
 		render(
-			<Tooltip data-testid='tooltip'>
+			<Tooltip>
 				<Button
 					data-testid='anchor'
 					style={{
@@ -80,7 +83,22 @@ describe('Tooltip', () => {
 
 		await userEvent.hover(buttonElement)
 
-		const tooltip = screen.getByTestId('tooltip')
+		const tooltip = screen.getByRole('tooltip')
 		expect(tooltip).toHaveStyle({ top: '64px', left: '120px' })
+	})
+
+	it('should render passed content inside tooltip', async () => {
+		render(
+			<Tooltip content='ツールチップへようこそ'>
+				<Button>私を指して</Button>
+			</Tooltip>
+		)
+
+		const buttonElement = screen.getByRole('button', { name: '私を指して' })
+		await userEvent.hover(buttonElement)
+
+		expect(
+			screen.getByRole('tooltip', { name: 'ツールチップへようこそ' })
+		).toBeInTheDocument()
 	})
 })
