@@ -18,48 +18,41 @@ export function useTooltip(element: ReactElement | undefined): UseTooltip {
 	const state = useRef<'focus' | 'idle'>('idle')
 
 	if (!element) throw new Error('Tooltip anchor element is not defined')
-	const setPosition = (bounds: DOMRect) => {
-		if (position == null) {
+
+	const setPosition = (bounds: DOMRect | null) => {
+		if (bounds !== null && position == null) {
 			_setPosition({
 				x: bounds.x,
 				y: bounds.y + bounds.height,
 			})
 		}
+
+		if (bounds === null && position !== null) _setPosition(null)
 	}
 
-	const dropPosition = () => {
-		if (position !== null) _setPosition(null)
-	}
-
-	const onMouseOver = (event: MouseEvent<HTMLElement>) => {
-		if (state.current === 'focus') return
-		const bounds = event.currentTarget.getBoundingClientRect()
-		setPosition(bounds)
-	}
-
-	const onMouseOut = () => {
-		if (state.current === 'focus') return
-		dropPosition()
-	}
-
-	const onFocus = (event: KeyboardEvent<HTMLElement>) => {
-		state.current = 'focus'
-		const bounds = event.currentTarget.getBoundingClientRect()
-		setPosition(bounds)
-	}
-
-	const onBlur = () => {
-		state.current = 'idle'
-		dropPosition()
+	const listeners = {
+		onMouseOver: (event: MouseEvent<HTMLElement>) => {
+			if (state.current === 'focus') return
+			const bounds = event.currentTarget.getBoundingClientRect()
+			setPosition(bounds)
+		},
+		onMouseOut: () => {
+			if (state.current === 'focus') return
+			setPosition(null)
+		},
+		onFocus: (event: KeyboardEvent<HTMLElement>) => {
+			state.current = 'focus'
+			const bounds = event.currentTarget.getBoundingClientRect()
+			setPosition(bounds)
+		},
+		onBlur: () => {
+			state.current = 'idle'
+			setPosition(null)
+		},
 	}
 
 	return {
-		anchor: cloneElement(element, {
-			onMouseOver,
-			onMouseOut,
-			onFocus,
-			onBlur,
-		}),
+		anchor: cloneElement(element, listeners),
 		position,
 	}
 }
