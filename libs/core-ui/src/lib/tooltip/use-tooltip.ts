@@ -30,11 +30,11 @@ export function useTooltip(element: ReactElement | undefined): UseTooltip {
 		if (bounds === null && position !== null) _setPosition(null)
 	}
 
-  const getBounds = (
+	const getBounds = (
 		event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>
-  ) => event.currentTarget.getBoundingClientRect()
+	) => event.currentTarget.getBoundingClientRect()
 
-  const listeners = {
+	const listeners = {
 		onMouseOver: (event: MouseEvent<HTMLElement>) => {
 			if (state.current !== 'focus') {
 				setPosition(getBounds(event))
@@ -53,7 +53,7 @@ export function useTooltip(element: ReactElement | undefined): UseTooltip {
 			state.current = 'idle'
 			setPosition(null)
 		},
-  }
+	}
 
 	return {
 		anchor: cloneElement(element, listeners),
