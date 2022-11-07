@@ -1,15 +1,8 @@
-import {
-	cloneElement,
-	MouseEvent,
-	KeyboardEvent,
-	ReactElement,
-	useRef,
-	useState,
-} from 'react'
-import { Position } from '../common-types'
+import { ReactElement } from 'react'
 import { polymorphicComponent } from '../polymorphic'
 import { Portal } from '../portal'
 import styles from './tooltip.module.less'
+import useTooltip from './use-tooltip'
 
 type TooltipProps = {
 	children: ReactElement
@@ -22,57 +15,15 @@ type TooltipProps = {
  * @returns
  */
 
-
 const Tooltip = polymorphicComponent<'div', TooltipProps>(
 	({ children, content, role = 'tooltip', ...props }, ref) => {
-		const [position, setPosition] = useState<Position | null>(null)
-		const anchorState = useRef<'focus' | 'idle'>('idle')
+		const { anchor, position } = useTooltip(children)
 
 		if (!children) return null
 
-		const setTooltipPosition = (bounds: DOMRect) => {
-			if (position !== null) return
-			setPosition({
-				x: bounds.x,
-				y: bounds.y + bounds.height,
-			})
-		}
-		const dropTooltipPosition = () => {
-			if (position !== null) setPosition(null)
-		}
-
-		const onMouseOver = (event: MouseEvent<HTMLElement>) => {
-			if (anchorState.current === 'focus') return
-			const bounds = event.currentTarget.getBoundingClientRect()
-			setTooltipPosition(bounds)
-		}
-
-		const onMouseOut = () => {
-			if (anchorState.current === 'focus') return
-			dropTooltipPosition()
-		}
-
-		const onFocus = (event: KeyboardEvent<HTMLElement>) => {
-			anchorState.current = 'focus'
-			const bounds = event.currentTarget.getBoundingClientRect()
-			setTooltipPosition(bounds)
-		}
-
-		const onBlur = () => {
-			anchorState.current = 'idle'
-			dropTooltipPosition()
-		}
-
-		const withMouseListeners = cloneElement(children, {
-			onMouseOver,
-			onMouseOut,
-			onFocus,
-			onBlur,
-		})
-
 		return (
 			<>
-				{withMouseListeners}
+				{anchor}
 				<Portal>
 					{position && (
 						<div
