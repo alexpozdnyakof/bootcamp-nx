@@ -6,6 +6,7 @@ import {
 	useRef,
 	useState,
 } from 'react'
+import { Position } from '../common-types'
 import { polymorphicComponent } from '../polymorphic'
 import { Portal } from '../portal'
 import styles from './tooltip.module.less'
@@ -21,10 +22,7 @@ type TooltipProps = {
  * @returns
  */
 
-type Position = {
-	x: number
-	y: number
-}
+
 const Tooltip = polymorphicComponent<'div', TooltipProps>(
 	({ children, content, role = 'tooltip', ...props }, ref) => {
 		const [position, setPosition] = useState<Position | null>(null)

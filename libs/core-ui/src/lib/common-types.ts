@@ -8,3 +8,8 @@ export type Space =
 export type SpaceWithNegatives = Space | `-${Space}`
 
 export type Tone = 'normal' | 'secondary' | 'danger' | 'positive'
+
+export type Position = {
+	x: number
+	y: number
+}
