@@ -31,9 +31,6 @@ function createDefaultContainer(id: string) {
 	result.style.position = 'absolute'
 	result.style.top = '0'
 	result.style.left = '0'
-	result.style.width = '100vw'
-	result.style.height = '100vh'
-	result.style.pointerEvents = 'none'
 
 	return result
 }
@@ -57,9 +54,6 @@ export function Portal({
 	const hostElement = document.createElement('div')
 	hostElement.style.position = 'relative'
 	hostElement.style.zIndex = '1'
-	hostElement.style.width = '100%'
-	hostElement.style.height = '100%'
-	hostElement.style.pointerEvents = 'auto'
 
 	const elementRef = useRef(hostElement)
 
