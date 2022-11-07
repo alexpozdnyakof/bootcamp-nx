@@ -32,6 +32,67 @@ describe('Tooltip', () => {
 		expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
 	})
 
+	it('should show and hide tooltip for keyboard actions', async () => {
+		render(
+			<Tooltip>
+				<Button>私を指して</Button>
+			</Tooltip>
+		)
+
+		expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
+
+		const buttonElement = screen.getByRole('button', {
+			name: '私を指して',
+		})
+
+		await userEvent.tab()
+		expect(buttonElement).toHaveFocus()
+		expect(screen.queryByRole('tooltip')).toBeInTheDocument()
+
+		await userEvent.tab()
+		expect(buttonElement).not.toHaveFocus()
+		expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
+	})
+
+	it('should not hide or show tooltip when focused button hovered or unhovered', async () => {
+		render(
+			<Tooltip>
+				<Button>私を指して</Button>
+			</Tooltip>
+		)
+
+		expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
+
+		const buttonElement = screen.getByRole('button', {
+			name: '私を指して',
+		})
+
+		await userEvent.tab()
+		expect(buttonElement).toHaveFocus()
+		expect(screen.queryByRole('tooltip')).toBeInTheDocument()
+
+		// trying to hove focused button
+		await userEvent.hover(buttonElement)
+		expect(screen.queryByRole('tooltip')).toBeInTheDocument()
+
+		// trying to unhover focused button
+		await userEvent.unhover(buttonElement)
+		expect(screen.queryByRole('tooltip')).toBeInTheDocument()
+
+		// unfocus button
+		await userEvent.tab()
+		expect(buttonElement).not.toHaveFocus()
+		expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
+
+		// tryin to hover unfocused button
+		await userEvent.hover(buttonElement)
+		expect(screen.queryByRole('tooltip')).toBeInTheDocument()
+
+		// tryin to unhover focused button
+		await userEvent.unhover(buttonElement)
+		expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
+	})
+
 	it('should render tooltip in portal', async () => {
 		const { baseElement } = render(
 			<Tooltip id='tooltip' content='ツールチップへようこそ'>
