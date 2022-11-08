@@ -7,4 +7,21 @@
 	border: 1px solid var(--bootcamp-content-secondary);
 	position: fixed;
 	font-size: var(--bootcamp-font-size-copy);
+	margin-top: 6px;
+}
+
+.tooltip-arrow {
+	top: 0;
+}
+
+.tooltip::before {
+	position: absolute;
+	content: '';
+	border-color: transparent;
+	border-style: solid;
+	border-width: 0 calc(12px * 0.5) 6px;
+	border-bottom-color: var(--bootcamp-framework-fill-selected);
+	top: -6px;
+	left: 50%;
+	margin-left: -6px;
 }

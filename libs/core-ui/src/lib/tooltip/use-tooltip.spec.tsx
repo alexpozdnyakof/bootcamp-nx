@@ -51,7 +51,7 @@ describe('useTooltip', () => {
 		await userEvent.hover(buttonElement)
 
 		expect(screen.getByTestId('position')).toHaveTextContent(
-			'{"x":120,"y":64}'
+			'{"x":104,"y":64}'
 		)
 	})
 

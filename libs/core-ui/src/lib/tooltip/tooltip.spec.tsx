@@ -126,17 +126,7 @@ describe('Tooltip', () => {
 
 		render(
 			<Tooltip>
-				<Button
-					data-testid='anchor'
-					style={{
-						width: '48px',
-						height: '32px',
-						marginLeft: '120px',
-						marginTop: '32px',
-					}}
-				>
-					私を指して
-				</Button>
+				<Button data-testid='anchor'>私を指して</Button>
 			</Tooltip>
 		)
 
@@ -145,7 +135,7 @@ describe('Tooltip', () => {
 		await userEvent.hover(buttonElement)
 
 		const tooltip = screen.getByRole('tooltip')
-		expect(tooltip).toHaveStyle({ top: '64px', left: '120px' })
+		expect(tooltip).toHaveStyle({ top: '64px', left: '104px' })
 	})
 
 	it('should render passed content inside tooltip', async () => {

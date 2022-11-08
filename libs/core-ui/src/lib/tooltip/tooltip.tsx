@@ -1,34 +1,9 @@
 import { ReactElement } from 'react'
 import { Box } from '../box'
-import { Position } from '../common-types'
 import { polymorphicComponent } from '../polymorphic'
 import { Portal } from '../portal'
 import styles from './tooltip.module.less'
 import useTooltip from './use-tooltip'
-
-type TooltipElementProps = {
-	position: Position
-	children: string
-}
-
-const TooltipElement = polymorphicComponent<'div', TooltipElementProps>(
-	({ position, children, ...props }, ref) => {
-		return (
-			<Box
-				role='tooltip'
-				className={styles['tooltip']}
-				{...props}
-				style={{
-					left: position?.x,
-					top: position?.y,
-				}}
-				ref={ref}
-			>
-				{children}
-			</Box>
-		)
-	}
-)
 
 type TooltipProps = {
 	children: ReactElement
@@ -52,13 +27,18 @@ const Tooltip = polymorphicComponent<'div', TooltipProps>(
 				{anchor}
 				<Portal>
 					{position && (
-						<TooltipElement
-							ref={ref}
-							position={position}
+						<Box
+							role='tooltip'
+							className={styles['tooltip']}
 							{...props}
+							style={{
+								left: position?.x,
+								top: position?.y,
+							}}
+							ref={ref}
 						>
 							{content}
-						</TooltipElement>
+						</Box>
 					)}
 				</Portal>
 			</>
