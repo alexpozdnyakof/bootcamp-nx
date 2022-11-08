@@ -29,4 +29,14 @@ describe('ListItem', () => {
 
 		expect(screen.getByTestId('deleteAction')).toBeInTheDocument()
 	})
+
+	it('should not be hoverable', () => {
+		render(
+			<ListItem hoverable={false} data-testid='list'>
+				text
+			</ListItem>
+		)
+
+		expect(screen.getByTestId('list')).not.toHaveClass('listItem_hoverable')
+	})
 })

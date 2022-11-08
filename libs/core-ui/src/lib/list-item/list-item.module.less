@@ -4,27 +4,38 @@
 }
 
 .ListItem {
-	padding: 4px 0 4px 12px;
+	padding: 8px 0 8px 24px;
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin: -2px -12px;
+	position: relative;
 }
 
-.ListItem:hover {
+.listItem_hoverable:hover {
 	background-color: var(--bootcamp-bg-selected);
 	border-radius: var(--bootcamp-border-radius-medium);
 }
 
 .ListItem-Controls {
-	visibility: hidden;
+	visibility: visible;
+	z-index: 1;
 }
 
-.ListItem:hover .ListItem-Controls {
+.ListItem_hoverable:hover .ListItem-Controls {
 	visibility: visible;
 }
 
 .ListItem-Content {
 	width: 100%;
+	z-index: 1;
+}
+
+.listItem-surface {
+	background-color: var(--bootcamp-bg-selected);
+	border-radius: var(--bootcamp-border-radius-medium);
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	transform: translate(-24px, 0);
 }

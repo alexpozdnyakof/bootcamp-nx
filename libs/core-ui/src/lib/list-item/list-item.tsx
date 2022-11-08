@@ -7,18 +7,27 @@ import styles from './list-item.module.less'
 type ListItemProps = {
 	children: ReactNode
 	actions?: ReactNode | Array<ReactNode>
+	hoverable?: boolean
 }
 
 const ListItem = polymorphicComponent<'div', ListItemProps>(
-	({ children, actions, ...props }, ref) => {
+	({ children, actions, hoverable = true, ...props }, ref) => {
 		return (
-			<Box className={styles['ListItem']} ref={ref} {...props}>
+			<Box
+				className={[
+					styles['ListItem'],
+					hoverable ? styles['listItem_hoverable'] : null,
+				]}
+				ref={ref}
+				{...props}
+			>
 				<Box className={styles['ListItem-Content']}>{children}</Box>
 				{actions ? (
 					<Box className={styles['ListItem-Controls']}>
 						<Inline>{actions}</Inline>
 					</Box>
 				) : null}
+				<Box className={styles['listItem-surface']} />
 			</Box>
 		)
 	}
