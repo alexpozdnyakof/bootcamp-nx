@@ -1,30 +1,31 @@
+import { Box } from '@bootcamp-nx/core-ui'
 import { ComponentProps, useCallback, useState } from 'react'
 import { TaskList, ViewTask } from './task-list'
 
 const tasks = [
 	{
 		id: 0,
-		text: 'Blood report graph is showing blank',
+		text: '血液レポートのグラフが空白になっている',
 		done: false,
 	},
 	{
 		id: 1,
-		text: 'Deactivate|| User is not able to deactivate the account',
+		text: '無効にする|| ユーザーがアカウントを無効にできない',
 		done: true,
 	},
 	{
 		id: 2,
-		text: 'My profile || User is not able to view the weight and height which are set during signup',
+		text: '|| 私のプロフィール || ユーザーは、サインアップ時に設定された体重と身長を表示できません',
 		done: false,
 	},
 	{
 		id: 3,
-		text: 'Profile, edit profile and Pop-ups',
+		text: 'プロフィール、プロフィールの編集、ポップアップ',
 		done: true,
 	},
 	{
 		id: 4,
-		text: 'Need Apple developer account to share build',
+		text: 'ビルドを共有するには Apple 開発者アカウントが必要です',
 		done: false,
 	},
 ]
@@ -79,25 +80,32 @@ export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
 		[setState, state]
 	)
 
-	const setActive = (idOrNull: TaskListState['active']) => {
-		setState(({ active, ...s }) => ({
-			active: active === idOrNull ? active : idOrNull,
-			...s,
-		}))
-	}
+	const onEdit = useCallback(
+		(idOrNull: TaskListState['active']) => {
+			setState(({ active, ...s }) => ({
+				active: active === idOrNull ? active : idOrNull,
+				...s,
+			}))
+		},
+		[setState]
+	)
 
 	return (
-		<TaskList
-			tasks={state.tasks}
-			title={title}
-			onCreate={onCreate}
-			toggleComplete={onComplete}
-			onDelete={onDelete}
-		/>
+		<Box marginLeft='xlarge'>
+			<TaskList
+				tasks={state.tasks}
+				title={title}
+				onCreate={onCreate}
+				toggleComplete={onComplete}
+				onDelete={onDelete}
+				onEdit={onEdit}
+				editingTask={state.active}
+			/>
+		</Box>
 	)
 }
 
 Interactive.args = {
 	tasks,
-	title: 'Awesome task list',
+	title: '素晴らしいタスクリスト',
 }
