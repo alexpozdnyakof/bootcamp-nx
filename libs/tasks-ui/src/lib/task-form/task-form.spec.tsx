@@ -88,4 +88,19 @@ describe('TaskForm', () => {
 			})
 		).toHaveFocus()
 	})
+
+  it('should set field value', () => {
+		render(
+			<TaskForm
+				onCreate={() => 0}
+				value='血液レポートのグラフが空白になっている'
+			/>
+		)
+
+		expect(
+			screen.getByRole('textbox', {
+				name: 'Create new task',
+			})
+		).toHaveValue('血液レポートのグラフが空白になっている')
+  })
 })

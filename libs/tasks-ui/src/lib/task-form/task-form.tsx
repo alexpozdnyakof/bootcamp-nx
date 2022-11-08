@@ -9,9 +9,10 @@ import { useEffect, useRef } from 'react'
 
 type TaskFormProps = {
 	onCreate: (title: string) => void
+	value?: string
 }
 
-export function TaskForm({ onCreate }: TaskFormProps) {
+export function TaskForm({ onCreate, value }: TaskFormProps) {
 	const ref = useRef<HTMLInputElement>(null)
 	useEffect(() => {
 		ref.current?.focus()
@@ -40,13 +41,14 @@ export function TaskForm({ onCreate }: TaskFormProps) {
 					aria-label='Create new task'
 					placeholder='タスク名を入力'
 					hint={
-						<Text as='span'>
+						<Text as='span' size='caption'>
 							押す <KeyboardShortcut>Enter</KeyboardShortcut>{' '}
 							作成したり <KeyboardShortcut>Esc</KeyboardShortcut>
 							キャンセルします
 						</Text>
 					}
 					ref={ref}
+					defaultValue={value}
 				/>
 			</KeyCapturer>
 		</Stack>
