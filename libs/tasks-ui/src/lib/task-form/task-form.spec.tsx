@@ -89,7 +89,7 @@ describe('TaskForm', () => {
 		).toHaveFocus()
 	})
 
-  it('should set field value', () => {
+	it('should set field value', () => {
 		render(
 			<TaskForm
 				onCreate={() => 0}
@@ -102,5 +102,17 @@ describe('TaskForm', () => {
 				name: 'Create new task',
 			})
 		).toHaveValue('血液レポートのグラフが空白になっている')
-  })
+	})
+
+	it('should call onCancel when esc pressed', async () => {
+		const spy = jest.fn()
+		render(<TaskForm onCreate={() => 0} onCancel={spy} />)
+
+		const taskField = screen.getByRole('textbox', {
+			name: 'Create new task',
+		})
+
+		await userEvent.type(taskField, '{esc}')
+		expect(spy).toHaveBeenCalled()
+	})
 })
