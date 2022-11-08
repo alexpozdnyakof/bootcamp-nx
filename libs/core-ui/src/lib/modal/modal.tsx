@@ -6,6 +6,7 @@ import { Portal } from '../portal'
 import { PortalProps, registerPortalRoot } from '../portal/portal'
 import styles from './modal.module.less'
 import { KeyCapturer } from '../key-capturer'
+import { BoxMaxMinWidth } from '../box/box'
 
 const Backdrop = ({ children }: { children: ReactNode }) => {
 	return <Box className={styles['backdrop']}>{children}</Box>
@@ -24,14 +25,16 @@ function checkCustomContainer(containerName: string | undefined) {
 }
 
 /**
+ * TODO: styling
  * TODO: add width
  * TODO: add height expanded or fit-content
  * TODO: make stacking modals
  * TODO: add scrolling with stickye header and footer
  */
 type ModalProps = {
-	isOpen: boolean
+	isOpen?: boolean
 	children: ReactNode
+	width?: BoxMaxMinWidth
 	onClose?: () => void
 } & JSX.IntrinsicElements['div'] &
 	Pick<PortalProps, 'containerName'>
@@ -41,6 +44,7 @@ export function Modal({
 	containerName,
 	children,
 	onClose,
+	width = 'medium',
 	...props
 }: ModalProps) {
 	if (!isOpen) return null
@@ -53,17 +57,24 @@ export function Modal({
 				<Center>
 					<FocusLock>
 						<KeyCapturer onEscape={onClose}>
-							<Box className={styles['dialog']} {...props}>
-								<Box className={styles['dialog-header']}>
-									<Button
-										onClick={onClose}
-										variant='tertiary'
-									>
-										閉じる
-									</Button>
-								</Box>
-								<Box className={styles['dialog-content']}>
-									<Center>{children}</Center>
+							<Box
+								className={styles['dialog']}
+								{...props}
+								width={width}
+								role='dialog'
+							>
+								<Box className={styles['dialog-guts']}>
+									<Box className={styles['dialog-header']}>
+										<Button
+											onClick={onClose}
+											variant='tertiary'
+										>
+											閉じる
+										</Button>
+									</Box>
+									<Box className={styles['dialog-content']}>
+										<Center>{children}</Center>
+									</Box>
 								</Box>
 							</Box>
 						</KeyCapturer>

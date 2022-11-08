@@ -275,5 +275,59 @@ describe('Box', () => {
 				expect(boxElement).toHaveClass('desktop-textAlign-end')
 			})
 		})
+
+		describe('width, minwidth, maxwidth', () => {
+			it('should render a box of the given width', () => {
+				const { rerender } = render(<Box data-testid='box-element' />)
+
+				const boxElement = screen.getByTestId('box-element')
+
+				expect(boxElement).not.toHaveClass('width-xsmall')
+				expect(boxElement).not.toHaveClass('width-small')
+				expect(boxElement).not.toHaveClass('width-medium')
+				expect(boxElement).not.toHaveClass('width-large')
+				expect(boxElement).not.toHaveClass('width-xlarge')
+
+				rerender(<Box data-testid='box-element' width='xsmall' />)
+
+				expect(boxElement).toHaveClass('width-xsmall')
+				expect(boxElement).not.toHaveClass('width-small')
+				expect(boxElement).not.toHaveClass('width-medium')
+				expect(boxElement).not.toHaveClass('width-large')
+				expect(boxElement).not.toHaveClass('width-xlarge')
+
+				rerender(<Box data-testid='box-element' width='small' />)
+
+				expect(boxElement).not.toHaveClass('width-xsmall')
+				expect(boxElement).toHaveClass('width-small')
+				expect(boxElement).not.toHaveClass('width-medium')
+				expect(boxElement).not.toHaveClass('width-large')
+				expect(boxElement).not.toHaveClass('width-xlarge')
+
+				rerender(<Box data-testid='box-element' width='medium' />)
+
+				expect(boxElement).not.toHaveClass('width-xsmall')
+				expect(boxElement).not.toHaveClass('width-small')
+				expect(boxElement).toHaveClass('width-medium')
+				expect(boxElement).not.toHaveClass('width-large')
+				expect(boxElement).not.toHaveClass('width-xlarge')
+
+				rerender(<Box data-testid='box-element' width='large' />)
+
+				expect(boxElement).not.toHaveClass('width-xsmall')
+				expect(boxElement).not.toHaveClass('width-small')
+				expect(boxElement).not.toHaveClass('width-medium')
+				expect(boxElement).toHaveClass('width-large')
+				expect(boxElement).not.toHaveClass('width-xlarge')
+
+				rerender(<Box data-testid='box-element' width='xlarge' />)
+
+				expect(boxElement).not.toHaveClass('width-xsmall')
+				expect(boxElement).not.toHaveClass('width-small')
+				expect(boxElement).not.toHaveClass('width-medium')
+				expect(boxElement).not.toHaveClass('width-large')
+				expect(boxElement).toHaveClass('width-xlarge')
+			})
+		})
 	})
 })

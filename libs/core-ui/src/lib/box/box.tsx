@@ -51,7 +51,7 @@ export type BoxJustifyContent =
 	| 'spaceEvenly'
 type BoxOverflow = 'hidden' | 'auto' | 'visible' | 'scroll'
 
-type BoxMaxMinWidth = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
+export type BoxMaxMinWidth = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
 type BoxMinWidth = 0 | BoxMaxMinWidth
 export type BoxMaxWidth = BoxMaxMinWidth | 'full'
 type BoxWidth =
