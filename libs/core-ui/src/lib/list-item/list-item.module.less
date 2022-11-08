@@ -3,30 +3,23 @@
 	--bootcamp-border-radius-medium: 8px;
 }
 
-.ListItem {
-	padding: 8px 0 8px 24px;
+.listItem {
+	padding: 2px 0;
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	position: relative;
+	box-sizing: border-box;
+	margin-top: -2px;
 }
 
-.listItem_hoverable:hover {
-	background-color: var(--bootcamp-bg-selected);
-	border-radius: var(--bootcamp-border-radius-medium);
-}
-
-.ListItem-Controls {
-	visibility: visible;
+.listItem-controls {
+	transition: opacity 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 	z-index: 1;
 }
 
-.ListItem_hoverable:hover .ListItem-Controls {
-	visibility: visible;
-}
-
-.ListItem-Content {
+.listItem-content {
 	width: 100%;
 	z-index: 1;
 }
@@ -34,8 +27,30 @@
 .listItem-surface {
 	background-color: var(--bootcamp-bg-selected);
 	border-radius: var(--bootcamp-border-radius-medium);
-	width: 100%;
+	width: calc(100% + var(--bootcamp-spacing-xlarge));
 	height: 100%;
 	position: absolute;
-	transform: translate(-24px, 0);
+	transform: translate(calc(-1 * var(--bootcamp-spacing-xlarge)), 0);
+	transition: opacity 0.15s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.listItem-startActions {
+	z-index: 1;
+	position: absolute;
+	left: -21px;
+	display: flex;
+	height: 100%;
+	align-items: center;
+}
+
+.listItem-surface,
+.listItem-startActions,
+.listItem-controls {
+	opacity: 0;
+}
+
+.listItem_hoverable:hover > .listItem-controls,
+.listItem_hoverable:hover > .listItem-surface,
+.listItem_hoverable:hover > .listItem-startActions {
+	opacity: 1;
 }

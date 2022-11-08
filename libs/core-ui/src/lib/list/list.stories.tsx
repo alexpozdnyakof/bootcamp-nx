@@ -3,6 +3,7 @@ import { Text } from '../text'
 import { Icon } from '../icon'
 import List from './list'
 import { ListItem } from '../list-item'
+import { Box } from '../box'
 
 export default {
 	component: List,
@@ -20,19 +21,26 @@ const itemsJp = [
 
 export function Overview() {
 	return (
-		<List>
-			{itemsJp.map(item => (
-				<ListItem
-					key={item}
-					actions={
-						<Button size='small' variant='quaternary'>
-							<Icon size='small'>delete</Icon>
-						</Button>
-					}
-				>
-					<Text size='body'>{item}</Text>
-				</ListItem>
-			))}
-		</List>
+		<Box marginLeft='xlarge'>
+			<List>
+				{itemsJp.map(item => (
+					<ListItem
+						key={item}
+						startActions={
+							<Icon size='small' tone='secondary'>
+								drag_indicator
+							</Icon>
+						}
+						actions={
+							<Button size='small' variant='quaternary'>
+								<Icon size='small'>delete</Icon>
+							</Button>
+						}
+					>
+						<Text size='caption'>{item}</Text>
+					</ListItem>
+				))}
+			</List>
+		</Box>
 	)
 }

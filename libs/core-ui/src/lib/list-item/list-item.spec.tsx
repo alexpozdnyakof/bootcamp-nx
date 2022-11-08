@@ -22,12 +22,16 @@ describe('ListItem', () => {
 
 	it('should render actions', () => {
 		render(
-			<ListItem actions={<Box data-testid='deleteAction' />}>
+			<ListItem
+				actions={<Box data-testid='deleteAction' />}
+				startActions={<Box data-testid='dragAction' />}
+			>
 				text
 			</ListItem>
 		)
 
 		expect(screen.getByTestId('deleteAction')).toBeInTheDocument()
+		expect(screen.getByTestId('dragAction')).toBeInTheDocument()
 	})
 
 	it('should not be hoverable', () => {
