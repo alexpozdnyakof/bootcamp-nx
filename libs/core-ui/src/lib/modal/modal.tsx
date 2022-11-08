@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactElement, ReactNode } from 'react'
 import { Box } from '../box'
 import { Button } from '../button'
 import FocusLock from 'react-focus-lock'
@@ -7,6 +7,9 @@ import { PortalProps, registerPortalRoot } from '../portal/portal'
 import styles from './modal.module.less'
 import { KeyCapturer } from '../key-capturer'
 import { BoxMaxMinWidth } from '../box/box'
+import { Inline } from '../inline'
+import { totalmem } from 'os'
+import { Heading } from '../heading'
 
 const Center = ({ children }: { children: ReactNode }) => {
 	return <Box className={styles['center']}>{children}</Box>
@@ -29,6 +32,8 @@ type ModalProps = {
 	children: ReactNode
 	width?: BoxMaxMinWidth
 	onClose?: () => void
+	buttons?: ReactNode
+	title?: string
 } & JSX.IntrinsicElements['div'] &
 	Pick<PortalProps, 'containerName'>
 
@@ -37,6 +42,8 @@ export function Modal({
 	children,
 	onClose,
 	width = 'medium',
+	buttons,
+	title,
 	...props
 }: ModalProps) {
 	checkCustomContainer(containerName)
@@ -54,6 +61,11 @@ export function Modal({
 						>
 							<Box className={styles['dialog-guts']}>
 								<Box className={styles['dialog-header']}>
+									{title && (
+										<Heading level={1} size='larger'>
+											{title}
+										</Heading>
+									)}
 									<Button
 										onClick={onClose}
 										variant='tertiary'
@@ -62,7 +74,10 @@ export function Modal({
 									</Button>
 								</Box>
 								<Box className={styles['dialog-content']}>
-									<Center>{children}</Center>
+									{children}
+								</Box>
+								<Box className={styles['dialog-footer']}>
+									<Inline space='small'>{buttons}</Inline>
 								</Box>
 							</Box>
 						</Box>
