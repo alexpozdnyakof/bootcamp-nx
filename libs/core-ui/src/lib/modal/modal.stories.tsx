@@ -9,28 +9,23 @@ export default {
 	title: 'Modal',
 }
 
-export function Interactive({
-	isOpen: _isOpen,
-	width,
-}: ComponentProps<typeof Modal>) {
-	const [isOpen, setOpen] = useState(_isOpen)
+export function Interactive({ width }: ComponentProps<typeof Modal>) {
+	const [isOpen, setOpen] = useState<boolean>(false)
 	const toggleModal = () => setOpen(o => !o)
 	return (
 		<>
 			<div id='__anotherRoot__'></div>
 			<Button onClick={toggleModal}>モーダルを開く</Button>
-			<Modal isOpen={isOpen} onClose={toggleModal} width={width}>
-				<h1>モーダルウィンドウ!</h1>
-			</Modal>
+			{isOpen && (
+				<Modal onClose={toggleModal} width={width}>
+					<h1>モーダルウィンドウ!</h1>
+				</Modal>
+			)}
 		</>
 	)
 }
 
 Interactive.argTypes = {
-	isOpen: {
-		control: { type: 'boolean' },
-		defaultValue: false,
-	},
 	width: selectWithNone<BoxMaxMinWidth>(
 		['xsmall', 'small', 'medium', 'large', 'xlarge'],
 		'none'

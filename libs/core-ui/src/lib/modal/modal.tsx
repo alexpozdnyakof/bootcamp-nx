@@ -26,7 +26,6 @@ function checkCustomContainer(containerName: string | undefined) {
  * TODO: add scrolling with stickye header and footer
  */
 type ModalProps = {
-	isOpen?: boolean
 	children: ReactNode
 	width?: BoxMaxMinWidth
 	onClose?: () => void
@@ -34,15 +33,12 @@ type ModalProps = {
 	Pick<PortalProps, 'containerName'>
 
 export function Modal({
-	isOpen,
 	containerName,
 	children,
 	onClose,
 	width = 'medium',
 	...props
 }: ModalProps) {
-	if (!isOpen) return null
-
 	checkCustomContainer(containerName)
 
 	return (
