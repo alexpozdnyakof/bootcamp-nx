@@ -8,10 +8,6 @@ import styles from './modal.module.less'
 import { KeyCapturer } from '../key-capturer'
 import { BoxMaxMinWidth } from '../box/box'
 
-const Backdrop = ({ children }: { children: ReactNode }) => {
-	return <Box className={styles['backdrop']}>{children}</Box>
-}
-
 const Center = ({ children }: { children: ReactNode }) => {
 	return <Box className={styles['center']}>{children}</Box>
 }
@@ -25,8 +21,6 @@ function checkCustomContainer(containerName: string | undefined) {
 }
 
 /**
- * TODO: styling
- * TODO: add width
  * TODO: add height expanded or fit-content
  * TODO: make stacking modals
  * TODO: add scrolling with stickye header and footer
@@ -53,34 +47,33 @@ export function Modal({
 
 	return (
 		<Portal containerName={containerName}>
-			<Backdrop>
-				<Center>
-					<FocusLock>
-						<KeyCapturer onEscape={onClose}>
-							<Box
-								className={styles['dialog']}
-								{...props}
-								width={width}
-								role='dialog'
-							>
-								<Box className={styles['dialog-guts']}>
-									<Box className={styles['dialog-header']}>
-										<Button
-											onClick={onClose}
-											variant='tertiary'
-										>
-											閉じる
-										</Button>
-									</Box>
-									<Box className={styles['dialog-content']}>
-										<Center>{children}</Center>
-									</Box>
+			<FocusLock>
+				<Box className={styles['dialog-container']}>
+					<KeyCapturer onEscape={onClose}>
+						<Box
+							className={styles['dialog']}
+							{...props}
+							width={width}
+							role='dialog'
+						>
+							<Box className={styles['dialog-guts']}>
+								<Box className={styles['dialog-header']}>
+									<Button
+										onClick={onClose}
+										variant='tertiary'
+									>
+										閉じる
+									</Button>
+								</Box>
+								<Box className={styles['dialog-content']}>
+									<Center>{children}</Center>
 								</Box>
 							</Box>
-						</KeyCapturer>
-					</FocusLock>
-				</Center>
-			</Backdrop>
+						</Box>
+					</KeyCapturer>
+				</Box>
+			</FocusLock>
+			<Box className={styles['backdrop']} onClick={onClose} />
 		</Portal>
 	)
 }
