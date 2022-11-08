@@ -38,12 +38,12 @@ export function TaskForm({ onCreate }: TaskFormProps) {
 			>
 				<TextField
 					aria-label='Create new task'
-					placeholder='Enter task name'
+					placeholder='タスク名を入力'
 					hint={
 						<Text as='span'>
-							Press <KeyboardShortcut>Enter</KeyboardShortcut> to
-							create or <KeyboardShortcut>Esc</KeyboardShortcut>{' '}
-							to cancel
+							押す <KeyboardShortcut>Enter</KeyboardShortcut>{' '}
+							作成したり <KeyboardShortcut>Esc</KeyboardShortcut>
+							キャンセルします
 						</Text>
 					}
 					ref={ref}

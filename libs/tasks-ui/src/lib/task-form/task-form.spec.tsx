@@ -77,7 +77,7 @@ describe('TaskForm', () => {
 			screen.getByRole('textbox', {
 				name: 'Create new task',
 			})
-		).toBe(screen.getByPlaceholderText('Enter task name'))
+		).toBe(screen.getByPlaceholderText('タスク名を入力'))
 	})
 	it('should be focused text field after init', () => {
 		render(<TaskForm onCreate={() => 0} />)
