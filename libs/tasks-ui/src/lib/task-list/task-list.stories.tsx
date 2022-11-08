@@ -81,14 +81,21 @@ export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
 	)
 
 	const onEdit = useCallback(
-		(idOrNull: TaskListState['active']) => {
+		(id: TaskListState['active']) => {
 			setState(({ active, ...s }) => ({
-				active: active === idOrNull ? active : idOrNull,
+				active: active === id ? active : id,
 				...s,
 			}))
 		},
 		[setState]
 	)
+
+	const onCancelEdit = useCallback(() => {
+		setState(({ active, ...s }) => ({
+			active: null,
+			...s,
+		}))
+	}, [setState])
 
 	return (
 		<Box marginLeft='xlarge'>
@@ -99,6 +106,7 @@ export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
 				toggleComplete={onComplete}
 				onDelete={onDelete}
 				onEdit={onEdit}
+				onCancelEdit={onCancelEdit}
 				editingTask={state.active}
 			/>
 		</Box>

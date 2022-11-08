@@ -22,6 +22,7 @@ type Handlers = {
 	toggleComplete?: (id: ViewTask['id']) => void
 	onCreate?: (text: ViewTask['text']) => void
 	onEdit?: (id: ViewTask['id']) => void
+	onCancelEdit?: () => void
 }
 
 type TaskListProps = {
@@ -37,6 +38,7 @@ const TaskListItem = memo(
 		toggleComplete,
 		onEdit,
 		isEditing,
+		onCancelEdit,
 	}: { task: ViewTask; isEditing: boolean } & Omit<Handlers, 'onCreate'>) => {
 		const handleClick = (event: MouseEvent) => {
 			if (event.detail === 2) {
@@ -65,9 +67,14 @@ const TaskListItem = memo(
 						drag_indicator
 					</Icon>
 				}
+				hoverable={!isEditing}
 			>
 				{isEditing ? (
-					<TaskForm onCreate={text => onCreate(text)} />
+					<TaskForm
+						onCreate={text => onCreate(text)}
+						onCancel={() => onCancelEdit?.()}
+						value={task.text}
+					/>
 				) : (
 					<Task
 						{...task}
@@ -88,6 +95,7 @@ export function TaskList({
 	toggleComplete,
 	onCreate,
 	onEdit,
+	onCancelEdit,
 	editingTask,
 }: TaskListProps) {
 	return (
@@ -110,6 +118,7 @@ export function TaskList({
 						toggleComplete={toggleComplete}
 						onEdit={onEdit}
 						isEditing={editingTask === task.id}
+						onCancelEdit={onCancelEdit}
 					/>
 				))}
 			</List>
