@@ -8,7 +8,7 @@ import {
 import { useEffect, useRef } from 'react'
 
 type TaskFormProps = {
-	onCreate: (title: string) => void
+	onCreate?: (title: string) => void
 	onCancel?: () => void
 	value?: string
 }
@@ -23,7 +23,7 @@ export function TaskForm({ onCreate, onCancel, value }: TaskFormProps) {
 		const value = ref.current?.value
 		if (!value) return
 
-		return onCreate(value.trim()), clearForm()
+		return onCreate?.(value.trim()), clearForm()
 	}
 
 	const clearForm = () => {
