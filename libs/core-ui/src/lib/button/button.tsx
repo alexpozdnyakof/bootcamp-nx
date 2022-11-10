@@ -21,9 +21,9 @@ type CommonButtonProps = {
 	loading?: boolean
 }
 
-/* eslint-disable-next-line */
 export type ButtonProps = {
 	children: NonNullable<ReactNode>
+	icon?: ReactNode
 } & CommonButtonProps
 
 const Button = polymorphicComponent<'button', ButtonProps>(
@@ -36,6 +36,7 @@ const Button = polymorphicComponent<'button', ButtonProps>(
 			disabled = false,
 			loading = false,
 			onClick,
+			icon,
 			...props
 		},
 		ref
@@ -54,13 +55,16 @@ const Button = polymorphicComponent<'button', ButtonProps>(
 					styles[`tone-${tone}`],
 					styles[`size-${size}`],
 					disabled ? styles['disabled'] : null,
+					icon ? styles['iconButton'] : null,
 				]}
 				ref={ref}
 			>
-				{children ? (
+				{icon ? (
+					(loading && <Loader />) || icon
+				) : children && !icon ? (
 					<span className={styles['label']}>{children}</span>
 				) : null}
-				{loading && (
+				{loading && !icon && (
 					<Box
 						display='flex'
 						className={styles['endIcon']}

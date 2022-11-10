@@ -1,4 +1,5 @@
 import { screen, render, fireEvent } from '@testing-library/react'
+import { utimes } from 'fs/promises'
 import Button from './button'
 
 describe('Button', () => {
@@ -231,5 +232,22 @@ describe('Button', () => {
 				screen.getByRole('button', { name: 'Click me' })
 			).toHaveAttribute('aria-disabled', 'true')
 		})
+	})
+
+	it('should add iconButton class when icon passed', () => {
+		render(<Button variant='primary' icon={<div />} />)
+
+		expect(screen.getByRole('button')).toHaveClass('iconButton')
+	})
+
+	it('should not render children when icon passed', () => {
+		render(
+			<Button variant='primary' icon={<div data-testid='icon' />}>
+				Click me!
+			</Button>
+		)
+
+		expect(screen.queryByText('Click me!')).not.toBeInTheDocument()
+		expect(screen.getByTestId('icon')).toBeInTheDocument()
 	})
 })
