@@ -8,12 +8,12 @@ import {
 import { useEffect, useRef } from 'react'
 
 type TaskFormProps = {
-	onCreate?: (title: string) => void
-	onCancel?: () => void
+	onSubmit?: (title: string) => void
+	onClear?: () => void
 	value?: string
 }
 
-export function TaskForm({ onCreate, onCancel, value }: TaskFormProps) {
+export function TaskForm({ onSubmit, onClear, value }: TaskFormProps) {
 	const ref = useRef<HTMLInputElement>(null)
 	useEffect(() => {
 		ref.current?.focus()
@@ -23,13 +23,13 @@ export function TaskForm({ onCreate, onCancel, value }: TaskFormProps) {
 		const value = ref.current?.value
 		if (!value) return
 
-		return onCreate?.(value.trim()), clearForm()
+		return onSubmit?.(value.trim()), clearForm()
 	}
 
 	const clearForm = () => {
 		if (ref.current) {
 			ref.current.value = ''
-			onCancel?.()
+			onClear?.()
 		}
 	}
 

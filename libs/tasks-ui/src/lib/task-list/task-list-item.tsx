@@ -77,8 +77,8 @@ const TaskListItem = memo(
 					{isEditing ? (
 						<Box ref={formRef}>
 							<TaskForm
-								onCreate={text => onChange?.(task.id, text)}
-								onCancel={() => onCancelEdit?.()}
+								onSubmit={text => onChange?.(task.id, text)}
+								onClear={() => onCancelEdit?.()}
 								value={task.text}
 							/>
 						</Box>

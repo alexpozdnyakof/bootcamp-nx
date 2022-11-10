@@ -34,7 +34,7 @@ export function TaskList({
 				<Heading level='2' size='larger'>
 					{title}
 				</Heading>
-				<TaskForm onCreate={onCreate} />
+				<TaskForm onSubmit={onCreate} />
 			</Stack>
 			<List>
 				{tasks.map(task => (

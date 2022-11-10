@@ -5,13 +5,13 @@ import TaskForm from './task-form'
 
 describe('TaskForm', () => {
 	it('should render successfully', () => {
-		const { baseElement } = render(<TaskForm onCreate={title => 0} />)
+		const { baseElement } = render(<TaskForm />)
 		expect(baseElement).toBeTruthy()
 	})
 
 	it('should call onCreate when enter pressed', async () => {
 		const spy = jest.fn()
-		render(<TaskForm onCreate={spy} />)
+		render(<TaskForm onSubmit={spy} />)
 		const taskField = screen.getByRole('textbox', {
 			name: 'Create new task',
 		})
@@ -22,7 +22,7 @@ describe('TaskForm', () => {
 	})
 	it('should not call onCreate when task title field is empty and enter pressed', async () => {
 		const spy = jest.fn()
-		render(<TaskForm onCreate={spy} />)
+		render(<TaskForm onSubmit={spy} />)
 
 		const taskField = screen.getByRole('textbox', {
 			name: 'Create new task',
@@ -35,7 +35,7 @@ describe('TaskForm', () => {
 	})
 
 	it('should clear field after submit', async () => {
-		render(<TaskForm onCreate={() => 0} />)
+		render(<TaskForm onSubmit={() => 0} />)
 
 		const taskField = screen.getByRole('textbox', {
 			name: 'Create new task',
@@ -47,7 +47,7 @@ describe('TaskForm', () => {
 	})
 
 	it('should clear field when escape pressed', async () => {
-		render(<TaskForm onCreate={() => 0} />)
+		render(<TaskForm onSubmit={() => 0} />)
 
 		const taskField = screen.getByRole('textbox', {
 			name: 'Create new task',
@@ -59,7 +59,7 @@ describe('TaskForm', () => {
 	})
 	it('should trim whitespaces when form submitted', async () => {
 		const spy = jest.fn()
-		render(<TaskForm onCreate={spy} />)
+		render(<TaskForm onSubmit={spy} />)
 
 		const taskField = screen.getByRole('textbox', {
 			name: 'Create new task',
@@ -71,7 +71,7 @@ describe('TaskForm', () => {
 	})
 
 	it('should have placeholder text', () => {
-		render(<TaskForm onCreate={() => 0} />)
+		render(<TaskForm />)
 
 		expect(
 			screen.getByRole('textbox', {
@@ -80,7 +80,7 @@ describe('TaskForm', () => {
 		).toBe(screen.getByPlaceholderText('タスク名を入力'))
 	})
 	it('should be focused text field after init', () => {
-		render(<TaskForm onCreate={() => 0} />)
+		render(<TaskForm />)
 
 		expect(
 			screen.getByRole('textbox', {
@@ -90,12 +90,7 @@ describe('TaskForm', () => {
 	})
 
 	it('should set field value', () => {
-		render(
-			<TaskForm
-				onCreate={() => 0}
-				value='血液レポートのグラフが空白になっている'
-			/>
-		)
+		render(<TaskForm value='血液レポートのグラフが空白になっている' />)
 
 		expect(
 			screen.getByRole('textbox', {
@@ -106,7 +101,7 @@ describe('TaskForm', () => {
 
 	it('should call onCancel when esc pressed', async () => {
 		const spy = jest.fn()
-		render(<TaskForm onCreate={() => 0} onCancel={spy} />)
+		render(<TaskForm onClear={spy} />)
 
 		const taskField = screen.getByRole('textbox', {
 			name: 'Create new task',
