@@ -28,7 +28,7 @@ Interactive.argTypes = {
 	},
 	text: {
 		control: { type: 'text' },
-		defaultValue: 'New task item for you',
+		defaultValue: '血液レポートのグラフが空白になっている',
 	},
 	done: {
 		control: { type: 'boolean' },
@@ -42,14 +42,14 @@ export function States({ id, text }: ComponentProps<typeof Task>) {
 			<Task
 				key='Done task'
 				id={1}
-				text='Done task'
+				text='完了したタスク'
 				done={true}
 				onClick={() => 0}
 			/>
 			<Task
 				key='Undone task'
 				id={2}
-				text='Undone task'
+				text='進行中のタスク'
 				done={false}
 				onClick={() => 0}
 			/>
