@@ -1,13 +1,4 @@
-import {
-	Box,
-	Button,
-	Heading,
-	Icon,
-	Inline,
-	List,
-	Stack,
-	Text,
-} from '@bootcamp-nx/core-ui'
+import { Button, Icon, Inline, List, Stack, Text } from '@bootcamp-nx/core-ui'
 import { ViewTask } from '../common-types'
 import { TaskForm } from '../task-form'
 import { TaskListItem, TaskListItemHandlers } from '../task-list-item'
@@ -45,9 +36,11 @@ export function TaskList({
 						<Text size='subtitle' weight='bold'>
 							{title}
 						</Text>
-						<Button variant='quaternary' size='small'>
-							<Icon size='small'>more_horiz</Icon>
-						</Button>
+						<Button
+							size='small'
+							variant='quaternary'
+							icon={<Icon size='small'>more_horiz</Icon>}
+						/>
 					</Inline>
 				</Stack>
 				<TaskForm onSubmit={onCreate} />

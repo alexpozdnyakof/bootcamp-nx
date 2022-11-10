@@ -63,9 +63,8 @@ const TaskListItem = memo(
 							variant='quaternary'
 							onClick={() => onDelete?.(task.id)}
 							aria-label='delete'
-						>
-							<Icon size='small'>delete</Icon>
-						</Button>
+							icon={<Icon size='small'>delete</Icon>}
+						/>
 					}
 					startActions={
 						<Icon size='small' tone='secondary'>
