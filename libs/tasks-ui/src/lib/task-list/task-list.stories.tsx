@@ -1,6 +1,7 @@
 import { Box } from '@bootcamp-nx/core-ui'
 import { ComponentProps, useCallback, useMemo, useState } from 'react'
-import { TaskList, ViewTask } from './task-list'
+import { TaskList } from './task-list'
+import { ViewTask } from './view-task'
 
 const tasks = [
 	{
@@ -56,7 +57,7 @@ export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
 	const [state, setState] = useState<TaskListState>({ tasks, active: null })
 
 	const onComplete = useCallback(
-		(id: number) => {
+		(id: ViewTask['id']) => {
 			setState(({ tasks, ...s }) => ({
 				tasks: tasks.map(it =>
 					it.id === id ? { ...it, done: !it.done } : it
@@ -68,7 +69,7 @@ export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
 	)
 
 	const onDelete = useCallback(
-		(id: number) => {
+		(id: ViewTask['id']) => {
 			setState(({ tasks, ...s }) => ({
 				tasks: tasks.filter(it => it.id !== id),
 				...s,
@@ -79,11 +80,12 @@ export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
 
 	const onCreate = useCallback(
 		(text: string) => {
-			const createTask = (text: string) => ({
+			const createTask = (text: ViewTask['text']) => ({
 				id: state.tasks[state.tasks.length - 1].id++,
 				text,
 				done: false,
 			})
+
 			setState(({ tasks, ...s }) => ({
 				tasks: tasks.concat(createTask(text)),
 				...s,
@@ -92,7 +94,7 @@ export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
 		[setState, state]
 	)
 
-	const onEdit = useCallback(
+	const onStartEdit = useCallback(
 		(id: TaskListState['active']) => {
 			setState(({ active, ...s }) => ({
 				active: active === id ? active : id,
@@ -108,6 +110,18 @@ export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
 			...s,
 		}))
 	}, [setState])
+
+	const onChange = useCallback(
+		(id: ViewTask['id'], text: string) => {
+			setState(({ tasks, ...s }) => ({
+				tasks: tasks.map(it =>
+					it.id === id ? { ...it, text: text } : it
+				),
+				...s,
+			}))
+		},
+		[setState]
+	)
 
 	const completedCount = useMemo(
 		() =>
@@ -132,10 +146,11 @@ export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
 				tasks={state.tasks}
 				title={title}
 				onCreate={onCreate}
-				toggleComplete={onComplete}
+				onComplete={onComplete}
 				onDelete={onDelete}
-				onEdit={onEdit}
+				onStartEdit={onStartEdit}
 				onCancelEdit={onCancelEdit}
+				onChange={onChange}
 				editingTask={state.active}
 				completedCount={completedCount}
 			/>

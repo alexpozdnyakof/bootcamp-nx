@@ -34,7 +34,7 @@ export default function Task({ done, id, text, onClick }: TaskProps) {
 			>
 				<CheckboxIcon />
 			</Box>
-			<Text size='caption'>{text}</Text>
+			<Text size='copy'>{text}</Text>
 		</Inline>
 	)
 }

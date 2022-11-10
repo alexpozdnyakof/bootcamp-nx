@@ -1,101 +1,24 @@
-import {
-	Button,
-	ListItem,
-	List,
-	Icon,
-	Stack,
-	Heading,
-	Text,
-} from '@bootcamp-nx/core-ui'
-import { ComponentProps, memo, MouseEvent } from 'react'
+import { Heading, List, Stack, Text } from '@bootcamp-nx/core-ui'
 import { TaskForm } from '../task-form'
-import Task from '../task/task'
-
-export type ViewTask = {
-	done: boolean
-	id: number
-	text: string
-}
-
-type Handlers = {
-	onDelete?: (id: ViewTask['id']) => void
-	toggleComplete?: (id: ViewTask['id']) => void
-	onCreate?: (text: ViewTask['text']) => void
-	onEdit?: (id: ViewTask['id']) => void
-	onCancelEdit?: () => void
-}
+import TaskListItem, { TaskListItemHandlers } from './task-list-item'
+import { ViewTask } from './view-task'
 
 type TaskListProps = {
 	tasks: Array<ViewTask>
 	title: string
 	completedCount?: string
 	editingTask?: ViewTask['id'] | null
-} & Partial<Handlers>
-
-const TaskListItem = memo(
-	({
-		task,
-		onDelete,
-		toggleComplete,
-		onEdit,
-		isEditing,
-		onCancelEdit,
-	}: { task: ViewTask; isEditing: boolean } & Omit<Handlers, 'onCreate'>) => {
-		const handleClick = (event: MouseEvent) => {
-			if (event.detail === 2) {
-				onEdit?.(task.id)
-			}
-		}
-
-		const onCreate = (text: string) => {
-			console.log({ text })
-		}
-
-		return (
-			<ListItem
-				onClick={handleClick}
-				actions={
-					<Button
-						size='small'
-						variant='quaternary'
-						onClick={() => onDelete?.(task.id)}
-					>
-						<Icon size='small'>delete</Icon>
-					</Button>
-				}
-				startActions={
-					<Icon size='small' tone='secondary'>
-						drag_indicator
-					</Icon>
-				}
-				hoverable={!isEditing}
-			>
-				{isEditing ? (
-					<TaskForm
-						onCreate={text => onCreate(text)}
-						onCancel={() => onCancelEdit?.()}
-						value={task.text}
-					/>
-				) : (
-					<Task
-						{...task}
-						onClick={() => toggleComplete?.(task.id)}
-					></Task>
-				)}
-			</ListItem>
-		)
-	}
-)
-
-TaskListItem.displayName = 'TaskListItem'
+	onCreate?: (text: ViewTask['text']) => void
+} & TaskListItemHandlers
 
 export function TaskList({
 	tasks,
 	title,
 	onDelete,
-	toggleComplete,
+	onComplete,
 	onCreate,
-	onEdit,
+	onChange,
+	onStartEdit,
 	onCancelEdit,
 	editingTask,
 	completedCount,
@@ -119,10 +42,11 @@ export function TaskList({
 						key={task.id}
 						task={task}
 						onDelete={onDelete}
-						toggleComplete={toggleComplete}
-						onEdit={onEdit}
+						onComplete={onComplete}
+						onStartEdit={onStartEdit}
 						isEditing={editingTask === task.id}
 						onCancelEdit={onCancelEdit}
+						onChange={onChange}
 					/>
 				))}
 			</List>
@@ -131,35 +55,3 @@ export function TaskList({
 }
 
 export default TaskList
-
-/**
- * This interface forces typescript to differentiate between
- * two IDs which use a different generic type.
- */
-//  export interface Id<T> extends String {
-//   __idTypeFor?: T;
-// }
-
-// // syntactic sugar for importing the specific ID type
-// export type PersonId = Id<Person>;
-
-// export interface Person {
-//   id: PersonId;
-
-//   address: Address;
-// }
-
-// // syntactic sugar for importing the specific ID type
-// export type AddressId = Id<Address>;
-
-// export interface Address {
-//   id: AddressId;
-// }
-
-// const a: Address = { id: 'some-address-id' };
-// const p: Person = { id: 'some-person-id', address: a };
-
-// // assign AddressId to PersonId
-// p.id = a.id; // TS: Type 'AddressId' is not assignable to type 'PersonId'.
-
-
