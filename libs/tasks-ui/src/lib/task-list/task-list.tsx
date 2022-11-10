@@ -1,28 +1,31 @@
 import { Button, Icon, Inline, List, Stack, Text } from '@bootcamp-nx/core-ui'
 import { ViewTask } from '../common-types'
 import { TaskForm } from '../task-form'
+import { useTaskListState } from '../task-list-context'
 import { TaskListItem, TaskListItemHandlers } from '../task-list-item'
 
 type TaskListProps = {
-	tasks: Array<ViewTask>
-	title: string
+	tasks?: Array<ViewTask>
+	title?: string
 	completedCount?: string
 	editingTask?: ViewTask['id'] | null
 	onCreate?: (text: ViewTask['text']) => void
 } & TaskListItemHandlers
 
-export function TaskList({
-	tasks,
-	title,
-	onDelete,
-	onComplete,
-	onCreate,
-	onChange,
-	onStartEdit,
-	onCancelEdit,
-	editingTask,
-	completedCount,
-}: TaskListProps) {
+export function TaskList(props: TaskListProps) {
+	const {
+		tasks,
+		title,
+		onDelete,
+		onComplete,
+		onCreate,
+		onChange,
+		onStartEdit,
+		onCancelEdit,
+		editingTask,
+		completedCount,
+	} = useTaskListState()
+
 	return (
 		<Stack space='large'>
 			<Stack space='small'>
