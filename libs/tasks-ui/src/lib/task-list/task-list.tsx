@@ -7,7 +7,7 @@ import {
 	Heading,
 	Text,
 } from '@bootcamp-nx/core-ui'
-import { memo, MouseEvent } from 'react'
+import { ComponentProps, memo, MouseEvent } from 'react'
 import { TaskForm } from '../task-form'
 import Task from '../task/task'
 
@@ -28,6 +28,7 @@ type Handlers = {
 type TaskListProps = {
 	tasks: Array<ViewTask>
 	title: string
+	completedCount?: string
 	editingTask?: ViewTask['id'] | null
 } & Partial<Handlers>
 
@@ -97,17 +98,20 @@ export function TaskList({
 	onEdit,
 	onCancelEdit,
 	editingTask,
+	completedCount,
 }: TaskListProps) {
 	return (
 		<Stack space='large'>
 			<Stack space='xsmall'>
-				<Text size='caption' tone='secondary' weight='bold'>
-					2/5 タスク完了
-				</Text>
+				{completedCount && (
+					<Text size='caption' tone='secondary' weight='bold'>
+						{completedCount} タスク完了
+					</Text>
+				)}
 				<Heading level='2' size='larger'>
 					{title}
 				</Heading>
-				<TaskForm onCreate={text => onCreate?.(text)} />
+				<TaskForm onCreate={onCreate} />
 			</Stack>
 			<List>
 				{tasks.map(task => (
@@ -127,3 +131,35 @@ export function TaskList({
 }
 
 export default TaskList
+
+/**
+ * This interface forces typescript to differentiate between
+ * two IDs which use a different generic type.
+ */
+//  export interface Id<T> extends String {
+//   __idTypeFor?: T;
+// }
+
+// // syntactic sugar for importing the specific ID type
+// export type PersonId = Id<Person>;
+
+// export interface Person {
+//   id: PersonId;
+
+//   address: Address;
+// }
+
+// // syntactic sugar for importing the specific ID type
+// export type AddressId = Id<Address>;
+
+// export interface Address {
+//   id: AddressId;
+// }
+
+// const a: Address = { id: 'some-address-id' };
+// const p: Person = { id: 'some-person-id', address: a };
+
+// // assign AddressId to PersonId
+// p.id = a.id; // TS: Type 'AddressId' is not assignable to type 'PersonId'.
+
+

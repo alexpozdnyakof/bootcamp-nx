@@ -1,5 +1,5 @@
 import { Box } from '@bootcamp-nx/core-ui'
-import { ComponentProps, useCallback, useState } from 'react'
+import { ComponentProps, useCallback, useMemo, useState } from 'react'
 import { TaskList, ViewTask } from './task-list'
 
 const tasks = [
@@ -39,6 +39,18 @@ type TaskListState = {
 	tasks: Array<ViewTask>
 	active: ViewTask['id'] | null
 }
+
+/**
+ * TODO: Lifting state
+ * 1. create task from form
+ * 2. delete task
+ * 3. start task editing
+ * 4. end task editing
+ * 5. change task text
+ * 6. change task status
+ * @param param0
+ * @returns
+ */
 
 export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
 	const [state, setState] = useState<TaskListState>({ tasks, active: null })
@@ -97,6 +109,23 @@ export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
 		}))
 	}, [setState])
 
+	const completedCount = useMemo(
+		() =>
+			state.tasks
+				.reduce(
+					(acc, curr) => {
+						const [completed, total] = acc
+						return [
+							curr.done ? completed + 1 : completed,
+							total + 1,
+						]
+					},
+					[0, 0]
+				)
+				.join('/'),
+		[state.tasks]
+	)
+
 	return (
 		<Box marginLeft='xlarge'>
 			<TaskList
@@ -108,6 +137,7 @@ export function Interactive({ tasks, title }: ComponentProps<typeof TaskList>) {
 				onEdit={onEdit}
 				onCancelEdit={onCancelEdit}
 				editingTask={state.active}
+				completedCount={completedCount}
 			/>
 		</Box>
 	)
