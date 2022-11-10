@@ -1,4 +1,13 @@
-import { Heading, List, Stack, Text } from '@bootcamp-nx/core-ui'
+import {
+	Box,
+	Button,
+	Heading,
+	Icon,
+	Inline,
+	List,
+	Stack,
+	Text,
+} from '@bootcamp-nx/core-ui'
 import { ViewTask } from '../common-types'
 import { TaskForm } from '../task-form'
 import { TaskListItem, TaskListItemHandlers } from '../task-list-item'
@@ -25,17 +34,25 @@ export function TaskList({
 }: TaskListProps) {
 	return (
 		<Stack space='large'>
-			<Stack space='xsmall'>
-				{completedCount && (
-					<Text size='caption' tone='secondary' weight='bold'>
-						{completedCount} タスク完了
-					</Text>
-				)}
-				<Heading level='2' size='larger'>
-					{title}
-				</Heading>
+			<Stack space='small'>
+				<Stack>
+					{completedCount && (
+						<Text size='caption' tone='secondary' weight='bold'>
+							{completedCount} タスク完了
+						</Text>
+					)}
+					<Inline width='full' alignY='center'>
+						<Text size='subtitle' weight='bold'>
+							{title}
+						</Text>
+						<Button variant='quaternary' size='small'>
+							<Icon size='small'>more_horiz</Icon>
+						</Button>
+					</Inline>
+				</Stack>
 				<TaskForm onSubmit={onCreate} />
 			</Stack>
+
 			<List>
 				{tasks.map(task => (
 					<TaskListItem
