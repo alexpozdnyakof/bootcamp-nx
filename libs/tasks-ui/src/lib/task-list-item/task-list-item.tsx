@@ -8,9 +8,9 @@ import {
 } from '@bootcamp-nx/core-ui'
 
 import { memo, MouseEvent, useRef } from 'react'
+import { ViewTask } from '../common-types'
 import { TaskForm } from '../task-form'
 import Task from '../task/task'
-import { ViewTask } from './view-task'
 
 export type TaskListItemHandlers = {
 	onDelete?: (id: ViewTask['id']) => void

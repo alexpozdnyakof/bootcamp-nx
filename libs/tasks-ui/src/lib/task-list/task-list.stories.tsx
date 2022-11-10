@@ -1,7 +1,7 @@
 import { Box } from '@bootcamp-nx/core-ui'
 import { ComponentProps, useCallback, useMemo, useState } from 'react'
+import { ViewTask } from '../common-types'
 import { TaskList } from './task-list'
-import { ViewTask } from './view-task'
 
 const tasks = [
 	{

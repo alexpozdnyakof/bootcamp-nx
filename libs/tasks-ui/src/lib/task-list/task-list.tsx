@@ -1,7 +1,7 @@
 import { Heading, List, Stack, Text } from '@bootcamp-nx/core-ui'
+import { ViewTask } from '../common-types'
 import { TaskForm } from '../task-form'
-import TaskListItem, { TaskListItemHandlers } from './task-list-item'
-import { ViewTask } from './view-task'
+import { TaskListItem, TaskListItemHandlers } from '../task-list-item'
 
 type TaskListProps = {
 	tasks: Array<ViewTask>
