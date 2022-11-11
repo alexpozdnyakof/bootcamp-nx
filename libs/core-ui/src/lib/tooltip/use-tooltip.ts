@@ -21,8 +21,6 @@ export function useTooltip(element: ReactElement | undefined): UseTooltip {
 
 	const setPosition = (bounds: DOMRect | null) => {
 		if (bounds !== null && position == null) {
-			console.log({ boundsWidth: bounds.width / 2 })
-			console.log({ boundsX: bounds.x })
 			_setPosition({
 				x: bounds.x - bounds.width / 3,
 				y: bounds.y + bounds.height,

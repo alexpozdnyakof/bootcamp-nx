@@ -72,7 +72,6 @@ function TaskListProvider({ children, tasks, title }: TaskListProviderProps) {
 
 	const onStartEdit = useCallback(
 		(id: TaskListInnerState['editingTask']) => {
-			console.log('onStartEdit')
 			setState(({ editingTask, ...s }) => ({
 				editingTask: editingTask === id ? editingTask : id,
 				...s,
