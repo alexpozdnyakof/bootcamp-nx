@@ -1,9 +1,16 @@
 import { Button, Icon, Inline, List, Stack, Text } from '@bootcamp-nx/core-ui'
+import { useState } from 'react'
 import { TaskForm } from '../task-form'
 import { useTaskListState } from '../task-list-context'
 import { TaskListItem } from '../task-list-item'
 
+enum TaskListMode {
+	CreatingTask,
+	Idle,
+}
 export function TaskList() {
+	const [mode, setMode] = useState<TaskListMode>(TaskListMode.Idle)
+
 	const {
 		tasks,
 		title,
@@ -16,6 +23,10 @@ export function TaskList() {
 		editingTask,
 		completedCount,
 	} = useTaskListState()
+
+	const isIdle = () => mode === TaskListMode.Idle
+	const setIdle = () => setMode(TaskListMode.Idle)
+	const setCreating = () => setMode(TaskListMode.CreatingTask)
 
 	return (
 		<Stack space='large'>
@@ -37,7 +48,12 @@ export function TaskList() {
 						/>
 					</Inline>
 				</Stack>
-				<TaskForm onSubmit={onCreate} />
+				{!isIdle() && (
+					<TaskForm onSubmit={onCreate} onClear={setIdle} />
+				)}
+				{isIdle() && (
+					<Button onClick={setCreating}>タスクを作成</Button>
+				)}
 			</Stack>
 
 			<List>

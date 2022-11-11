@@ -81,12 +81,63 @@ describe('Task list', () => {
 		expect(screen.queryByText(TASKS_DATA[0].text)).not.toBeInTheDocument()
 	})
 
+	it('should show and hide new task form', async () => {
+		render(<ComponentUnderTest />)
+
+		expect(
+			screen.queryByRole('textbox', {
+				name: 'Create new task',
+			})
+		).not.toBeInTheDocument()
+
+		await userEvent.click(
+			screen.getByRole('button', {
+				name: 'タスクを作成',
+			})
+		)
+
+		expect(
+			screen.queryByRole('button', {
+				name: 'タスクを作成',
+			})
+		).not.toBeInTheDocument()
+
+		expect(
+			screen.queryByRole('textbox', {
+				name: 'Create new task',
+			})
+		).toBeInTheDocument()
+
+		await userEvent.type(
+			screen.getByRole('textbox', {
+				name: 'Create new task',
+			}),
+			'{esc}'
+		)
+
+		expect(
+			screen.queryByRole('textbox', {
+				name: 'Create new task',
+			})
+		).not.toBeInTheDocument()
+		expect(
+			screen.getByRole('button', {
+				name: 'タスクを作成',
+			})
+		).toBeInTheDocument()
+	})
 	it('should create new task', async () => {
 		render(<ComponentUnderTest />)
 		expect(screen.getAllByRole('listitem')).toHaveLength(TASKS_DATA.length)
 
 		const newTaskText = '新しいホームページを作成する'
 		expect(screen.queryByText(newTaskText)).not.toBeInTheDocument()
+
+		await userEvent.click(
+			screen.getByRole('button', {
+				name: 'タスクを作成',
+			})
+		)
 
 		const newTaskForm = screen.getByRole('textbox', {
 			name: 'Create new task',
