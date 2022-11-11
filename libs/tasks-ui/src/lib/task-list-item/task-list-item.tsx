@@ -62,7 +62,7 @@ const TaskListItem = memo(
 							size='small'
 							variant='quaternary'
 							onClick={() => onDelete?.(task.id)}
-							aria-label='delete'
+							aria-label={'Delete '.concat(task.text)}
 							icon={<Icon size='small'>delete</Icon>}
 						/>
 					}
@@ -72,6 +72,7 @@ const TaskListItem = memo(
 						</Icon>
 					}
 					hoverable={!isEditing}
+					aria-label='task-list-item'
 				>
 					{isEditing ? (
 						<Box ref={formRef}>

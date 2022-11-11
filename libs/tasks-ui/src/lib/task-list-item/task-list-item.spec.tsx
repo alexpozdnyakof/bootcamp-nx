@@ -21,7 +21,11 @@ describe('Task list item', () => {
 		const onDelete = jest.fn()
 		render(<TaskListItem task={task} onDelete={onDelete} />)
 
-		await userEvent.click(screen.getByRole('button', { name: 'delete' }))
+		await userEvent.click(
+			screen.getByRole('button', {
+				name: 'Delete 血液レポートのグラフが空白になっている',
+			})
+		)
 
 		expect(onDelete).toHaveBeenCalledWith(task.id)
 	})
@@ -33,7 +37,10 @@ describe('Task list item', () => {
 			<TaskListItem task={task} onComplete={onComplete} />
 		)
 
-		await userEvent.click(screen.getByRole('button', { name: 'Complete' }))
+		const completeButton = screen.getByRole('button', {
+			name: 'Complete 血液レポートのグラフが空白になっている',
+		})
+		await userEvent.click(completeButton)
 
 		expect(onComplete).toHaveBeenCalledWith(task.id)
 
@@ -47,7 +54,7 @@ describe('Task list item', () => {
 		)
 
 		expect(onComplete).not.toBeCalled()
-		await userEvent.click(screen.getByRole('button', { name: 'Complete' }))
+		await userEvent.click(completeButton)
 		expect(onComplete).toHaveBeenCalledWith(task.id)
 	})
 

@@ -30,7 +30,7 @@ export default function Task({ done, id, text, onClick }: TaskProps) {
 					done ? styles['toggle__done'] : null,
 				]}
 				onClick={() => onClick(id)}
-				aria-label='Complete'
+				aria-label={'Complete '.concat(text)}
 			>
 				<CheckboxIcon />
 			</Box>

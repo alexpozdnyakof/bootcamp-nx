@@ -11,16 +11,20 @@ describe('Task', () => {
 				{...{
 					done: false,
 					id: 1,
-					text: 'New Todo',
+					text: '血液レポートのグラフが空白になっている',
 					onClick: () => 0,
 				}}
 			/>
 		)
 
 		expect(
-			screen.getByRole('button', { name: 'Complete' })
+			screen.getByRole('button', {
+				name: 'Complete 血液レポートのグラフが空白になっている',
+			})
 		).toBeInTheDocument()
-		expect(screen.getByText('New Todo')).toBeInTheDocument()
+		expect(
+			screen.getByText('血液レポートのグラフが空白になっている')
+		).toBeInTheDocument()
 	})
 
 	it('should be controlled component', async () => {
@@ -32,7 +36,7 @@ describe('Task', () => {
 						{...{
 							done: complete,
 							id: 1,
-							text: 'New Todo',
+							text: '血液レポートのグラフが空白になっている',
 							onClick: () => setComplete(v => !v),
 						}}
 					/>
@@ -45,7 +49,9 @@ describe('Task', () => {
 		}
 		render(<TestCase />)
 
-		const completeButton = screen.getByRole('button', { name: 'Complete' })
+		const completeButton = screen.getByRole('button', {
+			name: 'Complete 血液レポートのグラフが空白になっている',
+		})
 		expect(completeButton).not.toHaveClass('toggle__done')
 
 		await userEvent.click(completeButton)
