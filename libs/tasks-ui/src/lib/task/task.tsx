@@ -31,6 +31,8 @@ export default function Task({ done, id, text, onClick }: TaskProps) {
 				]}
 				onClick={() => onClick(id)}
 				aria-label={'Complete '.concat(text)}
+				aria-checked={done ? 'true' : 'false'}
+				role='checkbox'
 			>
 				<CheckboxIcon />
 			</Box>

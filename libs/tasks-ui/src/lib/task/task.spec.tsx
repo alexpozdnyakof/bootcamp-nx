@@ -49,13 +49,15 @@ describe('Task', () => {
 		}
 		render(<TestCase />)
 
-		const completeButton = screen.getByRole('button', {
+		const completeButton = screen.getByRole('checkbox', {
 			name: 'Complete 血液レポートのグラフが空白になっている',
 		})
 		expect(completeButton).not.toHaveClass('toggle__done')
+		expect(completeButton).not.toBeChecked()
 
 		await userEvent.click(completeButton)
 
 		expect(completeButton).toHaveClass('toggle__done')
+		expect(completeButton).toBeChecked()
 	})
 })

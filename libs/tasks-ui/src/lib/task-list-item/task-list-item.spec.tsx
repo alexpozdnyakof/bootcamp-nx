@@ -37,7 +37,7 @@ describe('Task list item', () => {
 			<TaskListItem task={task} onComplete={onComplete} />
 		)
 
-		const completeButton = screen.getByRole('button', {
+		const completeButton = screen.getByRole('checkbox', {
 			name: 'Complete 血液レポートのグラフが空白になっている',
 		})
 		await userEvent.click(completeButton)

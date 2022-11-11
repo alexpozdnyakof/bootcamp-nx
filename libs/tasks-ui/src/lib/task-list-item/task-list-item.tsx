@@ -72,7 +72,7 @@ const TaskListItem = memo(
 						</Icon>
 					}
 					hoverable={!isEditing}
-					aria-label='task-list-item'
+					aria-label={task.text}
 				>
 					{isEditing ? (
 						<Box ref={formRef}>
