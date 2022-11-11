@@ -10,7 +10,7 @@ type ListProps = {
 const List = polymorphicComponent<'div', ListProps>(
 	({ children, ...props }, ref) => {
 		return (
-			<Stack ref={ref} {...props}>
+			<Stack ref={ref} {...props} role='list'>
 				{children}
 			</Stack>
 		)

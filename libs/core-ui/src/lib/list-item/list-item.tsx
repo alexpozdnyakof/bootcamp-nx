@@ -15,6 +15,7 @@ const ListItem = polymorphicComponent<'div', ListItemProps>(
 	({ children, actions, startActions, hoverable = true, ...props }, ref) => {
 		return (
 			<Box
+				role='listitem'
 				className={[
 					styles['listItem'],
 					hoverable ? styles['listItem_hoverable'] : null,

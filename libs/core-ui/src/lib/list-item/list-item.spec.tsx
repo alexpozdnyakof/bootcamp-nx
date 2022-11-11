@@ -5,9 +5,9 @@ import ListItem from './list-item'
 
 describe('ListItem', () => {
 	it('should render successfully', () => {
-		render(<ListItem data-testid='list' />)
+		render(<ListItem />)
 
-		expect(screen.getByTestId('list')).toBeInTheDocument()
+		expect(screen.getByRole('listitem')).toBeInTheDocument()
 	})
 
 	it('should render children', () => {
@@ -35,12 +35,10 @@ describe('ListItem', () => {
 	})
 
 	it('should not be hoverable', () => {
-		render(
-			<ListItem hoverable={false} data-testid='list'>
-				text
-			</ListItem>
-		)
+		render(<ListItem hoverable={false}>text</ListItem>)
 
-		expect(screen.getByTestId('list')).not.toHaveClass('listItem_hoverable')
+		expect(screen.getByRole('listitem')).not.toHaveClass(
+			'listItem_hoverable'
+		)
 	})
 })
