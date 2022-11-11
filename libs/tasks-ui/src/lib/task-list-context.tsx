@@ -1,6 +1,6 @@
 import {
 	createContext,
-	PropsWithChildren,
+	ReactNode,
 	useCallback,
 	useContext,
 	useMemo,
@@ -8,39 +8,6 @@ import {
 } from 'react'
 import { ViewTask } from './common-types'
 import { TaskListItemHandlers } from './task-list-item'
-
-const tasksData = [
-	{
-		id: 0,
-		text: '血液レポートのグラフが空白になっている',
-		done: false,
-	},
-	{
-		id: 1,
-		text: '無効にする|| ユーザーがアカウントを無効にできない',
-		done: true,
-	},
-	{
-		id: 2,
-		text: '|| 私のプロフィール || ユーザーは、サインアップ時に設定された体重と身長を表示できません',
-		done: false,
-	},
-	{
-		id: 3,
-		text: 'プロフィール、プロフィールの編集、ポップアップ',
-		done: true,
-	},
-	{
-		id: 4,
-		text: 'ビルドを共有するには Apple 開発者アカウントが必要です',
-		done: false,
-	},
-	{
-		id: 5,
-		text: 'ビルドを共有するには Apple 開発者アカウントが必要です',
-		done: false,
-	},
-]
 
 export type TaskListContextState = {
 	tasks: Array<ViewTask>
@@ -54,9 +21,14 @@ type TaskListInnerState = Pick<TaskListContextState, 'tasks' | 'editingTask'>
 
 const TaskListContext = createContext({} as TaskListContextState)
 
-function TaskListProvider({ children }: PropsWithChildren) {
+type TaskListProviderProps = {
+	children: ReactNode
+	tasks: TaskListContextState['tasks']
+}
+
+function TaskListProvider({ children, tasks }: TaskListProviderProps) {
 	const [state, setState] = useState<TaskListInnerState>({
-		tasks: tasksData,
+		tasks,
 		editingTask: null,
 	})
 
@@ -100,8 +72,9 @@ function TaskListProvider({ children }: PropsWithChildren) {
 
 	const onStartEdit = useCallback(
 		(id: TaskListInnerState['editingTask']) => {
+			console.log('onStartEdit')
 			setState(({ editingTask, ...s }) => ({
-				active: editingTask === id ? editingTask : id,
+				editingTask: editingTask === id ? editingTask : id,
 				...s,
 			}))
 		},
