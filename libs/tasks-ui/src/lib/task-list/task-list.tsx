@@ -1,18 +1,9 @@
 import { Button, Icon, Inline, List, Stack, Text } from '@bootcamp-nx/core-ui'
-import { ViewTask } from '../common-types'
 import { TaskForm } from '../task-form'
 import { useTaskListState } from '../task-list-context'
-import { TaskListItem, TaskListItemHandlers } from '../task-list-item'
+import { TaskListItem } from '../task-list-item'
 
-type TaskListProps = {
-	tasks?: Array<ViewTask>
-	title?: string
-	completedCount?: string
-	editingTask?: ViewTask['id'] | null
-	onCreate?: (text: ViewTask['text']) => void
-} & TaskListItemHandlers
-
-export function TaskList(props: TaskListProps) {
+export function TaskList() {
 	const {
 		tasks,
 		title,

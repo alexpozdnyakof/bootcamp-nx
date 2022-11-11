@@ -26,9 +26,4 @@ export const TASKS_DATA: Array<ViewTask> = [
 		text: 'ビルドを共有するには Apple 開発者アカウントが必要です',
 		done: false,
 	},
-	{
-		id: 5,
-		text: 'ビルドを共有するには Apple 開発者アカウントが必要です',
-		done: false,
-	},
 ]

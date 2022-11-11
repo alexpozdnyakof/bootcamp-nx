@@ -18,7 +18,7 @@ describe('Task', () => {
 		)
 
 		expect(
-			screen.getByRole('button', {
+			screen.getByRole('checkbox', {
 				name: 'Complete 血液レポートのグラフが空白になっている',
 			})
 		).toBeInTheDocument()
