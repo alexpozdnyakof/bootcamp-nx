@@ -10,7 +10,7 @@ export default {
 export function Interactive() {
 	return (
 		<Box marginLeft='xlarge'>
-			<TaskListProvider tasks={TASKS_DATA}>
+			<TaskListProvider tasks={TASKS_DATA} title='素晴らしいタスクリスト'>
 				<TaskList />
 			</TaskListProvider>
 		</Box>

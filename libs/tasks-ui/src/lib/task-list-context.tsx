@@ -24,9 +24,9 @@ const TaskListContext = createContext({} as TaskListContextState)
 type TaskListProviderProps = {
 	children: ReactNode
 	tasks: TaskListContextState['tasks']
-}
+} & Pick<TaskListContextState, 'tasks' | 'title'>
 
-function TaskListProvider({ children, tasks }: TaskListProviderProps) {
+function TaskListProvider({ children, tasks, title }: TaskListProviderProps) {
 	const [state, setState] = useState<TaskListInnerState>({
 		tasks,
 		editingTask: null,
@@ -121,7 +121,7 @@ function TaskListProvider({ children, tasks }: TaskListProviderProps) {
 		<TaskListContext.Provider
 			value={{
 				tasks: state.tasks,
-				title: '素晴らしいタスクリスト',
+				title,
 				onComplete,
 				onDelete,
 				onCreate,
