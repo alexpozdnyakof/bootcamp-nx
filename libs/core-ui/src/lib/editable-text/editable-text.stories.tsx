@@ -1,3 +1,5 @@
+import { ComponentProps } from 'react'
+import { select } from '../storybook-helpers'
 import { EditableText } from './editable-text'
 
 export default {
@@ -5,6 +7,16 @@ export default {
 	title: 'Editable Text',
 }
 
-export function Interactive() {
-	return <EditableText value='素晴らしいタスクリスト' />
+export function Interactive(props: ComponentProps<typeof EditableText>) {
+	return <EditableText {...props} />
+}
+
+Interactive.argTypes = {
+	size: {
+		control: select(['body', 'subtitle'], 'body'),
+	},
+	value: {
+		control: { type: 'text' },
+		defaultValue: '素晴らしいタスクリスト',
+	},
 }

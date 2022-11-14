@@ -40,4 +40,3 @@ export default function Task({ done, id, text, onClick }: TaskProps) {
 		</Inline>
 	)
 }
-
