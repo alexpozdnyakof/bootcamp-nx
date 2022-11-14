@@ -1,4 +1,6 @@
-import { Box, Icon, polymorphicComponent } from '@bootcamp-nx/core-ui'
+import { Box } from '../box'
+import { Icon } from '../icon'
+import { polymorphicComponent } from '../polymorphic'
 import styles from './switch-complete.module.less'
 
 export type SwitchCompleteProps = {
