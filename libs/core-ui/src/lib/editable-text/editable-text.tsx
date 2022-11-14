@@ -10,13 +10,13 @@ enum EditableTextMode {
 }
 
 export type EditableTextProps = {
-	value: string
+	children: string
 	onChange: (newValue: string) => void
 	size?: 'body' | 'subtitle'
 } & Omit<TextProps, 'size' | 'children'>
 
 export function EditableText({
-	value,
+	children,
 	onChange,
 	size: _size = 'body',
 	...props
@@ -36,10 +36,12 @@ export function EditableText({
 	}
 
 	const onSubmit = () => {
-		const value = inputRef.current?.value as string
-		onChange(value)
+		const result = inputRef.current?.value as string
+		onChange(result)
 		setIdle()
 	}
+
+	const value = children.slice()
 
 	return (
 		<KeyCapturer onEscape={setIdle}>

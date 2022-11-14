@@ -15,7 +15,7 @@ Interactive.argTypes = {
 	size: {
 		control: select(['body', 'subtitle'], 'body'),
 	},
-	value: {
+	children: {
 		control: { type: 'text' },
 		defaultValue: '素晴らしいタスクリスト',
 	},
