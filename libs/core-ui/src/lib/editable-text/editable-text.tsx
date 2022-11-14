@@ -11,7 +11,7 @@ enum EditableTextMode {
 
 export type EditableTextProps = {
 	value: string
-	onChange?: (newValue: string) => void
+	onChange: (newValue: string) => void
 	size?: 'body' | 'subtitle'
 } & Omit<TextProps, 'size' | 'children'>
 
@@ -35,6 +35,12 @@ export function EditableText({
 		}
 	}
 
+	const onSubmit = () => {
+		const value = inputRef.current?.value as string
+		onChange(value)
+		setIdle()
+	}
+
 	return (
 		<KeyCapturer onEscape={setIdle}>
 			<Box
@@ -48,14 +54,16 @@ export function EditableText({
 				tabIndex={0}
 			>
 				{mode === EditableTextMode.Edit ? (
-					<Box
-						as='input'
-						className={[styles['editableText-input']]}
-						aria-label={`Edit ${value}`}
-						defaultValue={value}
-						ref={inputRef}
-						onBlur={setIdle}
-					/>
+					<KeyCapturer onEnter={onSubmit}>
+						<Box
+							as='input'
+							className={[styles['editableText-input']]}
+							aria-label={`Edit ${value}`}
+							defaultValue={value}
+							ref={inputRef}
+							onBlur={setIdle}
+						/>
+					</KeyCapturer>
 				) : (
 					<Text {...props} size={_size}>
 						{value}

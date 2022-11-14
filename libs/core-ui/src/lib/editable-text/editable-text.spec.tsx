@@ -4,12 +4,12 @@ import EditableText from './editable-text'
 
 describe('EditableText', () => {
 	it('should render text', () => {
-		render(<EditableText value='素' />)
+		render(<EditableText value='素' onChange={(value: string) => 0} />)
 		expect(screen.getByText('素')).toBeInTheDocument()
 	})
 
 	it('should toggle to edit mode when doubleclicked', async () => {
-		render(<EditableText value='素' />)
+		render(<EditableText value='素' onChange={(value: string) => 0} />)
 		const staticText = screen.getByText('素')
 
 		expect(staticText).toBeInTheDocument()
@@ -30,7 +30,7 @@ describe('EditableText', () => {
 	})
 
 	it('should focus textfield in edit mode', async () => {
-		render(<EditableText value='素' />)
+		render(<EditableText value='素' onChange={(value: string) => 0} />)
 
 		await userEvent.dblClick(screen.getByRole('switch'))
 
@@ -42,7 +42,7 @@ describe('EditableText', () => {
 	})
 
 	it('should cancel edit mode after esc pressed', async () => {
-		render(<EditableText value='素' />)
+		render(<EditableText value='素' onChange={(value: string) => 0} />)
 
 		expect(screen.getByText('素')).toBeInTheDocument()
 		expect(
@@ -63,7 +63,7 @@ describe('EditableText', () => {
 	})
 
 	it('should cancel edit mode after input field lost focus', async () => {
-		render(<EditableText value='素' />)
+		render(<EditableText value='素' onChange={(value: string) => 0} />)
 
 		expect(screen.getByText('素')).toBeInTheDocument()
 		expect(
@@ -83,12 +83,41 @@ describe('EditableText', () => {
 		).not.toBeInTheDocument()
 	})
 	it('should set subtitle size', () => {
-		const { rerender } = render(<EditableText value='素' />)
+		const { rerender } = render(
+			<EditableText value='素' onChange={(value: string) => 0} />
+		)
 
 		expect(screen.getByRole('switch')).not.toHaveClass('size-subtitle')
 
-		rerender(<EditableText value='素' size='subtitle' />)
+		rerender(
+			<EditableText
+				value='素'
+				size='subtitle'
+				onChange={(value: string) => 0}
+			/>
+		)
 
 		expect(screen.getByRole('switch')).toHaveClass('size-subtitle')
+	})
+
+	it('should call onChange callback after enter pressed', async () => {
+		const onChange = jest.fn()
+		render(<EditableText value='素' onChange={onChange} />)
+
+		await userEvent.dblClick(screen.getByRole('switch'))
+		await userEvent.type(screen.getByRole('textbox'), '晴{enter}')
+		expect(onChange).toBeCalledWith('素晴')
+	})
+
+	it('should hide form after enter pressed', async () => {
+		render(<EditableText value='素' onChange={value => 0} />)
+
+		expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
+
+		await userEvent.dblClick(screen.getByRole('switch'))
+		expect(screen.queryByRole('textbox')).toBeInTheDocument()
+
+		await userEvent.type(screen.getByRole('textbox'), '晴{enter}')
+		expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
 	})
 })
