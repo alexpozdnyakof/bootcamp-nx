@@ -4,6 +4,8 @@ import {
 	Stack,
 	Text,
 	TextField,
+	Inline,
+	Button,
 } from '@bootcamp-nx/core-ui'
 import { useEffect, useRef } from 'react'
 
@@ -34,11 +36,8 @@ export function TaskForm({ onSubmit, onClear, value }: TaskFormProps) {
 	}
 
 	return (
-		<Stack space='small'>
-			<KeyCapturer
-				onEnter={() => submitForm()}
-				onEscape={() => clearForm()}
-			>
+		<Stack space='xsmall'>
+			<KeyCapturer onEnter={submitForm} onEscape={clearForm}>
 				<TextField
 					aria-label='Create new task'
 					placeholder='タスク名を入力'
@@ -53,6 +52,12 @@ export function TaskForm({ onSubmit, onClear, value }: TaskFormProps) {
 					defaultValue={value}
 				/>
 			</KeyCapturer>
+			<Inline space='small' align='right'>
+				<Button onClick={submitForm}>作成</Button>
+				<Button variant='secondary' onClick={clearForm}>
+					キャンセル
+				</Button>
+			</Inline>
 		</Stack>
 	)
 }

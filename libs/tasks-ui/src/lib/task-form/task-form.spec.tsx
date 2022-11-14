@@ -110,4 +110,29 @@ describe('TaskForm', () => {
 		await userEvent.type(taskField, '{esc}')
 		expect(spy).toHaveBeenCalled()
 	})
+
+  it('should call onSubmit when button pressed', async () => {
+		const spy = jest.fn()
+		render(<TaskForm onSubmit={spy} />)
+
+		const taskField = screen.getByRole('textbox', {
+			name: 'Create new task',
+		})
+
+		await userEvent.type(taskField, '作成')
+
+		await userEvent.click(screen.getByRole('button', { name: '作成' }))
+
+		expect(spy).toHaveBeenCalled()
+  })
+
+  it('should call onCancel when button pressed', async () => {
+		const spy = jest.fn()
+		render(<TaskForm onClear={spy} />)
+
+		await userEvent.click(
+			screen.getByRole('button', { name: 'キャンセル' })
+		)
+		expect(spy).toHaveBeenCalled()
+  })
 })
