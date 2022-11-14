@@ -9,16 +9,24 @@ import {
 import styles from './inline.module.less'
 export type InlineAlign = 'left' | 'center' | 'right'
 
-/* eslint-disable-next-line */
 export type InlineProps = {
 	space?: ResponsiveProp<Space>
 	align?: ResponsiveProp<InlineAlign>
 	alignY?: ResponsiveProp<'top' | 'center' | 'bottom'>
+	wrap?: boolean
 } & ReusableBoxProps
 
 const Inline = polymorphicComponent<'div', InlineProps>(
 	(
-		{ as, space, align = 'left', alignY = 'center', children, ...props },
+		{
+			as,
+			space,
+			align = 'left',
+			alignY = 'center',
+			wrap = false,
+			children,
+			...props
+		},
 		ref
 	) => {
 		return (
@@ -27,7 +35,7 @@ const Inline = polymorphicComponent<'div', InlineProps>(
 				ref={ref}
 				as={as}
 				display='flex'
-				flexWrap='wrap'
+				flexWrap={wrap ? 'wrap' : 'nowrap'}
 				className={[getClassNames(styles, 'space', space)]}
 				alignItems={mapResponsiveProp(alignY, alignY =>
 					alignY === 'top'

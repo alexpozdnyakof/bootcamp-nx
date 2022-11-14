@@ -125,5 +125,6 @@ describe('Inline', () => {
 			)
 		})
 	})
+
 	runSpaceTests(Inline)
 })
