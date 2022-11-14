@@ -58,82 +58,18 @@ describe('Task list item', () => {
 		expect(onComplete).toHaveBeenCalledWith(task.id)
 	})
 
-	it('should call onStartEdit callback', async () => {
-		const onStartEdit = jest.fn()
-		render(
-			<TaskListItem
-				task={task}
-				onStartEdit={onStartEdit}
-				data-testid='task-list-element'
-			/>
-		)
-
-		await userEvent.dblClick(screen.getByTestId('task-list-element'))
-
-		expect(onStartEdit).toHaveBeenCalledWith(task.id)
-	})
-
-	it('should show task form when editing', async () => {
-		const { rerender } = render(
-			<TaskListItem task={task} isEditing={false} />
-		)
-
-		expect(
-			screen.queryByPlaceholderText('タスク名を入力')
-		).not.toBeInTheDocument()
-
-		rerender(<TaskListItem task={task} isEditing={true} />)
-		expect(
-			screen.queryByPlaceholderText('タスク名を入力')
-		).toBeInTheDocument()
-	})
-
-	it('should call onCancelEdit', async () => {
-		const onCancelEdit = jest.fn()
-		render(
-			<TaskListItem
-				task={task}
-				isEditing={true}
-				onCancelEdit={onCancelEdit}
-			/>
-		)
-
-		await userEvent.type(
-			screen.getByPlaceholderText('タスク名を入力'),
-			'{esc}'
-		)
-
-		expect(onCancelEdit).toHaveBeenCalled()
-	})
-
-	it('should call onCancelEdit when clicked outside', async () => {
-		const onCancelEdit = jest.fn()
-		render(
-			<>
-				<div data-testid='outside-element'></div>
-				<TaskListItem
-					task={task}
-					isEditing={true}
-					onCancelEdit={onCancelEdit}
-				/>
-			</>
-		)
-
-		await userEvent.click(screen.getByPlaceholderText('タスク名を入力'))
-		expect(onCancelEdit).not.toHaveBeenCalled()
-
-		await userEvent.click(screen.getByTestId('outside-element'))
-		expect(onCancelEdit).toBeCalled()
-	})
-
-	it('should call onCreate callback', async () => {
+	it('should call onChange', async () => {
 		const onChange = jest.fn()
 		render(
 			<TaskListItem task={task} isEditing={true} onChange={onChange} />
 		)
 
+		await userEvent.dblClick(
+			screen.getByRole('switch', { name: `Edit ${task.text}` })
+		)
+
 		await userEvent.type(
-			screen.getByPlaceholderText('タスク名を入力'),
+			screen.getByDisplayValue(task.text),
 			'血液レ{enter}'
 		)
 

@@ -151,31 +151,6 @@ describe('Task list', () => {
 		expect(screen.queryByText(newTaskText)).toBeInTheDocument()
 	})
 
-	it('should show and hide task editing form', async () => {
-		render(<ComponentUnderTest />)
-
-		expect(
-			screen.queryByDisplayValue(TASKS_DATA[0].text)
-		).not.toBeInTheDocument()
-
-		await userEvent.dblClick(
-			screen.getByRole('listitem', { name: TASKS_DATA[0].text })
-		)
-
-		expect(
-			screen.queryByDisplayValue(TASKS_DATA[0].text)
-		).toBeInTheDocument()
-
-		await userEvent.type(
-			screen.getByDisplayValue(TASKS_DATA[0].text),
-			'{esc}'
-		)
-
-		expect(
-			screen.queryByDisplayValue(TASKS_DATA[0].text)
-		).not.toBeInTheDocument()
-	})
-
 	it('should change task text', async () => {
 		render(<ComponentUnderTest />)
 
@@ -187,7 +162,7 @@ describe('Task list', () => {
 		).not.toBeInTheDocument()
 
 		await userEvent.dblClick(
-			screen.getByRole('listitem', { name: TASKS_DATA[0].text })
+			screen.getByRole('switch', { name: `Edit ${TASKS_DATA[0].text}` })
 		)
 
 		await userEvent.type(

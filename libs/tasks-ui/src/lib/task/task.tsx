@@ -1,4 +1,4 @@
-import { Inline, Box, Text } from '@bootcamp-nx/core-ui'
+import { Inline, Box, EditableText } from '@bootcamp-nx/core-ui'
 import styles from './task.module.less'
 
 const CheckboxIcon = (props: JSX.IntrinsicElements['svg']) => (
@@ -18,11 +18,12 @@ export type TaskProps = {
 	id: number
 	text: string
 	onClick: (id: number) => void
+	onChange?: (newText: string) => void
 }
 
-export default function Task({ done, id, text, onClick }: TaskProps) {
+export default function Task({ done, id, text, onClick, onChange }: TaskProps) {
 	return (
-		<Inline space='small' style={{ whiteSpace: 'nowrap' }}>
+		<Inline space='xsmall'>
 			<Box
 				as='button'
 				className={[
@@ -36,7 +37,12 @@ export default function Task({ done, id, text, onClick }: TaskProps) {
 			>
 				<CheckboxIcon />
 			</Box>
-			<Text>{text}</Text>
+			<EditableText
+				onChange={newText => onChange?.(newText)}
+				aria-label={`Edit ${text}`}
+			>
+				{text}
+			</EditableText>
 		</Inline>
 	)
 }

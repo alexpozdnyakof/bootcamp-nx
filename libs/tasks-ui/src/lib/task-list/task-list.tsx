@@ -18,9 +18,6 @@ export function TaskList() {
 		onComplete,
 		onCreate,
 		onChange,
-		onStartEdit,
-		onCancelEdit,
-		editingTask,
 		completedCount,
 	} = useTaskListState()
 
@@ -63,9 +60,6 @@ export function TaskList() {
 						task={task}
 						onDelete={onDelete}
 						onComplete={onComplete}
-						onStartEdit={onStartEdit}
-						isEditing={editingTask === task.id}
-						onCancelEdit={onCancelEdit}
 						onChange={onChange}
 					/>
 				))}
