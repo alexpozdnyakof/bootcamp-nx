@@ -52,7 +52,7 @@ export function TaskForm({ onSubmit, onClear, value }: TaskFormProps) {
 					defaultValue={value}
 				/>
 			</KeyCapturer>
-			<Inline space='small' align='right'>
+			<Inline space='small'>
 				<Button onClick={submitForm}>作成</Button>
 				<Button variant='secondary' onClick={clearForm}>
 					キャンセル

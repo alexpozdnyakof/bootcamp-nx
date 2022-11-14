@@ -111,7 +111,7 @@ describe('TaskForm', () => {
 		expect(spy).toHaveBeenCalled()
 	})
 
-  it('should call onSubmit when button pressed', async () => {
+	it('should call onSubmit when button pressed', async () => {
 		const spy = jest.fn()
 		render(<TaskForm onSubmit={spy} />)
 
@@ -124,9 +124,9 @@ describe('TaskForm', () => {
 		await userEvent.click(screen.getByRole('button', { name: '作成' }))
 
 		expect(spy).toHaveBeenCalled()
-  })
+	})
 
-  it('should call onCancel when button pressed', async () => {
+	it('should call onCancel when button pressed', async () => {
 		const spy = jest.fn()
 		render(<TaskForm onClear={spy} />)
 
@@ -134,5 +134,5 @@ describe('TaskForm', () => {
 			screen.getByRole('button', { name: 'キャンセル' })
 		)
 		expect(spy).toHaveBeenCalled()
-  })
+	})
 })

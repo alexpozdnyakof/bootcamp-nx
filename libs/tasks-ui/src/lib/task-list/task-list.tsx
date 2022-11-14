@@ -1,4 +1,13 @@
-import { Button, Icon, Inline, List, Stack, Text } from '@bootcamp-nx/core-ui'
+import {
+	Box,
+	Button,
+	EditableText,
+	Icon,
+	Inline,
+	List,
+	Stack,
+	Text,
+} from '@bootcamp-nx/core-ui'
 import { useState } from 'react'
 import { TaskForm } from '../task-form'
 import { useTaskListState } from '../task-list-context'
@@ -28,6 +37,7 @@ export function TaskList() {
 	return (
 		<Stack space='large'>
 			<Stack space='small'>
+				{/* Task list header */}
 				<Stack>
 					{completedCount && (
 						<Text size='caption' tone='secondary' weight='bold'>
@@ -35,9 +45,14 @@ export function TaskList() {
 						</Text>
 					)}
 					<Inline width='full' alignY='center'>
-						<Text size='subtitle' weight='bold'>
+						<EditableText
+							size='subtitle'
+							weight='bold'
+							onChange={newValue => 0}
+						>
 							{title}
-						</Text>
+						</EditableText>
+
 						<Button
 							size='small'
 							variant='quaternary'
@@ -45,6 +60,8 @@ export function TaskList() {
 						/>
 					</Inline>
 				</Stack>
+
+				{/* Task Form */}
 				{!isIdle() && (
 					<TaskForm onSubmit={onCreate} onClear={setIdle} />
 				)}
@@ -53,6 +70,7 @@ export function TaskList() {
 				)}
 			</Stack>
 
+			{/* Tasks */}
 			<List>
 				{tasks.map(task => (
 					<TaskListItem
