@@ -15,7 +15,7 @@ export type EditableTextProps = {
 	onStartEdit?: () => void
 	onCancelEdit?: () => void
 	size?: 'body' | 'subtitle'
-} & Omit<TextProps, 'size' | 'children'>
+} & Omit<TextProps, 'size' | 'children' | 'weight'>
 
 export function EditableText({
 	children,
