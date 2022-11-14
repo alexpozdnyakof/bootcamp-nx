@@ -57,6 +57,7 @@ const TaskListItem = memo(
 				>
 					<Inline space='xsmall'>
 						<SwitchComplete
+							disabled={isEdit}
 							done={task.done}
 							aria-label={'Complete '.concat(task.text)}
 							onClick={() => onComplete?.(task.id)}

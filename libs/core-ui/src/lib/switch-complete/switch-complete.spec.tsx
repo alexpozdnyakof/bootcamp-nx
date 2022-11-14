@@ -24,4 +24,12 @@ describe('SwitchComplete', () => {
 
 		expect(onClick).toBeCalled()
 	})
+
+	it('should can be disablable', () => {
+		const { rerender } = render(<SwitchComplete aria-label='液' />)
+		expect(screen.getByRole('switch', { name: '液' })).not.toBeDisabled()
+
+		rerender(<SwitchComplete aria-label='液' disabled />)
+		expect(screen.getByRole('switch', { name: '液' })).toBeDisabled()
+	})
 })

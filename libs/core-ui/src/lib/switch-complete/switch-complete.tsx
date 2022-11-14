@@ -8,7 +8,7 @@ export type SwitchCompleteProps = {
 }
 
 const SwitchComplete = polymorphicComponent<'button', SwitchCompleteProps>(
-	({ done, onClick, ...props }, ref) => (
+	({ done, onClick, disabled, ...props }, ref) => (
 		<Box
 			ref={ref}
 			as='button'
@@ -16,6 +16,7 @@ const SwitchComplete = polymorphicComponent<'button', SwitchCompleteProps>(
 			className={[styles['switchComplete']]}
 			onClick={onClick}
 			aria-checked={done}
+			disabled={disabled}
 			role='switch'
 		>
 			<Icon size='small'>done</Icon>
