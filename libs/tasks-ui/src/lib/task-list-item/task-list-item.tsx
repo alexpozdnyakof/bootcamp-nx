@@ -1,13 +1,15 @@
 import {
 	Button,
 	Icon,
+	Inline,
+	SwitchComplete,
 	ListItem,
+	EditableText,
 	polymorphicComponent,
 } from '@bootcamp-nx/core-ui'
 
 import { memo } from 'react'
 import { ViewTask } from '../common-types'
-import Task from '../task/task'
 
 export type TaskListItemHandlers = {
 	onDelete?: (id: ViewTask['id']) => void
@@ -49,11 +51,19 @@ const TaskListItem = memo(
 					hoverable={!isEditing}
 					aria-label={task.text}
 				>
-					<Task
-						{...task}
-						onChange={newValue => onChange?.(task.id, newValue)}
-						onClick={() => onComplete?.(task.id)}
-					></Task>
+					<Inline space='xsmall'>
+						<SwitchComplete
+							done={task.done}
+							aria-label={'Complete '.concat(task.text)}
+							onClick={() => onComplete?.(task.id)}
+						/>
+						<EditableText
+							onChange={newText => onChange?.(task.id, newText)}
+							aria-label={`Edit ${task.text}`}
+						>
+							{task.text}
+						</EditableText>
+					</Inline>
 				</ListItem>
 			)
 		}
