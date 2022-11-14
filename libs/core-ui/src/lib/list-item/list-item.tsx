@@ -8,17 +8,29 @@ type ListItemProps = {
 	children: ReactNode
 	actions?: ReactNode | Array<ReactNode>
 	hoverable?: boolean
+	selected?: boolean
 	startActions: ReactNode | Array<ReactNode>
 }
 
 const ListItem = polymorphicComponent<'div', ListItemProps>(
-	({ children, actions, startActions, hoverable = true, ...props }, ref) => {
+	(
+		{
+			children,
+			actions,
+			startActions,
+			hoverable = true,
+			selected = false,
+			...props
+		},
+		ref
+	) => {
 		return (
 			<Box
 				role='listitem'
 				className={[
 					styles['listItem'],
 					hoverable ? styles['listItem_hoverable'] : null,
+					selected ? styles['listItem_selected'] : null,
 				]}
 				ref={ref}
 				{...props}

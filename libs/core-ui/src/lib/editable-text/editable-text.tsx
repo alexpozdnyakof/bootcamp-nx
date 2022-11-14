@@ -12,12 +12,16 @@ enum EditableTextMode {
 export type EditableTextProps = {
 	children: string
 	onChange: (newValue: string) => void
+	onStartEdit?: () => void
+	onCancelEdit?: () => void
 	size?: 'body' | 'subtitle'
 } & Omit<TextProps, 'size' | 'children'>
 
 export function EditableText({
 	children,
 	onChange,
+	onStartEdit,
+	onCancelEdit,
 	size: _size = 'body',
 	...props
 }: EditableTextProps) {
@@ -26,8 +30,8 @@ export function EditableText({
 	useEffect(() => {
 		inputRef.current?.focus()
 	}, [mode])
-	const setEdit = () => setMode(EditableTextMode.Edit)
-	const setIdle = () => setMode(EditableTextMode.Idle)
+	const setEdit = () => (setMode(EditableTextMode.Edit), onStartEdit?.())
+	const setIdle = () => (setMode(EditableTextMode.Idle), onCancelEdit?.())
 
 	const handleClick = (event: MouseEvent<HTMLElement>) => {
 		if (event.detail === 2) {

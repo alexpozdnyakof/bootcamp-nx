@@ -34,11 +34,17 @@ describe('ListItem', () => {
 		expect(screen.getByTestId('dragAction')).toBeInTheDocument()
 	})
 
-	it('should not be hoverable', () => {
+	it('should can be not hoverable', () => {
 		render(<ListItem hoverable={false}>text</ListItem>)
 
 		expect(screen.getByRole('listitem')).not.toHaveClass(
 			'listItem_hoverable'
 		)
+	})
+
+	it('should can be selected', () => {
+		render(<ListItem selected={true}>text</ListItem>)
+
+		expect(screen.getByRole('listitem')).toHaveClass('listItem_selected')
 	})
 })

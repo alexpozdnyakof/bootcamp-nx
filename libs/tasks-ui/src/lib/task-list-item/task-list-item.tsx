@@ -8,7 +8,7 @@ import {
 	polymorphicComponent,
 } from '@bootcamp-nx/core-ui'
 
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import { ViewTask } from '../common-types'
 
 export type TaskListItemHandlers = {
@@ -30,9 +30,13 @@ const TaskListItem = memo(
 		) => {
 			if (!task) return null
 
+			// eslint-disable-next-line react-hooks/rules-of-hooks
+			const [isEdit, setEdit] = useState<boolean>(false)
+
 			return (
 				<ListItem
 					{...props}
+					selected={isEdit}
 					ref={ref}
 					actions={
 						<Button
@@ -60,6 +64,8 @@ const TaskListItem = memo(
 						<EditableText
 							onChange={newText => onChange?.(task.id, newText)}
 							aria-label={`Edit ${task.text}`}
+							onStartEdit={() => setEdit(true)}
+							onCancelEdit={() => setEdit(false)}
 						>
 							{task.text}
 						</EditableText>
