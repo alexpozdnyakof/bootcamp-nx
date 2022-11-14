@@ -1,3 +1,4 @@
+export * from './lib/editable-text/'
 export * from './lib/hooks'
 export * from './lib/tooltip'
 export * from './lib/list-item'

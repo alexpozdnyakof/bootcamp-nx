@@ -1,4 +1,4 @@
-import { ForwardedRef, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { Box, BoxProps } from '../box'
 import { Tone } from '../common-types'
 import { polymorphicComponent } from '../polymorphic'
