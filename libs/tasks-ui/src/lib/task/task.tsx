@@ -1,4 +1,5 @@
 import { Inline, Box, EditableText } from '@bootcamp-nx/core-ui'
+import { SwitchComplete } from '../switch-complete'
 import styles from './task.module.less'
 
 const CheckboxIcon = (props: JSX.IntrinsicElements['svg']) => (
@@ -17,26 +18,18 @@ export type TaskProps = {
 	done: boolean
 	id: number
 	text: string
-	onClick: (id: number) => void
+	onClick: () => void
 	onChange?: (newText: string) => void
 }
 
 export default function Task({ done, id, text, onClick, onChange }: TaskProps) {
 	return (
 		<Inline space='xsmall'>
-			<Box
-				as='button'
-				className={[
-					styles['toggle'],
-					done ? styles['toggle__done'] : null,
-				]}
-				onClick={() => onClick(id)}
+			<SwitchComplete
+				done={done}
 				aria-label={'Complete '.concat(text)}
-				aria-checked={done ? 'true' : 'false'}
-				role='checkbox'
-			>
-				<CheckboxIcon />
-			</Box>
+				onClick={onClick}
+			/>
 			<EditableText
 				onChange={newText => onChange?.(newText)}
 				aria-label={`Edit ${text}`}

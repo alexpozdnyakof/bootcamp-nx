@@ -39,7 +39,7 @@ describe('Task list', () => {
 
 	it('should complete task', async () => {
 		render(<ComponentUnderTest />)
-		const completeButton = screen.getByRole('checkbox', {
+		const completeButton = screen.getByRole('switch', {
 			name: 'Complete 血液レポートのグラフが空白になっている',
 		})
 
@@ -54,7 +54,7 @@ describe('Task list', () => {
 		render(<ComponentUnderTest />)
 
 		await userEvent.click(
-			screen.getByRole('checkbox', {
+			screen.getByRole('switch', {
 				name: 'Complete 血液レポートのグラフが空白になっている',
 			})
 		)
