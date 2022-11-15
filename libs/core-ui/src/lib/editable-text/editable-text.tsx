@@ -11,7 +11,7 @@ enum EditableTextMode {
 
 export type EditableTextProps = {
 	children: string
-	onChange: (newValue: string) => void
+	onChange?: (newValue: string) => void
 	onStartEdit?: () => void
 	onCancelEdit?: () => void
 	size?: 'body' | 'subtitle'
@@ -42,7 +42,7 @@ export function EditableText({
 
 	const onSubmit = () => {
 		const result = inputRef.current?.value as string
-		onChange(result)
+		onChange?.(result)
 		setIdle()
 	}
 

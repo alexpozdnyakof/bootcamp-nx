@@ -1,15 +1,7 @@
-import {
-	Button,
-	EditableText,
-	ExpandView,
-	Icon,
-	Inline,
-	List,
-	Stack,
-	Text,
-} from '@bootcamp-nx/core-ui'
-import { TaskForm } from '../task-form'
+import { List, Stack } from '@bootcamp-nx/core-ui'
+import TaskFormExpandView from '../task-form-expand-view'
 import { useTaskListState } from '../task-list-context'
+import TaskListHeader from '../task-list-header/task-list-header'
 import { TaskListItem } from '../task-list-item'
 
 export function TaskList() {
@@ -26,50 +18,12 @@ export function TaskList() {
 	return (
 		<Stack space='large'>
 			<Stack space='small'>
-				{/* Task list header */}
-				<Stack>
-					{completedCount && (
-						<Text size='caption' tone='secondary' weight='bold'>
-							{completedCount} タスク完了
-						</Text>
-					)}
-					<Inline width='full' alignY='center'>
-						<EditableText
-							size='subtitle'
-							weight='bold'
-							onChange={newValue => 0}
-						>
-							{title}
-						</EditableText>
-
-						<Button
-							size='small'
-							variant='quaternary'
-							icon={<Icon size='small'>more_horiz</Icon>}
-						/>
-					</Inline>
-				</Stack>
-
-				<ExpandView>
-					{(toggleExpand, expanded) => (
-						<>
-							{!expanded && (
-								<Button onClick={toggleExpand}>
-									タスクを作成
-								</Button>
-							)}
-							{expanded && (
-								<TaskForm
-									onSubmit={onCreate}
-									onClear={toggleExpand}
-								/>
-							)}
-						</>
-					)}
-				</ExpandView>
+				<TaskListHeader completed={completedCount}>
+					{title}
+				</TaskListHeader>
+				<TaskFormExpandView onSubmit={onCreate} />
 			</Stack>
 
-			{/* Tasks */}
 			<List>
 				{tasks.map(task => (
 					<TaskListItem

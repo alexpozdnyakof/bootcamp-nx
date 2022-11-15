@@ -9,7 +9,7 @@ import {
 } from '@bootcamp-nx/core-ui'
 import { useEffect, useRef } from 'react'
 
-type TaskFormProps = {
+export type TaskFormProps = {
 	onSubmit?: (title: string) => void
 	onClear?: () => void
 	value?: string

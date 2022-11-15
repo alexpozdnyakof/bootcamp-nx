@@ -4,12 +4,12 @@ import EditableText from './editable-text'
 
 describe('EditableText', () => {
 	it('should render text', () => {
-		render(<EditableText onChange={(value: string) => 0}>素</EditableText>)
+		render(<EditableText>素</EditableText>)
 		expect(screen.getByText('素')).toBeInTheDocument()
 	})
 
 	it('should toggle to edit mode when doubleclicked', async () => {
-		render(<EditableText onChange={(value: string) => 0}>素</EditableText>)
+		render(<EditableText>素</EditableText>)
 		const staticText = screen.getByText('素')
 
 		expect(staticText).toBeInTheDocument()
@@ -30,7 +30,7 @@ describe('EditableText', () => {
 	})
 
 	it('should focus textfield in edit mode', async () => {
-		render(<EditableText onChange={(value: string) => 0}>素</EditableText>)
+		render(<EditableText>素</EditableText>)
 
 		await userEvent.dblClick(screen.getByRole('switch'))
 
@@ -42,7 +42,7 @@ describe('EditableText', () => {
 	})
 
 	it('should cancel edit mode after esc pressed', async () => {
-		render(<EditableText onChange={(value: string) => 0}>素</EditableText>)
+		render(<EditableText>素</EditableText>)
 
 		expect(screen.getByText('素')).toBeInTheDocument()
 		expect(
@@ -63,7 +63,7 @@ describe('EditableText', () => {
 	})
 
 	it('should cancel edit mode after input field lost focus', async () => {
-		render(<EditableText onChange={(value: string) => 0}>素</EditableText>)
+		render(<EditableText>素</EditableText>)
 
 		expect(screen.getByText('素')).toBeInTheDocument()
 		expect(
@@ -82,18 +82,13 @@ describe('EditableText', () => {
 			})
 		).not.toBeInTheDocument()
 	})
+
 	it('should set subtitle size', () => {
-		const { rerender } = render(
-			<EditableText onChange={(value: string) => 0}>素</EditableText>
-		)
+		const { rerender } = render(<EditableText>素</EditableText>)
 
 		expect(screen.getByRole('switch')).not.toHaveClass('size-subtitle')
 
-		rerender(
-			<EditableText size='subtitle' onChange={(value: string) => 0}>
-				素
-			</EditableText>
-		)
+		rerender(<EditableText size='subtitle'>素</EditableText>)
 
 		expect(screen.getByRole('switch')).toHaveClass('size-subtitle')
 	})
@@ -108,7 +103,7 @@ describe('EditableText', () => {
 	})
 
 	it('should hide form after enter pressed', async () => {
-		render(<EditableText onChange={value => 0}>素</EditableText>)
+		render(<EditableText>素</EditableText>)
 
 		expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
 
