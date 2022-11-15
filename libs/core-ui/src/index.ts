@@ -1,3 +1,4 @@
+export * from './lib/expand-view'
 export * from './lib/switch-complete'
 export * from './lib/editable-text'
 export * from './lib/hooks'
