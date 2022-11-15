@@ -1,25 +1,18 @@
 import {
-	Box,
 	Button,
 	EditableText,
+	ExpandView,
 	Icon,
 	Inline,
 	List,
 	Stack,
 	Text,
 } from '@bootcamp-nx/core-ui'
-import { useState } from 'react'
 import { TaskForm } from '../task-form'
 import { useTaskListState } from '../task-list-context'
 import { TaskListItem } from '../task-list-item'
 
-enum TaskListMode {
-	CreatingTask,
-	Idle,
-}
 export function TaskList() {
-	const [mode, setMode] = useState<TaskListMode>(TaskListMode.Idle)
-
 	const {
 		tasks,
 		title,
@@ -29,10 +22,6 @@ export function TaskList() {
 		onChange,
 		completedCount,
 	} = useTaskListState()
-
-	const isIdle = () => mode === TaskListMode.Idle
-	const setIdle = () => setMode(TaskListMode.Idle)
-	const setCreating = () => setMode(TaskListMode.CreatingTask)
 
 	return (
 		<Stack space='large'>
@@ -61,13 +50,23 @@ export function TaskList() {
 					</Inline>
 				</Stack>
 
-				{/* Task Form */}
-				{!isIdle() && (
-					<TaskForm onSubmit={onCreate} onClear={setIdle} />
-				)}
-				{isIdle() && (
-					<Button onClick={setCreating}>タスクを作成</Button>
-				)}
+				<ExpandView>
+					{(toggleExpand, expanded) => (
+						<>
+							{!expanded && (
+								<Button onClick={toggleExpand}>
+									タスクを作成
+								</Button>
+							)}
+							{expanded && (
+								<TaskForm
+									onSubmit={onCreate}
+									onClear={toggleExpand}
+								/>
+							)}
+						</>
+					)}
+				</ExpandView>
 			</Stack>
 
 			{/* Tasks */}
