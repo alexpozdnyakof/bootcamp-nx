@@ -70,23 +70,6 @@ function TaskListProvider({ children, tasks, title }: TaskListProviderProps) {
 		[setState, state]
 	)
 
-	const onStartEdit = useCallback(
-		(id: TaskListInnerState['editingTask']) => {
-			setState(({ editingTask, ...s }) => ({
-				editingTask: editingTask === id ? editingTask : id,
-				...s,
-			}))
-		},
-		[setState]
-	)
-
-	const onCancelEdit = useCallback(() => {
-		setState(({ editingTask, ...s }) => ({
-			active: null,
-			...s,
-		}))
-	}, [setState])
-
 	const onChange = useCallback(
 		(id: ViewTask['id'], text: string) => {
 			setState(({ tasks, ...s }) => ({
@@ -124,8 +107,6 @@ function TaskListProvider({ children, tasks, title }: TaskListProviderProps) {
 				onComplete,
 				onDelete,
 				onCreate,
-				onStartEdit,
-				onCancelEdit,
 				onChange,
 				completedCount,
 				editingTask: state.editingTask,
