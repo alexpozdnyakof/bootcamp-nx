@@ -1,5 +1,5 @@
 import { Button, ExpandView } from '@bootcamp-nx/core-ui'
-import TaskForm, { TaskFormProps } from './task-form/task-form'
+import TaskForm, { TaskFormProps } from './task-form'
 
 export default function TaskFormExpandView({
 	onSubmit,

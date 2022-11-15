@@ -9,7 +9,7 @@ import {
 } from '@bootcamp-nx/core-ui'
 
 import { memo, useState } from 'react'
-import { ViewTask } from '../common-types'
+import { ViewTask } from './common-types'
 
 export type TaskListItemHandlers = {
 	onDelete?: (id: ViewTask['id']) => void
@@ -78,5 +78,4 @@ const TaskListItem = memo(
 )
 
 TaskListItem.displayName = 'TaskListItem'
-
 export default TaskListItem

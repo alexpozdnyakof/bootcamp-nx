@@ -1,6 +1,6 @@
 import { screen, render } from '@testing-library/react'
 import TaskList from './task-list'
-import { TaskListProvider } from '../task-list-context'
+import { TaskListProvider } from './task-list-context'
 import { TASKS_DATA } from './tasks-data'
 import userEvent from '@testing-library/user-event'
 

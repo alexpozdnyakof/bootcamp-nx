@@ -1,8 +1,8 @@
 import { List, Stack } from '@bootcamp-nx/core-ui'
-import TaskFormExpandView from '../task-form-expand-view'
-import { useTaskListState } from '../task-list-context'
-import TaskListHeader from '../task-list-header/task-list-header'
-import { TaskListItem } from '../task-list-item'
+import { useTaskListState } from './task-list-context'
+import TaskFormExpandView from './task-form-expand-view'
+import TaskListHeader from './task-list-header'
+import TaskListItem from './task-list-item'
 
 export function TaskList() {
 	const {
