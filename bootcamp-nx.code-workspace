@@ -7,10 +7,10 @@
 			"path": "../todo-ts"
 		},
 		{
-			"path": "../reactist"
+			"path": "../../Node/express/examples"
 		},
 		{
-			"path": "../primer"
+			"path": "../../Node/koa-ts"
 		}
 	],
 	"settings": {
