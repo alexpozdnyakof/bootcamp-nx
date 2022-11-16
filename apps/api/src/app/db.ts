@@ -1,6 +1,6 @@
-import { PageDataUnit, TaskListDataUnit, TaskDataUnit } from './data-unit'
+import { AbstractStore } from './data-unit'
 
-const DATABASE: Array<PageDataUnit | TaskListDataUnit | TaskDataUnit> = [
+const DATABASE: AbstractStore = [
 	{
 		id: 1,
 		parentId: 0,
@@ -9,7 +9,7 @@ const DATABASE: Array<PageDataUnit | TaskListDataUnit | TaskDataUnit> = [
 			created: Date.now(),
 			updated: Date.now(),
 		},
-		type: 'page',
+		type: 'project',
 		children: [2],
 	},
 	{

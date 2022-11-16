@@ -13,7 +13,7 @@ interface EntityPropsMap {
 	task_list: {
 		title: string
 	}
-	page: {
+	project: {
 		title: string
 	}
 }
@@ -26,13 +26,11 @@ interface EntityValue<Type extends EntityType> {
 	children: Array<UniqueId>
 }
 
-type TaskDataUnit = DataUnit<'task'>
-type TaskListDataUnit = DataUnit<'task_list'>
-type PageDataUnit = DataUnit<'page'>
-
 type DataUnit<T extends EntityType> = {
 	id: UniqueId
 	parentId: UniqueId
 } & EntityValue<T>
 
-export { TaskDataUnit, TaskListDataUnit, PageDataUnit, EntityType }
+type AbstractStore = Array<DataUnit<'task' | 'task_list' | 'project'>>
+
+export { AbstractStore, DataUnit, EntityType }
