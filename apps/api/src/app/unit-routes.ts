@@ -1,9 +1,13 @@
 import { Router } from 'express'
+import unitService from './unit-service'
 
 const router = Router()
 
-router.get('/projects', (req, res) => {
-	res.send({ result: 'All projects' })
+router.get('/projects', async (req, res) => {
+	const projects = await unitService.get<'project'>(
+		unit => unit.type === 'project'
+	)
+	res.send(projects)
 })
 
 router.get('/unit/:id', (req, res) => {

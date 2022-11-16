@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tasklist should return all projects 1`] = `
+Array [
+  Object {
+    "children": Array [
+      2,
+    ],
+    "id": 1,
+    "parentId": 0,
+    "properties": Object {
+      "created": 1668602957123,
+      "title": "基本的なブートキャンプ プロジェクト",
+      "updated": 1668602957123,
+    },
+    "type": "project",
+  },
+]
+`;

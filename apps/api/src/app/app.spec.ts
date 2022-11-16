@@ -8,5 +8,4 @@ describe('app', () => {
 
 		expect(response.body).toEqual({ message: 'Welcome to api!' })
 	})
-
 })

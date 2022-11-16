@@ -7,7 +7,7 @@ describe('Tasklist', () => {
 	it('should return all projects', async () => {
 		const response = await request(app).get('/projects')
 		expect(response.status).toBe(200)
-		expect(response.body).toEqual({ result: 'All projects' })
+		expect(response.body).toMatchSnapshot()
 	})
 
 	it('should return unit id', async () => {

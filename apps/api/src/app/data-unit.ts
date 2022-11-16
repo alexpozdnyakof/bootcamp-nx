@@ -18,19 +18,41 @@ interface EntityPropsMap {
 	}
 }
 
-type EntityType = keyof EntityPropsMap
-
-interface EntityValue<Type extends EntityType> {
-	type: Type
-	properties: EntityPropsMap[Type] & UpdatedCreatedTime
-	children: Array<UniqueId>
-}
+type EntityType = 'task' | 'task_list' | 'project'
 
 type DataUnit<T extends EntityType> = {
 	id: UniqueId
 	parentId: UniqueId
-} & EntityValue<T>
+	type: T
+	properties: EntityPropsMap[T] & UpdatedCreatedTime
+	children: Array<UniqueId>
+}
 
-type AbstractStore = Array<DataUnit<'task' | 'task_list' | 'project'>>
+type EntityUnit = DataUnit<'task'> | DataUnit<'task_list'> | DataUnit<'project'>
 
-export { AbstractStore, DataUnit, EntityType }
+type AbstractStore = Array<EntityUnit>
+
+type DataUnitDTO = Pick<
+	DataUnit<keyof EntityPropsMap>,
+	'parentId' | 'children' | 'type'
+> & {
+	properties: Omit<
+		DataUnit<keyof EntityPropsMap>['properties'],
+		'created' | 'updated'
+	>
+}
+
+type DataUnitUpdateValue = Partial<
+	Pick<DataUnitDTO, 'properties' | 'children' | 'parentId'>
+> &
+	Pick<EntityUnit, 'id'>
+
+export {
+	AbstractStore,
+	EntityType,
+	UniqueId,
+	EntityUnit,
+	DataUnitDTO,
+	DataUnit,
+	DataUnitUpdateValue,
+}
