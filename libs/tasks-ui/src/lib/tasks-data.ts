@@ -1,4 +1,4 @@
-import { ViewTask } from '../common-types'
+import { ViewTask } from './common-types'
 
 export const TASKS_DATA: Array<ViewTask> = [
 	{
