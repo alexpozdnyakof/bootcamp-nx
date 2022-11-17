@@ -1,7 +1,9 @@
-import * as fs from 'fs'
 import { Database } from 'sqlite3'
 
-const database = new Database('database.sqlite', err => {
+const dbFileName =
+	process.env.NODE_ENV === 'test' ? `database-test` : `database`
+
+const database = new Database(`${__dirname}/${dbFileName}.sqlite`, err => {
 	if (err) throw new Error(err.message)
 })
 
@@ -11,6 +13,11 @@ function migrate() {
 	database.exec(
 		'CREATE TABLE IF NOT EXISTS projects (id INTEGER PRIMARY KEY AUTOINCREMENT,title VARCHAR(200) NOT NULL,description TEXT NULL)'
 	)
+
+	if (process.env.NODE_ENV === 'test') {
+		console.log('test')
+		addMigrationData()
+	}
 }
 
 function addMigrationData() {

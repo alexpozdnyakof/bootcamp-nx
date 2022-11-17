@@ -1,9 +1,14 @@
 import * as request from 'supertest'
 import * as express from 'express'
 import router from './unit-routes'
+import { database } from './database'
 describe('Tasklist', () => {
 	const app = express()
 	app.use('/', router)
+
+  afterAll(() => {
+		database.close()
+  })
 	it('should return all projects', async () => {
 		const response = await request(app).get('/projects')
 		expect(response.status).toBe(200)

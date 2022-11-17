@@ -1,13 +1,12 @@
-import * as express from 'express'
 import { Message } from '@bootcamp-nx/api-interfaces'
+import * as express from 'express'
+import { migrate } from './database'
 import unitRoutes from './unit-routes'
-import { addMigrationData, migrate } from './database'
 
 const app = express()
 const router = express.Router()
 
 migrate()
-addMigrationData()
 
 const greeting: Message = { message: 'Welcome to api!' }
 
