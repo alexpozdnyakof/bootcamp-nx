@@ -1,17 +1,20 @@
-import * as request from 'supertest'
 import * as express from 'express'
-import * as fs from 'fs'
-import * as path from 'path'
+import * as request from 'supertest'
+import { database, seeds, undoSeeds } from './database/database'
 import router from './unit-routes'
-import { database } from './database/database'
+
 describe('Tasklist', () => {
 	const app = express()
 	app.use('/', router)
+	beforeEach(() => {
+		seeds()
+	})
 
 	afterAll(() => {
+		undoSeeds()
 		database.close()
-		fs.unlinkSync(path.join(__dirname, '/database/test.sqlite'))
 	})
+
 	it('should return all projects', async () => {
 		const response = await request(app).get('/projects')
 		expect(response.status).toBe(200)

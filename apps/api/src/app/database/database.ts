@@ -8,6 +8,7 @@ const dbFileName = process.env.NODE_ENV === 'test' ? `test` : `database`
 const database = new Database(`${__dirname}/${dbFileName}.sqlite`, err => {
 	if (err) throw new Error(err.message)
 })
+
 const sqlUrl =
 	process.env.NODE_ENV === 'test'
 		? path.join(__dirname, '../../sql')
@@ -20,7 +21,6 @@ function migrate() {
 
 	if (process.env.NODE_ENV === 'test') {
 		console.log('test')
-		seeds()
 	}
 }
 
@@ -31,7 +31,11 @@ function seeds() {
 	)
 }
 
-export { database, migrate }
+function undoSeeds() {
+	database.exec(fs.readFileSync(sqlUrl.concat('/undo-seeds.sql')).toString())
+}
+
+export { database, migrate, undoSeeds, seeds }
 
 // 'CREATE TABLE IF NOT EXISTS projects (id INTEGER PRIMARY KEY AUTOINCREMENT,title VARCHAR(200) NOT NULL,description TEXT NULL)'
 // `INSERT OR REPLACE INTO projects VALUES
