@@ -3,42 +3,28 @@ import { Database } from 'sqlite3'
 import * as fs from 'fs'
 import * as path from 'path'
 
-const dbFileName = process.env.NODE_ENV === 'test' ? `test` : `database`
+const dbpath =
+	process.env.NODE_ENV === 'test'
+		? ':memory:'
+		: path.join(__dirname, '/database.sqlite')
 
-const database = new Database(`${__dirname}/${dbFileName}.sqlite`, err => {
+const database = new Database(dbpath, err => {
 	if (err) throw new Error(err.message)
 })
 
-const sqlUrl =
-	process.env.NODE_ENV === 'test'
-		? path.join(__dirname, '../../sql')
-		: path.join(__dirname, '/sql')
+const getSQLString = (fileName: string): string => {
+	const sqlDirectory = process.env.NODE_ENV === 'test' ? '../../sql' : '/sql'
+	return fs
+		.readFileSync(path.join(__dirname, sqlDirectory, `/${fileName}.sql`))
+		.toString()
+}
 
 function migrate() {
-	console.log({ __dirname })
-
-	database.exec(fs.readFileSync(sqlUrl.concat('/projects.sql')).toString())
-
-	if (process.env.NODE_ENV === 'test') {
-		console.log('test')
-	}
+	database.exec(getSQLString('projects'))
 }
 
 function seeds() {
-	console.log({ __dirname })
-	database.exec(
-		fs.readFileSync(sqlUrl.concat('/projects-migration.sql')).toString()
-	)
+	database.exec(getSQLString('projects-seed'))
 }
 
-function undoSeeds() {
-	database.exec(fs.readFileSync(sqlUrl.concat('/undo-seeds.sql')).toString())
-}
-
-export { database, migrate, undoSeeds, seeds }
-
-// 'CREATE TABLE IF NOT EXISTS projects (id INTEGER PRIMARY KEY AUTOINCREMENT,title VARCHAR(200) NOT NULL,description TEXT NULL)'
-// `INSERT OR REPLACE INTO projects VALUES
-// (1, 'ホームページのリニューアル',
-// '新しいフレッシュホームページの制作過程はこちら'),
-// (2, 'チェックアウトフォームのリファクタリング', '新しいチェックアウト フォームでユーザー エクスペリエンスを向上'), (3, '実験プロジェクト', null)`
+export { database, migrate, seeds }
