@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { database } from './database'
+import { database } from './database/database'
 import unitService from './unit-service'
 
 const router = Router()
@@ -9,8 +9,8 @@ router.get('/projects', async (req, res) => {
 	new Promise((resolve, reject) => {
 		database.all(select, (err, rows) => (err ? reject() : resolve(rows)))
 	})
-		.then(rows => res.status(200).send(rows || 'Not Found.'))
-		.catch(() => res.status(404).send('Not Found.'))
+		.then(rows => res.status(200).send(rows))
+		.catch(error => res.status(404).send({ error }))
 })
 
 router.get('/unit/:id', (req, res) => {

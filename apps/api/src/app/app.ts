@@ -1,6 +1,6 @@
 import { Message } from '@bootcamp-nx/api-interfaces'
 import * as express from 'express'
-import { migrate } from './database'
+import { migrate } from './database/database'
 import unitRoutes from './unit-routes'
 
 const app = express()
