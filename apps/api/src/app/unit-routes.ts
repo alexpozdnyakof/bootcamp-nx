@@ -1,7 +1,6 @@
 import { Router } from 'express'
 import database from './database/database'
 
-
 const router = Router()
 
 router.get('/projects', async (req, res) => {
