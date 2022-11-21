@@ -1,14 +1,13 @@
-import { UniqueId } from './data-unit'
+import { UniqueId, UpdatedCreatedTime } from './data-unit'
 import database from './database/database'
 
 export type ProjectValueObject = {
 	id: number
 	title: string
 	description: string | null
-}
+} & UpdatedCreatedTime
 
 export type ProjectDataObject = {
-	id: number
 	title: string
 	description: string | null
 }
@@ -23,7 +22,7 @@ export interface DataModel<
 	get(): Promise<Array<T>>
 	findById(id: UniqueId): Promise<T>
 	delete(id: UniqueId): Promise<void>
-	create(dto: U): Promise<{ id: UniqueId }>
+	create(dto: U): Promise<void>
 }
 
 export default function ProjectModel(): Partial<
@@ -47,6 +46,15 @@ export default function ProjectModel(): Partial<
 				database.get(query, [id], (err, row: ProjectValueObject) => {
 					if (err) reject(err)
 					resolve(row)
+				})
+			})
+		},
+		async create(dto: ProjectDataObject) {
+			const query = 'INSERT INTO projects (title, description)'
+			return new Promise((resolve, reject) => {
+				database.run(query, [dto.title, dto.description], err => {
+					if (err) reject(err)
+					resolve()
 				})
 			})
 		},

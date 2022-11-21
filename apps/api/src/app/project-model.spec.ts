@@ -8,4 +8,8 @@ describe('ProjectModel', () => {
 	it('should return project with id 1', async () => {
 		await expect(projectModel.findById(1)).resolves.toMatchSnapshot()
 	})
+
+  it('should create new one project', async () => {
+		await expect(projectModel.findById(1))
+  })
 })

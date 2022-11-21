@@ -55,4 +55,5 @@ export {
 	DataUnitDTO,
 	DataUnit,
 	DataUnitUpdateValue,
+	UpdatedCreatedTime,
 }
