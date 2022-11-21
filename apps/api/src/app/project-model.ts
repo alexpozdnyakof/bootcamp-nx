@@ -1,3 +1,4 @@
+import e = require('express')
 import { UniqueId, UpdatedCreatedTime } from './data-unit'
 import database from './database/database'
 
@@ -21,15 +22,15 @@ export interface DataModel<
 > {
 	get(): Promise<Array<T>>
 	findById(id: UniqueId): Promise<T>
-	delete(id: UniqueId): Promise<void>
+	delete(id: UniqueId): Promise<1 | Error>
 	create(dto: U): Promise<void>
 }
 
 export default function ProjectModel(): Partial<
 	DataModel<ProjectValueObject, ProjectDataObject>
 > {
-	return {
-		async get() {
+	const result = {
+		async get(): Promise<Array<ProjectValueObject>> {
 			const query = 'SELECT * FROM projects'
 
 			return new Promise((resolve, reject) => {
@@ -39,18 +40,20 @@ export default function ProjectModel(): Partial<
 				})
 			})
 		},
-		async findById(id: UniqueId) {
+		async findById(id: UniqueId): Promise<ProjectValueObject> {
 			const query = 'SELECT * FROM projects WHERE id=?'
 
 			return new Promise((resolve, reject) => {
 				database.get(query, [id], (err, row: ProjectValueObject) => {
 					if (err) reject(err)
+					if (typeof row == 'undefined') reject('Not found')
 					resolve(row)
 				})
 			})
 		},
-		async create(dto: ProjectDataObject) {
-			const query = 'INSERT INTO projects (title, description)'
+		async create(dto: ProjectDataObject): Promise<void> {
+			const query =
+				'INSERT INTO projects (title, description) VALUES (?,?)'
 			return new Promise((resolve, reject) => {
 				database.run(query, [dto.title, dto.description], err => {
 					if (err) reject(err)
@@ -58,5 +61,21 @@ export default function ProjectModel(): Partial<
 				})
 			})
 		},
+		async delete(id: UniqueId): Promise<1 | Error> {
+			const query = 'DELETE FROM projects WHERE id=?'
+			try {
+				await result.findById(id)
+				return new Promise((resolve, reject) => {
+					database.run(query, [id], err => {
+						if (err) reject(err)
+						resolve(1)
+					})
+				})
+			} catch (error) {
+				return Promise.reject(new Error(error))
+			}
+		},
 	}
+
+	return result
 }

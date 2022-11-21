@@ -1,5 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ProjectModel should create new one project 1`] = `
+Object {
+  "created": Any<String>,
+  "description": "簡単な説明",
+  "id": Any<Number>,
+  "title": "新しい計画",
+  "updated": Any<String>,
+}
+`;
+
 exports[`ProjectModel should return all projects 1`] = `
 Array [
   Object {
