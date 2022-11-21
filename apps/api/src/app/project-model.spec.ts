@@ -9,11 +9,11 @@ describe('ProjectModel', () => {
 		await expect(projectModel.findById(1)).resolves.toMatchSnapshot()
 	})
 
-  it('should throw error when get non-existing project', async () => {
+	it('should throw error when get non-existing project', async () => {
 		await expect(projectModel.findById(10)).rejects.toBe('Not found')
-  })
+	})
 
-  it('should create new one project', async () => {
+	it('should create new one project', async () => {
 		const dto = {
 			title: '新しい計画',
 			description: '簡単な説明',
@@ -33,19 +33,19 @@ describe('ProjectModel', () => {
 		} catch (e) {
 			console.log(e)
 		}
-  })
-  it('should delete project with id 3', async () => {
+	})
+	it('should delete project with id 3', async () => {
 		const pre = await projectModel.get()
 		await projectModel.delete(3)
 
 		const past = await projectModel.get()
 		expect(past).toHaveLength(pre.length - 1)
 		await expect(projectModel.findById(3)).rejects.toBe('Not found')
-  })
+	})
 
-  it('should rejects when delete non-existing project ', async () => {
+	it('should rejects when delete non-existing project ', async () => {
 		await expect(projectModel.delete(10)).rejects.toEqual(
 			new Error('Not found')
 		)
-  })
+	})
 })

@@ -26,31 +26,36 @@ export interface DataModel<
 	create(dto: U): Promise<void>
 }
 
-export default function ProjectModel(): Partial<
-	DataModel<ProjectValueObject, ProjectDataObject>
+export default function ProjectModel(): DataModel<
+	ProjectValueObject,
+	ProjectDataObject
 > {
-	const result = {
-		async get(): Promise<Array<ProjectValueObject>> {
-			const query = 'SELECT * FROM projects'
+	async function get(): Promise<Array<ProjectValueObject>> {
+		const query = 'SELECT * FROM projects'
 
-			return new Promise((resolve, reject) => {
-				database.all(query, (err, rows: Array<ProjectValueObject>) => {
-					if (err) reject(err)
-					resolve(rows)
-				})
+		return new Promise((resolve, reject) => {
+			database.all(query, (err, rows: Array<ProjectValueObject>) => {
+				if (err) reject(err)
+				resolve(rows)
 			})
-		},
-		async findById(id: UniqueId): Promise<ProjectValueObject> {
-			const query = 'SELECT * FROM projects WHERE id=?'
+		})
+	}
 
-			return new Promise((resolve, reject) => {
-				database.get(query, [id], (err, row: ProjectValueObject) => {
-					if (err) reject(err)
-					if (typeof row == 'undefined') reject('Not found')
-					resolve(row)
-				})
+	async function findById(id: UniqueId): Promise<ProjectValueObject> {
+		const query = 'SELECT * FROM projects WHERE id=?'
+
+		return new Promise((resolve, reject) => {
+			database.get(query, [id], (err, row: ProjectValueObject) => {
+				if (err) reject(err)
+				if (typeof row == 'undefined') reject('Not found')
+				resolve(row)
 			})
-		},
+		})
+	}
+
+	return Object.freeze({
+		get,
+		findById,
 		async create(dto: ProjectDataObject): Promise<void> {
 			const query =
 				'INSERT INTO projects (title, description) VALUES (?,?)'
@@ -63,19 +68,16 @@ export default function ProjectModel(): Partial<
 		},
 		async delete(id: UniqueId): Promise<1 | Error> {
 			const query = 'DELETE FROM projects WHERE id=?'
-			try {
-				await result.findById(id)
-				return new Promise((resolve, reject) => {
-					database.run(query, [id], err => {
-						if (err) reject(err)
-						resolve(1)
-					})
-				})
-			} catch (error) {
-				return Promise.reject(new Error(error))
-			}
+			return findById(id).then(
+				() =>
+					new Promise((resolve, reject) => {
+						database.run(query, [id], err => {
+							if (err) reject(err)
+							resolve(1)
+						})
+					}),
+				reason => Promise.reject(new Error(reason))
+			)
 		},
-	}
-
-	return result
+	})
 }
