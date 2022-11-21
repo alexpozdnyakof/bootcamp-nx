@@ -5,6 +5,7 @@ describe('ProjectModel', () => {
 	it('should return all projects', async () => {
 		await expect(projectModel.get()).resolves.toMatchSnapshot()
 	})
+
 	it('should return project with id 1', async () => {
 		await expect(projectModel.findById(1)).resolves.toMatchSnapshot()
 	})
@@ -34,6 +35,7 @@ describe('ProjectModel', () => {
 			console.log(e)
 		}
 	})
+
 	it('should delete project with id 3', async () => {
 		const pre = await projectModel.get()
 		await projectModel.delete(3)
@@ -45,6 +47,33 @@ describe('ProjectModel', () => {
 
 	it('should rejects when delete non-existing project ', async () => {
 		await expect(projectModel.delete(10)).rejects.toEqual(
+			new Error('Not found')
+		)
+	})
+
+	it('should update entity with id 1', async () => {
+		const dto = {
+			title: '新しい計画',
+			description: '簡単な説明',
+		}
+
+		let { title, description } = await projectModel.findById(1)
+
+		expect({ title, description }).not.toEqual(dto)
+
+		await projectModel.update(1, dto)
+		;({ title, description } = await projectModel.findById(1))
+
+		expect({ title, description }).not.toEqual(dto)
+	})
+
+	it('should rejects when update non-existing project ', async () => {
+		const dto = {
+			title: '新しい計画',
+			description: '簡単な説明',
+		}
+
+		await expect(projectModel.update(10, dto)).rejects.toEqual(
 			new Error('Not found')
 		)
 	})

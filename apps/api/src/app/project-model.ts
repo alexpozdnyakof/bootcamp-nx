@@ -22,8 +22,9 @@ export interface DataModel<
 > {
 	get(): Promise<Array<T>>
 	findById(id: UniqueId): Promise<T>
-	delete(id: UniqueId): Promise<1 | Error>
+	delete(id: UniqueId): Promise<void>
 	create(dto: U): Promise<void>
+	update(id: UniqueId, value: ProjectDataObject): Promise<void>
 }
 
 export default function ProjectModel(): DataModel<
@@ -66,15 +67,34 @@ export default function ProjectModel(): DataModel<
 				})
 			})
 		},
-		async delete(id: UniqueId): Promise<1 | Error> {
+		async delete(id: UniqueId): Promise<void> {
 			const query = 'DELETE FROM projects WHERE id=?'
 			return findById(id).then(
 				() =>
 					new Promise((resolve, reject) => {
 						database.run(query, [id], err => {
 							if (err) reject(err)
-							resolve(1)
+							resolve()
 						})
+					}),
+				reason => Promise.reject(new Error(reason))
+			)
+		},
+		async update(id: UniqueId, dto: ProjectDataObject): Promise<void> {
+			const query =
+				'UPDATE projects SET title=?, description=? WHERE id=?'
+
+			return findById(id).then(
+				() =>
+					new Promise((resolve, reject) => {
+						database.run(
+							query,
+							[dto.title, dto.description],
+							err => {
+								if (err) reject(err)
+								resolve()
+							}
+						)
 					}),
 				reason => Promise.reject(new Error(reason))
 			)
