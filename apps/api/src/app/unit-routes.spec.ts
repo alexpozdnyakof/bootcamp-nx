@@ -1,16 +1,13 @@
 import * as express from 'express'
 import * as request from 'supertest'
-import { database, migrate, seeds } from './database/database'
+import database from './database/database'
 import router from './unit-routes'
 
 describe('Tasklist', () => {
 	const app = express()
 	app.use('/', router)
 
-	beforeAll(() => {
-		migrate()
-		seeds()
-	})
+	// beforeAll(() => {})
 
 	afterAll(() => {
 		database.close()
