@@ -1,5 +1,5 @@
-import DataModel from './data-model'
-import { UniqueId, UpdatedCreatedTime } from './data-unit'
+import DataModel from '../data-model'
+import { UniqueId, UpdatedCreatedTime } from '../data-unit'
 export type Value = {
 	id: number
 	title: string
