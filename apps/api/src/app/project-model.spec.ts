@@ -11,7 +11,9 @@ describe('ProjectModel', () => {
 	})
 
 	it('should throw error when get non-existing project', async () => {
-		await expect(projectModel.findById(10)).rejects.toBe('Not Found')
+		await expect(projectModel.findById(10)).rejects.toEqual(
+			new Error('Not Found')
+		)
 	})
 
 	it('should create new one project', async () => {
@@ -42,11 +44,15 @@ describe('ProjectModel', () => {
 
 		const past = await projectModel.get()
 		expect(past).toHaveLength(pre.length - 1)
-		await expect(projectModel.findById(3)).rejects.toBe('Not Found')
+		await expect(projectModel.findById(3)).rejects.toEqual(
+			new Error('Not Found')
+		)
 	})
 
 	it('should rejects when delete non-existing project ', async () => {
-		await expect(projectModel.delete(10)).rejects.toEqual('Not Found')
+		await expect(projectModel.delete(10)).rejects.toEqual(
+			new Error('Not Found')
+		)
 	})
 
 	it('should update entity with id 1', async () => {
@@ -71,6 +77,8 @@ describe('ProjectModel', () => {
 			description: '簡単な説明',
 		}
 
-		await expect(projectModel.update(10, dto)).rejects.toEqual('Not Found')
+		await expect(projectModel.update(10, dto)).rejects.toEqual(
+			new Error('Not Found')
+		)
 	})
 })

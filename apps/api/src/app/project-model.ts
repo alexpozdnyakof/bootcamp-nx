@@ -23,34 +23,30 @@ export interface DataModel<
 	findById(id: UniqueId): Promise<T>
 	delete(id: UniqueId): Promise<void>
 	create(dto: U): Promise<void>
-	update(id: UniqueId, value: ProjectDataObject): Promise<void>
+	update(id: UniqueId, value: U): Promise<void>
 }
 
 export default function ProjectModel(): DataModel<
 	ProjectValueObject,
 	ProjectDataObject
 > {
-	function handleNotFound<T>(result: T | undefined): Promise<T> {
-		return new Promise((resolve, reject) => {
-			if (typeof result == 'undefined') {
-				reject('Not Found')
-			}
-			resolve(result as T)
-		})
-	}
-	// ************************************************************************ //
-
-	async function get(): Promise<Array<ProjectValueObject>> {
+	async function get(): Promise<ProjectValueObject[]> {
 		const query = 'SELECT * FROM projects'
-		return dbService.All<Array<ProjectValueObject>>(query)
+		try {
+			return await dbService.All<ProjectValueObject>(query)
+		} catch (e) {
+			throw new Error(e)
+		}
 	}
 
 	async function findById(id: UniqueId): Promise<ProjectValueObject> {
 		const query = 'SELECT * FROM projects WHERE id=?'
-		return dbService.Get<ProjectValueObject>(query, [id]).then(
-			result => handleNotFound<ProjectValueObject>(result),
-			reason => Promise.reject(reason)
-		)
+
+		try {
+			return await dbService.Get<ProjectValueObject>(query, [id])
+		} catch (e) {
+			throw new Error(e)
+		}
 	}
 
 	return Object.freeze({
@@ -59,24 +55,35 @@ export default function ProjectModel(): DataModel<
 		async create(dto: ProjectDataObject): Promise<void> {
 			const query =
 				'INSERT INTO projects (title, description) VALUES (?,?)'
-			return dbService.Run(query, [dto.title, dto.description])
+
+			try {
+				await dbService.Run(query, [dto.title, dto.description])
+			} catch (e) {
+				throw new Error(e)
+			}
 		},
+
 		async delete(id: UniqueId): Promise<void> {
 			const query = 'DELETE FROM projects WHERE id=?'
 
-			return findById(id).then(
-				() => dbService.Run(query, [id]),
-				reason => Promise.reject(reason)
-			)
+			try {
+				await findById(id)
+				await dbService.Run(query, [id])
+			} catch (e) {
+				throw e as Error
+			}
 		},
+
 		async update(id: UniqueId, dto: ProjectDataObject): Promise<void> {
 			const query =
 				'UPDATE projects SET title=?, description=? WHERE id=?'
 
-			return findById(id).then(
-				() => dbService.Run(query, [dto.title, dto.description]),
-				reason => Promise.reject(reason)
-			)
+			try {
+				await findById(id)
+				await dbService.Run(query, [dto.title, dto.description])
+			} catch (e) {
+				throw e as Error
+			}
 		},
 	})
 }
