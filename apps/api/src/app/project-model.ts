@@ -1,6 +1,5 @@
-import e = require('express')
 import { UniqueId, UpdatedCreatedTime } from './data-unit'
-import database from './database/database'
+import dbService from './database/database-service'
 
 export type ProjectValueObject = {
 	id: number
@@ -27,52 +26,10 @@ export interface DataModel<
 	update(id: UniqueId, value: ProjectDataObject): Promise<void>
 }
 
-
-type DbResult<T> = {
-	status: 'success' | 'failed'
-	result: T
-}
-
 export default function ProjectModel(): DataModel<
 	ProjectValueObject,
 	ProjectDataObject
 > {
-	async function dbAll<T>(
-		query: string,
-		params?: Array<string | number | boolean>
-	): Promise<T> {
-		return new Promise((resolve, reject) => {
-			database.all(query, params ?? [], (err, result: T) => {
-				if (err) reject(err)
-				resolve(result)
-			})
-		})
-	}
-
-	async function dbGet<T>(
-		query: string,
-		params?: Array<string | number | boolean>
-	): Promise<T> {
-		return new Promise((resolve, reject) => {
-			database.get(query, params ?? [], (err, result: T) => {
-				if (err) reject(err)
-				resolve(result)
-			})
-		})
-	}
-
-	async function dbRun<T>(
-		query: string,
-		params?: Array<string | number | boolean>
-	): Promise<T> {
-		return new Promise((resolve, reject) => {
-			database.run(query, params ?? [], (err, result: T) => {
-				if (err) reject(err)
-				resolve(result)
-			})
-		})
-	}
-
 	function handleNotFound<T>(result: T | undefined): Promise<T> {
 		return new Promise((resolve, reject) => {
 			if (typeof result == 'undefined') {
@@ -81,15 +38,16 @@ export default function ProjectModel(): DataModel<
 			resolve(result as T)
 		})
 	}
+	// ************************************************************************ //
 
 	async function get(): Promise<Array<ProjectValueObject>> {
 		const query = 'SELECT * FROM projects'
-		return dbAll<Array<ProjectValueObject>>(query)
+		return dbService.All<Array<ProjectValueObject>>(query)
 	}
 
 	async function findById(id: UniqueId): Promise<ProjectValueObject> {
 		const query = 'SELECT * FROM projects WHERE id=?'
-		return dbGet<ProjectValueObject>(query, [id]).then(
+		return dbService.Get<ProjectValueObject>(query, [id]).then(
 			result => handleNotFound<ProjectValueObject>(result),
 			reason => Promise.reject(reason)
 		)
@@ -101,13 +59,13 @@ export default function ProjectModel(): DataModel<
 		async create(dto: ProjectDataObject): Promise<void> {
 			const query =
 				'INSERT INTO projects (title, description) VALUES (?,?)'
-			return dbRun(query, [dto.title, dto.description])
+			return dbService.Run(query, [dto.title, dto.description])
 		},
 		async delete(id: UniqueId): Promise<void> {
 			const query = 'DELETE FROM projects WHERE id=?'
 
 			return findById(id).then(
-				() => dbRun(query, [id]),
+				() => dbService.Run(query, [id]),
 				reason => Promise.reject(reason)
 			)
 		},
@@ -116,7 +74,7 @@ export default function ProjectModel(): DataModel<
 				'UPDATE projects SET title=?, description=? WHERE id=?'
 
 			return findById(id).then(
-				() => dbRun(query, [dto.title, dto.description]),
+				() => dbService.Run(query, [dto.title, dto.description]),
 				reason => Promise.reject(reason)
 			)
 		},
