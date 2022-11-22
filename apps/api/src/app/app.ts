@@ -1,7 +1,6 @@
 import { Message } from '@bootcamp-nx/api-interfaces'
 import * as express from 'express'
 import * as morgan from 'morgan'
-import unitRoutes from './unit-routes'
 
 const app = express()
 const router = express.Router()
@@ -37,6 +36,5 @@ router.get(
 )
 
 app.use('/', router)
-app.use('/', unitRoutes)
 
 export default app
