@@ -27,31 +27,72 @@ export interface DataModel<
 	update(id: UniqueId, value: ProjectDataObject): Promise<void>
 }
 
+
+type DbResult<T> = {
+	status: 'success' | 'failed'
+	result: T
+}
+
 export default function ProjectModel(): DataModel<
 	ProjectValueObject,
 	ProjectDataObject
 > {
-	async function get(): Promise<Array<ProjectValueObject>> {
-		const query = 'SELECT * FROM projects'
-
+	async function dbAll<T>(
+		query: string,
+		params?: Array<string | number | boolean>
+	): Promise<T> {
 		return new Promise((resolve, reject) => {
-			database.all(query, (err, rows: Array<ProjectValueObject>) => {
+			database.all(query, params ?? [], (err, result: T) => {
 				if (err) reject(err)
-				resolve(rows)
+				resolve(result)
 			})
 		})
 	}
 
-	async function findById(id: UniqueId): Promise<ProjectValueObject> {
-		const query = 'SELECT * FROM projects WHERE id=?'
-
+	async function dbGet<T>(
+		query: string,
+		params?: Array<string | number | boolean>
+	): Promise<T> {
 		return new Promise((resolve, reject) => {
-			database.get(query, [id], (err, row: ProjectValueObject) => {
+			database.get(query, params ?? [], (err, result: T) => {
 				if (err) reject(err)
-				if (typeof row == 'undefined') reject('Not found')
-				resolve(row)
+				resolve(result)
 			})
 		})
+	}
+
+	async function dbRun<T>(
+		query: string,
+		params?: Array<string | number | boolean>
+	): Promise<T> {
+		return new Promise((resolve, reject) => {
+			database.run(query, params ?? [], (err, result: T) => {
+				if (err) reject(err)
+				resolve(result)
+			})
+		})
+	}
+
+	function handleNotFound<T>(result: T | undefined): Promise<T> {
+		return new Promise((resolve, reject) => {
+			if (typeof result == 'undefined') {
+				reject('Not Found')
+			}
+			resolve(result as T)
+		})
+	}
+
+	async function get(): Promise<Array<ProjectValueObject>> {
+		const query = 'SELECT * FROM projects'
+		return dbAll<Array<ProjectValueObject>>(query)
+	}
+
+	async function findById(id: UniqueId): Promise<ProjectValueObject> {
+		const query = 'SELECT * FROM projects WHERE id=?'
+		return dbGet<ProjectValueObject>(query, [id]).then(
+			result => handleNotFound<ProjectValueObject>(result),
+			reason => Promise.reject(reason)
+		)
 	}
 
 	return Object.freeze({
@@ -60,24 +101,14 @@ export default function ProjectModel(): DataModel<
 		async create(dto: ProjectDataObject): Promise<void> {
 			const query =
 				'INSERT INTO projects (title, description) VALUES (?,?)'
-			return new Promise((resolve, reject) => {
-				database.run(query, [dto.title, dto.description], err => {
-					if (err) reject(err)
-					resolve()
-				})
-			})
+			return dbRun(query, [dto.title, dto.description])
 		},
 		async delete(id: UniqueId): Promise<void> {
 			const query = 'DELETE FROM projects WHERE id=?'
+
 			return findById(id).then(
-				() =>
-					new Promise((resolve, reject) => {
-						database.run(query, [id], err => {
-							if (err) reject(err)
-							resolve()
-						})
-					}),
-				reason => Promise.reject(new Error(reason))
+				() => dbRun(query, [id]),
+				reason => Promise.reject(reason)
 			)
 		},
 		async update(id: UniqueId, dto: ProjectDataObject): Promise<void> {
@@ -85,18 +116,8 @@ export default function ProjectModel(): DataModel<
 				'UPDATE projects SET title=?, description=? WHERE id=?'
 
 			return findById(id).then(
-				() =>
-					new Promise((resolve, reject) => {
-						database.run(
-							query,
-							[dto.title, dto.description],
-							err => {
-								if (err) reject(err)
-								resolve()
-							}
-						)
-					}),
-				reason => Promise.reject(new Error(reason))
+				() => dbRun(query, [dto.title, dto.description]),
+				reason => Promise.reject(reason)
 			)
 		},
 	})
