@@ -1,42 +1,14 @@
-import database from './database'
+import { Database } from 'sqlite3'
+import { InitSqlite } from './db-init'
 
 type Params = Array<string | number | boolean>
-
-export type DbResult<T = undefined> =
-	| {
-			status: 'success'
-			result: T
-	  }
-	| {
-			status: 'failed'
-			result: string
-	  }
-
 interface DatabaseService {
 	All<T>(query: string, params?: Params): Promise<Array<T>>
 	Get<T>(query: string, params: Params): Promise<T>
 	Run<T = undefined>(query: string, params?: Params): Promise<T>
 }
 
-export function DatabaseService(): DatabaseService {
-	const DbResult = <T = undefined>(
-		status: DbResult<T>['status'],
-		result: T
-	): DbResult<T> => {
-		if (status == 'success') {
-			return {
-				status,
-				result,
-			}
-		}
-		if (status == 'failed') {
-			return {
-				status,
-				result: result as string,
-			}
-		}
-	}
-
+export function DatabaseService(Database: Database): DatabaseService {
 	function handleNotFound<T>(result: T | undefined): Promise<T> {
 		return new Promise((resolve, reject) => {
 			if (typeof result == 'undefined') {
@@ -48,7 +20,7 @@ export function DatabaseService(): DatabaseService {
 
 	async function Get<T>(query: string, params: Params): Promise<T> {
 		return new Promise((resolve, reject) => {
-			database.get(query, params, (err, result: T) => {
+			Database.get(query, params, (err, result: T) => {
 				if (err) reject(err)
 				resolve(result)
 			})
@@ -61,7 +33,7 @@ export function DatabaseService(): DatabaseService {
 	return Object.freeze({
 		async All<T>(query: string, params?: Params): Promise<Array<T>> {
 			return new Promise((resolve, reject) => {
-				database.all(query, params ?? [], (err, result: Array<T>) => {
+				Database.all(query, params ?? [], (err, result: Array<T>) => {
 					if (err) reject(err)
 					resolve(result)
 				})
@@ -70,7 +42,7 @@ export function DatabaseService(): DatabaseService {
 		Get,
 		async Run<T = undefined>(query: string, params?: Params): Promise<T> {
 			return new Promise((resolve, reject) => {
-				database.run(query, params ?? [], (err, result: T) => {
+				Database.run(query, params ?? [], (err, result: T) => {
 					if (err) reject(err)
 					resolve(result)
 				})
@@ -79,4 +51,4 @@ export function DatabaseService(): DatabaseService {
 	})
 }
 
-export default DatabaseService()
+export default DatabaseService(InitSqlite())

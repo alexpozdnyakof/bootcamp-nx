@@ -1,5 +1,5 @@
 import { UniqueId } from './data-unit'
-import dbService from './database/database-service'
+import { DbService } from './database'
 
 export interface DataModel<
 	DTO extends { [key: string]: unknown },
@@ -20,7 +20,7 @@ export default function DataModel<
 		const query = `SELECT * FROM ${tableName} WHERE id=?`
 
 		try {
-			return await dbService.Get<Value>(query, [id])
+			return await DbService.Get<Value>(query, [id])
 		} catch (e) {
 			throw new Error(e)
 		}
@@ -30,7 +30,7 @@ export default function DataModel<
 		async Get(): Promise<Array<Value>> {
 			const query = `SELECT * FROM ${tableName}`
 			try {
-				return await dbService.All<Value>(query)
+				return await DbService.All<Value>(query)
 			} catch (e) {
 				throw new Error(e)
 			}
@@ -46,7 +46,7 @@ export default function DataModel<
 			)}) VALUES (${placeholder.join(',')})`
 
 			try {
-				await dbService.Run(query, values)
+				await DbService.Run(query, values)
 			} catch (e) {
 				throw new Error(e)
 			}
@@ -57,7 +57,7 @@ export default function DataModel<
 
 			try {
 				await FindById(id)
-				await dbService.Run(query, [id])
+				await DbService.Run(query, [id])
 			} catch (e) {
 				throw e as Error
 			}
@@ -71,7 +71,7 @@ export default function DataModel<
 
 			try {
 				await FindById(id)
-				await dbService.Run(query, Object.values(dto))
+				await DbService.Run(query, Object.values(dto))
 			} catch (e) {
 				throw e as Error
 			}

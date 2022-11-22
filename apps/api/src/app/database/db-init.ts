@@ -33,7 +33,7 @@ function makeMigration(
 	if (withSeeds) dbInstance.exec(getSQLString('projects-seed'))
 }
 
-export function initDatabase() {
+export function InitSqlite() {
 	const isTest = process.env.NODE_ENV === 'test'
 	const dbpath = isTest
 		? ':memory:'
@@ -44,6 +44,6 @@ export function initDatabase() {
 	return database
 }
 
-const database = initDatabase()
+const database = InitSqlite()
 
 export default database
