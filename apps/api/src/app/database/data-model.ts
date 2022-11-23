@@ -1,5 +1,5 @@
 import { UniqueId } from './data-unit'
-import { DbService } from './database'
+import DbService from './db-service'
 
 export interface DataModel<
 	DTO extends { [key: string]: unknown },
