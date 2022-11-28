@@ -1,17 +1,15 @@
 import ProjectModel from './project-model'
 describe('ProjectModel', () => {
-	const projectModel = ProjectModel()
-
 	it('should return all projects', async () => {
-		await expect(projectModel.GetAll()).resolves.toMatchSnapshot()
+		await expect(ProjectModel.GetAll()).resolves.toMatchSnapshot()
 	})
 
 	it('should return project with id 1', async () => {
-		await expect(projectModel.GetOne(1)).resolves.toMatchSnapshot()
+		await expect(ProjectModel.GetOne(1)).resolves.toMatchSnapshot()
 	})
 
 	it('should throw error when get non-existing project', async () => {
-		await expect(projectModel.GetOne(10)).rejects.toEqual(
+		await expect(ProjectModel.GetOne(10)).rejects.toEqual(
 			new Error('Not Found')
 		)
 	})
@@ -22,9 +20,9 @@ describe('ProjectModel', () => {
 			description: '簡単な説明',
 		}
 		try {
-			const pre = await projectModel.GetAll()
-			await projectModel.Add(dto)
-			const past = await projectModel.GetAll()
+			const pre = await ProjectModel.GetAll()
+			await ProjectModel.Add(dto)
+			const past = await ProjectModel.GetAll()
 
 			expect(past).toHaveLength(pre.length + 1)
 			expect(past[past.length - 1]).toMatchSnapshot({
@@ -39,18 +37,18 @@ describe('ProjectModel', () => {
 	})
 
 	it('should delete project with id 3', async () => {
-		const pre = await projectModel.GetAll()
-		await projectModel.Delete(3)
+		const pre = await ProjectModel.GetAll()
+		await ProjectModel.Delete(3)
 
-		const past = await projectModel.GetAll()
+		const past = await ProjectModel.GetAll()
 		expect(past).toHaveLength(pre.length - 1)
-		await expect(projectModel.GetOne(3)).rejects.toEqual(
+		await expect(ProjectModel.GetOne(3)).rejects.toEqual(
 			new Error('Not Found')
 		)
 	})
 
 	it('should rejects when delete non-existing project ', async () => {
-		await expect(projectModel.Delete(10)).rejects.toEqual(
+		await expect(ProjectModel.Delete(10)).rejects.toEqual(
 			new Error('Not Found')
 		)
 	})
@@ -61,12 +59,12 @@ describe('ProjectModel', () => {
 			description: '簡単な説明',
 		}
 
-		let { title, description } = await projectModel.GetOne(1)
+		let { title, description } = await ProjectModel.GetOne(1)
 
 		expect({ title, description }).not.toEqual(dto)
 
-		await projectModel.Update(1, dto)
-		;({ title, description } = await projectModel.GetOne(1))
+		await ProjectModel.Update(1, dto)
+		;({ title, description } = await ProjectModel.GetOne(1))
 
 		expect({ title, description }).not.toEqual(dto)
 	})
@@ -77,7 +75,7 @@ describe('ProjectModel', () => {
 			description: '簡単な説明',
 		}
 
-		await expect(projectModel.Update(10, dto)).rejects.toEqual(
+		await expect(ProjectModel.Update(10, dto)).rejects.toEqual(
 			new Error('Not Found')
 		)
 	})

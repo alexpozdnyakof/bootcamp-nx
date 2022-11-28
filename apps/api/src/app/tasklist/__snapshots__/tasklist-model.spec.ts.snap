@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TaskListModel should create new one task 1`] = `
+Object {
+  "created": Any<String>,
+  "description": "簡単な説明",
+  "id": Any<Number>,
+  "title": "新しい計画",
+  "updated": Any<String>,
+}
+`;
+
+exports[`TaskListModel should return all tasks 1`] = `
+Array [
+  Object {
+    "created": "2022-11-21T11:21:14.543Z",
+    "description": "プレリリースジョブのみ",
+    "id": 1,
+    "title": "すべてのフロントエンド タスク",
+    "updated": "2022-11-21T11:21:14.543Z",
+  },
+  Object {
+    "created": "2022-11-21T11:21:14.544Z",
+    "description": "プレリリースジョブのみ",
+    "id": 2,
+    "title": "すべてのバックエンド タスク",
+    "updated": "2022-11-21T11:21:14.544Z",
+  },
+  Object {
+    "created": "2022-11-21T11:21:14.545Z",
+    "description": null,
+    "id": 3,
+    "title": "デザインバックログ",
+    "updated": "2022-11-21T11:21:14.545Z",
+  },
+]
+`;
+
+exports[`TaskListModel should return task with id 1 1`] = `
+Object {
+  "created": "2022-11-21T11:21:14.543Z",
+  "description": "プレリリースジョブのみ",
+  "id": 1,
+  "title": "すべてのフロントエンド タスク",
+  "updated": "2022-11-21T11:21:14.543Z",
+}
+`;

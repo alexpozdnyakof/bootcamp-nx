@@ -5694,7 +5694,7 @@ bn.js@^5.0.0, bn.js@^5.1.1:
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-5.2.1.tgz#0bc527a6a0d18d0aa8d5b0538ce4a77dccfa7b70"
   integrity sha512-eXRvHzWyYPBuB4NBy0cmYQjGitUrtqwbvlzP3G6VFnNRbsZQIxQ10PbKKHt8gZ/HW/D/747aDl+QkDqg3KQLMQ==
 
-body-parser@1.20.1:
+body-parser@1.20.1, body-parser@^1.20.1:
   version "1.20.1"
   resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.20.1.tgz#b1812a8912c195cd371a3ee5e66faa2338a5c668"
   integrity sha512-jWi7abTbYwajOytWCQc37VulmWiRae5RyTpaCyDcS5/lMdtwSz5lOpDE67srw/HYe35f1z3fDQw+3txg7gNtWw==
@@ -14718,6 +14718,11 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   integrity sha512-ntymy489o0/QQplUDnpYAYUsO50K9SBrIVaKCWDOJzYJts0f9WH9RFJkyagebkw5+y1oi00R7ynNW/d12GBumg==
   dependencies:
     aproba "^1.1.1"
+
+runtypes@^6.6.0:
+  version "6.6.0"
+  resolved "https://registry.yarnpkg.com/runtypes/-/runtypes-6.6.0.tgz#48e353d8b0f641ab5ec5d80fa96dd7bd41ea3281"
+  integrity sha512-ddM7sgB3fyboDlBzEYFQ04L674sKjbs4GyW2W32N/5Ae47NRd/GyMASPC2PFw8drPHYGEcZ0mZ26r5RcB8msfQ==
 
 rxjs@^6.4.0, rxjs@^6.5.4:
   version "6.6.7"

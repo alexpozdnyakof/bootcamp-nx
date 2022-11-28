@@ -1,49 +1,42 @@
 import { Database } from 'sqlite3'
+import { readFileSync, readdirSync } from 'node:fs'
+import { join } from 'path'
 
-import * as fs from 'fs'
-import * as path from 'path'
-
-function init(dbpath: string) {
-	const database = new Database(dbpath, err => {
-		if (err) throw new Error(err.message)
-	})
-
-	return database
+function readSqlDirectory(subdir: string): Array<string> {
+	const path = join(
+		__dirname,
+		process.env.NODE_ENV === 'test' ? '../../sql' : '/sql',
+		subdir
+	)
+	return readdirSync(path).map(fileName =>
+		readFileSync(join(path, '/', fileName)).toString()
+	)
 }
 
-type MigrationOptions = {
-	withSeeds?: boolean
+function migrate(dbInstance: Database) {
+	const migrations = readSqlDirectory('/migrations')
+	migrations.map(sqlString => dbInstance.exec(sqlString))
 }
 
-function makeMigration(
-	dbInstance: Database,
-	{ withSeeds = false }: MigrationOptions
-) {
-	const getSQLString = (fileName: string): string => {
-		const sqlDirectory =
-			process.env.NODE_ENV === 'test' ? '../../sql' : '/sql'
-		return fs
-			.readFileSync(
-				path.join(__dirname, sqlDirectory, `/${fileName}.sql`)
-			)
-			.toString()
-	}
-
-	dbInstance.exec(getSQLString('projects'))
-	if (withSeeds) dbInstance.exec(getSQLString('projects-seed'))
+function seed(dbInstance: Database) {
+	const seeds = readSqlDirectory('/seeds')
+	seeds.map(sqlString => dbInstance.exec(sqlString))
 }
 
 export function InitSqlite() {
 	const isTest = process.env.NODE_ENV === 'test'
-	const dbpath = isTest
-		? ':memory:'
-		: path.join(__dirname, '/database.sqlite')
+	const dbpath = isTest ? ':memory:' : join(__dirname, '/database.sqlite')
 
-	const database = init(dbpath)
-	makeMigration(database, { withSeeds: isTest })
+	const database = new Database(dbpath, err => {
+		if (err) throw new Error(err.message)
+	})
+
+	migrate(database)
+	if (process.env.NODE_ENV === 'test') {
+		seed(database)
+	}
+
 	return database
 }
 
-const database = InitSqlite()
-
-export default database
+export default InitSqlite()

@@ -1,26 +1,32 @@
 import { DataModel } from '../database'
-import { Project, ProjectDTO } from './project'
+import { TaskList, TaskListDTO } from './tasklist'
 
-function ProjectModel() {
-	const tableName = 'projects'
-	const dataModel = DataModel<ProjectDTO, Project>(tableName)
+function IceFactory<T extends { [key: string]: unknown }>(
+	aObject: T
+): Readonly<T> {
+	return Object.freeze({ ...aObject })
+}
 
-	return Object.freeze({
-		async GetAll(): Promise<Project[]> {
+export function TaskListModel() {
+	const tableName = 'tasklist'
+	const dataModel = DataModel<TaskListDTO, TaskList>(tableName)
+
+	return IceFactory({
+		async GetAll(): Promise<TaskList[]> {
 			try {
 				return await dataModel.Get()
 			} catch (e) {
 				throw new Error(e?.message)
 			}
 		},
-		async GetOne(id: UniqueId): Promise<Project> {
+		async GetOne(id: UniqueId): Promise<TaskList> {
 			try {
 				return await dataModel.FindById(id)
 			} catch (e) {
 				throw new Error(e?.message)
 			}
 		},
-		async Add(dto: ProjectDTO): Promise<void> {
+		async Add(dto: TaskListDTO): Promise<void> {
 			try {
 				await dataModel.Insert(dto)
 			} catch (e) {
@@ -36,7 +42,7 @@ function ProjectModel() {
 			}
 		},
 
-		async Update(id: UniqueId, dto: ProjectDTO): Promise<void> {
+		async Update(id: UniqueId, dto: TaskListDTO): Promise<void> {
 			try {
 				await dataModel.Update(id, dto)
 			} catch (e) {
@@ -46,4 +52,4 @@ function ProjectModel() {
 	})
 }
 
-export default ProjectModel()
+export default TaskListModel()

@@ -1,4 +1,3 @@
-import { UniqueId } from './data-unit'
 import DbService from './db-service'
 
 export interface DataModel<

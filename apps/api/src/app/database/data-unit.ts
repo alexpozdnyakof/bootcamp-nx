@@ -1,10 +1,3 @@
-type UniqueId = number
-
-type UpdatedCreatedTime = {
-	created: number
-	updated: number
-}
-
 interface EntityPropsMap {
 	task: {
 		text: string
@@ -50,10 +43,8 @@ type DataUnitUpdateValue = Partial<
 export {
 	AbstractStore,
 	EntityType,
-	UniqueId,
 	EntityUnit,
 	DataUnitDTO,
 	DataUnit,
 	DataUnitUpdateValue,
-	UpdatedCreatedTime,
 }

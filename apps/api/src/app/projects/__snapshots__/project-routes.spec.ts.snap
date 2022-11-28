@@ -1,16 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ProjectModel should create new one project 1`] = `
+exports[`ProjectRouter should not create invalid project 1`] = `
 Object {
-  "created": Any<String>,
-  "description": "簡単な説明",
-  "id": Any<Number>,
-  "title": "新しい計画",
-  "updated": Any<String>,
+  "message": "Validation failed:
+{
+  \\"title\\": \\"Expected string, but was missing\\",
+  \\"description\\": \\"Expected string, but was missing\\"
+}.
+Object should match { title: string; description: string; }",
 }
 `;
 
-exports[`ProjectModel should return all projects 1`] = `
+exports[`ProjectRouter should return 400 for project invalid update 1`] = `
+Object {
+  "message": "Validation failed:
+{
+  \\"title\\": \\"Expected string, but was missing\\",
+  \\"description\\": \\"Expected string, but was missing\\"
+}.
+Object should match { title: string; description: string; }",
+}
+`;
+
+exports[`ProjectRouter should return all projects 1`] = `
 Array [
   Object {
     "created": "2022-11-21T11:21:14.543Z",
@@ -36,7 +48,7 @@ Array [
 ]
 `;
 
-exports[`ProjectModel should return project with id 1 1`] = `
+exports[`ProjectRouter should return project with id 1 1`] = `
 Object {
   "created": "2022-11-21T11:21:14.543Z",
   "description": "新しいフレッシュホームページの制作過程はこちら",
