@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { ProjectDTO } from './project'
-import ProjectModel from './project-model'
+import ProjectModel from './project-repository'
 
 const ProjectRouter = Router()
 const ProjectRouterPrefix = 'projects'

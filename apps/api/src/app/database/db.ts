@@ -40,7 +40,11 @@ function InitSqlite() {
 }
 
 type Params = Array<string | number | boolean>
-
+export interface DatabaseService {
+	All<T>(query: string, params?: Params): Promise<Array<T>>
+	Get<T>(query: string, params: Params): Promise<T>
+	Run<T = undefined>(query: string, params?: Params): Promise<T>
+}
 function DatabaseService() {
 	const Database = InitSqlite()
 	function handleNotFound<T>(result: T | undefined): Promise<T> {
