@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ProjectRouter should not create invalid project 1`] = `
+exports[`ProjectController should not create invalid project 1`] = `
 Object {
   "message": "Validation failed:
 {
@@ -11,7 +11,7 @@ Object should match { title: string; description: string; }",
 }
 `;
 
-exports[`ProjectRouter should return 400 for project invalid update 1`] = `
+exports[`ProjectController should return 400 for project invalid update 1`] = `
 Object {
   "message": "Validation failed:
 {
@@ -22,7 +22,7 @@ Object should match { title: string; description: string; }",
 }
 `;
 
-exports[`ProjectRouter should return all projects 1`] = `
+exports[`ProjectController should return all projects 1`] = `
 Array [
   Object {
     "created": "2022-11-21T11:21:14.543Z",
@@ -48,7 +48,7 @@ Array [
 ]
 `;
 
-exports[`ProjectRouter should return project with id 1 1`] = `
+exports[`ProjectController should return project with id 1 1`] = `
 Object {
   "created": "2022-11-21T11:21:14.543Z",
   "description": "新しいフレッシュホームページの制作過程はこちら",

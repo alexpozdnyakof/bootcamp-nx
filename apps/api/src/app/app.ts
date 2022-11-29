@@ -1,7 +1,7 @@
 import { Message } from '@bootcamp-nx/api-interfaces'
 import * as express from 'express'
 import * as morgan from 'morgan'
-import { ProjectRouter, ProjectRouterPrefix } from './projects'
+import { ProjectController, ProjectRouterPrefix } from './projects'
 const app = express()
 const router = express.Router()
 
@@ -35,7 +35,7 @@ router.get(
 		res.send('Hello from C!')
 	}
 )
-app.use(`/${ProjectRouterPrefix}`, ProjectRouter)
+app.use(`/${ProjectRouterPrefix}`, ProjectController)
 app.use('/', router)
 
 export default app

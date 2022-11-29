@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "../../Node/express/examples"
+		},
+		{
+			"path": "../../Node/koa-ts"
 		}
 	],
 	"settings": {

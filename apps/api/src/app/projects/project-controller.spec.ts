@@ -1,11 +1,11 @@
 import * as express from 'express'
 import * as request from 'supertest'
 import { json } from 'body-parser'
-import { ProjectRouter } from './project-routes'
-describe('ProjectRouter', () => {
+import { ProjectController } from './project-controller'
+describe('ProjectController', () => {
 	const App = express()
 	App.use(json())
-	App.use('/', ProjectRouter)
+	App.use('/', ProjectController)
 
 	it('should return all projects', async () => {
 		const response = await request(App).get('/')

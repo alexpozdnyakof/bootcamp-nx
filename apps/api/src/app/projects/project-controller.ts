@@ -57,4 +57,4 @@ ProjectRouter.put('/:id', async (req, res) => {
 	}
 })
 
-export { ProjectRouter, ProjectRouterPrefix }
+export { ProjectRouter as ProjectController, ProjectRouterPrefix }
