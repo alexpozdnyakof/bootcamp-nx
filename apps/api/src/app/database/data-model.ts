@@ -1,4 +1,4 @@
-import DbService from './db-service'
+import Database from './db'
 
 export interface DataModel<
 	DTO extends { [key: string]: unknown },
@@ -19,7 +19,7 @@ export default function DataModel<
 		const query = `SELECT * FROM ${tableName} WHERE id=?`
 
 		try {
-			return await DbService.Get<Value>(query, [id])
+			return await Database.Get<Value>(query, [id])
 		} catch (e) {
 			throw new Error(e)
 		}
@@ -29,7 +29,7 @@ export default function DataModel<
 		async Get(): Promise<Array<Value>> {
 			const query = `SELECT * FROM ${tableName}`
 			try {
-				return await DbService.All<Value>(query)
+				return await Database.All<Value>(query)
 			} catch (e) {
 				throw new Error(e)
 			}
@@ -45,7 +45,7 @@ export default function DataModel<
 			)}) VALUES (${placeholder.join(',')})`
 
 			try {
-				await DbService.Run(query, values)
+				await Database.Run(query, values)
 			} catch (e) {
 				throw new Error(e)
 			}
@@ -56,7 +56,7 @@ export default function DataModel<
 
 			try {
 				await FindById(id)
-				await DbService.Run(query, [id])
+				await Database.Run(query, [id])
 			} catch (e) {
 				throw e as Error
 			}
@@ -70,7 +70,7 @@ export default function DataModel<
 
 			try {
 				await FindById(id)
-				await DbService.Run(query, Object.values(dto))
+				await Database.Run(query, Object.values(dto))
 			} catch (e) {
 				throw e as Error
 			}
