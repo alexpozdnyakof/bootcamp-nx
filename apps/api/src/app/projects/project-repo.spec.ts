@@ -1,5 +1,12 @@
-import ProjectRepository from './project-repository'
+import { database } from '../database'
+import ProjectRepository from './project-repo'
 describe('ProjectRepository', () => {
+	beforeAll(async () => {
+		await database.migrate.up({
+			name: '20221129145930_create_project_table.ts',
+		})
+		await database.seed.run({ specific: '01-project.ts' })
+	})
 	it('should create new one project', async () => {
 		const dto = {
 			title: '新しい計画',
@@ -35,6 +42,6 @@ describe('ProjectRepository', () => {
 		await ProjectRepository.Update(1, dto)
 		;({ title, description } = await ProjectRepository.GetOne(1))
 
-		expect({ title, description }).not.toEqual(dto)
+		expect({ title, description }).toEqual(dto)
 	})
 })

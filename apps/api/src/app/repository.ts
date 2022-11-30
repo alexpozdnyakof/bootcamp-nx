@@ -1,6 +1,5 @@
 import { DatabaseService } from './database'
 
-
 export default function BaseRepository<
 	DTO extends { [key: string]: string | number | boolean },
 	Value extends { [key: string]: unknown }

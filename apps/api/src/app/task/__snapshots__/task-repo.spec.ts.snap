@@ -3,7 +3,7 @@
 exports[`TaskModel should create new one task 1`] = `
 Object {
   "created": Any<String>,
-  "done": false,
+  "done": 0,
   "id": 4,
   "title": "新しい計画",
   "updated": Any<String>,
@@ -13,35 +13,35 @@ Object {
 exports[`TaskModel should return all tasks 1`] = `
 Array [
   Object {
-    "created": "2022-11-21T11:21:14.543Z",
-    "done": false,
+    "created": "2022-11-29 15:31:37",
+    "done": 0,
     "id": 1,
     "title": "血液レポートのグラフが空白になっている",
-    "updated": "2022-11-21T11:21:14.543Z",
+    "updated": "2022-11-29 15:31:37",
   },
   Object {
-    "created": "2022-11-21T11:21:14.544Z",
-    "done": true,
+    "created": "2022-11-29 15:31:37",
+    "done": 1,
     "id": 2,
     "title": "無効にする|| ユーザーがアカウントを無効にできない",
-    "updated": "2022-11-21T11:21:14.544Z",
+    "updated": "2022-11-29 15:31:37",
   },
   Object {
-    "created": "2022-11-21T11:21:14.545Z",
-    "done": false,
+    "created": "2022-11-29 15:31:37",
+    "done": 0,
     "id": 3,
     "title": "プロフィール、プロフィールの編集、ポップアップ",
-    "updated": "2022-11-21T11:21:14.545Z",
+    "updated": "2022-11-29 15:31:37",
   },
 ]
 `;
 
 exports[`TaskModel should return task with id 1 1`] = `
 Object {
-  "created": "2022-11-21T11:21:14.543Z",
+  "created": "2022-11-29 15:31:37",
   "done": false,
   "id": 1,
   "title": "血液レポートのグラフが空白になっている",
-  "updated": "2022-11-21T11:21:14.543Z",
+  "updated": "2022-11-29 15:31:37",
 }
 `;

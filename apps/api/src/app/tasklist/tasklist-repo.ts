@@ -1,4 +1,4 @@
-import { DataModel } from '../database'
+import { database } from '../database'
 import { TaskList, TaskListDTO } from './tasklist'
 
 function IceFactory<T extends { [key: string]: unknown }>(
@@ -7,28 +7,31 @@ function IceFactory<T extends { [key: string]: unknown }>(
 	return Object.freeze({ ...aObject })
 }
 
-export function TaskListModel() {
+export function TaskListRepo() {
 	const tableName = 'tasklist'
-	const dataModel = DataModel<TaskListDTO, TaskList>(tableName)
 
 	return IceFactory({
 		async GetAll(): Promise<TaskList[]> {
 			try {
-				return await dataModel.Get()
+				return await database.select().from(tableName)
 			} catch (e) {
 				throw new Error(e?.message)
 			}
 		},
 		async GetOne(id: UniqueId): Promise<TaskList> {
 			try {
-				return await dataModel.FindById(id)
+				return await database
+					.select<TaskList>()
+					.where('id', id)
+					.from(tableName)
+					.first()
 			} catch (e) {
 				throw new Error(e?.message)
 			}
 		},
 		async Add(dto: TaskListDTO): Promise<void> {
 			try {
-				await dataModel.Insert(dto)
+				await database(tableName).insert(dto)
 			} catch (e) {
 				throw new Error(e?.message)
 			}
@@ -36,7 +39,7 @@ export function TaskListModel() {
 
 		async Delete(id: UniqueId): Promise<void> {
 			try {
-				await dataModel.Delete(id)
+				await database.del().where({ id }).from(tableName)
 			} catch (e) {
 				throw new Error(e?.message)
 			}
@@ -44,7 +47,7 @@ export function TaskListModel() {
 
 		async Update(id: UniqueId, dto: TaskListDTO): Promise<void> {
 			try {
-				await dataModel.Update(id, dto)
+				await database(tableName).where('id', id).update(dto)
 			} catch (e) {
 				throw new Error(e?.message)
 			}
@@ -52,4 +55,4 @@ export function TaskListModel() {
 	})
 }
 
-export default TaskListModel()
+export default TaskListRepo()

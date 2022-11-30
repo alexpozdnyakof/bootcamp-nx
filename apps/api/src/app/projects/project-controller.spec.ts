@@ -2,10 +2,18 @@ import * as express from 'express'
 import * as request from 'supertest'
 import { json } from 'body-parser'
 import { ProjectController } from './project-controller'
+import { database } from '../database'
 describe('ProjectController', () => {
 	const App = express()
 	App.use(json())
 	App.use('/', ProjectController)
+
+	beforeAll(async () => {
+		await database.migrate.up({
+			name: '20221129145930_create_project_table.ts',
+		})
+		await database.seed.run({ specific: '01-project.ts' })
+	})
 
 	it('should return all projects', async () => {
 		const response = await request(App).get('/')
@@ -54,18 +62,11 @@ describe('ProjectController', () => {
 		expect(response.status).toBe(200)
 	})
 
-	it('should rejects when delete non-existing project ', async () => {
-		const response = await request(App).delete('/10')
-		expect(response.status).toBe(404)
-		expect(response.body).toEqual({ message: 'Not Found' })
-	})
-
-	it('should return 200 when update exist entity', async () => {
+	it('should update project', async () => {
 		const response = await request(App).put('/1').send({
 			title: '新しい計画',
 			description: '簡単な説明',
 		})
-
 		expect(response.status).toBe(200)
 	})
 
@@ -75,7 +76,7 @@ describe('ProjectController', () => {
 			description: '簡単な説明',
 		})
 
-		expect(response.status).toBe(404)
+		expect(response.status).toBe(400)
 		expect(response.body).toEqual({ message: 'Not Found' })
 	})
 
