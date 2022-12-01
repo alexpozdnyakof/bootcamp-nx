@@ -22,7 +22,6 @@ function ProjectModel() {
 				const result = await database
 					.select<Array<ProjectRow>>()
 					.from(tableName)
-
 				return result
 			} catch (e) {
 				const err = e
@@ -41,8 +40,7 @@ function ProjectModel() {
 					throw new Error('Not Found')
 				}
 
-				const project = Object.assign(result)
-				return project
+				return result
 			} catch (e) {
 				throw new Error(e?.message)
 			}
