@@ -1,14 +1,14 @@
 import { Record, String } from 'runtypes'
+import { Row } from '../database'
 
-export type Project = {
-	id: UniqueId
+export type ProjectValue = {
 	title: string
 	description: string | null
-} & UpdatedCreatedTime
+}
 
-export type ProjectDTO = Pick<Project, 'title' | 'description'>
+export type ProjectRow = Row<ProjectValue>
 
-export const ProjectDTO = Record({
+export const ProjectValue = Record({
 	title: String,
 	description: String,
 })

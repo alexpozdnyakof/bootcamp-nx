@@ -1,12 +1,12 @@
 import { database } from '../database'
-import { Project, ProjectDTO } from './project'
+import { ProjectValue, ProjectRow } from './project'
 
 function ProjectModel() {
 	const tableName = 'project'
 
 	async function isExist(id: UniqueId) {
 		const result = await database
-			.select<Project>()
+			.select<ProjectRow>()
 			.where('id', id)
 			.from(tableName)
 			.first()
@@ -17,17 +17,22 @@ function ProjectModel() {
 	}
 
 	return Object.freeze({
-		async GetAll(): Promise<Project[]> {
-			try {
-				return await database.select().from(tableName)
-			} catch (e) {
-				throw new Error(e?.message)
-			}
-		},
-		async GetOne(id: UniqueId): Promise<Project> {
+		async GetAll(): Promise<ProjectRow[]> {
 			try {
 				const result = await database
-					.select<Project>()
+					.select<Array<ProjectRow>>()
+					.from(tableName)
+
+				return result
+			} catch (e) {
+				const err = e
+				throw new Error(err?.message)
+			}
+		},
+		async GetOne(id: UniqueId): Promise<ProjectRow> {
+			try {
+				const result = await database
+					.select<ProjectRow>()
 					.where({ id })
 					.from(tableName)
 					.first()
@@ -36,12 +41,13 @@ function ProjectModel() {
 					throw new Error('Not Found')
 				}
 
-				return result
+				const project = Object.assign(result)
+				return project
 			} catch (e) {
 				throw new Error(e?.message)
 			}
 		},
-		async Add(dto: ProjectDTO): Promise<void> {
+		async Add(dto: ProjectValue): Promise<void> {
 			try {
 				await database(tableName).insert(dto)
 			} catch (e) {
@@ -58,7 +64,7 @@ function ProjectModel() {
 			}
 		},
 
-		async Update(id: UniqueId, dto: ProjectDTO): Promise<void> {
+		async Update(id: UniqueId, dto: ProjectValue): Promise<void> {
 			try {
 				await isExist(id)
 				await database(tableName).where({ id }).update(dto)
