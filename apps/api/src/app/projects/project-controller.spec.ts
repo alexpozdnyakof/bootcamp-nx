@@ -1,5 +1,5 @@
-import * as express from 'express'
-import * as request from 'supertest'
+import express from 'express'
+import request from 'supertest'
 import { json } from 'body-parser'
 import { ProjectController } from './project-controller'
 import { database } from '../database'
@@ -12,7 +12,14 @@ describe('ProjectController', () => {
 		await database.migrate.up({
 			name: '20221129145930_create_project_table.ts',
 		})
+		await database.migrate.up({
+			name: '20221129145937_create_tasklist_table.ts',
+		})
+		await database.migrate.up({
+			name: '20221130102828_create_tasklist_to_project.ts',
+		})
 		await database.seed.run({ specific: '01-project.ts' })
+		await database.seed.run({ specific: '02-tasklist.ts' })
 	})
 
 	it('should return all projects', async () => {

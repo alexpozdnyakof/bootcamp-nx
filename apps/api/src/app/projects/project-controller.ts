@@ -1,6 +1,8 @@
-import { Router } from 'express'
-import { ProjectDTO } from './project'
+import { ApiProject } from '@bootcamp-nx/api-interfaces'
+import { Router, Response } from 'express'
+import { ProjectValue } from './project'
 import ProjectModel from './project-repo'
+import TasklistRepo from '../tasklist/tasklist-repo'
 
 const ProjectRouter = Router()
 const ProjectRouterPrefix = 'projects'
@@ -14,20 +16,32 @@ ProjectRouter.get('/', async (_, res) => {
 	}
 })
 
-ProjectRouter.get('/:id', async (req, res) => {
-	const id = Number(req.params.id)
-	try {
-		const result = await ProjectModel.GetOne(id)
-		if (result === undefined) throw new Error('Not Found')
-		res.status(200).send(result)
-	} catch (error) {
-		res.status(404).send({ message: error.message })
+ProjectRouter.get(
+	'/:id',
+	async (req, res: Response<ApiProject | { message: string }>) => {
+		const id = Number(req.params.id)
+		try {
+			const result = await ProjectModel.GetOne(id)
+			if (result === undefined) throw new Error('Not Found')
+
+			const tasklists = await TasklistRepo.GetLinkedToProject(id)
+
+			const ApiProject = {
+				...result,
+				tasklists,
+				type: 'project',
+			} as const
+
+			res.status(200).send(ApiProject)
+		} catch (error) {
+			res.status(404).send({ message: error.message })
+		}
 	}
-})
+)
 
 ProjectRouter.post('/', async (req, res) => {
 	try {
-		const dto = ProjectDTO.check(req.body)
+		const dto = ProjectValue.check(req.body)
 		const result = await ProjectModel.Add(dto)
 		res.status(200).send(result)
 	} catch (error) {
@@ -48,7 +62,7 @@ ProjectRouter.delete('/:id', async (req, res) => {
 ProjectRouter.put('/:id', async (req, res) => {
 	const id = Number(req.params.id)
 	try {
-		const dto = ProjectDTO.check(req.body)
+		const dto = ProjectValue.check(req.body)
 		await ProjectModel.Update(id, dto)
 		res.status(200).send()
 	} catch (error) {

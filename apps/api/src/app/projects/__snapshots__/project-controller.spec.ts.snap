@@ -53,7 +53,12 @@ Object {
   "created": "2022-11-29 15:31:37",
   "description": "新しいフレッシュホームページの制作過程はこちら",
   "id": 1,
+  "tasklists": Array [
+    1,
+    2,
+  ],
   "title": "ホームページのリニューアル",
+  "type": "project",
   "updated": "2022-11-29 15:31:37",
 }
 `;

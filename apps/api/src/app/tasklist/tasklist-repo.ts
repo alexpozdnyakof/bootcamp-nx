@@ -11,6 +11,14 @@ export function TaskListRepo() {
 	const tableName = 'tasklist'
 
 	return IceFactory({
+		async GetLinkedToProject(id: UniqueId) {
+			return (
+				await database
+					.select<Array<{ tasklist_id: number }>>('tasklist_id')
+					.from('tasklistProject')
+					.where('tasklistProject.project_id', id)
+			).map(list => list?.tasklist_id)
+		},
 		async GetAll(): Promise<TaskList[]> {
 			try {
 				return await database.select().from(tableName)
