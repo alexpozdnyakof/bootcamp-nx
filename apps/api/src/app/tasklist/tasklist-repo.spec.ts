@@ -6,9 +6,9 @@ describe('TaskListRepo', () => {
 		await database.migrate.up({
 			name: '20221129145937_create_tasklist_table.ts',
 		})
-    await database.migrate.up({
-		name: '20221130102828_create_tasklist_to_project.ts',
-	})
+		await database.migrate.up({
+			name: '20221130102828_create_tasklist_to_project.ts',
+		})
 		await database.seed.run({ specific: '02-tasklist.ts' })
 	})
 

@@ -1,7 +1,8 @@
 import { Message } from '@bootcamp-nx/api-interfaces'
-import * as express from 'express'
-import * as morgan from 'morgan'
+import express from 'express'
+import morgan from 'morgan'
 import { ProjectController, ProjectRouterPrefix } from './projects'
+
 const app = express()
 const router = express.Router()
 
