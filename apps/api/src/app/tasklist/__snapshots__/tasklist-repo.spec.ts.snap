@@ -1,47 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TaskListRepo should create new one task 1`] = `
+exports[`TaskListRepo should create a new one list 1`] = `
 Object {
   "created": Any<String>,
   "description": "簡単な説明",
   "id": Any<Number>,
   "title": "新しい計画",
   "updated": Any<String>,
-}
-`;
-
-exports[`TaskListRepo should return all tasks 1`] = `
-Array [
-  Object {
-    "created": "2022-11-29 15:31:37",
-    "description": "プレリリースジョブのみ",
-    "id": 1,
-    "title": "すべてのフロントエンド タスク",
-    "updated": "2022-11-29 15:31:37",
-  },
-  Object {
-    "created": "2022-11-29 15:31:37",
-    "description": "プレリリースジョブのみ",
-    "id": 2,
-    "title": "すべてのバックエンド タスク",
-    "updated": "2022-11-29 15:31:37",
-  },
-  Object {
-    "created": "2022-11-29 15:31:37",
-    "description": null,
-    "id": 3,
-    "title": "デザインバックログ",
-    "updated": "2022-11-29 15:31:37",
-  },
-]
-`;
-
-exports[`TaskListRepo should return task with id 1 1`] = `
-Object {
-  "created": "2022-11-29 15:31:37",
-  "description": "プレリリースジョブのみ",
-  "id": 1,
-  "title": "すべてのフロントエンド タスク",
-  "updated": "2022-11-29 15:31:37",
 }
 `;

@@ -12,26 +12,16 @@ describe('TaskListRepo', () => {
 		await database.seed.run({ specific: '02-tasklist.ts' })
 	})
 
-	it('should return all tasks', async () => {
-		await expect(TaskListRepo.GetAll()).resolves.toMatchSnapshot()
-	})
-
-	it('should return task with id 1', async () => {
-		await expect(TaskListRepo.GetOne(1)).resolves.toMatchSnapshot()
-	})
-
-	it('should create new one task', async () => {
+	it('should create a new one list', async () => {
 		const dto = {
 			title: '新しい計画',
 			description: '簡単な説明',
 		}
 		try {
-			const pre = await TaskListRepo.GetAll()
 			await TaskListRepo.Add(dto)
-			const past = await TaskListRepo.GetAll()
+			const newTasklist = await TaskListRepo.GetOne(4)
 
-			expect(past).toHaveLength(pre.length + 1)
-			expect(past[past.length - 1]).toMatchSnapshot({
+			expect(newTasklist).toMatchSnapshot({
 				created: expect.any(String),
 				updated: expect.any(String),
 				...dto,
@@ -42,17 +32,12 @@ describe('TaskListRepo', () => {
 		}
 	})
 
-	it('should delete task with id 3', async () => {
-		const before = await TaskListRepo.GetAll()
+	it('should delete the list', async () => {
 		await TaskListRepo.Delete(3)
-
-		const after = await TaskListRepo.GetAll()
-
-		expect(after.length).toBe(before.length - 1)
 		await expect(TaskListRepo.GetOne(3)).resolves.toEqual(undefined)
 	})
 
-	it('should update entity with id 1', async () => {
+	it('should update the list', async () => {
 		const dto = {
 			title: '新しい計画',
 			description: '簡単な説明',

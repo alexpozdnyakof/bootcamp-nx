@@ -1,8 +1,9 @@
 import { ApiProject } from '@bootcamp-nx/api-interfaces'
-import { Router, Response } from 'express'
+import { Response, Router } from 'express'
+import TasklistRepo from '../tasklist/tasklist-repo'
+import { createApiProject } from './api-project'
 import { ProjectValue } from './project'
 import ProjectModel from './project-repo'
-import TasklistRepo from '../tasklist/tasklist-repo'
 
 const ProjectRouter = Router()
 const ProjectRouterPrefix = 'projects'
@@ -21,16 +22,11 @@ ProjectRouter.get(
 	async (req, res: Response<ApiProject | { message: string }>) => {
 		const id = Number(req.params.id)
 		try {
-			const result = await ProjectModel.GetOne(id)
-			if (result === undefined) throw new Error('Not Found')
+			const projectRow = await ProjectModel.GetOne(id)
+			if (projectRow === undefined) throw new Error('Not Found')
 
-			const tasklists = await TasklistRepo.GetLinkedToProject(id)
-
-			const ApiProject = {
-				...result,
-				tasklists,
-				type: 'project',
-			} as const
+			const tasklistsRow = await TasklistRepo.GetLinkedToProject(id)
+			const ApiProject = createApiProject(projectRow, tasklistsRow)
 
 			res.status(200).send(ApiProject)
 		} catch (error) {

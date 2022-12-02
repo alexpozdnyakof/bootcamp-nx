@@ -54,8 +54,20 @@ Object {
   "description": "新しいフレッシュホームページの制作過程はこちら",
   "id": 1,
   "tasklists": Array [
-    1,
-    2,
+    Object {
+      "created": "2022-11-29 15:31:37",
+      "description": "プレリリースジョブのみ",
+      "id": 1,
+      "title": "すべてのフロントエンド タスク",
+      "updated": "2022-11-29 15:31:37",
+    },
+    Object {
+      "created": "2022-11-29 15:31:37",
+      "description": "プレリリースジョブのみ",
+      "id": 2,
+      "title": "すべてのバックエンド タスク",
+      "updated": "2022-11-29 15:31:37",
+    },
   ],
   "title": "ホームページのリニューアル",
   "type": "project",

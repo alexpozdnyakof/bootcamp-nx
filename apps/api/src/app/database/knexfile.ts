@@ -4,6 +4,7 @@ import { join } from 'path'
 const config: { [key: string]: Knex.Config } = {
 	development: {
 		client: 'sqlite3',
+		useNullAsDefault: true,
 		connection: {
 			filename: './db.sqlite',
 		},
@@ -17,6 +18,7 @@ const config: { [key: string]: Knex.Config } = {
 
 	test: {
 		client: 'sqlite3',
+		useNullAsDefault: true,
 		connection: {
 			filename: ':memory:',
 		},
@@ -30,6 +32,7 @@ const config: { [key: string]: Knex.Config } = {
 
 	production: {
 		client: 'sqlite3',
+		useNullAsDefault: true,
 		connection: {
 			filename: './db.sqlite',
 		},

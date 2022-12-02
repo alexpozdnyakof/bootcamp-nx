@@ -1,5 +1,5 @@
 export interface Message {
-  message: string;
+	message: string
 }
 export interface ApiProject {
 	id: number
@@ -7,6 +7,12 @@ export interface ApiProject {
 	description: string | null
 	created: string
 	updated: string
-	tasklists: Array<number>
+	tasklists: Array<{
+		id: number
+		title: string
+		description: string | null
+		created: string
+		updated: string
+	}>
 	type: 'project'
 }

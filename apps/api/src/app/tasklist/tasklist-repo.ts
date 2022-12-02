@@ -1,5 +1,5 @@
 import { database } from '../database'
-import { TaskList, TaskListDTO } from './tasklist'
+import { TaskListRow, TaskListValue } from './tasklist'
 
 function IceFactory<T extends { [key: string]: unknown }>(
 	aObject: T
@@ -11,25 +11,17 @@ export function TaskListRepo() {
 	const tableName = 'tasklist'
 
 	return IceFactory({
-		async GetLinkedToProject(id: UniqueId) {
-			return (
-				await database
-					.select<Array<{ tasklist_id: number }>>('tasklist_id')
-					.from('tasklistProject')
-					.where('tasklistProject.project_id', id)
-			).map(list => list?.tasklist_id)
+		async GetLinkedToProject(id: UniqueId): Promise<TaskListRow[]> {
+			return await database
+				.select<Array<TaskListRow>>('tasklist.*')
+				.from('tasklistProject')
+				.join('tasklist', 'tasklist.id', 'tasklistProject.tasklist_id')
+				.where('tasklistProject.project_id', id)
 		},
-		async GetAll(): Promise<TaskList[]> {
-			try {
-				return await database.select().from(tableName)
-			} catch (e) {
-				throw new Error(e?.message)
-			}
-		},
-		async GetOne(id: UniqueId): Promise<TaskList> {
+		async GetOne(id: UniqueId): Promise<TaskListRow> {
 			try {
 				return await database
-					.select<TaskList>()
+					.select<TaskListRow>()
 					.where('id', id)
 					.from(tableName)
 					.first()
@@ -37,7 +29,7 @@ export function TaskListRepo() {
 				throw new Error(e?.message)
 			}
 		},
-		async Add(dto: TaskListDTO): Promise<void> {
+		async Add(dto: TaskListValue): Promise<void> {
 			try {
 				await database(tableName).insert(dto)
 			} catch (e) {
@@ -53,7 +45,7 @@ export function TaskListRepo() {
 			}
 		},
 
-		async Update(id: UniqueId, dto: TaskListDTO): Promise<void> {
+		async Update(id: UniqueId, dto: TaskListValue): Promise<void> {
 			try {
 				await database(tableName).where('id', id).update(dto)
 			} catch (e) {

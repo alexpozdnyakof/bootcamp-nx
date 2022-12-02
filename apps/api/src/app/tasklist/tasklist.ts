@@ -1,14 +1,14 @@
 import { Record, String } from 'runtypes'
+import { Row } from '../database'
 
-export type TaskList = {
-	id: UniqueId
+export type TaskListValue = {
 	title: string
 	description: string
-} & UpdatedCreatedTime
+}
 
-export type TaskListDTO = Pick<TaskList, 'title' | 'description'>
+export type TaskListRow = Row<TaskListValue>
 
-export const TaskListDTO = Record({
+export const TaskListValue = Record({
 	title: String,
 	description: String,
 })
