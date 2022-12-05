@@ -1,14 +1,14 @@
 import { Record, String, Boolean } from 'runtypes'
+import { Row } from '../database'
 
-export type Task = {
-	id: UniqueId
+export type TaskValue = {
 	title: string
-	done: boolean
-} & UpdatedCreatedTime
+	done: 0 | 1
+}
 
-export type TaskDTO = Pick<Task, 'title' | 'done'>
+export type TaskRow = Row<TaskValue>
 
-export const TaskDTO = Record({
+export const TaskValue = Record({
 	title: String,
 	done: Boolean,
 })

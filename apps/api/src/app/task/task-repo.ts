@@ -1,7 +1,7 @@
 import { database } from '../database'
-import { Task, TaskDTO } from './task'
+import { TaskRow, TaskValue } from './task'
 
-function TaskFactory(row: Omit<Task, 'done'> & { done: 0 | 1 }): Task {
+function TaskFactory(row: TaskRow): Omit<TaskRow, 'done'> & { done: boolean } {
 	return Object.assign(row, { done: Boolean(row.done) })
 }
 function TaskRepo() {
@@ -20,17 +20,12 @@ function TaskRepo() {
 	}
 
 	return Object.freeze({
-		async GetAll(): Promise<Task[]> {
-			try {
-				return await database.select().from(tableName)
-			} catch (e) {
-				throw new Error(e?.message)
-			}
-		},
-		async GetOne(id: UniqueId): Promise<Task> {
+		async GetOne(
+			id: UniqueId
+		): Promise<Omit<TaskRow, 'done'> & { done: boolean }> {
 			try {
 				const result = await database
-					.select<Omit<Task, 'done'> & { done: 0 | 1 }>()
+					.select<TaskRow>()
 					.where({ id })
 					.from(tableName)
 					.first()
@@ -44,9 +39,14 @@ function TaskRepo() {
 				throw new Error(e?.message)
 			}
 		},
-		async Add(dto: TaskDTO): Promise<void> {
+		async Add(
+			dto: Omit<TaskValue, 'done'> & { done: boolean }
+		): Promise<void> {
 			try {
-				await database(tableName).insert(dto)
+				await database(tableName).insert({
+					...dto,
+					done: Number(dto.done),
+				})
 			} catch (e) {
 				throw new Error(e?.message)
 			}
@@ -61,10 +61,18 @@ function TaskRepo() {
 			}
 		},
 
-		async Update(id: UniqueId, dto: TaskDTO): Promise<void> {
+		async Update(
+			id: UniqueId,
+			dto: Omit<TaskValue, 'done'> & { done: boolean }
+		): Promise<void> {
 			try {
 				await isExist(id)
-				await database(tableName).where({ id }).update(dto)
+				await database(tableName)
+					.where({ id })
+					.update({
+						...dto,
+						done: Number(dto.done),
+					})
 			} catch (e) {
 				throw new Error(e?.message)
 			}

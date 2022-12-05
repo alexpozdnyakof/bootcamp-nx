@@ -1,6 +1,5 @@
 import { ApiProject } from '@bootcamp-nx/api-interfaces'
 import { Response, Router } from 'express'
-import TasklistRepo from '../tasklist/tasklist-repo'
 import { createApiProject } from './api-project'
 import { ProjectValue } from './project'
 import ProjectModel from './project-repo'
@@ -25,7 +24,7 @@ ProjectRouter.get(
 			const projectRow = await ProjectModel.GetOne(id)
 			if (projectRow === undefined) throw new Error('Not Found')
 
-			const tasklistsRow = await TasklistRepo.GetLinkedToProject(id)
+			const tasklistsRow = await ProjectModel.GetRelatedTasklists(id)
 			const ApiProject = createApiProject(projectRow, tasklistsRow)
 
 			res.status(200).send(ApiProject)
@@ -39,7 +38,7 @@ ProjectRouter.post('/', async (req, res) => {
 	try {
 		const dto = ProjectValue.check(req.body)
 		const result = await ProjectModel.Add(dto)
-		res.status(200).send(result)
+		res.status(201).send(result)
 	} catch (error) {
 		res.status(400).send({ message: error.message })
 	}
@@ -60,7 +59,7 @@ ProjectRouter.put('/:id', async (req, res) => {
 	try {
 		const dto = ProjectValue.check(req.body)
 		await ProjectModel.Update(id, dto)
-		res.status(200).send()
+		res.status(201).send()
 	} catch (error) {
 		res.status(400).send({ message: error.message })
 	}

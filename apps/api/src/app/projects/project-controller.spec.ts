@@ -49,7 +49,7 @@ describe('ProjectController', () => {
 				description: '簡単な説明',
 			})
 
-		expect(response.status).toBe(200)
+		expect(response.status).toBe(201)
 	})
 
 	it('should not create invalid project', async () => {
@@ -74,7 +74,7 @@ describe('ProjectController', () => {
 			title: '新しい計画',
 			description: '簡単な説明',
 		})
-		expect(response.status).toBe(200)
+		expect(response.status).toBe(201)
 	})
 
 	it('should return 404 when update non-existing project ', async () => {

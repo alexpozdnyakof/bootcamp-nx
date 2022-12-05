@@ -5,10 +5,10 @@ describe('TaskModel', () => {
 		await database.migrate.up({
 			name: '20221129145851_create_task_table.ts',
 		})
+		await database.migrate.up({
+			name: '20221202114516_create_task_to_tasklist.ts',
+		})
 		await database.seed.run({ specific: '03-task.ts' })
-	})
-	it('should return all tasks', async () => {
-		await expect(TaskRepo.GetAll()).resolves.toMatchSnapshot()
 	})
 
 	it('should return task with id 1', async () => {
@@ -26,15 +26,12 @@ describe('TaskModel', () => {
 			done: false,
 		}
 		try {
-			const before = await TaskRepo.GetAll()
 			await TaskRepo.Add(dto)
-			const after = await TaskRepo.GetAll()
-
-			expect(after).toHaveLength(before.length + 1)
-			expect(after[after.length - 1]).toMatchSnapshot({
+			const lastTask = await TaskRepo.GetOne(4)
+			expect(lastTask).toMatchSnapshot({
 				created: expect.any(String),
 				updated: expect.any(String),
-				done: 0,
+				done: false,
 				title: '新しい計画',
 				id: 4,
 			})
@@ -43,11 +40,7 @@ describe('TaskModel', () => {
 		}
 	})
 	it('should delete task with id 3', async () => {
-		const pre = await TaskRepo.GetAll()
 		await TaskRepo.Delete(3)
-
-		const past = await TaskRepo.GetAll()
-		expect(past).toHaveLength(pre.length - 1)
 		await expect(TaskRepo.GetOne(3)).rejects.toEqual(new Error('Not Found'))
 	})
 

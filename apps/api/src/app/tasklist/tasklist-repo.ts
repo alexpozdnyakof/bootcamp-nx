@@ -1,4 +1,5 @@
 import { database } from '../database'
+import { TaskRow } from '../task/task'
 import { TaskListRow, TaskListValue } from './tasklist'
 
 function IceFactory<T extends { [key: string]: unknown }>(
@@ -11,12 +12,16 @@ export function TaskListRepo() {
 	const tableName = 'tasklist'
 
 	return IceFactory({
-		async GetLinkedToProject(id: UniqueId): Promise<TaskListRow[]> {
-			return await database
-				.select<Array<TaskListRow>>('tasklist.*')
-				.from('tasklistProject')
-				.join('tasklist', 'tasklist.id', 'tasklistProject.tasklist_id')
-				.where('tasklistProject.project_id', id)
+		async GetRelatedTasks(id: UniqueId): Promise<TaskRow[]> {
+			try {
+				return await database
+					.select<Array<TaskRow>>('task.*')
+					.from('taskTasklist')
+					.join('tasklist', 'tasklist.id', 'taskTasklist.tasklist_id')
+					.where('taskTasklist.tasklist_id', id)
+			} catch (e) {
+				throw new Error(e?.message)
+			}
 		},
 		async GetOne(id: UniqueId): Promise<TaskListRow> {
 			try {

@@ -1,4 +1,5 @@
 import { database } from '../database'
+import { TaskListRow } from '../tasklist'
 import { ProjectValue, ProjectRow } from './project'
 
 function ProjectModel() {
@@ -17,6 +18,13 @@ function ProjectModel() {
 	}
 
 	return Object.freeze({
+		async GetRelatedTasklists(id: UniqueId): Promise<TaskListRow[]> {
+			return await database
+				.select<Array<TaskListRow>>('tasklist.*')
+				.from('tasklistProject')
+				.join('tasklist', 'tasklist.id', 'tasklistProject.tasklist_id')
+				.where('tasklistProject.project_id', id)
+		},
 		async GetAll(): Promise<ProjectRow[]> {
 			try {
 				const result = await database

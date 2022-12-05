@@ -28,4 +28,30 @@ export async function seed(knex: Knex): Promise<void> {
 			updated: '2022-11-29 15:31:37',
 		},
 	])
+
+  await knex('taskTasklist').del()
+  await knex('taskTasklist').insert([
+		{
+			id: 1,
+			task_id: 1,
+			tasklist_id: 1,
+			created: '2022-11-29 15:31:37',
+			updated: '2022-11-29 15:31:37',
+		},
+		{
+			id: 2,
+			task_id: 2,
+			tasklist_id: 1,
+			created: '2022-11-29 15:31:37',
+			updated: '2022-11-29 15:31:37',
+		},
+		{
+			id: 3,
+			task_id: 3,
+			tasklist_id: 2,
+			created: '2022-11-29 15:31:37',
+			updated: '2022-11-29 15:31:37',
+		},
+  ])
+
 }
