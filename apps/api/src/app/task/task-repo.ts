@@ -1,10 +1,7 @@
 import { database } from '../database'
 import { TaskRow, TaskValue } from './task'
 
-function TaskFactory(row: TaskRow): Omit<TaskRow, 'done'> & { done: boolean } {
-	return Object.assign(row, { done: Boolean(row.done) })
-}
-function TaskRepo() {
+export function TaskRepo() {
 	const tableName = 'task'
 
 	async function isExist(id: UniqueId) {
@@ -20,9 +17,7 @@ function TaskRepo() {
 	}
 
 	return Object.freeze({
-		async GetOne(
-			id: UniqueId
-		): Promise<Omit<TaskRow, 'done'> & { done: boolean }> {
+		async GetOne(id: UniqueId): Promise<TaskRow> {
 			try {
 				const result = await database
 					.select<TaskRow>()
@@ -34,7 +29,7 @@ function TaskRepo() {
 					throw new Error('Not Found')
 				}
 
-				return TaskFactory(result)
+				return result
 			} catch (e) {
 				throw new Error(e?.message)
 			}
@@ -80,4 +75,4 @@ function TaskRepo() {
 	})
 }
 
-export default TaskRepo()
+

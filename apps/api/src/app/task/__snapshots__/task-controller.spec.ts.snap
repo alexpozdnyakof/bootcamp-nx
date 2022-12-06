@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TaskController should return task 1`] = `
+Object {
+  "created": "2022-11-29 15:31:37",
+  "done": false,
+  "id": 1,
+  "title": "血液レポートのグラフが空白になっている",
+  "type": "task",
+  "updated": "2022-11-29 15:31:37",
+}
+`;

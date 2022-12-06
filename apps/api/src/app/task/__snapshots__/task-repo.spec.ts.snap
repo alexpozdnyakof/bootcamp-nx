@@ -3,7 +3,7 @@
 exports[`TaskModel should create new one task 1`] = `
 Object {
   "created": Any<String>,
-  "done": false,
+  "done": 0,
   "id": 4,
   "title": "新しい計画",
   "updated": Any<String>,
@@ -13,7 +13,7 @@ Object {
 exports[`TaskModel should return task with id 1 1`] = `
 Object {
   "created": "2022-11-29 15:31:37",
-  "done": false,
+  "done": 0,
   "id": 1,
   "title": "血液レポートのグラフが空白になっている",
   "updated": "2022-11-29 15:31:37",

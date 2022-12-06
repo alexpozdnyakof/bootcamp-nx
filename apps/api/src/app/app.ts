@@ -3,6 +3,7 @@ import express from 'express'
 import morgan from 'morgan'
 import { ProjectController, ProjectRouterPrefix } from './projects'
 import { TasklistController, TasklistRouterPrefix } from './tasklist'
+import { TaskController, TaskRouterPrefix } from './task'
 
 const app = express()
 const router = express.Router()
@@ -16,29 +17,9 @@ router.get('/api', (req, res) => {
 	res.send(greeting)
 })
 
-router.get(
-	'/example/b',
-	function (req, res, next) {
-		console.log('the response will be sent by the next function ...')
-		next()
-	},
-	function (req, res) {
-		res.send('Hello from B!')
-	}
-)
-
-router.get(
-	'/example/c',
-	function (req, res, next) {
-		console.log('the response will be sent by the next function ...')
-		next()
-	},
-	function (req, res) {
-		res.send('Hello from C!')
-	}
-)
 app.use(`/${ProjectRouterPrefix}`, ProjectController)
 app.use(`/${TasklistRouterPrefix}`, TasklistController)
+app.use(`/${TaskRouterPrefix}`, TaskController)
 app.use('/', router)
 
 export default app
