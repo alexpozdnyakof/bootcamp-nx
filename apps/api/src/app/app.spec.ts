@@ -2,7 +2,7 @@ import request from 'supertest'
 import app from './app'
 
 describe('app', () => {
-	it('should return welcome api message', async () => {
+	xit('should return welcome api message', async () => {
 		const response: request.Response = await request(app).get('/api')
 		expect(response.status).toBe(200)
 
