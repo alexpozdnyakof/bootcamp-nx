@@ -2,6 +2,7 @@ import { Message } from '@bootcamp-nx/api-interfaces'
 import express from 'express'
 import morgan from 'morgan'
 import { ProjectController, ProjectRouterPrefix } from './projects'
+import { TasklistController, TasklistRouterPrefix } from './tasklist'
 
 const app = express()
 const router = express.Router()
@@ -37,6 +38,7 @@ router.get(
 	}
 )
 app.use(`/${ProjectRouterPrefix}`, ProjectController)
+app.use(`/${TasklistRouterPrefix}`, TasklistController)
 app.use('/', router)
 
 export default app

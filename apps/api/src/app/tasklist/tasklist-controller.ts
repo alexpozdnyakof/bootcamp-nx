@@ -1,4 +1,6 @@
-import { Router } from 'express'
+import { ApiTask } from '@bootcamp-nx/api-interfaces'
+import { Router, Response } from 'express'
+import { CreateTask } from '../task/task'
 import { TaskListValue } from './tasklist'
 import { TaskListRepo } from './tasklist-repo'
 
@@ -6,25 +8,30 @@ const TasklistRouter = Router()
 const TaskListModel = TaskListRepo()
 const TasklistRouterPrefix = 'tasklist'
 
-// TasklistRouter.get('/:id', async (request, response) => {
-// 	const id = Number(request.params.id)
-// 	try {
-// 		const tasklist = await TaskListModel.GetOne(id)
-// 		response.status(200).send(tasklist)
-// 	} catch (error) {
-// 		response.status(404).send({ message: error.message })
-// 	}
-// })
-
-TasklistRouter.get('/:id/tasks', async (request, response) => {
+TasklistRouter.get('/:id', async (request, response) => {
 	const id = Number(request.params.id)
 	try {
-		const tasks = await TaskListModel.GetRelatedTasks(id)
-		response.status(200).send(tasks)
+		const tasklist = await TaskListModel.GetOne(id)
+		response.status(200).send(tasklist)
 	} catch (error) {
 		response.status(404).send({ message: error.message })
 	}
 })
+
+TasklistRouter.get(
+	'/:id/tasks',
+	async (request, response: Response<ApiTask[] | { message: string }>) => {
+		const id = Number(request.params.id)
+		try {
+			const tasks = (await TaskListModel.GetRelatedTasks(id)).map(task =>
+				CreateTask(task)
+			)
+			response.status(200).send(tasks)
+		} catch (error) {
+			response.status(404).send({ message: error.message })
+		}
+	}
+)
 
 TasklistRouter.post('/', async (req, res) => {
 	try {
@@ -36,33 +43,27 @@ TasklistRouter.post('/', async (req, res) => {
 	}
 })
 
-// TasklistRouter.delete('/:id', async (req, res) => {
-// 	const id = Number(req.params.id)
-// 	try {
-// 		await TaskListModel.Delete(id)
-// 		res.status(204).send()
-// 	} catch (error) {
-// 		res.status(400).send({ message: error.message })
-// 	}
-// })
+TasklistRouter.delete('/:id', async (req, res) => {
+	const id = Number(req.params.id)
+	try {
+		const tasklist = await TaskListModel.GetOne(id)
+		if (typeof tasklist == 'undefined') throw new Error('Not Found')
+		await TaskListModel.Delete(id)
+		res.status(204).send()
+	} catch (error) {
+		res.status(400).send({ message: error.message })
+	}
+})
 
-// TasklistRouter.put('/:id', async (req, res) => {
-// 	const id = Number(req.params.id)
-// 	try {
-// 		const dto = TaskListValue.check(req.body)
-// 		await TaskListModel.Update(id, dto)
-// 		res.status(204).send()
-// 	} catch (error) {
-// 		res.status(400).send({ message: error.message })
-// 	}
-// })
+TasklistRouter.put('/:id', async (req, res) => {
+	const id = Number(req.params.id)
+	try {
+		const dto = TaskListValue.check(req.body)
+		await TaskListModel.Update(id, dto)
+		res.status(204).send()
+	} catch (error) {
+		res.status(400).send({ message: error.message })
+	}
+})
 
 export { TasklistRouter as TasklistController, TasklistRouterPrefix }
-
-/**
- * Api Specification
- * Get All Projects -> Array<ApiProject>
- * Get One Project -> ApiProject
- * Get Project tasklists -> Array<ApiTasklist>
- *
- */

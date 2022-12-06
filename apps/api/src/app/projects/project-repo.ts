@@ -25,6 +25,7 @@ function ProjectModel() {
 				.join('tasklist', 'tasklist.id', 'tasklistProject.tasklist_id')
 				.where('tasklistProject.project_id', id)
 		},
+
 		async GetAll(): Promise<ProjectRow[]> {
 			try {
 				const result = await database

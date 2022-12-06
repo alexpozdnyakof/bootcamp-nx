@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TaskListController should return all related tasks 1`] = `
+Array [
+  Object {
+    "created": "2022-11-29 15:31:37",
+    "done": false,
+    "id": 1,
+    "title": "血液レポートのグラフが空白になっている",
+    "type": "task",
+    "updated": "2022-11-29 15:31:37",
+  },
+  Object {
+    "created": "2022-11-29 15:31:37",
+    "done": true,
+    "id": 2,
+    "title": "無効にする|| ユーザーがアカウントを無効にできない",
+    "type": "task",
+    "updated": "2022-11-29 15:31:37",
+  },
+]
+`;

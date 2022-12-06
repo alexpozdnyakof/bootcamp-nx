@@ -16,3 +16,13 @@ export interface ApiProject {
 	}>
 	type: 'project'
 }
+
+
+export interface ApiTask {
+	id: number
+	title: string
+	done: boolean
+	created: string
+	updated: string
+	type: 'task'
+}

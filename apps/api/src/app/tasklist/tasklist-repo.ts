@@ -17,7 +17,7 @@ export function TaskListRepo() {
 				return await database
 					.select<Array<TaskRow>>('task.*')
 					.from('taskTasklist')
-					.join('tasklist', 'tasklist.id', 'taskTasklist.tasklist_id')
+					.join('task', 'task.id', 'taskTasklist.task_id')
 					.where('taskTasklist.tasklist_id', id)
 			} catch (e) {
 				throw new Error(e?.message)
