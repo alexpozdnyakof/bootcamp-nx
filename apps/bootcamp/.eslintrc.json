@@ -27,7 +27,8 @@
 				],
 				"react/react-in-jsx-scope": "off",
 				"@typescript-eslint/semi": "off",
-				"@typescript-eslint/indent": "off"
+				"@typescript-eslint/indent": "off",
+				"@typescript-eslint/comma-dangle": "off"
 			}
 		},
 		{

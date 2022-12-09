@@ -1,7 +1,11 @@
-import { Box, List, ListItem, Stack, Text } from '@bootcamp-nx/core-ui'
+import { Box, Stack, Text } from '@bootcamp-nx/core-ui'
 import { TaskList, TaskListProvider } from '@bootcamp-nx/tasks-ui'
+import { Provider } from 'react-redux'
 import styles from './app.module.less'
+import SideMenu from './features/side-menu/side-menu'
+import store from './store'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const itemsJp = [
 	'ホームページのリニューアル',
 	'チェックアウトフォームのリファクタリング',
@@ -41,7 +45,7 @@ export const TASKS_DATA = [
 
 export default function App() {
 	return (
-		<>
+		<Provider store={store}>
 			<Box
 				style={{ height: '48px' }}
 				width='full'
@@ -54,18 +58,7 @@ export default function App() {
 			<Box className={styles['app-layout']}>
 				<Box className={styles['app-menu']}>
 					<Box style={{ height: '24px' }} />
-					<Stack space='small'>
-						<Text size='subtitle' weight='bold'>
-							プロジェクト
-						</Text>
-						<List>
-							{itemsJp.map(item => (
-								<ListItem key={item}>
-									<Text size='body'>{item}</Text>
-								</ListItem>
-							))}
-						</List>
-					</Stack>
+					<SideMenu />
 				</Box>
 				<Box>
 					<Box className={styles['app-layout-content']}>
@@ -88,6 +81,6 @@ export default function App() {
 					</Box>
 				</Box>
 			</Box>
-		</>
+		</Provider>
 	)
 }

@@ -11,6 +11,15 @@
 		},
 		{
 			"path": "../react-redux-00"
+		},
+		{
+			"path": "../blockchain"
+		},
+		{
+			"path": "../redux-saga/examples"
+		},
+		{
+			"path": "../../Node/koa-ts"
 		}
 	],
 	"settings": {
