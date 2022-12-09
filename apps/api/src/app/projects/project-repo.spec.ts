@@ -3,9 +3,9 @@ import ProjectRepository from './project-repo'
 describe('ProjectRepository', () => {
 	beforeAll(async () => {
 		await database.migrate.up({
-			name: '20221129145930_create_project_table.ts',
+			name: '20221129145930_create_project_table.js',
 		})
-		await database.seed.run({ specific: '01-project.ts' })
+		await database.seed.run({ specific: '01-project.js' })
 	})
 	it('should create new one project', async () => {
 		const dto = {

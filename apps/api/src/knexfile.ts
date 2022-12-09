@@ -10,9 +10,11 @@ const config: { [key: string]: Knex.Config } = {
 		},
 		migrations: {
 			directory: join(__dirname, '/migrations'),
+			loadExtensions: ['.js'],
 		},
 		seeds: {
 			directory: join(__dirname, '/seeds'),
+			loadExtensions: ['.js'],
 		},
 	},
 
@@ -38,9 +40,11 @@ const config: { [key: string]: Knex.Config } = {
 		},
 		migrations: {
 			directory: join(__dirname, '/migrations'),
+			loadExtensions: ['.js'],
 		},
 		seeds: {
 			directory: join(__dirname, '/seeds'),
+			loadExtensions: ['.js'],
 		},
 	},
 }

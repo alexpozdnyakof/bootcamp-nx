@@ -1,6 +1,4 @@
-import { Knex } from 'knex'
-
-export async function up(knex: Knex): Promise<void> {
+exports.up = function (knex) {
 	return knex.schema.createTable('tasklist', table => {
 		table.increments('id').primary()
 		table.string('title').notNullable()
@@ -10,6 +8,6 @@ export async function up(knex: Knex): Promise<void> {
 	})
 }
 
-export async function down(knex: Knex): Promise<void> {
+exports.down = function (knex) {
 	return knex.schema.dropTable('tasklist')
 }

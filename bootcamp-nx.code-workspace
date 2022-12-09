@@ -5,6 +5,12 @@
 		},
 		{
 			"path": "../../Node/express/examples"
+		},
+		{
+			"path": "../island-saga"
+		},
+		{
+			"path": "../react-redux-00"
 		}
 	],
 	"settings": {

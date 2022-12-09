@@ -8,19 +8,16 @@ const TaskRouter = Router()
 const TaskModel = TaskRepo()
 const TaskRouterPrefix = 'task'
 
-TaskRouter.get(
-	'/:id',
-	async (request, response: Response<ApiTask | { message: string }>) => {
-		const id = Number(request.params.id)
-		try {
-			const task = await TaskModel.GetOne(id)
-			const ApiTask = CreateTask(task)
-			response.status(200).send(ApiTask)
-		} catch (error) {
-			response.status(404).send({ message: error.message })
-		}
+TaskRouter.get('/:id', async (request, response: Response<ApiTask>) => {
+	const id = Number(request.params.id)
+	try {
+		const task = await TaskModel.GetOne(id)
+		const ApiTask = CreateTask(task)
+		response.status(200).send(ApiTask)
+	} catch (error) {
+		response.sendStatus(404)
 	}
-)
+})
 
 TaskRouter.post('/', async (req, res) => {
 	try {

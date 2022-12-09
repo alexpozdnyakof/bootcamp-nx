@@ -1,3 +1,134 @@
-.container {
+:root {
+	--bootcamp-font-family: 'Line', -apple-system, system-ui, 'Segoe UI',
+		roboto, noto, oxygen-sans, ubuntu, cantrell, 'Helvetica Neue',
+		sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+	--bootcamp-border-radius-small: 6px;
+	--bootcamp-border-radius-large: 12px;
+
+	/* background color */
+	--bootcamp-bg-default: #18181a;
+	--bootcamp-bg-action: rgb(52, 199, 89);
+	--bootcamp-bg-surface: #222325;
+	--bootcamp-bg-highlight: rgba(40, 246, 129, 0.25);
+	--bootcamp-bg-selected: rgba(230, 230, 230);
+
+	--bootcamp-font-size-caption: 11px;
+	--bootcamp-font-size-copy: 12px;
+	--bootcamp-font-size-body: 13px;
+	--bootcamp-font-size-subtitle: 15px;
+	--bootcamp-font-size-header: 18px;
+	--bootcamp-font-size-header-large: 22px;
+	--bootcamp-font-size-header-xlarge: 28px;
+
+	--bootcamp-font-weight-regular: 400;
+	--bootcamp-font-weight-medium: 600;
+	--bootcamp-font-weight-strong: 700;
+	--bootcamp-font-weight-xstrong: 900;
+
+	--bootcamp-breakpoint-tablet: 768px;
+	--bootcamp-breakpoint-desktop: 992px;
+
+	/* standard divider colors */
+	--bootcamp-divider-primary: #d7d8de;
+	--bootcamp-divider-secondary: #555;
+	--bootcamp-divider-tertiary: #333;
+
+	/* spacing sizes */
+	--bootcamp-spacing-xsmall: 4px;
+	--bootcamp-spacing-small: 8px;
+	--bootcamp-spacing-medium: 12px;
+	--bootcamp-spacing-large: 16px;
+	--bootcamp-spacing-xlarge: 24px;
+	--bootcamp-spacing-xxlarge: 32px;
+
+	/* width */
+	--bootcamp-width-xsmall: 220px;
+	--bootcamp-width-small: 400px;
+	--bootcamp-width-medium: 660px;
+	--bootcamp-width-large: 940px;
+	--bootcamp-width-xlarge: 1280px;
+
+	--bootcamp-content-primary: rgba(255, 255, 255, 0.88);
+	--bootcamp-content-secondary: rgba(255, 255, 255, 0.56);
+	--bootcamp-content-tertiary: rgba(0, 0, 0, 0.4);
+	--bootcamp-content-light-on-dark: rgb(255, 255, 255);
+	--bootcamp-content-positive: rgb(52, 199, 89);
+	--bootcamp-content-danger: rgb(212, 68, 46);
+
+	--bootcamp-framework-fill-background: rgb(26, 26, 26);
+	--bootcamp-framework-fill-crest: rgba(255, 255, 255, 0.08);
+	--bootcamp-framework-fill-selected: #222325;
+	--bootcamp-framework-fill-summit: rgb(214, 214, 214);
+
+	--bootcamp-alert-tone-info-icon: #1d438c;
+	--bootcamp-alert-tone-info-border: rgb(36, 111, 224);
+	--bootcamp-alert-tone-info-background: rgba(36, 111, 224, 0.1);
+
+	--bootcamp-alert-tone-positive-icon: rgb(52, 199, 89);
+	--bootcamp-alert-tone-positive-border: rgb(5, 133, 39);
+	--bootcamp-alert-tone-positive-background: rgba(5, 133, 39, 0.1);
+
+	--bootcamp-alert-tone-caution-icon: #5e3704;
+	--bootcamp-alert-tone-caution-border: rgb(235, 141, 19);
+	--bootcamp-alert-tone-caution-background: rgba(235, 141, 19, 0.2);
+
+	--bootcamp-alert-tone-critical-icon: #b03d32;
+	--bootcamp-alert-tone-critical-border: rgb(209, 69, 59);
+	--bootcamp-alert-tone-critical-background: rgba(209, 69, 59, 0.1);
+
+	--bootcamp-switch-checked: rgb(52, 199, 89);
+	--bootcamp-switch-checked-border: rgb(0, 223, 166);
+	--bootcamp-border-light: #d7d8de;
+}
+
+.theme-light {
+	--bootcamp-content-primary: rgba(0, 0, 0, 0.88);
+	--bootcamp-content-secondary: rgba(0, 0, 0, 0.56);
+	--bootcamp-content-tertiary: rgba(0, 0, 0, 0.4);
+	--bootcamp-content-light-on-dark: rgb(255, 255, 255);
+	--bootcamp-content-positive: rgb(5, 133, 39);
+	--bootcamp-content-danger: rgb(209, 69, 59);
+
+	--bootcamp-framework-fill-background: rgb(250, 250, 250);
+	--bootcamp-framework-fill-crest: rgb(230, 230, 230);
+	--bootcamp-framework-fill-selected: rgb(236, 236, 236);
+	--bootcamp-framework-fill-summit: rgb(214, 214, 214);
+
+	--bootcamp-divider-primary: #c4c7c8;
+	--bootcamp-divider-secondary: #dde2e3;
+	--bootcamp-divider-tertiary: #edf2f3;
+}
+
+html,
+body {
 	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: var(--bootcamp-font-family);
+  background: var(--bootcamp-bg-default);
+  color: var(--bootcamp-content-primary);
+	font-size: 1rem;
+	line-height: 1.5;
+	font-weight: normal;
+	-webkit-font-smoothing: antialiased;
+	font-feature-settings: 'zero', 'ss01';
+}
+
+p {
+	margin-block-end: 0;
+}
+
+a {
+	color: rgb(52, 199, 89);
+	font-weight: var(--bootcamp-font-weight-medium);
+}
+
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
 }

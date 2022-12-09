@@ -1,54 +1,52 @@
-import { Knex } from 'knex'
-
-export async function seed(knex: Knex): Promise<void> {
+exports.seed = async function (knex) {
 	// Deletes ALL existing entries
-	await knex('task').del()
+	await knex('tasklist').del()
 
 	// Inserts seed entries
-	await knex('task').insert([
+	await knex('tasklist').insert([
 		{
 			id: 1,
-			title: '血液レポートのグラフが空白になっている',
-			done: false,
+			title: 'すべてのフロントエンド タスク',
+			description: 'プレリリースジョブのみ',
 			created: '2022-11-29 15:31:37',
 			updated: '2022-11-29 15:31:37',
 		},
 		{
 			id: 2,
-			title: '無効にする|| ユーザーがアカウントを無効にできない',
-			done: true,
+			title: 'すべてのバックエンド タスク',
+			description: 'プレリリースジョブのみ',
 			created: '2022-11-29 15:31:37',
 			updated: '2022-11-29 15:31:37',
 		},
 		{
 			id: 3,
-			title: 'プロフィール、プロフィールの編集、ポップアップ',
-			done: false,
+			title: 'デザインバックログ',
+			description: null,
 			created: '2022-11-29 15:31:37',
 			updated: '2022-11-29 15:31:37',
 		},
 	])
 
-	await knex('taskTasklist').del()
-	await knex('taskTasklist').insert([
+	await knex('tasklistProject').del()
+	await knex('tasklistProject').insert([
 		{
 			id: 1,
-			task_id: 1,
+			project_id: 1,
 			tasklist_id: 1,
 			created: '2022-11-29 15:31:37',
 			updated: '2022-11-29 15:31:37',
 		},
 		{
 			id: 2,
-			task_id: 2,
-			tasklist_id: 1,
+			project_id: 1,
+			tasklist_id: 2,
 			created: '2022-11-29 15:31:37',
 			updated: '2022-11-29 15:31:37',
 		},
 		{
 			id: 3,
-			task_id: 3,
-			tasklist_id: 2,
+			project_id: 2,
+			tasklist_id: 3,
 			created: '2022-11-29 15:31:37',
 			updated: '2022-11-29 15:31:37',
 		},

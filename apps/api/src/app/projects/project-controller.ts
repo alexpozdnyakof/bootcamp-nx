@@ -12,7 +12,7 @@ ProjectRouter.get('/', async (_, res) => {
 		const result = await ProjectModel.GetAll()
 		res.status(200).send(result)
 	} catch (error) {
-		res.status(404).send(error.message)
+		res.sendStatus(404)
 	}
 })
 

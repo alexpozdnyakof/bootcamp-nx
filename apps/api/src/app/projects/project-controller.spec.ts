@@ -10,16 +10,16 @@ describe('ProjectController', () => {
 
 	beforeAll(async () => {
 		await database.migrate.up({
-			name: '20221129145930_create_project_table.ts',
+			name: '20221129145930_create_project_table.js',
 		})
 		await database.migrate.up({
-			name: '20221129145937_create_tasklist_table.ts',
+			name: '20221129145937_create_tasklist_table.js',
 		})
 		await database.migrate.up({
-			name: '20221130102828_create_tasklist_to_project.ts',
+			name: '20221130102828_create_tasklist_to_project.js',
 		})
-		await database.seed.run({ specific: '01-project.ts' })
-		await database.seed.run({ specific: '02-tasklist.ts' })
+		await database.seed.run({ specific: '01-project.js' })
+		await database.seed.run({ specific: '02-tasklist.js' })
 	})
 
 	it('should return all projects', async () => {

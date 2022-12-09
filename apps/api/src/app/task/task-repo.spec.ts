@@ -4,12 +4,12 @@ describe('TaskModel', () => {
 	const TaskModel = TaskRepo()
 	beforeAll(async () => {
 		await database.migrate.up({
-			name: '20221129145851_create_task_table.ts',
+			name: '20221129145851_create_task_table.js',
 		})
 		await database.migrate.up({
-			name: '20221202114516_create_task_to_tasklist.ts',
+			name: '20221202114516_create_task_to_tasklist.js',
 		})
-		await database.seed.run({ specific: '03-task.ts' })
+		await database.seed.run({ specific: '03-task.js' })
 	})
 
 	it('should return task with id 1', async () => {

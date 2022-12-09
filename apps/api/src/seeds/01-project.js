@@ -1,10 +1,6 @@
-import { Knex } from 'knex'
-
-export async function seed(knex: Knex): Promise<void> {
-	// Deletes ALL existing entries
+exports.seed = async function (knex) {
 	await knex('project').del()
 
-	// Inserts seed entries
 	await knex('project').insert([
 		{
 			id: 1,

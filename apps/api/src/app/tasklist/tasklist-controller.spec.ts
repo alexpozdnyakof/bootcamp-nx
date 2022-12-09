@@ -10,19 +10,19 @@ describe('TaskListController', () => {
 
 	beforeAll(async () => {
 		await database.migrate.up({
-			name: '20221129145937_create_tasklist_table.ts',
+			name: '20221129145937_create_tasklist_table.js',
 		})
 		await database.migrate.up({
-			name: '20221129145851_create_task_table.ts',
+			name: '20221129145851_create_task_table.js',
 		})
 		await database.migrate.up({
-			name: '20221202114516_create_task_to_tasklist.ts',
+			name: '20221202114516_create_task_to_tasklist.js',
 		})
 		await database.migrate.up({
-			name: '20221130102828_create_tasklist_to_project.ts',
+			name: '20221130102828_create_tasklist_to_project.js',
 		})
-		await database.seed.run({ specific: '02-tasklist.ts' })
-		await database.seed.run({ specific: '03-task.ts' })
+		await database.seed.run({ specific: '02-tasklist.js' })
+		await database.seed.run({ specific: '03-task.js' })
 	})
 
 	it('should return all related tasks', async () => {

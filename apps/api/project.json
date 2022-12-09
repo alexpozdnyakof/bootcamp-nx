@@ -12,7 +12,11 @@
 				"outputPath": "dist/apps/api",
 				"main": "apps/api/src/main.ts",
 				"tsConfig": "apps/api/tsconfig.app.json",
-				"assets": ["apps/api/src/assets"]
+				"assets": [
+					"apps/api/src/assets",
+					"apps/api/src/migrations",
+					"apps/api/src/seeds"
+				]
 			},
 			"configurations": {
 				"production": {
