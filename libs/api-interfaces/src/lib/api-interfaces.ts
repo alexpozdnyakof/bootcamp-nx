@@ -25,3 +25,11 @@ export interface ApiTask {
 	updated: string
 	type: 'task'
 }
+export interface ApiTaskList {
+	id: number
+	title: string
+	done: boolean
+	created: string
+	updated: string
+	type: 'task_list'
+}

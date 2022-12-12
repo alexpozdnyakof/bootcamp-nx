@@ -21,6 +21,7 @@ export const sideMenuSlice = createSlice({
 		},
 		loadSuccess(state, action: PayloadAction<Array<ApiProject>>) {
 			state.projects = action.payload
+			state.status = 'idle'
 		},
 		loadFailed(state) {
 			state.status = 'error'
