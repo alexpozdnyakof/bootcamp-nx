@@ -18,12 +18,31 @@ describe('ProjectController', () => {
 		await database.migrate.up({
 			name: '20221130102828_create_tasklist_to_project.js',
 		})
+		await database.migrate.up({
+			name: '20221202114516_create_task_to_tasklist.js',
+		})
+		await database.migrate.up({
+			name: '20221129145851_create_task_table.js',
+		})
 		await database.seed.run({ specific: '01-project.js' })
 		await database.seed.run({ specific: '02-tasklist.js' })
+		await database.seed.run({ specific: '03-task.js' })
 	})
 
 	it('should return all projects', async () => {
 		const response = await request(App).get('/')
+		expect(response.status).toBe(200)
+		expect(response.body).toMatchSnapshot()
+	})
+
+	it('should return all related tasklists', async () => {
+		const response = await request(App).get('/1/tasklists')
+		expect(response.status).toBe(200)
+		expect(response.body).toMatchSnapshot()
+	})
+
+	it('should return all related tasks', async () => {
+		const response = await request(App).get('/1/tasks')
 		expect(response.status).toBe(200)
 		expect(response.body).toMatchSnapshot()
 	})

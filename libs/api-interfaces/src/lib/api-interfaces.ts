@@ -7,13 +7,6 @@ export interface ApiProject {
 	description: string | null
 	created: string
 	updated: string
-	tasklists: Array<{
-		id: number
-		title: string
-		description: string | null
-		created: string
-		updated: string
-	}>
 	type: 'project'
 }
 

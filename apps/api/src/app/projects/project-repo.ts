@@ -1,4 +1,5 @@
 import { database } from '../database'
+import { TaskRow } from '../task/task'
 import { TaskListRow } from '../tasklist'
 import { ProjectValue, ProjectRow } from './project'
 
@@ -24,6 +25,32 @@ function ProjectModel() {
 				.from('tasklistProject')
 				.join('tasklist', 'tasklist.id', 'tasklistProject.tasklist_id')
 				.where('tasklistProject.project_id', id)
+		},
+		async GetRelatedTasks(
+			id: UniqueId
+		): Promise<(TaskRow & { tasklist_id: number })[]> {
+			try {
+				return await database
+					.select<Array<TaskRow & { tasklist_id: number }>>(
+						'task.*',
+						'taskTasklist.tasklist_id'
+					)
+					.from('tasklistProject')
+					.join(
+						'tasklist',
+						'tasklist.id',
+						'tasklistProject.tasklist_id'
+					)
+					.join(
+						'taskTasklist',
+						'taskTasklist.tasklist_id',
+						'tasklist.id'
+					)
+					.join('task', 'task.id', 'taskTasklist.task_id')
+					.where('tasklistProject.project_id', id)
+			} catch (e) {
+				throw new Error(e?.message)
+			}
 		},
 
 		async GetAll(): Promise<ProjectRow[]> {

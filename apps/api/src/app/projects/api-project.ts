@@ -1,13 +1,9 @@
-import { TaskListRow } from '../tasklist/tasklist'
+import { ApiProject } from '@bootcamp-nx/api-interfaces'
 import { ProjectRow } from './project'
 
-export function createApiProject(
-	aRow: ProjectRow,
-	tasklists: Array<TaskListRow>
-) {
+export function CreateApiProject(aRow: ProjectRow): ApiProject {
 	return {
 		...aRow,
-		tasklists,
 		type: 'project',
 	} as const
 }

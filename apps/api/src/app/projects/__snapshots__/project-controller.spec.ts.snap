@@ -48,27 +48,64 @@ Array [
 ]
 `;
 
+exports[`ProjectController should return all related tasklists 1`] = `
+Array [
+  Object {
+    "created": "2022-11-29 15:31:37",
+    "description": "プレリリースジョブのみ",
+    "id": 1,
+    "title": "すべてのフロントエンド タスク",
+    "type": "task_list",
+    "updated": "2022-11-29 15:31:37",
+  },
+  Object {
+    "created": "2022-11-29 15:31:37",
+    "description": "プレリリースジョブのみ",
+    "id": 2,
+    "title": "すべてのバックエンド タスク",
+    "type": "task_list",
+    "updated": "2022-11-29 15:31:37",
+  },
+]
+`;
+
+exports[`ProjectController should return all related tasks 1`] = `
+Array [
+  Object {
+    "created": "2022-11-29 15:31:37",
+    "done": false,
+    "id": 1,
+    "tasklist_id": 1,
+    "title": "血液レポートのグラフが空白になっている",
+    "type": "task",
+    "updated": "2022-11-29 15:31:37",
+  },
+  Object {
+    "created": "2022-11-29 15:31:37",
+    "done": true,
+    "id": 2,
+    "tasklist_id": 1,
+    "title": "無効にする|| ユーザーがアカウントを無効にできない",
+    "type": "task",
+    "updated": "2022-11-29 15:31:37",
+  },
+  Object {
+    "created": "2022-11-29 15:31:37",
+    "done": false,
+    "id": 3,
+    "tasklist_id": 2,
+    "title": "プロフィール、プロフィールの編集、ポップアップ",
+    "type": "task",
+    "updated": "2022-11-29 15:31:37",
+  },
+]
+`;
+
 exports[`ProjectController should return project with id 1 1`] = `
 Object {
   "created": "2022-11-29 15:31:37",
   "description": "新しいフレッシュホームページの制作過程はこちら",
   "id": 1,
-  "tasklists": Array [
-    Object {
-      "created": "2022-11-29 15:31:37",
-      "description": "プレリリースジョブのみ",
-      "id": 1,
-      "title": "すべてのフロントエンド タスク",
-      "updated": "2022-11-29 15:31:37",
-    },
-    Object {
-      "created": "2022-11-29 15:31:37",
-      "description": "プレリリースジョブのみ",
-      "id": 2,
-      "title": "すべてのバックエンド タスク",
-      "updated": "2022-11-29 15:31:37",
-    },
-  ],
   "title": "ホームページのリニューアル",
   "type": "project",
   "updated": "2022-11-29 15:31:37",

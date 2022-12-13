@@ -1,6 +1,8 @@
-import { ApiProject } from '@bootcamp-nx/api-interfaces'
+import { ApiProject, ApiTask, ApiTaskList } from '@bootcamp-nx/api-interfaces'
 import { Response, Router } from 'express'
-import { createApiProject } from './api-project'
+import { CreateTask } from '../task/task'
+import { CreateTaskList } from '../tasklist'
+import { CreateApiProject } from './api-project'
 import { ProjectValue } from './project'
 import ProjectModel from './project-repo'
 
@@ -24,12 +26,46 @@ ProjectRouter.get(
 			const projectRow = await ProjectModel.GetOne(id)
 			if (projectRow === undefined) throw new Error('Not Found')
 
-			const tasklistsRow = await ProjectModel.GetRelatedTasklists(id)
-			const ApiProject = createApiProject(projectRow, tasklistsRow)
+			const ApiProject = CreateApiProject(projectRow)
 
 			res.status(200).send(ApiProject)
 		} catch (error) {
 			res.status(404).send({ message: error.message })
+		}
+	}
+)
+
+ProjectRouter.get(
+	'/:id/tasklists',
+	async (req, res: Response<Array<ApiTaskList> | { message: string }>) => {
+		const id = Number(req.params.id)
+		try {
+			const tasklistsRow = await ProjectModel.GetRelatedTasklists(id)
+			const apiTaskLists = tasklistsRow.map(row => CreateTaskList(row))
+			res.status(200).send(apiTaskLists)
+		} catch (error) {
+			res.status(400).send({ message: error.message })
+		}
+	}
+)
+ProjectRouter.get(
+	'/:id/tasks',
+	async (
+		req,
+		res: Response<
+			Array<ApiTask & { tasklist_id: number }> | { message: string }
+		>
+	) => {
+		const id = Number(req.params.id)
+		try {
+			const tasksRow = await ProjectModel.GetRelatedTasks(id)
+
+			const apiTasks = tasksRow.map(({ tasklist_id, ...row }) =>
+				Object.assign(CreateTask(row), { tasklist_id })
+			)
+			res.status(200).send(apiTasks)
+		} catch (error) {
+			res.status(400).send({ message: error.message })
 		}
 	}
 )
