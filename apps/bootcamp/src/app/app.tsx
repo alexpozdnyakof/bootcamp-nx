@@ -4,8 +4,8 @@ import { Provider } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
 import styles from './app.module.less'
 import SideMenu from './features/side-menu/side-menu'
-import { TaskListFeature } from './features/task-list/task-list'
 import { TopBar } from './features/top-bar/top-bar'
+import ProjectPage from './pages/project'
 
 import store from './store'
 
@@ -35,7 +35,7 @@ export default function App() {
 								<Routes>
 									<Route
 										path=':id'
-										element={<TaskListFeature />}
+										element={<ProjectPage />}
 									/>
 								</Routes>
 							</Suspense>

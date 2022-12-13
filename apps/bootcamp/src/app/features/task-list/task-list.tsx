@@ -1,7 +1,6 @@
 import { Stack } from '@bootcamp-nx/core-ui'
 import { TaskList, TaskListProvider } from '@bootcamp-nx/tasks-ui'
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
 import { useAppDispatch } from '../../store-hooks'
 import { load } from './task-list.slice'
 
@@ -33,16 +32,16 @@ export const TASKS_DATA = [
 	},
 ]
 /* eslint-disable-next-line */
-export interface TaskListProps {}
+export interface TaskListProps {
+	projectId: string
+}
 
-export function TaskListFeature() {
-	const params = useParams<{ id: string }>()
+export function TaskListFeature({ projectId }: TaskListProps) {
 	const dispatch = useAppDispatch()
-	const id = params.id!
 
 	useEffect(() => {
-		dispatch(load({ id }))
-	}, [dispatch, id])
+		dispatch(load({ id: projectId }))
+	}, [dispatch, projectId])
 
 	return (
 		<Stack space='xlarge'>

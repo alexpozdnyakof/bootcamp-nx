@@ -1,14 +1,18 @@
 /* eslint-disable no-param-reassign */
-import { ApiProject } from '@bootcamp-nx/api-interfaces'
+import { ApiProject, ApiTask, ApiTaskList } from '@bootcamp-nx/api-interfaces'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type TaskListState = {
-	project: ApiProject
 	status: 'idle' | 'pending' | 'error'
+	tasks: Array<ApiTask & { tasklist_id: number }>
+	lists: Array<ApiTaskList>
+	project: ApiProject | null
 }
 
 const initialState: TaskListState = {
-	project: {} as ApiProject,
+	project: null,
+	tasks: [],
+	lists: [],
 	status: 'idle',
 }
 
@@ -20,9 +24,17 @@ const taskListSlice = createSlice({
 		load(state, action: PayloadAction<{ id: string }>) {
 			state.status = 'pending'
 		},
-		loadSuccess(state, action: PayloadAction<ApiProject>) {
+		loadProjectSuccess(state, action: PayloadAction<ApiProject>) {
 			state.project = action.payload
-			state.status = 'idle'
+		},
+		loadTasklistsSuccess(state, action: PayloadAction<Array<ApiTaskList>>) {
+			state.lists = action.payload
+		},
+		loadTasksSuccess(
+			state,
+			action: PayloadAction<Array<ApiTask & { tasklist_id: number }>>
+		) {
+			state.tasks = action.payload
 		},
 		loadFailed(state) {
 			state.status = 'error'
@@ -30,6 +42,12 @@ const taskListSlice = createSlice({
 	},
 })
 
-export const { load, loadSuccess, loadFailed } = taskListSlice.actions
+export const {
+	load,
+	loadProjectSuccess,
+	loadTasklistsSuccess,
+	loadTasksSuccess,
+	loadFailed,
+} = taskListSlice.actions
 
 export default taskListSlice.reducer

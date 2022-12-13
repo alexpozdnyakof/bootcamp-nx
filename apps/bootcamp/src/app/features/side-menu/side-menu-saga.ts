@@ -10,7 +10,7 @@ export function* loadSideMenu() {
 	try {
 		const response: Array<ApiProject> = yield call(
 			httpRequest,
-			'/api/projects'
+			'/api/project'
 		)
 
 		yield put(loadSuccess(response))
