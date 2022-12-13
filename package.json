@@ -30,7 +30,9 @@
 		"regenerator-runtime": "0.13.7",
 		"runtypes": "^6.6.0",
 		"sqlite3": "^5.1.2",
-		"tslib": "^2.3.0"
+		"swagger-ui-express": "^4.6.0",
+		"tslib": "^2.3.0",
+		"yamljs": "^0.3.0"
 	},
 	"devDependencies": {
 		"@babel/core": "7.12.13",

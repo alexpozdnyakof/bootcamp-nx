@@ -1,23 +1,25 @@
-import { ApiTask } from '@bootcamp-nx/api-interfaces'
+import { ApiTask, ApiTaskList } from '@bootcamp-nx/api-interfaces'
 import { Router, Response } from 'express'
 import { CreateTask } from '../task/task'
-import { TaskListValue } from './tasklist'
+import { CreateTaskList, TaskListValue } from './tasklist'
 import { TaskListRepo } from './tasklist-repo'
 
 const TasklistRouter = Router()
 const TaskListModel = TaskListRepo()
 const TasklistRouterPrefix = 'tasklist'
 
-TasklistRouter.get('/:id', async (request, response) => {
-	const id = Number(request.params.id)
-	try {
-		const tasklist = await TaskListModel.GetOne(id)
-		response.status(200).send(tasklist)
-	} catch (error) {
-		response.status(404).send({ message: error.message })
+TasklistRouter.get(
+	'/:id',
+	async (request, response: Response<ApiTaskList | { message: string }>) => {
+		const id = Number(request.params.id)
+		try {
+			const tasklist = await TaskListModel.GetOne(id)
+			response.status(200).send(CreateTaskList(tasklist))
+		} catch (error) {
+			response.status(404).send({ message: error.message })
+		}
 	}
-})
-
+)
 TasklistRouter.get(
 	'/:id/tasks',
 	async (request, response: Response<ApiTask[] | { message: string }>) => {

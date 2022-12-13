@@ -15,7 +15,8 @@
 				"assets": [
 					"apps/api/src/assets",
 					"apps/api/src/migrations",
-					"apps/api/src/seeds"
+					"apps/api/src/seeds",
+					"apps/api/src/swagger-spec.yaml"
 				]
 			},
 			"configurations": {

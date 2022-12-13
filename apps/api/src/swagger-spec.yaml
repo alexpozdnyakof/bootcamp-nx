@@ -1,0 +1,328 @@
+info:
+    title: Bootcamp API
+    version: 0.0.1
+    description: REST API for Bootcamp project
+host: localhost:3333
+basePath: '/api'
+swagger: '2.0'
+paths:
+    /tasklist/{id}/tasks:
+        get:
+            description: Return all tasks related to tasklist
+            tags:
+                - TaskList
+            produces:
+                - application/json
+            parameters:
+                - $ref: '#/components/parameters/id'
+            responses:
+                200:
+                    description: tasklist
+                    schema:
+                        type: array
+                        items:
+                            $ref: '#/components/schemas/ApiTask'
+    /tasklist:
+        post:
+            description: Create tasklist
+            tags:
+                - TaskList
+            produces:
+                - application/json
+            parameters:
+                - $ref: '#/components/parameters/title'
+                - $ref: '#/components/parameters/description'
+            responses:
+                '201':
+                    $ref: '#/components/responses/OK'
+                '400':
+                    $ref: '#/components/responses/BadRequest'
+    /tasklist/{id}:
+        get:
+            description: Find tasklist by id and return
+            tags:
+                - TaskList
+            produces:
+                - application/json
+            parameters:
+                - $ref: '#/components/parameters/id'
+            responses:
+                '200':
+                    description: tasklist
+                    schema:
+                        type: object
+                        $ref: '#/components/schemas/ApiTaskList'
+        put:
+            description: Update exist tasklist
+            tags:
+                - TaskList
+            produces:
+                - application/json
+            parameters:
+                - $ref: '#/components/parameters/id'
+                - $ref: '#/components/parameters/title'
+                - $ref: '#/components/parameters/description'
+            responses:
+                '204':
+                    $ref: '#/components/responses/OK'
+                '400':
+                    $ref: '#/components/responses/BadRequest'
+        delete:
+            description: Delete exist tasklist
+            tags:
+                - TaskList
+            produces:
+                - application/json
+            parameters:
+                - $ref: '#/components/parameters/id'
+            responses:
+                204:
+                    $ref: '#/components/responses/OK'
+                400:
+                    $ref: '#/components/responses/BadRequest'
+    /project/{id}:
+        get:
+            description: Find project by id
+            tags:
+                - Project
+            produces:
+                - application/json
+            parameters:
+                - $ref: '#/components/parameters/id'
+            responses:
+                200:
+                    description: api project
+                    schema:
+                        type: object
+                        $ref: '#/components/schemas/ApiProject'
+                '404':
+                    $ref: '#/components/responses/NotFound'
+        put:
+            description: Update exist project
+            tags:
+                - Project
+            produces:
+                - application/json
+            parameters:
+                - $ref: '#/components/parameters/id'
+                - $ref: '#/components/parameters/title'
+                - $ref: '#/components/parameters/description'
+            responses:
+                204:
+                    $ref: '#/components/responses/OK'
+                400:
+                    $ref: '#/components/responses/BadRequest'
+        delete:
+            description: Delete exist project
+            tags:
+                - Project
+            produces:
+                - application/json
+            parameters:
+                - $ref: '#/components/parameters/id'
+            responses:
+                204:
+                    $ref: '#/components/responses/OK'
+                400:
+                    $ref: '#/components/responses/BadRequest'
+    /project:
+        get:
+            description: Return all projects
+            tags:
+                - Project
+            produces:
+                - application/json
+            responses:
+                200:
+                    description: api project
+                    schema:
+                        type: array
+                        items:
+                            $ref: '#/components/schemas/ApiProject'
+        post:
+            description: Create new project
+            tags:
+                - Project
+            produces:
+                - application/json
+            parameters:
+                - $ref: '#/components/parameters/title'
+                - $ref: '#/components/parameters/description'
+            responses:
+                '201':
+                    $ref: '#/components/responses/OK'
+                '400':
+                    $ref: '#/components/responses/BadRequest'
+    /task:
+        post:
+            description: Create new task
+            tags:
+                - Task
+            produces:
+                - application/json
+            parameters:
+                - $ref: '#/components/parameters/title'
+                - $ref: '#/components/parameters/done'
+            responses:
+                '201':
+                    $ref: '#/components/responses/OK'
+                '400':
+                    $ref: '#/components/responses/BadRequest'
+
+    /task/{id}:
+        get:
+            description: Find task by id
+            tags:
+                - Task
+            produces:
+                - application/json
+            parameters:
+                - $ref: '#/components/parameters/id'
+            responses:
+                200:
+                    description: api task
+                    schema:
+                        type: object
+                        $ref: '#/components/schemas/ApiTask'
+                '404':
+                    $ref: '#/components/responses/NotFound'
+        put:
+            description: Update exist task
+            tags:
+                - Task
+            produces:
+                - application/json
+            parameters:
+                - $ref: '#/components/parameters/id'
+                - $ref: '#/components/parameters/title'
+                - $ref: '#/components/parameters/done'
+            responses:
+                204:
+                    $ref: '#/components/responses/OK'
+                400:
+                    $ref: '#/components/responses/BadRequest'
+        delete:
+            description: Delete exist project
+            tags:
+                - Task
+            produces:
+                - application/json
+            parameters:
+                - $ref: '#/components/parameters/id'
+            responses:
+                204:
+                    $ref: '#/components/responses/OK'
+                400:
+                    $ref: '#/components/responses/BadRequest'
+
+components:
+    schemas:
+        DefaultRow:
+            type: object
+            required:
+                - id
+                - created
+                - updated
+                - type
+            properties:
+                id:
+                    type: number
+                created:
+                    type: string
+                updated:
+                    type: string
+                type:
+                    type: string
+
+        ApiProject:
+            allOf:
+                - $ref: '#/components/schemas/DefaultRow'
+                - type: object
+                  properties:
+                      title:
+                          type: string
+                      description:
+                          type: string
+                      tasklists:
+                          type: array
+                          items:
+                              $ref: '#/components/schemas/ApiTaskList'
+
+        ApiTaskList:
+            allOf:
+                - $ref: '#/components/schemas/DefaultRow'
+                - type: object
+                  required:
+                      - title
+                  properties:
+                      title:
+                          type: string
+                          required: true
+                      description:
+                          type: string
+
+        ApiTask:
+            allOf:
+                - $ref: '#/components/schemas/DefaultRow'
+                - type: object
+                  required:
+                      - title
+                      - done
+                  properties:
+                      title:
+                          type: string
+                      done:
+                          type: boolean
+        Error:
+            type: object
+            properties:
+                message:
+                    type: string
+    parameters:
+        id:
+            name: id
+            description: Entity id
+            in: path
+            required: true
+            type: string
+        title:
+            name: title
+            description: Entity title
+            in: body
+            required: true
+            type: string
+        description:
+            name: description
+            description: Entity description
+            in: body
+            required: false
+            type: string
+        done:
+            name: done
+            description: Task complete status
+            in: body
+            required: true
+            type: boolean
+    responses:
+        NotFound:
+            description: Entity not found
+            content: application/json
+            schema:
+                type: object
+                '$ref': '#/components/schemas/Error'
+        BadRequest:
+            description: Bad Request
+            content: application/json
+            schema:
+                type: object
+                '$ref': '#/components/schemas/Error'
+        OK:
+            description: OK
+    securityDefinitions: {}
+tags:
+    - name: TaskList
+      description: Tasklist is collection of tasks
+    - name: Project
+      description: Project is collection of tasklists
+    - name: Task
+      description: Task - base unit

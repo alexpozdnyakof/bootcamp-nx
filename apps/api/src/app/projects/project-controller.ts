@@ -5,7 +5,7 @@ import { ProjectValue } from './project'
 import ProjectModel from './project-repo'
 
 const ProjectRouter = Router()
-const ProjectRouterPrefix = 'projects'
+const ProjectRouterPrefix = 'project'
 
 ProjectRouter.get('/', async (_, res) => {
 	try {
