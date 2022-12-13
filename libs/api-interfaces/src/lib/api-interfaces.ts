@@ -28,7 +28,7 @@ export interface ApiTask {
 export interface ApiTaskList {
 	id: number
 	title: string
-	done: boolean
+	description: string | null
 	created: string
 	updated: string
 	type: 'task_list'
