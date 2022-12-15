@@ -1,5 +1,7 @@
 export type ViewTask = {
-	done: boolean
 	id: number
-	text: string
+	title: string
+	done: boolean
+	created: string
+	updated: string
 }

@@ -14,7 +14,7 @@ export type TaskListContextState = {
 	title: string
 	completedCount?: string
 	editingTask?: ViewTask['id'] | null
-	onCreate?: (text: ViewTask['text']) => void
+	onCreate?: (text: ViewTask['title']) => void
 } & TaskListItemHandlers
 
 type TaskListInnerState = Pick<TaskListContextState, 'tasks' | 'editingTask'>
@@ -56,10 +56,12 @@ function TaskListProvider({ children, tasks, title }: TaskListProviderProps) {
 
 	const onCreate = useCallback(
 		(text: string) => {
-			const createTask = (text: ViewTask['text']) => ({
+			const createTask = (title: ViewTask['title']) => ({
 				id: state.tasks[state.tasks.length - 1].id++,
-				text,
+				title,
 				done: false,
+				created: Date.now().toString(),
+				updated: Date.now().toString(),
 			})
 
 			setState(({ tasks, ...s }) => ({
@@ -71,10 +73,10 @@ function TaskListProvider({ children, tasks, title }: TaskListProviderProps) {
 	)
 
 	const onChange = useCallback(
-		(id: ViewTask['id'], text: string) => {
+		(id: ViewTask['id'], title: string) => {
 			setState(({ tasks, ...s }) => ({
 				tasks: tasks.map(it =>
-					it.id === id ? { ...it, text: text } : it
+					it.id === id ? { ...it, title: title } : it
 				),
 				...s,
 			}))

@@ -28,7 +28,7 @@ export function TaskList() {
 				{tasks.map(task => (
 					<TaskListItem
 						key={task.id}
-						// task={task}
+						task={task}
 						onDelete={onDelete}
 						onComplete={onComplete}
 						onChange={onChange}

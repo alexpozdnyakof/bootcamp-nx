@@ -1,12 +1,11 @@
-import { ApiTask } from '@bootcamp-nx/api-interfaces'
 import {
 	Button,
+	EditableText,
 	Icon,
 	Inline,
-	SwitchComplete,
 	ListItem,
-	EditableText,
 	polymorphicComponent,
+	SwitchComplete,
 } from '@bootcamp-nx/core-ui'
 
 import { memo, useState } from 'react'
@@ -19,7 +18,7 @@ export type TaskListItemHandlers = {
 }
 
 export type TaskListItemProps = {
-	task: Required<ApiTask>
+	task: ViewTask
 	isEditing?: boolean
 } & TaskListItemHandlers
 

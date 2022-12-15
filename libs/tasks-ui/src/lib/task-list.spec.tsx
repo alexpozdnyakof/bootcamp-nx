@@ -26,8 +26,8 @@ describe('Task list', () => {
 		render(<ComponentUnderTest />)
 
 		expect(screen.getAllByRole('listitem')).toHaveLength(TASKS_DATA.length)
-		TASKS_DATA.forEach(({ text }) =>
-			expect(screen.getByText(text)).toBeInTheDocument()
+		TASKS_DATA.forEach(({ title }) =>
+			expect(screen.getByText(title)).toBeInTheDocument()
 		)
 	})
 
@@ -66,11 +66,11 @@ describe('Task list', () => {
 		render(<ComponentUnderTest />)
 
 		expect(screen.getAllByRole('listitem')).toHaveLength(TASKS_DATA.length)
-		expect(screen.getByText(TASKS_DATA[0].text)).toBeInTheDocument()
+		expect(screen.getByText(TASKS_DATA[0].title)).toBeInTheDocument()
 
 		await userEvent.click(
 			screen.getByRole('button', {
-				name: `Delete ${TASKS_DATA[0].text}`,
+				name: `Delete ${TASKS_DATA[0].title}`,
 			})
 		)
 
@@ -78,7 +78,7 @@ describe('Task list', () => {
 			TASKS_DATA.length - 1
 		)
 
-		expect(screen.queryByText(TASKS_DATA[0].text)).not.toBeInTheDocument()
+		expect(screen.queryByText(TASKS_DATA[0].title)).not.toBeInTheDocument()
 	})
 
 	it('should show and hide new task form', async () => {
@@ -154,26 +154,26 @@ describe('Task list', () => {
 	it('should change task text', async () => {
 		render(<ComponentUnderTest />)
 
-		const taskBeforeEditing = screen.queryByText(TASKS_DATA[0].text)
+		const taskBeforeEditing = screen.queryByText(TASKS_DATA[0].title)
 
 		expect(taskBeforeEditing).toBeInTheDocument()
 		expect(
-			screen.queryByText(TASKS_DATA[0].text.concat('血液'))
+			screen.queryByText(TASKS_DATA[0].title.concat('血液'))
 		).not.toBeInTheDocument()
 
 		await userEvent.dblClick(
-			screen.getByRole('switch', { name: `Edit ${TASKS_DATA[0].text}` })
+			screen.getByRole('switch', { name: `Edit ${TASKS_DATA[0].title}` })
 		)
 
 		await userEvent.type(
-			screen.getByDisplayValue(TASKS_DATA[0].text),
+			screen.getByDisplayValue(TASKS_DATA[0].title),
 			'血液{enter}'
 		)
 
 		expect(taskBeforeEditing).not.toBeInTheDocument()
 
 		expect(
-			screen.queryByText(TASKS_DATA[0].text.concat('血液'))
+			screen.queryByText(TASKS_DATA[0].title.concat('血液'))
 		).toBeInTheDocument()
 
 		expect(taskBeforeEditing).not.toBeInTheDocument()

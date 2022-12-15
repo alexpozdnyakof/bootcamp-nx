@@ -4,8 +4,10 @@ import TaskListItem from './task-list-item'
 describe('Task list item', () => {
 	const task = {
 		id: 0,
-		text: '血液レポートのグラフが空白になっている',
+		title: '血液レポートのグラフが空白になっている',
 		done: false,
+		created: '2022-11-29 15:31:37',
+		updated: '2022-11-29 15:31:37',
 	}
 
 	it('should not render item without task', () => {
@@ -14,7 +16,7 @@ describe('Task list item', () => {
 	})
 	it('should render task text', () => {
 		render(<TaskListItem task={task} />)
-		expect(screen.getByText(task.text)).toBeInTheDocument()
+		expect(screen.getByText(task.title)).toBeInTheDocument()
 	})
 
 	it('should call onDelete callback', async () => {
@@ -65,17 +67,17 @@ describe('Task list item', () => {
 		)
 
 		await userEvent.dblClick(
-			screen.getByRole('switch', { name: `Edit ${task.text}` })
+			screen.getByRole('switch', { name: `Edit ${task.title}` })
 		)
 
 		await userEvent.type(
-			screen.getByDisplayValue(task.text),
+			screen.getByDisplayValue(task.title),
 			'血液レ{enter}'
 		)
 
 		expect(onChange).toHaveBeenCalledWith(
 			task.id,
-			task.text.concat('血液レ')
+			task.title.concat('血液レ')
 		)
 	})
 })
