@@ -16,8 +16,10 @@ export interface ApiTask {
 	done: boolean
 	created: string
 	updated: string
+	tasklist_id?: number
 	type: 'task'
 }
+
 export interface ApiTaskList {
 	id: number
 	title: string

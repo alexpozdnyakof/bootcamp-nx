@@ -52,7 +52,7 @@ export function* loadTasks(projectId: string) {
 	}
 }
 
-export function* watchProject() {
+export function* watchTasklist() {
 	while (true) {
 		const action: PayloadAction<{ id: string }> = yield take(load.type)
 		const { id } = action.payload

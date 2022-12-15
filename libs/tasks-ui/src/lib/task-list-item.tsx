@@ -1,3 +1,4 @@
+import { ApiTask } from '@bootcamp-nx/api-interfaces'
 import {
 	Button,
 	Icon,
@@ -18,11 +19,11 @@ export type TaskListItemHandlers = {
 }
 
 export type TaskListItemProps = {
-	task: ViewTask
+	task: Required<ApiTask>
 	isEditing?: boolean
 } & TaskListItemHandlers
 
-const TaskListItem = memo(
+export const TaskListItem = memo(
 	polymorphicComponent<'div', TaskListItemProps>(
 		(
 			{ task, onDelete, onComplete, isEditing, onChange, ...props },
@@ -43,7 +44,7 @@ const TaskListItem = memo(
 							size='small'
 							variant='quaternary'
 							onClick={() => onDelete?.(task.id)}
-							aria-label={'Delete '.concat(task.text)}
+							aria-label={'Delete '.concat(task.title)}
 							icon={<Icon size='small'>delete</Icon>}
 						/>
 					}
@@ -53,22 +54,22 @@ const TaskListItem = memo(
 						</Icon>
 					}
 					hoverable={!isEditing}
-					aria-label={task.text}
+					aria-label={task.title}
 				>
 					<Inline space='xsmall'>
 						<SwitchComplete
 							disabled={isEdit}
 							done={task.done}
-							aria-label={'Complete '.concat(task.text)}
+							aria-label={'Complete '.concat(task.title)}
 							onClick={() => onComplete?.(task.id)}
 						/>
 						<EditableText
 							onChange={newText => onChange?.(task.id, newText)}
-							aria-label={`Edit ${task.text}`}
+							aria-label={`Edit ${task.title}`}
 							onStartEdit={() => setEdit(true)}
 							onCancelEdit={() => setEdit(false)}
 						>
-							{task.text}
+							{task.title}
 						</EditableText>
 					</Inline>
 				</ListItem>

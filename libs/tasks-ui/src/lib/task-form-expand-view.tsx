@@ -1,7 +1,7 @@
 import { Button, ExpandView } from '@bootcamp-nx/core-ui'
 import TaskForm, { TaskFormProps } from './task-form'
 
-export default function TaskFormExpandView({
+export function TaskFormExpandView({
 	onSubmit,
 }: Pick<TaskFormProps, 'onSubmit'>) {
 	return (
@@ -19,3 +19,5 @@ export default function TaskFormExpandView({
 		</ExpandView>
 	)
 }
+
+export default TaskFormExpandView

@@ -1,36 +1,14 @@
-import { Stack } from '@bootcamp-nx/core-ui'
-import { TaskList, TaskListProvider } from '@bootcamp-nx/tasks-ui'
+import { Stack, List } from '@bootcamp-nx/core-ui'
+import {
+	TaskList,
+	TaskListHeader,
+	TaskFormExpandView,
+	TaskListItem,
+} from '@bootcamp-nx/tasks-ui'
 import { useEffect } from 'react'
-import { useAppDispatch } from '../../store-hooks'
+import { useAppDispatch, useAppSelector } from '../../store-hooks'
+import { getTasklists, getTasks } from './task-list.selector'
 import { load } from './task-list.slice'
-
-export const TASKS_DATA = [
-	{
-		id: 0,
-		text: '血液レポートのグラフが空白になっている',
-		done: false,
-	},
-	{
-		id: 1,
-		text: '無効にする|| ユーザーがアカウントを無効にできない',
-		done: true,
-	},
-	{
-		id: 2,
-		text: '|| 私のプロフィール || ユーザーは、サインアップ時に設定された体重と身長を表示できません',
-		done: false,
-	},
-	{
-		id: 3,
-		text: 'プロフィール、プロフィールの編集、ポップアップ',
-		done: true,
-	},
-	{
-		id: 4,
-		text: 'ビルドを共有するには Apple 開発者アカウントが必要です',
-		done: false,
-	},
-]
 /* eslint-disable-next-line */
 export interface TaskListProps {
 	projectId: string
@@ -38,6 +16,8 @@ export interface TaskListProps {
 
 export function TaskListFeature({ projectId }: TaskListProps) {
 	const dispatch = useAppDispatch()
+	const taskLists = useAppSelector(getTasklists)
+	const tasks = useAppSelector(getTasks)
 
 	useEffect(() => {
 		dispatch(load({ id: projectId }))
@@ -45,12 +25,29 @@ export function TaskListFeature({ projectId }: TaskListProps) {
 
 	return (
 		<Stack space='xlarge'>
-			<TaskListProvider tasks={TASKS_DATA} title='素晴らしいタスクリスト'>
-				<TaskList />
-			</TaskListProvider>
-			<TaskListProvider tasks={TASKS_DATA} title='素晴らしいタスクリスト'>
-				<TaskList />
-			</TaskListProvider>
+			{taskLists.map(list => (
+				<Stack space='large' key={`${list.type}-${list.id}`}>
+					<Stack space='small'>
+						<TaskListHeader completed='0/5'>
+							{list.title}
+						</TaskListHeader>
+						<TaskFormExpandView onSubmit={() => {}} />
+					</Stack>
+					<List>
+						{tasks
+							.filter(task => task.tasklist_id === list.id)
+							.map(task => (
+								<TaskListItem
+									key={task.id}
+									task={task}
+									onDelete={() => {}}
+									onComplete={() => {}}
+									onChange={() => {}}
+								/>
+							))}
+					</List>
+				</Stack>
+			))}
 		</Stack>
 	)
 }
