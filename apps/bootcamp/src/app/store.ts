@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
 import sideMenuSliceReducer from './features/side-menu/side-menu-slice'
 import tasklistSliceReducer from './features/task-list/task-list.slice'
-import projectSliceReducer from './features/project/project.slice'
+import projectSliceReducer from './pages/project.slice'
 import root from './saga'
 
 const sagaMiddleware = createSagaMiddleware()

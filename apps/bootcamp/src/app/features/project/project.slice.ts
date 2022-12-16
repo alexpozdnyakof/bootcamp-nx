@@ -10,7 +10,6 @@ type ProjectState = {
 	created: string | null
 	updated: string | null
 	type: 'project'
-	project: ApiProject | null
 }
 
 const initialState: ProjectState = {
@@ -20,7 +19,6 @@ const initialState: ProjectState = {
 	created: null,
 	updated: null,
 	type: 'project',
-	project: null,
 }
 
 const projectSlice = createSlice({

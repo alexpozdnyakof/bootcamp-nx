@@ -1,55 +1,47 @@
-import { Stack, List } from '@bootcamp-nx/core-ui'
+import { List, Stack } from '@bootcamp-nx/core-ui'
 import {
-	TaskList,
-	TaskListHeader,
 	TaskFormExpandView,
+	TaskListHeader,
 	TaskListItem,
 } from '@bootcamp-nx/tasks-ui'
-import { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '../../store-hooks'
-import { getTasklists, getTasks } from './task-list.selector'
-import { load } from './task-list.slice'
-/* eslint-disable-next-line */
-export interface TaskListProps {
-	projectId: string
+import { useAppSelector } from '../../store-hooks'
+import { getTasksRelatedToTasklist } from './task-list.selector'
+
+type TaskListProps = {
+	type: 'task_list'
+	id: number
+	title: string
+	onCreate: (title: string) => void
 }
 
-export function TaskListFeature({ projectId }: TaskListProps) {
-	const dispatch = useAppDispatch()
-	const taskLists = useAppSelector(getTasklists)
-	const tasks = useAppSelector(getTasks)
-
-	useEffect(() => {
-		dispatch(load({ id: projectId }))
-	}, [dispatch, projectId])
-
+export default function TaskList({
+	type,
+	id: _listId,
+	title,
+	onCreate,
+}: TaskListProps) {
+	const tasks = useAppSelector(state =>
+		getTasksRelatedToTasklist(state, _listId)
+	)
 	return (
-		<Stack space='xlarge'>
-			{taskLists.map(list => (
-				<Stack space='large' key={`${list.type}-${list.id}`}>
-					<Stack space='small'>
-						<TaskListHeader completed='0/5'>
-							{list.title}
-						</TaskListHeader>
-						<TaskFormExpandView onSubmit={() => {}} />
-					</Stack>
-					<List>
-						{tasks
-							.filter(task => task.tasklist_id === list.id)
-							.map(task => (
-								<TaskListItem
-									key={task.id}
-									task={task}
-									onDelete={() => {}}
-									onComplete={() => {}}
-									onChange={() => {}}
-								/>
-							))}
-					</List>
-				</Stack>
-			))}
+		<Stack space='large' key={`${type}-${_listId}`}>
+			<Stack space='small'>
+				<TaskListHeader completed='0/5'>{title}</TaskListHeader>
+				<TaskFormExpandView onSubmit={onCreate} />
+			</Stack>
+			<List>
+				{tasks.map(task => (
+					<TaskListItem
+						key={task.id}
+						task={task}
+						onDelete={() => {}}
+						onComplete={() => {}}
+						onChange={() => {}}
+					/>
+				))}
+			</List>
 		</Stack>
 	)
 }
 
-export default TaskList
+export { TaskList }

@@ -1,16 +1,33 @@
-import { Box } from '@bootcamp-nx/core-ui'
+/* eslint-disable react/jsx-props-no-spreading */
+import { Box, Stack } from '@bootcamp-nx/core-ui'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Project } from '../features/project/project'
-import { TaskListFeature } from '../features/task-list/task-list'
+import { TaskList } from '../features/task-list/task-list'
+import { useAppDispatch, useAppSelector } from '../store-hooks'
+import selectTaskLists from './project.selector'
+import { load } from './project.slice'
 
 export default function ProjectPage() {
 	const params = useParams<{ id: string }>()
-	const id = Number(params.id)
+	const dispatch = useAppDispatch()
+	const lists = useAppSelector(selectTaskLists)
+	useEffect(() => {
+		dispatch(load({ id: Number(params.id) }))
+	}, [dispatch, params])
 
 	return (
 		<Box width='full'>
-			<Project id={id} />
-			<TaskListFeature projectId={params.id!} />
+			<Stack space='xlarge'>
+				<Project />
+				{lists.map(list => (
+					<TaskList
+						key={`list-${list.id}`}
+						{...list}
+						onCreate={() => {}}
+					/>
+				))}
+			</Stack>
 		</Box>
 	)
 }

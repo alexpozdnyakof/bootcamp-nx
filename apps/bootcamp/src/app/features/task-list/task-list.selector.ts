@@ -3,7 +3,7 @@ import { RootState } from '../../store'
 
 const getTasksRelatedToTasklist = createSelector(
 	[
-		(state: RootState) => state.tasks.tasks,
+		(state: RootState) => state.project.tasks,
 		(state, tasklistId: number) => tasklistId,
 	],
 	(tasks, tasklistId) => tasks.filter(task => task.tasklist_id === tasklistId)
