@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TaskController should return task 1`] = `
+exports[`TaskController should find task by id 1`] = `
 Object {
   "created": "2022-11-29 15:31:37",
   "done": false,

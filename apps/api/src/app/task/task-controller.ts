@@ -42,7 +42,7 @@ TaskRouter.post(
 		try {
 			const dto = TaskValue.check(req.body)
 			const result = await TaskModel.Add(dto)
-			res.status(201).send({ id: result })
+			res.status(201).send(result)
 		} catch (error) {
 			console.log(`Error: ${error.message}`)
 			res.status(400).send({ code: 400, message: 'Bad Request' })
