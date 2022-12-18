@@ -34,7 +34,7 @@ export function TaskRepo() {
 				throw new Error(e?.message)
 			}
 		},
-		async Add(
+		async Save(
 			dto: Omit<TaskValue, 'done'> & { done: boolean }
 		): Promise<{ id: number }> {
 			try {
