@@ -20,6 +20,11 @@ export interface ApiTask {
 	type: 'task'
 }
 
+export interface ApiTaskDTO {
+	title: string
+	done: boolean
+}
+
 export interface ApiTaskList {
 	id: number
 	title: string
