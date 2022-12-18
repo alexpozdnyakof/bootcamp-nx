@@ -197,7 +197,7 @@ paths:
                 - $ref: '#/components/parameters/done'
             responses:
                 '201':
-                    $ref: '#/components/responses/OK'
+                    $ref: '#/components/responses/EntityId'
                 '400':
                     $ref: '#/components/responses/BadRequest'
 
@@ -318,6 +318,9 @@ components:
             properties:
                 message:
                     type: string
+                code:
+                    type: number
+                    enum: [400, 404, 500]
     parameters:
         id:
             name: id
@@ -344,6 +347,14 @@ components:
             required: true
             type: string
     responses:
+        EntityId:
+            description: Created entity id
+            content: application/json
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
         NotFound:
             description: Entity not found
             content: application/json
