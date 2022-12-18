@@ -1,8 +1,19 @@
-import { ApiTask } from '@bootcamp-nx/api-interfaces'
-import { Router, Response } from 'express'
+import { ApiTask, ApiTaskDTO } from '@bootcamp-nx/api-interfaces'
+import { Router, Response, Request } from 'express'
 import { CreateTask, TaskValue } from './task'
 
 import { TaskRepo } from './task-repo'
+
+type ParamsDictionary = {
+	[key: string]: string
+}
+
+interface TypedRequest<
+	T extends { params?: ParamsDictionary; body?: Record<string, any> }
+> extends Request {
+	params: T['params'] extends ParamsDictionary ? T['params'] : never
+	body: T['body'] extends Record<string, any> ? T['body'] : never
+}
 
 type ErrorResult =
 	| {
@@ -24,7 +35,10 @@ const TaskRouterPrefix = 'task'
 
 TaskRouter.get(
 	'/:id',
-	async (request, response: Response<ApiTask | ErrorResult>) => {
+	async (
+		request: TypedRequest<{ params: { id: string } }>,
+		response: Response<ApiTask | ErrorResult>
+	) => {
 		const id = Number(request.params.id)
 		try {
 			const task = await TaskModel.GetOne(id)
@@ -39,7 +53,10 @@ TaskRouter.get(
 
 TaskRouter.post(
 	'/',
-	async (req, res: Response<{ id: number } | ErrorResult>) => {
+	async (
+		req: TypedRequest<{ body: ApiTaskDTO }>,
+		res: Response<{ id: number } | ErrorResult>
+	) => {
 		try {
 			const dto = TaskValue.check(req.body)
 			const result = await TaskModel.Save(dto)
@@ -53,31 +70,47 @@ TaskRouter.post(
 	}
 )
 
-TaskRouter.delete('/:id', async (req, res: Response<ErrorResult>) => {
-	const id = Number(req.params.id)
-	try {
-		await TaskModel.Delete(id)
+TaskRouter.delete(
+	'/:id',
+	async (
+		req: TypedRequest<{ params: { id: string } }>,
+		res: Response<void | ErrorResult>
+	) => {
+		const id = Number(req.params.id)
+		try {
+			await TaskModel.Delete(id)
 
-		res.status(204).send()
-	} catch (error) {
-		console.log(`Error: ${error.message}`)
+			res.status(204).send()
+		} catch (error) {
+			console.log(`Error: ${error.message}`)
 
-		res.status(400).send({ code: 400, message: 'Bad Request' })
+			res.status(400).send({ code: 400, message: 'Bad Request' })
+		}
 	}
-})
+)
 
-TaskRouter.put('/:id', async (req, res) => {
-	const id = Number(req.params.id)
-	try {
-		const dto = TaskValue.check(req.body)
-		await TaskModel.Update(id, dto)
+TaskRouter.put(
+	'/:id',
+	async (
+		req: TypedRequest<{
+			params: { id: string }
+			body: ApiTaskDTO
+		}>,
+		res: Response<void | ErrorResult>
+	) => {
+		const id = Number(req.params.id)
 
-		res.status(204).send()
-	} catch (error) {
-		console.log(`Error: ${error.message}`)
+		try {
+			const dto = TaskValue.check(req.body)
+			await TaskModel.Update(id, dto)
 
-		res.status(400).send({ message: error.message })
+			res.status(204).send()
+		} catch (error) {
+			console.log(`Error: ${error.message}`)
+
+			res.status(400).send({ code: 400, message: error.message })
+		}
 	}
-})
+)
 
 export { TaskRouter as TaskController, TaskRouterPrefix }
