@@ -351,10 +351,10 @@ components:
             description: Created entity id
             content: application/json
             schema:
-              type: object
-              properties:
-                id:
-                  type: number
+                type: object
+                properties:
+                    id:
+                        type: number
         NotFound:
             description: Entity not found
             content: application/json

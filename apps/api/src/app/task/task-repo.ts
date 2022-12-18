@@ -36,12 +36,14 @@ export function TaskRepo() {
 		},
 		async Add(
 			dto: Omit<TaskValue, 'done'> & { done: boolean }
-		): Promise<void> {
+		): Promise<number> {
 			try {
-				await database(tableName).insert({
-					...dto,
-					done: Number(dto.done),
-				})
+				return await database(tableName)
+					.insert({
+						...dto,
+						done: Number(dto.done),
+					})
+					.returning('id')
 			} catch (e) {
 				throw new Error(e?.message)
 			}
