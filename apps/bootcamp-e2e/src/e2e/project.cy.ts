@@ -19,4 +19,16 @@ describe('project', () => {
 		cy.contains('無効にする|| ユーザーがアカウントを無効にできない')
 		cy.contains('プロフィール、プロフィールの編集、ポップアップ')
 	})
+
+	it('should create new task', () => {
+		cy.get('button:contains("タスクを作成")').first().click()
+
+		cy.get('input[aria-label="Create new task"]')
+			.first()
+			.type('プロジェクト ページの機能を作成する')
+
+		cy.get('button:contains("作成")').first().click()
+
+		// cy.contains('プロジェクト ページの機能を作成する')
+	})
 })
