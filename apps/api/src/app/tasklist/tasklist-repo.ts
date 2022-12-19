@@ -45,7 +45,7 @@ export function TaskListRepo() {
 				throw new Error(e?.message)
 			}
 		},
-		async Add(dto: TaskListValue): Promise<{ id: number }> {
+		async Save(dto: TaskListValue): Promise<{ id: number }> {
 			try {
 				const result = await database(tableName)
 					.insert(dto)

@@ -6,7 +6,7 @@ const config: { [key: string]: Knex.Config } = {
 		client: 'sqlite3',
 		useNullAsDefault: true,
 		connection: {
-			filename: './db.sqlite',
+			filename: join(__dirname, '/db.sqlite'),
 		},
 		migrations: {
 			directory: join(__dirname, '/migrations'),
@@ -36,7 +36,7 @@ const config: { [key: string]: Knex.Config } = {
 		client: 'sqlite3',
 		useNullAsDefault: true,
 		connection: {
-			filename: './db.sqlite',
+			filename: join(__dirname, '/db.sqlite'),
 		},
 		migrations: {
 			directory: join(__dirname, '/migrations'),

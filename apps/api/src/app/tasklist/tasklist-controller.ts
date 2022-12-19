@@ -73,7 +73,7 @@ TasklistRouter.post(
 	) => {
 		try {
 			const dto = TaskListValue.check(req.body)
-			const result = await TaskListModel.Add(dto)
+			const result = await TaskListModel.Save(dto)
 			res.status(201).send(result)
 		} catch (error) {
 			res.status(400).send({ code: 400, message: error.message })
