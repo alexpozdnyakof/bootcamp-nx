@@ -17,17 +17,20 @@ type TaskListProps = {
 export default function TaskList({
 	type,
 	id: _listId,
-	title,
+	title: _listTitle,
 	onCreate,
 }: TaskListProps) {
 	const tasks = useAppSelector(state =>
 		getTasksRelatedToTasklist(state, _listId)
 	)
+
 	return (
 		<Stack space='large' key={`${type}-${_listId}`}>
 			<Stack space='small'>
-				<TaskListHeader completed='0/5'>{title}</TaskListHeader>
-				<TaskFormExpandView onSubmit={onCreate} />
+				<TaskListHeader completed='0/5'>{_listTitle}</TaskListHeader>
+				<TaskFormExpandView
+					onSubmit={(title: string) => onCreate(title)}
+				/>
 			</Stack>
 			<List>
 				{tasks.map(task => (

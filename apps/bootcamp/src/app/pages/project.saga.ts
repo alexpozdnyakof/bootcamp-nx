@@ -1,7 +1,14 @@
-import { ApiProject, ApiTask, ApiTaskList } from '@bootcamp-nx/api-interfaces'
+import {
+	ApiProject,
+	ApiTask,
+	ApiTaskDTO,
+	ApiTaskList,
+} from '@bootcamp-nx/api-interfaces'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { call, fork, put, take } from 'redux-saga/effects'
 import {
+	addTask,
+	addTaskSuccess,
 	load,
 	loadFailed,
 	loadProjectSuccess,
@@ -11,6 +18,17 @@ import {
 
 function httpRequest(url: string) {
 	return fetch(url).then(response => response.json())
+}
+
+function httpPostRequest<T extends { [key: string]: any }>(
+	url: string,
+	body: T
+) {
+	return fetch(url, {
+		method: 'POST',
+		body: JSON.stringify(body),
+		headers: { 'Content-Type': 'application/json;charset=utf-8' },
+	}).then(response => response.json())
 }
 
 export function* loadProject(projectId: number) {
@@ -48,6 +66,33 @@ function* loadTasklists(projectId: number) {
 		yield put(loadTasklistsSuccess(response))
 	} catch (error) {
 		yield put(loadFailed())
+	}
+}
+
+function* addTaskWorker(dto: ApiTaskDTO) {
+	try {
+		const response: { id: number } = yield call(
+			httpPostRequest,
+			'/api/task',
+			dto
+		)
+		console.log({ response })
+
+		const task: Required<ApiTask> = yield call(
+			httpRequest,
+			`/api/task/${response.id}`
+		)
+
+		yield put(addTaskSuccess(task))
+	} catch (error) {
+		yield put(loadFailed())
+	}
+}
+
+export function* watchAddTask() {
+	while (true) {
+		const action: PayloadAction<ApiTaskDTO> = yield take(addTask.type)
+		yield fork(addTaskWorker, action.payload)
 	}
 }
 

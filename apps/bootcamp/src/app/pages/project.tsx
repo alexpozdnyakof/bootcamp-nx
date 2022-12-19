@@ -6,7 +6,7 @@ import { Project } from '../features/project/project'
 import { TaskList } from '../features/task-list/task-list'
 import { useAppDispatch, useAppSelector } from '../store-hooks'
 import selectTaskLists from './project.selector'
-import { load } from './project.slice'
+import { addTask, load } from './project.slice'
 
 export default function ProjectPage() {
 	const params = useParams<{ id: string }>()
@@ -16,6 +16,9 @@ export default function ProjectPage() {
 		dispatch(load({ id: Number(params.id) }))
 	}, [dispatch, params])
 
+	const onCreate = (title: string) =>
+		dispatch(addTask({ title, done: false }))
+
 	return (
 		<Box width='full'>
 			<Stack space='xlarge'>
@@ -24,7 +27,7 @@ export default function ProjectPage() {
 					<TaskList
 						key={`list-${list.id}`}
 						{...list}
-						onCreate={() => {}}
+						onCreate={onCreate}
 					/>
 				))}
 			</Stack>

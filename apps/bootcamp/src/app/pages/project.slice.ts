@@ -1,6 +1,11 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ApiProject, ApiTask, ApiTaskList } from '@bootcamp-nx/api-interfaces'
+import {
+	ApiProject,
+	ApiTask,
+	ApiTaskDTO,
+	ApiTaskList,
+} from '@bootcamp-nx/api-interfaces'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type Nullable<T> = { [P in keyof T]: T[P] | null }
@@ -44,6 +49,12 @@ const projectPageSlice = createSlice({
 		) {
 			state.tasks = action.payload
 		},
+		addTask(state, action: PayloadAction<ApiTaskDTO>) {
+			return state
+		},
+		addTaskSuccess(state, action: PayloadAction<Required<ApiTask>>) {
+			state.tasks.push(action.payload)
+		},
 		loadFailed(state) {
 			return state
 		},
@@ -56,6 +67,8 @@ export const {
 	loadProjectSuccess,
 	loadTasksSuccess,
 	loadFailed,
+	addTask,
+	addTaskSuccess,
 } = projectPageSlice.actions
 
 export default projectPageSlice.reducer
