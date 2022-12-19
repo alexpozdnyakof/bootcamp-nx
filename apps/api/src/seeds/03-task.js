@@ -25,6 +25,13 @@ exports.seed = async function seed(knex) {
 			created: '2022-11-29 15:31:37',
 			updated: '2022-11-29 15:31:37',
 		},
+		{
+			id: 4,
+			title: '|| 私のプロフィール || ユーザーは、サインアップ時に設定された体重と身長を表示できません',
+			done: false,
+			created: '2022-11-29 15:31:37',
+			updated: '2022-11-29 15:31:37',
+		},
 	])
 
 	await knex('taskTasklist').del()

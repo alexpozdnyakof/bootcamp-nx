@@ -35,6 +35,7 @@ TaskRouter.post(
 		res: TypedResponse<{ id: number }>
 	) => {
 		try {
+			console.log({ body: req.body })
 			const dto = TaskValue.check(req.body)
 			const result = await TaskModel.Save(dto)
 

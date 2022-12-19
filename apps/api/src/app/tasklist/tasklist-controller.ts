@@ -1,6 +1,8 @@
 import { ApiTask, ApiTaskList } from '@bootcamp-nx/api-interfaces'
 import { Router, Response } from 'express'
 import { CreateTask } from '../task/task'
+import { TypedRequest } from '../typed-request'
+import { TypedResponse } from '../typed-response'
 import { CreateTaskList, TaskListValue } from './tasklist'
 import { TaskListRepo } from './tasklist-repo'
 
@@ -31,6 +33,24 @@ TasklistRouter.get(
 			response.status(200).send(tasks)
 		} catch (error) {
 			response.status(404).send({ message: error.message })
+		}
+	}
+)
+
+TasklistRouter.post(
+	'/:id/task',
+	async (
+		request: TypedRequest<{ params: { id: string }; body: { id: number } }>,
+		response: TypedResponse<void>
+	) => {
+		try {
+			const ListId = Number(request.params.id)
+			const TaskId = request.body.id
+			await TaskListModel.AddTask(ListId, TaskId)
+
+			response.sendStatus(201)
+		} catch (error) {
+			response.status(400).send({ code: 400, message: 'Bad Request' })
 		}
 	}
 )

@@ -37,6 +37,21 @@ paths:
                     $ref: '#/components/responses/OK'
                 '400':
                     $ref: '#/components/responses/BadRequest'
+    /tasklist/{id}/task:
+        post:
+            description: Add exist task to task list
+            tags:
+                - TaskList
+                - Task
+            parameters:
+                - $ref: '#/components/parameters/id'
+                - $ref: '#/components/parameters/bodyId'
+            responses:
+                201:
+                    $ref: '#/components/responses/OK'
+                400:
+                    $ref: '#/components/responses/BadRequest'
+
     /tasklist/{id}:
         get:
             description: Find tasklist by id and return
@@ -328,6 +343,12 @@ components:
             in: path
             required: true
             type: string
+        bodyId:
+            name: id
+            description: Entity id
+            in: body
+            required: true
+            type: number
         title:
             name: title
             description: Entity title

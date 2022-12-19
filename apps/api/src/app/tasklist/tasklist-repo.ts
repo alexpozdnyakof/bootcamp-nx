@@ -10,8 +10,19 @@ function IceFactory<T extends { [key: string]: unknown }>(
 
 export function TaskListRepo() {
 	const tableName = 'tasklist'
+	const taskRelationTableName = 'taskTasklist'
 
 	return IceFactory({
+		async AddTask(listId: number, taskId: number): Promise<void> {
+			try {
+				return await database(taskRelationTableName).insert({
+					tasklist_id: listId,
+					task_id: taskId,
+				})
+			} catch (error) {
+				throw new Error(error?.message)
+			}
+		},
 		async GetRelatedTasks(id: UniqueId): Promise<TaskRow[]> {
 			try {
 				return await database

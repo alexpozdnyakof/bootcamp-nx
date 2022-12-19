@@ -53,4 +53,37 @@ describe('TaskListController', () => {
 
 		expect(response.status).toBe(204)
 	})
+
+	it('should add task to tasklist', async () => {
+		const beforeTasksInList = (await request(App).get('/1/tasks')).body
+		expect(last(beforeTasksInList)).not.toEqual({
+			id: 4,
+			title: '|| 私のプロフィール || ユーザーは、サインアップ時に設定された体重と身長を表示できません',
+			done: false,
+			created: '2022-11-29 15:31:37',
+			updated: '2022-11-29 15:31:37',
+		})
+
+		const response = await request(App).post('/1/task').send({
+			id: 4,
+		})
+		expect(response.status).toBe(201)
+
+		const afterTasksInList = (await request(App).get('/1/tasks')).body
+		expect(afterTasksInList.length).toBe(beforeTasksInList.length + 1)
+
+		expect(last(afterTasksInList)).toEqual({
+			id: 4,
+			title: '|| 私のプロフィール || ユーザーは、サインアップ時に設定された体重と身長を表示できません',
+			done: false,
+			type: 'task',
+			created: '2022-11-29 15:31:37',
+			updated: '2022-11-29 15:31:37',
+		})
+	})
 })
+
+// ** UTIL ** //
+function last<T>(array: Array<T>): T {
+	return array[array.length - 1]
+}
