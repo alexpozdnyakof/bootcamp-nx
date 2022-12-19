@@ -45,9 +45,12 @@ export function TaskListRepo() {
 				throw new Error(e?.message)
 			}
 		},
-		async Add(dto: TaskListValue): Promise<void> {
+		async Add(dto: TaskListValue): Promise<{ id: number }> {
 			try {
-				await database(tableName).insert(dto)
+				const result = await database(tableName)
+					.insert(dto)
+					.returning<[{ id: number }]>('id')
+				return result[0]
 			} catch (e) {
 				throw new Error(e?.message)
 			}

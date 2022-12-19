@@ -5,10 +5,12 @@ import { database } from '../database'
 import { TasklistController } from './tasklist-controller'
 describe('TaskListController', () => {
 	const App = express()
-	App.use(json())
-	App.use('/', TasklistController)
+
+	const LIST_DTO = { title: '新しい計画', description: '簡単な説明' }
 
 	beforeAll(async () => {
+		App.use(json())
+		App.use('/', TasklistController)
 		await database.migrate.up({
 			name: '20221129145937_create_tasklist_table.js',
 		})
@@ -31,13 +33,19 @@ describe('TaskListController', () => {
 
 		expect(response.body).toMatchSnapshot()
 	})
-	it('should create new one tasklist', async () => {
+	it('should create tasklist', async () => {
 		const response = await request(App)
 			.post('/')
 			.set('Accept', 'application/json')
-			.send({ title: '新しい計画', description: '簡単な説明' })
+			.send(LIST_DTO)
 
 		expect(response.status).toBe(201)
+
+		const id = response.body.id
+		expect(id).toBeDefined()
+
+		const { title, description } = (await request(App).get(`/${id}`)).body
+		expect({ title, description }).toEqual(LIST_DTO)
 	})
 
 	it('should delete tasklist', async () => {
@@ -46,12 +54,11 @@ describe('TaskListController', () => {
 	})
 
 	it('should update tasklist', async () => {
-		const response = await request(App).put('/1').send({
-			title: '新しい計画',
-			description: '簡単な説明',
-		})
-
+		const response = await request(App).put('/1').send(LIST_DTO)
 		expect(response.status).toBe(204)
+
+		const { title, description } = (await request(App).get('/1')).body
+		expect({ title, description }).toEqual(LIST_DTO)
 	})
 
 	it('should add task to tasklist', async () => {
