@@ -120,6 +120,7 @@ describe('Task list', () => {
 				name: 'Create new task',
 			})
 		).not.toBeInTheDocument()
+
 		expect(
 			screen.getByRole('button', {
 				name: 'タスクを作成',
