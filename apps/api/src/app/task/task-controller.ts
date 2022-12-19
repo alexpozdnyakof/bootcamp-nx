@@ -1,33 +1,10 @@
 import { ApiTask, ApiTaskDTO } from '@bootcamp-nx/api-interfaces'
-import { Router, Response, Request } from 'express'
+import { Router } from 'express'
+import { TypedRequest } from '../typed-request'
+import { TypedResponse } from '../typed-response'
 import { CreateTask, TaskValue } from './task'
 
 import { TaskRepo } from './task-repo'
-
-type ParamsDictionary = {
-	[key: string]: string
-}
-
-interface TypedRequest<
-	T extends { params?: ParamsDictionary; body?: Record<string, any> }
-> extends Request {
-	params: T['params'] extends ParamsDictionary ? T['params'] : never
-	body: T['body'] extends Record<string, any> ? T['body'] : never
-}
-
-type ErrorResult =
-	| {
-			code: 400
-			message: 'Bad Request'
-	  }
-	| {
-			code: 404
-			message: 'Not Found'
-	  }
-	| {
-			code: 500
-			message: 'Server Error'
-	  }
 
 const TaskRouter = Router()
 const TaskModel = TaskRepo()
@@ -37,7 +14,7 @@ TaskRouter.get(
 	'/:id',
 	async (
 		request: TypedRequest<{ params: { id: string } }>,
-		response: Response<ApiTask | ErrorResult>
+		response: TypedResponse<ApiTask>
 	) => {
 		const id = Number(request.params.id)
 		try {
@@ -55,7 +32,7 @@ TaskRouter.post(
 	'/',
 	async (
 		req: TypedRequest<{ body: ApiTaskDTO }>,
-		res: Response<{ id: number } | ErrorResult>
+		res: TypedResponse<{ id: number }>
 	) => {
 		try {
 			const dto = TaskValue.check(req.body)
@@ -74,7 +51,7 @@ TaskRouter.delete(
 	'/:id',
 	async (
 		req: TypedRequest<{ params: { id: string } }>,
-		res: Response<void | ErrorResult>
+		res: TypedResponse<void>
 	) => {
 		const id = Number(req.params.id)
 		try {
@@ -96,7 +73,7 @@ TaskRouter.put(
 			params: { id: string }
 			body: ApiTaskDTO
 		}>,
-		res: Response<void | ErrorResult>
+		res: TypedResponse<void>
 	) => {
 		const id = Number(req.params.id)
 
