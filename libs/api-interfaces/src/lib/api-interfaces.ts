@@ -25,6 +25,11 @@ export interface ApiTaskDTO {
 	done: boolean
 }
 
+export interface ApiTaskListDTO {
+	title: string
+	description: string
+}
+
 export interface ApiTaskList {
 	id: number
 	title: string
