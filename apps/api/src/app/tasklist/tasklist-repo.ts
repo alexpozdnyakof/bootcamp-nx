@@ -13,6 +13,25 @@ export function TaskListRepo() {
 	const taskRelationTableName = 'taskTasklist'
 
 	return IceFactory({
+		async IsTaskInList(listId: number, taskId: number): Promise<void> {
+			try {
+				const result = await database
+					.select<{ task_id: number; tasklist_id: number }>()
+					.from('taskTasklist')
+					.where('taskTasklist.task_id', taskId)
+					.first()
+
+				if (typeof result !== 'undefined') {
+					const errorMessage =
+						result.tasklist_id == listId
+							? 'Task already in this list'
+							: 'Task already in another list'
+					throw new Error(errorMessage)
+				}
+			} catch (error) {
+				throw new Error(error?.message)
+			}
+		},
 		async AddTask(listId: number, taskId: number): Promise<void> {
 			try {
 				return await database(taskRelationTableName).insert({

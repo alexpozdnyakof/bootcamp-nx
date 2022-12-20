@@ -56,11 +56,13 @@ TasklistRouter.post(
 		try {
 			const ListId = Number(request.params.id)
 			const TaskId = request.body.id
+
+			await TaskListModel.IsTaskInList(ListId, TaskId)
 			await TaskListModel.AddTask(ListId, TaskId)
 
 			response.sendStatus(201)
 		} catch (error) {
-			response.status(400).send({ code: 400, message: 'Bad Request' })
+			response.status(400).send({ code: 400, message: error.message })
 		}
 	}
 )

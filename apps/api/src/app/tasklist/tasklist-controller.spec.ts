@@ -74,6 +74,7 @@ describe('TaskListController', () => {
 		const response = await request(App).post('/1/task').send({
 			id: 4,
 		})
+
 		expect(response.status).toBe(201)
 
 		const afterTasksInList = (await request(App).get('/1/tasks')).body
@@ -87,6 +88,23 @@ describe('TaskListController', () => {
 			created: '2022-11-29 15:31:37',
 			updated: '2022-11-29 15:31:37',
 		})
+	})
+
+	it('should return bad request when adding task that already in its list', async () => {
+		const response = await request(App).post('/1/task').send({
+			id: 4,
+		})
+
+		expect(response.status).toBe(400)
+		expect(response.body.message).toBe('Task already in this list')
+	})
+
+	it('should return bad request when adding task that already in another list', async () => {
+		const response = await request(App).post('/1/task').send({
+			id: 3,
+		})
+		expect(response.status).toBe(400)
+		expect(response.body.message).toBe('Task already in another list')
 	})
 })
 
