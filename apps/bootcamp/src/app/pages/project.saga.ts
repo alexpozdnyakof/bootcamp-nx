@@ -17,18 +17,29 @@ import {
 } from './project.slice'
 
 function httpRequest(url: string) {
+	console.log({ url })
 	return fetch(url).then(response => response.json())
 }
 
 function httpPostRequest<T extends { [key: string]: any }>(
 	url: string,
-	body: T
+	body: T,
+	readAs: 'text' | 'json' = 'json'
 ) {
 	return fetch(url, {
 		method: 'POST',
 		body: JSON.stringify(body),
 		headers: { 'Content-Type': 'application/json;charset=utf-8' },
-	}).then(response => response.json())
+	}).then(response => {
+		switch (readAs) {
+			case 'json':
+				return response.json()
+			case 'text':
+				return response.text()
+			default:
+				return response.json()
+		}
+	})
 }
 
 export function* loadProject(projectId: number) {
@@ -69,21 +80,29 @@ function* loadTasklists(projectId: number) {
 	}
 }
 
-function* addTaskWorker(dto: ApiTaskDTO) {
+function* addTaskWorker({ listId, dto }: { listId: number; dto: ApiTaskDTO }) {
 	try {
 		const response: { id: number } = yield call(
 			httpPostRequest,
 			'/api/task',
 			dto
 		)
-		console.log({ response })
 
-		const task: Required<ApiTask> = yield call(
+		yield call(
+			httpPostRequest,
+			`/api/tasklist/${listId}/task`,
+			{
+				id: response.id,
+			},
+			'text'
+		)
+
+		const task: ApiTask = yield call(
 			httpRequest,
 			`/api/task/${response.id}`
 		)
 
-		yield put(addTaskSuccess(task))
+		yield put(addTaskSuccess({ ...task, tasklist_id: listId }))
 	} catch (error) {
 		yield put(loadFailed())
 	}
@@ -91,7 +110,8 @@ function* addTaskWorker(dto: ApiTaskDTO) {
 
 export function* watchAddTask() {
 	while (true) {
-		const action: PayloadAction<ApiTaskDTO> = yield take(addTask.type)
+		const action: PayloadAction<{ listId: number; dto: ApiTaskDTO }> =
+			yield take(addTask.type)
 		yield fork(addTaskWorker, action.payload)
 	}
 }

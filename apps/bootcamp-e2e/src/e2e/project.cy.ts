@@ -27,8 +27,12 @@ describe('project', () => {
 			.first()
 			.type('プロジェクト ページの機能を作成する')
 
-		cy.get('button:contains("作成")').first().click()
+		cy.intercept('/api/task*').as('addTask')
+		cy.intercept('/api/tasklist/1/task').as('addTaskToTasklist')
 
-		// cy.contains('プロジェクト ページの機能を作成する')
+		cy.get('button:contains("作成")').first().click()
+		cy.wait('@addTask')
+		cy.wait('@addTaskToTasklist')
+		cy.contains('プロジェクト ページの機能を作成する')
 	})
 })

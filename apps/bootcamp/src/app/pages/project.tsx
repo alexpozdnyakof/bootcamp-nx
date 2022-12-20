@@ -16,8 +16,8 @@ export default function ProjectPage() {
 		dispatch(load({ id: Number(params.id) }))
 	}, [dispatch, params])
 
-	const onCreate = (title: string) =>
-		dispatch(addTask({ title, done: false }))
+	const onCreate = (listId: number, title: string) =>
+		dispatch(addTask({ listId, dto: { title, done: false } }))
 
 	return (
 		<Box width='full'>
@@ -27,7 +27,7 @@ export default function ProjectPage() {
 					<TaskList
 						key={`list-${list.id}`}
 						{...list}
-						onCreate={onCreate}
+						onCreate={(title: string) => onCreate(list.id, title)}
 					/>
 				))}
 			</Stack>

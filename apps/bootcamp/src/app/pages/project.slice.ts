@@ -49,7 +49,10 @@ const projectPageSlice = createSlice({
 		) {
 			state.tasks = action.payload
 		},
-		addTask(state, action: PayloadAction<ApiTaskDTO>) {
+		addTask(
+			state,
+			action: PayloadAction<{ listId: number; dto: ApiTaskDTO }>
+		) {
 			return state
 		},
 		addTaskSuccess(state, action: PayloadAction<Required<ApiTask>>) {
