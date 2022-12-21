@@ -68,6 +68,27 @@ const projectPageSlice = createSlice({
 					: task
 			)
 		},
+		deleteTask(state, action: PayloadAction<{ id: number }>) {
+			return state
+		},
+		deleteTaskSuccess(state, action: PayloadAction<{ id: number }>) {
+			state.tasks = state.tasks.filter(
+				task => task.id !== action.payload.id
+			)
+		},
+		changeTaskTitle(
+			state,
+			action: PayloadAction<{ id: number; title: string }>
+		) {
+			return state
+		},
+		changeTaskTitleSuccess(state, action: PayloadAction<ApiTask>) {
+			state.tasks = state.tasks.map(task =>
+				task.id === action.payload.id
+					? { ...task, ...action.payload }
+					: task
+			)
+		},
 		loadFailed(state) {
 			return state
 		},
@@ -84,6 +105,10 @@ export const {
 	addTaskSuccess,
 	changeTaskStatus,
 	changeTaskStatusSuccess,
+	deleteTask,
+	deleteTaskSuccess,
+	changeTaskTitle,
+	changeTaskTitleSuccess,
 } = projectPageSlice.actions
 
 export default projectPageSlice.reducer

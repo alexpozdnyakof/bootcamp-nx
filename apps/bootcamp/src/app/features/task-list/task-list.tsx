@@ -13,6 +13,8 @@ type TaskListProps = {
 	title: string
 	onCreate: (title: string) => void
 	onTaskComplete: (id: number) => void
+	onTaskDelete: (id: number) => void
+	onChangeTaskTitle: (id: number, title: string) => void
 }
 
 export default function TaskList({
@@ -21,6 +23,8 @@ export default function TaskList({
 	title: _listTitle,
 	onCreate,
 	onTaskComplete,
+	onTaskDelete,
+	onChangeTaskTitle,
 }: TaskListProps) {
 	const tasks = useAppSelector(state =>
 		getTasksRelatedToTasklist(state, _listId)
@@ -39,9 +43,9 @@ export default function TaskList({
 					<TaskListItem
 						key={task.id}
 						task={task}
-						onDelete={() => {}}
+						onDelete={onTaskDelete}
 						onComplete={onTaskComplete}
-						onChange={() => {}}
+						onChange={onChangeTaskTitle}
 					/>
 				))}
 			</List>

@@ -4,6 +4,8 @@ import {
 	watchAddTask,
 	watchProject,
 	watchChangeTaskStatus,
+	watchDeleteTask,
+	watchChangeTaskTitle,
 } from './pages/project.saga'
 
 export default function* root() {
@@ -12,5 +14,7 @@ export default function* root() {
 		fork(watchProject),
 		fork(watchAddTask),
 		fork(watchChangeTaskStatus),
+		fork(watchDeleteTask),
+		fork(watchChangeTaskTitle),
 	])
 }

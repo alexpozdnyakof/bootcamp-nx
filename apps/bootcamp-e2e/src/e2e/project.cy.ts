@@ -36,7 +36,7 @@ describe('project', () => {
 		cy.contains('プロジェクト ページの機能を作成する')
 	})
 
-  it('should complete task', () => {
+	it('should complete task', () => {
 		cy.get(
 			'[aria-label="Complete 血液レポートのグラフが空白になっている"]'
 		).as('taskSwitchComplete')
@@ -57,8 +57,8 @@ describe('project', () => {
 			'aria-checked',
 			'true'
 		)
-  })
-  it('should uncomplete task', () => {
+	})
+	it('should uncomplete task', () => {
 		cy.get(
 			'[aria-label="Complete 血液レポートのグラフが空白になっている"]'
 		).as('taskSwitchComplete')
@@ -79,5 +79,32 @@ describe('project', () => {
 			'aria-checked',
 			'false'
 		)
-  })
+	})
+
+	it('should delete task', () => {
+		cy.contains('プロジェクト ページの機能を作成する')
+		cy.intercept('/api/task/*').as('deleteTaskRequest')
+		cy.get(
+			'[aria-label="Delete プロジェクト ページの機能を作成する"]'
+		).click()
+
+		cy.wait('@deleteTaskRequest')
+		cy.get('プロジェクト ページの機能を作成する').should('not.exist')
+	})
+
+	it('should change task title', () => {
+		cy.contains('プロフィール、プロフィールの編集、ポップアップ')
+		cy.intercept('/api/task/*').as('editTaskRequest')
+
+		cy.get(
+			'[aria-label="Edit プロフィール、プロフィールの編集、ポップアップ"]'
+		).dblclick()
+
+		cy.get(
+			'input[value=プロフィール、プロフィールの編集、ポップアップ]'
+		).type('血液{enter}')
+
+		cy.wait('@editTaskRequest')
+		cy.contains('プロフィール、プロフィールの編集、ポップアップ血液')
+	})
 })

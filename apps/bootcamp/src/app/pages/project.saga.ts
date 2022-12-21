@@ -12,6 +12,10 @@ import {
 	addTaskSuccess,
 	changeTaskStatus,
 	changeTaskStatusSuccess,
+	changeTaskTitle,
+	changeTaskTitleSuccess,
+	deleteTask,
+	deleteTaskSuccess,
 	load,
 	loadFailed,
 	loadProjectSuccess,
@@ -24,7 +28,6 @@ const selectTask = createSelector(
 	(tasks, taskId) => tasks.find((task: ApiTask) => task.id === taskId)
 )
 function httpRequest(url: string) {
-	console.log({ url })
 	return fetch(url).then(response => response.json())
 }
 
@@ -58,6 +61,21 @@ function httpPutRequest<T extends { [key: string]: any }>(
 		method: 'PUT',
 		body: JSON.stringify(body),
 		headers: { 'Content-Type': 'application/json;charset=utf-8' },
+	}).then(response => {
+		switch (readAs) {
+			case 'json':
+				return response.json()
+			case 'text':
+				return response.text()
+			default:
+				return response.json()
+		}
+	})
+}
+
+function httpDeleteRequest(url: string, readAs: 'text' | 'json' = 'json') {
+	return fetch(url, {
+		method: 'DELETE',
 	}).then(response => {
 		switch (readAs) {
 			case 'json':
@@ -151,11 +169,32 @@ function* changeTaskStatusWorker(taskId: number) {
 			`/api/task/${taskId}`
 		)
 
-		console.log({ updatedTask })
-
 		yield put(changeTaskStatusSuccess(updatedTask))
 	} catch (error) {
-		console.log({ error })
+		yield put(loadFailed())
+	}
+}
+
+function* deleteTaskWorker(taskId: number) {
+	try {
+		yield call(httpDeleteRequest, `/api/task/${taskId}`, 'text')
+		yield put(deleteTaskSuccess({ id: taskId }))
+	} catch (error) {
+		yield put(loadFailed())
+	}
+}
+
+function* changeTaskTitleWorker({ id, title }: { id: number; title: string }) {
+	const task: Required<ApiTask> = yield select(state => selectTask(state, id))
+	const taskDTO = { title, done: task.done }
+
+	try {
+		yield call(httpPutRequest, `/api/task/${id}`, taskDTO, 'text')
+
+		const updatedTask: ApiTask = yield call(httpRequest, `/api/task/${id}`)
+
+		yield put(changeTaskTitleSuccess(updatedTask))
+	} catch (error) {
 		yield put(loadFailed())
 	}
 }
@@ -166,6 +205,24 @@ export function* watchChangeTaskStatus() {
 			changeTaskStatus.type
 		)
 		yield fork(changeTaskStatusWorker, action.payload.id)
+	}
+}
+
+export function* watchChangeTaskTitle() {
+	while (true) {
+		const action: PayloadAction<{ id: number; title: string }> = yield take(
+			changeTaskTitle.type
+		)
+		yield fork(changeTaskTitleWorker, action.payload)
+	}
+}
+
+export function* watchDeleteTask() {
+	while (true) {
+		const action: PayloadAction<{ id: number }> = yield take(
+			deleteTask.type
+		)
+		yield fork(deleteTaskWorker, action.payload.id)
 	}
 }
 
