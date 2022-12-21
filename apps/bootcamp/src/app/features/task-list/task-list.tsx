@@ -12,6 +12,7 @@ type TaskListProps = {
 	id: number
 	title: string
 	onCreate: (title: string) => void
+	onTaskComplete: (id: number) => void
 }
 
 export default function TaskList({
@@ -19,6 +20,7 @@ export default function TaskList({
 	id: _listId,
 	title: _listTitle,
 	onCreate,
+	onTaskComplete,
 }: TaskListProps) {
 	const tasks = useAppSelector(state =>
 		getTasksRelatedToTasklist(state, _listId)
@@ -38,7 +40,7 @@ export default function TaskList({
 						key={task.id}
 						task={task}
 						onDelete={() => {}}
-						onComplete={() => {}}
+						onComplete={onTaskComplete}
 						onChange={() => {}}
 					/>
 				))}

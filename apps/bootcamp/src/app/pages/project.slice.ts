@@ -58,6 +58,16 @@ const projectPageSlice = createSlice({
 		addTaskSuccess(state, action: PayloadAction<Required<ApiTask>>) {
 			state.tasks.push(action.payload)
 		},
+		changeTaskStatus(state, action: PayloadAction<{ id: number }>) {
+			return state
+		},
+		changeTaskStatusSuccess(state, action: PayloadAction<ApiTask>) {
+			state.tasks = state.tasks.map(task =>
+				task.id === action.payload.id
+					? { ...task, ...action.payload }
+					: task
+			)
+		},
 		loadFailed(state) {
 			return state
 		},
@@ -72,6 +82,8 @@ export const {
 	loadFailed,
 	addTask,
 	addTaskSuccess,
+	changeTaskStatus,
+	changeTaskStatusSuccess,
 } = projectPageSlice.actions
 
 export default projectPageSlice.reducer

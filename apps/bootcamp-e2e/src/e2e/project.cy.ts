@@ -35,4 +35,49 @@ describe('project', () => {
 		cy.wait('@addTaskToTasklist')
 		cy.contains('プロジェクト ページの機能を作成する')
 	})
+
+  it('should complete task', () => {
+		cy.get(
+			'[aria-label="Complete 血液レポートのグラフが空白になっている"]'
+		).as('taskSwitchComplete')
+
+		cy.get('@taskSwitchComplete').should(
+			'have.attr',
+			'aria-checked',
+			'false'
+		)
+		cy.intercept('/api/task/*').as('changeTaskStatusRequest')
+
+		cy.get('@taskSwitchComplete').click()
+
+		cy.wait('@changeTaskStatusRequest')
+
+		cy.get('@taskSwitchComplete').should(
+			'have.attr',
+			'aria-checked',
+			'true'
+		)
+  })
+  it('should uncomplete task', () => {
+		cy.get(
+			'[aria-label="Complete 血液レポートのグラフが空白になっている"]'
+		).as('taskSwitchComplete')
+
+		cy.get('@taskSwitchComplete').should(
+			'have.attr',
+			'aria-checked',
+			'true'
+		)
+		cy.intercept('/api/task/*').as('changeTaskStatusRequest')
+
+		cy.get('@taskSwitchComplete').click()
+
+		cy.wait('@changeTaskStatusRequest')
+
+		cy.get('@taskSwitchComplete').should(
+			'have.attr',
+			'aria-checked',
+			'false'
+		)
+  })
 })

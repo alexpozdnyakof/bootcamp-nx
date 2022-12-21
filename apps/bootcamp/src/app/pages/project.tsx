@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Box, Stack } from '@bootcamp-nx/core-ui'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Project } from '../features/project/project'
 import { TaskList } from '../features/task-list/task-list'
 import { useAppDispatch, useAppSelector } from '../store-hooks'
 import selectTaskLists from './project.selector'
-import { addTask, load } from './project.slice'
+import { addTask, changeTaskStatus, load } from './project.slice'
 
 export default function ProjectPage() {
 	const params = useParams<{ id: string }>()
@@ -19,6 +19,13 @@ export default function ProjectPage() {
 	const onCreate = (listId: number, title: string) =>
 		dispatch(addTask({ listId, dto: { title, done: false } }))
 
+	const onComplete = useCallback(
+		(id: number) => {
+			dispatch(changeTaskStatus({ id }))
+		},
+		[dispatch]
+	)
+
 	return (
 		<Box width='full'>
 			<Stack space='xlarge'>
@@ -28,6 +35,7 @@ export default function ProjectPage() {
 						key={`list-${list.id}`}
 						{...list}
 						onCreate={(title: string) => onCreate(list.id, title)}
+						onTaskComplete={onComplete}
 					/>
 				))}
 			</Stack>
