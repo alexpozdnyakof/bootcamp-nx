@@ -4,9 +4,9 @@ import {
 	ApiTaskDTO,
 	ApiTaskList,
 } from '@bootcamp-nx/api-interfaces'
+import { ApiBootcamp } from '@bootcamp-nx/data-access-bootcamp'
 import { createSelector, PayloadAction } from '@reduxjs/toolkit'
 import { call, fork, put, select, take } from 'redux-saga/effects'
-
 import {
 	addTask,
 	addTaskSuccess,
@@ -27,74 +27,12 @@ const selectTask = createSelector(
 	[state => state.project.tasks, (state, taskId: number) => taskId],
 	(tasks, taskId) => tasks.find((task: ApiTask) => task.id === taskId)
 )
-function httpRequest(url: string) {
-	return fetch(url).then(response => response.json())
-}
 
-function httpPostRequest<T extends { [key: string]: any }>(
-	url: string,
-	body: T,
-	readAs: 'text' | 'json' = 'json'
-) {
-	return fetch(url, {
-		method: 'POST',
-		body: JSON.stringify(body),
-		headers: { 'Content-Type': 'application/json;charset=utf-8' },
-	}).then(response => {
-		switch (readAs) {
-			case 'json':
-				return response.json()
-			case 'text':
-				return response.text()
-			default:
-				return response.json()
-		}
-	})
-}
-
-function httpPutRequest<T extends { [key: string]: any }>(
-	url: string,
-	body: T,
-	readAs: 'text' | 'json' = 'json'
-) {
-	return fetch(url, {
-		method: 'PUT',
-		body: JSON.stringify(body),
-		headers: { 'Content-Type': 'application/json;charset=utf-8' },
-	}).then(response => {
-		switch (readAs) {
-			case 'json':
-				return response.json()
-			case 'text':
-				return response.text()
-			default:
-				return response.json()
-		}
-	})
-}
-
-function httpDeleteRequest(url: string, readAs: 'text' | 'json' = 'json') {
-	return fetch(url, {
-		method: 'DELETE',
-	}).then(response => {
-		switch (readAs) {
-			case 'json':
-				return response.json()
-			case 'text':
-				return response.text()
-			default:
-				return response.json()
-		}
-	})
-}
+const BootcampApi = ApiBootcamp()
 
 export function* loadProject(projectId: number) {
 	try {
-		const response: ApiProject = yield call(
-			httpRequest,
-			`/api/project/${projectId}`
-		)
-
+		const response: ApiProject = yield call(BootcampApi.Project, projectId)
 		yield put(loadProjectSuccess(response))
 	} catch (error) {
 		yield put(loadFailed())
@@ -104,10 +42,9 @@ export function* loadProject(projectId: number) {
 function* loadTasks(projectId: number) {
 	try {
 		const response: Array<Required<ApiTask>> = yield call(
-			httpRequest,
-			`/api/project/${projectId}/tasks`
+			BootcampApi.ProjectTasks,
+			projectId
 		)
-
 		yield put(loadTasksSuccess(response))
 	} catch (error) {
 		yield put(loadFailed())
@@ -117,10 +54,9 @@ function* loadTasks(projectId: number) {
 function* loadTasklists(projectId: number) {
 	try {
 		const response: Array<ApiTaskList> = yield call(
-			httpRequest,
-			`/api/project/${projectId}/tasklists`
+			BootcampApi.ProjectTaskslists,
+			projectId
 		)
-
 		yield put(loadTasklistsSuccess(response))
 	} catch (error) {
 		yield put(loadFailed())
@@ -129,25 +65,14 @@ function* loadTasklists(projectId: number) {
 
 function* addTaskWorker({ listId, dto }: { listId: number; dto: ApiTaskDTO }) {
 	try {
-		const response: { id: number } = yield call(
-			httpPostRequest,
-			'/api/task',
-			dto
-		)
+		const response: { id: number } = yield call(BootcampApi.SaveTask, dto)
+		const taskId = response.id
+		yield call(BootcampApi.LinkTaskToTasklist, {
+			listId,
+			taskId,
+		})
 
-		yield call(
-			httpPostRequest,
-			`/api/tasklist/${listId}/task`,
-			{
-				id: response.id,
-			},
-			'text'
-		)
-
-		const task: ApiTask = yield call(
-			httpRequest,
-			`/api/task/${response.id}`
-		)
+		const task: ApiTask = yield call(BootcampApi.Task, taskId)
 
 		yield put(addTaskSuccess({ ...task, tasklist_id: listId }))
 	} catch (error) {
@@ -162,12 +87,9 @@ function* changeTaskStatusWorker(taskId: number) {
 	const taskDTO = { title: task.title, done: !task.done }
 
 	try {
-		yield call(httpPutRequest, `/api/task/${taskId}`, taskDTO, 'text')
+		yield call(BootcampApi.UpdateTask, taskId, taskDTO)
 
-		const updatedTask: ApiTask = yield call(
-			httpRequest,
-			`/api/task/${taskId}`
-		)
+		const updatedTask: ApiTask = yield call(BootcampApi.Task, taskId)
 
 		yield put(changeTaskStatusSuccess(updatedTask))
 	} catch (error) {
@@ -177,7 +99,7 @@ function* changeTaskStatusWorker(taskId: number) {
 
 function* deleteTaskWorker(taskId: number) {
 	try {
-		yield call(httpDeleteRequest, `/api/task/${taskId}`, 'text')
+		yield call(BootcampApi.DeleteTask, taskId)
 		yield put(deleteTaskSuccess({ id: taskId }))
 	} catch (error) {
 		yield put(loadFailed())
@@ -189,9 +111,9 @@ function* changeTaskTitleWorker({ id, title }: { id: number; title: string }) {
 	const taskDTO = { title, done: task.done }
 
 	try {
-		yield call(httpPutRequest, `/api/task/${id}`, taskDTO, 'text')
+		yield call(BootcampApi.UpdateTask, id, taskDTO)
 
-		const updatedTask: ApiTask = yield call(httpRequest, `/api/task/${id}`)
+		const updatedTask: ApiTask = yield call(BootcampApi.Task, id)
 
 		yield put(changeTaskTitleSuccess(updatedTask))
 	} catch (error) {

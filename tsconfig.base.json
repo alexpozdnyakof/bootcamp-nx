@@ -17,6 +17,9 @@
 		"paths": {
 			"@bootcamp-nx/api-interfaces": ["libs/api-interfaces/src/index.ts"],
 			"@bootcamp-nx/core-ui": ["libs/core-ui/src/index.ts"],
+			"@bootcamp-nx/data-access-bootcamp": [
+				"libs/data-access-bootcamp/src/index.ts"
+			],
 			"@bootcamp-nx/tasks-ui": ["libs/tasks-ui/src/index.ts"]
 		}
 	},
