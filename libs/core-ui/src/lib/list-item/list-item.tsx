@@ -5,7 +5,7 @@ import { polymorphicComponent } from '../polymorphic'
 import styles from './list-item.module.less'
 
 type ListItemProps = {
-	children: ReactNode
+	children: ReactNode | Array<ReactNode>
 	actions?: ReactNode | Array<ReactNode>
 	hoverable?: boolean
 	selected?: boolean

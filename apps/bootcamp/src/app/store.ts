@@ -1,24 +1,46 @@
-import { configureStore } from '@reduxjs/toolkit'
+/* eslint-disable @typescript-eslint/dot-notation */
+import { ApiTask } from '@bootcamp-nx/api-interfaces'
+import { configureStore, createSelector } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
-import sideMenuSliceReducer from './features/side-menu/side-menu-slice'
-import tasklistSliceReducer from './features/task-list/task-list.slice'
-import projectSliceReducer from './pages/project.slice'
 import root from './saga'
+import { projectSlice, sectionSlice, taskSlice } from './slices'
 
 const sagaMiddleware = createSagaMiddleware()
 
-const store = configureStore({
+export const store = configureStore({
 	reducer: {
-		sideMenu: sideMenuSliceReducer,
-		project: projectSliceReducer,
-		tasks: tasklistSliceReducer,
+		[taskSlice.name]: taskSlice.reducer,
+		[projectSlice.name]: projectSlice.reducer,
+		[sectionSlice.name]: sectionSlice.reducer,
 	},
 	middleware: getDefaultMiddleware =>
 		getDefaultMiddleware().concat(sagaMiddleware),
+	devTools: process.env['NODE_ENV'] !== 'production',
 })
 
-export default store
-
 sagaMiddleware.run(root)
+
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>
+
+export const selectTasksGroupedBySections = createSelector(
+	[
+		(state: RootState) =>
+			Object.entries(state.tasks.entities).map(([id, task]) => ({
+				id,
+				...task,
+			})),
+		(state: RootState) =>
+			Object.entries(state.sections.entities).map(([id, section]) => ({
+				id,
+				...section,
+			})),
+	],
+	(tasks, sections) =>
+		sections.map(section => ({
+			...section,
+			tasks: tasks.filter(
+				task => task.tasklist_id === section.id
+			) as Array<Required<ApiTask>>,
+		}))
+)

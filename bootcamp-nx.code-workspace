@@ -2,24 +2,6 @@
 	"folders": [
 		{
 			"path": "."
-		},
-		{
-			"path": "../../Node/express/examples"
-		},
-		{
-			"path": "../island-saga"
-		},
-		{
-			"path": "../react-redux-00"
-		},
-		{
-			"path": "../blockchain"
-		},
-		{
-			"path": "../redux-saga/examples"
-		},
-		{
-			"path": "../../Node/koa-ts"
 		}
 	],
 	"settings": {

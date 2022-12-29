@@ -1,65 +1,34 @@
-/* eslint-disable react/jsx-props-no-spreading */
+import { ApiTask, ApiTaskList } from '@bootcamp-nx/api-interfaces'
 import { Box, Stack } from '@bootcamp-nx/core-ui'
-import { useCallback, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { Project } from '../features/project/project'
-import { TaskList } from '../features/task-list/task-list'
-import { useAppDispatch, useAppSelector } from '../store-hooks'
-import selectTaskLists from './project.selector'
-import {
-	addTask,
-	changeTaskStatus,
-	changeTaskTitle,
-	deleteTask,
-	load,
-} from './project.slice'
+import { useEffect } from 'react'
+import { useLoaderData } from 'react-router-dom'
+import { projectSlice, sectionSlice, taskSlice } from '../slices'
+import { useAppDispatch } from '../store-hooks'
+import ProjectSummary from './project-summary'
+import { ProjectTasks } from './project-tasks'
 
 export default function ProjectPage() {
-	const params = useParams<{ id: string }>()
+	const [tasks, sections, projectId] = useLoaderData() as [
+		Array<Required<ApiTask>>,
+		Array<ApiTaskList>,
+		number
+	]
+
 	const dispatch = useAppDispatch()
-	const lists = useAppSelector(selectTaskLists)
+
 	useEffect(() => {
-		dispatch(load({ id: Number(params.id) }))
-	}, [dispatch, params])
-
-	const onCreate = (listId: number, title: string) =>
-		dispatch(addTask({ listId, dto: { title, done: false } }))
-
-	const onComplete = useCallback(
-		(id: number) => {
-			dispatch(changeTaskStatus({ id }))
-		},
-		[dispatch]
-	)
-
-	const onDelete = useCallback(
-		(id: number) => {
-			dispatch(deleteTask({ id }))
-		},
-		[dispatch]
-	)
-
-	const onChangeTaskTitle = useCallback(
-		(id: number, title: string) => {
-			dispatch(changeTaskTitle({ id, title }))
-		},
-		[dispatch]
-	)
+		dispatch(taskSlice.actions.setAll(tasks))
+		dispatch(sectionSlice.actions.setAll(sections))
+		dispatch(projectSlice.actions.setActive({ id: projectId }))
+	}, [dispatch, sections, tasks, projectId])
 
 	return (
 		<Box width='full'>
 			<Stack space='xlarge'>
-				<Project />
-				{lists.map(list => (
-					<TaskList
-						key={`list-${list.id}`}
-						{...list}
-						onCreate={(title: string) => onCreate(list.id, title)}
-						onTaskComplete={onComplete}
-						onTaskDelete={onDelete}
-						onChangeTaskTitle={onChangeTaskTitle}
-					/>
-				))}
+				<ProjectSummary />
+				<Stack space='large'>
+					<ProjectTasks />
+				</Stack>
 			</Stack>
 		</Box>
 	)
