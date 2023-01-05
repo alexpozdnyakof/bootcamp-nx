@@ -65,4 +65,13 @@ describe('dataAccessBootcamp', () => {
 			expect.objectContaining({ method: 'DELETE' })
 		)
 	})
+
+	it('should sign in', async () => {
+		await bootcampApi.SignIn()
+		expect(global.fetch).toHaveBeenCalledWith(`/api/auth/sign-in`)
+	})
+	it('should fetch current user', async () => {
+		await bootcampApi.CurrentUser()
+		expect(global.fetch).toHaveBeenCalledWith(`/api/auth/user`)
+	})
 })

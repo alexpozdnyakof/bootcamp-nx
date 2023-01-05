@@ -3,6 +3,7 @@ import {
 	ApiTask,
 	ApiTaskDTO,
 	ApiTaskList,
+	ApiUser,
 } from '@bootcamp-nx/api-interfaces'
 
 export function ApiBootcamp() {
@@ -68,6 +69,16 @@ export function ApiBootcamp() {
 			return fetch(getFullUrl(`/task/${id}`), {
 				method: 'DELETE',
 			}).then(response => response.text())
+		},
+		async SignIn(): Promise<void> {
+			return fetch(getFullUrl(`/auth/sign-in`)).then(response =>
+				response.json()
+			)
+		},
+		async CurrentUser(): Promise<ApiUser> {
+			return fetch(getFullUrl(`/auth/user`)).then(response =>
+				response.json()
+			)
 		},
 	}
 }
