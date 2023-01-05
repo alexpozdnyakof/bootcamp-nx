@@ -1,10 +1,10 @@
 import { Inline, List, ListItem, Stack } from '@bootcamp-nx/core-ui'
 import { TaskFormExpandView, TaskListHeader } from '@bootcamp-nx/tasks-ui'
-import { DeleteTask } from '../features/delete-task'
-import { EditableTaskTitle } from '../features/editable-task-title'
-import { ToggleTask } from '../features/toggle-task'
-import { selectTasksGroupedBySections } from '../store'
-import { useAppSelector } from '../store-hooks'
+import { DeleteTask } from '../../features/delete-task'
+import { EditableTaskTitle } from '../../features/editable-task-title'
+import { ToggleTask } from '../../features/toggle-task'
+import { selectTasksGroupedBySections } from '../../store'
+import { useAppSelector } from '../../store-hooks'
 
 export function ProjectTasks() {
 	const sections = useAppSelector(selectTasksGroupedBySections)

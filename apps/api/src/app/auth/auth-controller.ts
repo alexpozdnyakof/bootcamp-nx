@@ -64,15 +64,14 @@ AuthController.post(
 			const dto = { username, password: hashedPassword }
 			const result = await userRepo.Save(dto)
 
-      const newUser = await userRepo.FindById(result.id)
+			const newUser = await userRepo.FindById(result.id)
 
-		res.status(201)
-			.cookie('refreshToken', webtoken(newUser), {
-				httpOnly: true,
-				sameSite: 'strict',
-			})
-			.send()
-
+			res.status(201)
+				.cookie('refreshToken', webtoken(newUser), {
+					httpOnly: true,
+					sameSite: 'strict',
+				})
+				.send()
 		} catch (error) {
 			console.log(error)
 			res.status(400).send({ code: 400, message: 'Bad Request' })

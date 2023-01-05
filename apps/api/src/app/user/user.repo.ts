@@ -65,6 +65,6 @@ export default function UserRepo() {
 			} catch (error) {
 				throw new Error(error?.message)
 			}
-		}
+		},
 	}
 }

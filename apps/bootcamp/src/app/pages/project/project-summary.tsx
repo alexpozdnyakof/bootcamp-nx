@@ -1,5 +1,5 @@
 import { Box, Heading, Text } from '@bootcamp-nx/core-ui'
-import { useAppSelector } from '../store-hooks'
+import { useAppSelector } from '../../store-hooks'
 
 export default function ProjectSummary() {
 	const project = useAppSelector(state => {
