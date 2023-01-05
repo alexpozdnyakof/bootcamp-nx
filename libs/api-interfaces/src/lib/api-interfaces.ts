@@ -38,3 +38,13 @@ export interface ApiTaskList {
 	updated: string
 	type: 'task_list'
 }
+
+export interface ApiUser {
+	id: number
+	username: string
+}
+
+export interface ApiCredentials {
+	username: string
+	password: string
+}

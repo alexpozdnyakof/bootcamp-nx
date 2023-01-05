@@ -3,7 +3,7 @@ import { ApiTask } from '@bootcamp-nx/api-interfaces'
 import { configureStore, createSelector } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
 import root from './saga'
-import { projectSlice, sectionSlice, taskSlice } from './slices'
+import { authSlice, projectSlice, sectionSlice, taskSlice } from './slices'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -12,6 +12,7 @@ export const store = configureStore({
 		[taskSlice.name]: taskSlice.reducer,
 		[projectSlice.name]: projectSlice.reducer,
 		[sectionSlice.name]: sectionSlice.reducer,
+		[authSlice.name]: authSlice.reducer,
 	},
 	middleware: getDefaultMiddleware =>
 		getDefaultMiddleware().concat(sagaMiddleware),
