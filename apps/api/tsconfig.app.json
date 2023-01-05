@@ -4,6 +4,7 @@
 		"outDir": "../../dist/out-tsc",
 		"module": "commonjs",
 		"types": ["node", "express"],
+		"typeRoots": ["./app/express.d.ts"],
 		"esModuleInterop": true,
 		"resolveJsonModule": true
 	},

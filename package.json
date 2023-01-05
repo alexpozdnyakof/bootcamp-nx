@@ -15,10 +15,12 @@
 	"private": true,
 	"dependencies": {
 		"@reduxjs/toolkit": "^1.9.1",
+		"argon2": "^0.30.2",
 		"body-parser": "^1.20.1",
 		"classnames": "^2.3.2",
 		"core-js": "^3.6.5",
 		"cors": "^2.8.5",
+		"dotenv": "^16.0.3",
 		"express": "^4.18.1",
 		"knex": "^2.3.0",
 		"morgan": "^1.10.0",

@@ -11,3 +11,7 @@ export type ErrorResult =
 			code: 500
 			message: 'Server Error'
 	  }
+	| {
+			code: 403
+			message: string
+	  }
