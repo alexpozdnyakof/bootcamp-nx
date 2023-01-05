@@ -4,8 +4,10 @@ import { useEffect } from 'react'
 import { useLoaderData } from 'react-router-dom'
 import { projectSlice, sectionSlice, taskSlice } from '../../slices'
 import { useAppDispatch } from '../../store-hooks'
+import { SideMenu } from '../../widgets'
 import ProjectSummary from './project-summary'
 import { ProjectTasks } from './project-tasks'
+import styles from './project.module.css'
 
 export default function ProjectPage() {
 	const [tasks, sections, projectId] = useLoaderData() as [
@@ -23,13 +25,25 @@ export default function ProjectPage() {
 	}, [dispatch, sections, tasks, projectId])
 
 	return (
-		<Box width='full'>
-			<Stack space='xlarge'>
-				<ProjectSummary />
-				<Stack space='large'>
-					<ProjectTasks />
-				</Stack>
-			</Stack>
+		<Box className={styles['app-layout']}>
+			<Box className={styles['app-menu']}>
+				<Box style={{ height: '24px' }} />
+				<SideMenu />
+			</Box>
+			<Box>
+				<Box className={styles['app-layout-content']}>
+					<Box className={styles['app-tasklists']}>
+						<Box width='full'>
+							<Stack space='xlarge'>
+								<ProjectSummary />
+								<Stack space='large'>
+									<ProjectTasks />
+								</Stack>
+							</Stack>
+						</Box>
+					</Box>
+				</Box>
+			</Box>
 		</Box>
 	)
 }
