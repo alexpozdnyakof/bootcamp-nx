@@ -65,19 +65,6 @@ export default function UserRepo() {
 			} catch (error) {
 				throw new Error(error?.message)
 			}
-		},
-		async findByCredentials({
-			username,
-			password,
-		}: Pick<User, 'username' | 'password'>): Promise<
-			User & { id: number }
-		> {
-			const byLogin = USERS.find(user => user.username == username)
-			if (!byLogin) throw new Error('User by login not found')
-			if (byLogin.password !== password)
-				throw new Error('Password is incorrect')
-
-			return byLogin
-		},
+		}
 	}
 }

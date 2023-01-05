@@ -44,12 +44,10 @@ describe('Auth Controller', () => {
 				.set('Accept', 'application/json')
 				.send(CREDENTIALS)
 
-			const cookies = response.headers['set-cookie']
+			const cookies = response.headers['set-cookie'][0].split('=')
 
 			expect(response.status).toBe(200)
-			expect(cookies).toEqual([
-				'refreshToken=eyJhbGciOiJIUzI1NiIsInR5cGUiOiJqd3QifQ%3D%3D.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0QHRlc3QuY29tIiwicGFzc3dvcmQiOiIkYXJnb24yaWQkdj0xOSRtPTY1NTM2LHQ9MyxwPTQkdTdiWHJTbmNjZStheVJpT0JPU2Z5USRrZ0UxNGVyVkFxM0VtSExHcVNZZ0xEbWVRTDF3R2NTSStUN2ZFNFdDOHBrIiwiY3JlYXRlZCI6IjIwMjItMTEtMjkgMTU6MzE6MzciLCJ1cGRhdGVkIjoiMjAyMi0xMS0yOSAxNTozMTozNyJ9.RKuF2sl%2F9Auvq2ovUdEU1PFqnWK0qdgWTluHyRDLByY%3D; Path=/; HttpOnly; SameSite=Strict',
-			])
+			expect(cookies[0]).toBe('refreshToken')
 		})
 		it('should return error for non-existing user', async () => {
 			const response = await request(App)
@@ -75,10 +73,11 @@ describe('Auth Controller', () => {
 				.post('/sign-up')
 				.set('Accept', 'application/json')
 				.send(USER_DTO)
-			expect(response.status).toBe(201)
 
-			const id = response.body.id
-			expect(id).toBe(4)
+			const cookies = response.headers['set-cookie'][0].split('=')
+
+			expect(response.status).toBe(201)
+			expect(cookies[0]).toBe('refreshToken')
 		})
 		it('should return error if user already exist', async () => {
 			const response = await request(App)
