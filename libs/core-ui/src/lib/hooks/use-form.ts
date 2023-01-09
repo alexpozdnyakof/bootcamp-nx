@@ -1,6 +1,4 @@
-import { createRef, RefObject, useRef } from 'react'
-
-
+import { createRef, RefObject, useRef, useState } from 'react'
 
 type ValidationError = {
 	type: string
@@ -31,12 +29,13 @@ type ValidationResult = {
 
 export default function useForm() {
 	const state = useRef<FormState>({ controls: {} })
+	const [errors, setErrors] = useState<ValidationResult>({})
 
 	const value = () =>
 		Object.entries(state.current.controls).reduce(
 			(acc, [name, field]) =>
 				Object.assign(acc, {
-					[name]: field.ref?.current?.value,
+					[name]: field.ref.current?.value,
 				}),
 			{}
 		)
@@ -44,18 +43,11 @@ export default function useForm() {
 	const validate = (formValue: Record<string, unknown>) => {
 		const values: Array<[keyof FormState['controls'], unknown]> =
 			Object.entries(formValue)
-		/**
-		 * {
-		 *  name: value
-		 * }
-		 * [fn, fn, fn] ->  [error, undefined, error] -> [error, error]
-		 *
-		 */
+
 		const { controls } = state.current
 
-		const validateResult = values.reduce((acc, entry) => {
+		const result = values.reduce((acc, entry) => {
 			const [name, value] = entry
-			// Validate field: Extract this
 
 			const validationResult = controls[name].validators
 				.map((validatorFn): ValidationError | undefined =>
@@ -73,7 +65,7 @@ export default function useForm() {
 			return acc
 		}, {} as ValidationResult)
 
-		return validateResult
+		return result
 	}
 
 	return {
@@ -94,8 +86,11 @@ export default function useForm() {
 			const valid = Object.keys(formErrors).length === 0
 			if (valid) {
 				fn(value())
+			} else {
+				setErrors(formErrors)
 			}
 		},
+		errors,
 	}
 }
 

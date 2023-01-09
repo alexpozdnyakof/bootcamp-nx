@@ -10,7 +10,7 @@ describe('UseForm', () => {
 	}: {
 		onSubmit: (value: any) => void
 	}) {
-		const { register, handleSumbit } = useForm()
+		const { register, handleSumbit, errors } = useForm()
 
 		return (
 			<form onSubmit={() => handleSumbit(onSubmit)}>
@@ -31,6 +31,12 @@ describe('UseForm', () => {
 					/>
 				</fieldset>
 				<button type='submit'>Submit</button>
+				<div data-testId='incomeErrors'>
+					{JSON.stringify(errors['income'])}
+				</div>
+				<div data-testId='outcomeErrors'>
+					{JSON.stringify(errors['outcome'])}
+				</div>
 			</form>
 		)
 	}
@@ -69,9 +75,20 @@ describe('UseForm', () => {
 		const submitFn = jest.fn()
 		render(<ComponentUnderTest onSubmit={submitFn} />)
 
+		const incomeField = screen.getByRole('textbox', { name: 'Income' })
+		const outcomeField = screen.getByRole('textbox', { name: 'Outcome' })
+
 		const submitBtn = screen.getByRole('button', { name: 'Submit' })
 		await userEvent.click(submitBtn)
-
 		expect(submitFn).not.toHaveBeenCalled()
+
+		// Try with one empty field
+		await userEvent.type(incomeField, 'income text')
+		expect(submitFn).not.toHaveBeenCalled()
+
+		// Try with filled form
+		await userEvent.type(outcomeField, 'outcome text')
+		await userEvent.click(submitBtn)
+		expect(submitFn).toHaveBeenCalled()
 	})
 })
