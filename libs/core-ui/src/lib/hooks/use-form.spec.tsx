@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event/'
-import useForm from './use-form'
+import useForm, { required } from './use-form'
 
 describe('UseForm', () => {
 	function ComponentUnderTest({
@@ -16,11 +16,19 @@ describe('UseForm', () => {
 			<form onSubmit={() => handleSumbit(onSubmit)}>
 				<fieldset>
 					<label htmlFor='income'>Income</label>
-					<input id='income' type='text' {...register('income')} />
+					<input
+						id='income'
+						type='text'
+						{...register('income', [required])}
+					/>
 				</fieldset>
 				<fieldset>
 					<label htmlFor='outcome'>Outcome</label>
-					<input id='outcome' type='text' {...register('outcome')} />
+					<input
+						id='outcome'
+						type='text'
+						{...register('outcome', [required])}
+					/>
 				</fieldset>
 				<button type='submit'>Submit</button>
 			</form>
@@ -55,5 +63,15 @@ describe('UseForm', () => {
 			income: 'income text',
 			outcome: 'outcome text',
 		})
+	})
+
+	it('should not execute submit callback if some form fields invalid', async () => {
+		const submitFn = jest.fn()
+		render(<ComponentUnderTest onSubmit={submitFn} />)
+
+		const submitBtn = screen.getByRole('button', { name: 'Submit' })
+		await userEvent.click(submitBtn)
+
+		expect(submitFn).not.toHaveBeenCalled()
 	})
 })
