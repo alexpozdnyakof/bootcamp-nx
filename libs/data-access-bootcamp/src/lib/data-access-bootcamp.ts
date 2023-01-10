@@ -70,10 +70,15 @@ export function ApiBootcamp() {
 				method: 'DELETE',
 			}).then(response => response.text())
 		},
-		async SignIn(): Promise<void> {
-			return fetch(getFullUrl(`/auth/sign-in`)).then(response =>
-				response.json()
-			)
+		async SignIn(credentials: {
+			username: string
+			password: string
+		}): Promise<void> {
+			return fetch(getFullUrl(`/auth/sign-in`), {
+				method: 'POST',
+				body: JSON.stringify(credentials),
+				headers: { 'Content-Type': 'application/json;charset=utf-8' },
+			}).then()
 		},
 		async CurrentUser(): Promise<ApiUser> {
 			return fetch(getFullUrl(`/auth/user`)).then(response =>

@@ -94,12 +94,6 @@ export default function useForm() {
 	}
 }
 
-/**
- * TODO: validate fields before submit
- * TODO: lock submit if form invalid
- * TODO: return fields errors
- */
-
 export function required(value: unknown): ValidationError | undefined {
 	const emptyString = (value: unknown) =>
 		typeof value == 'string' && value.length === 0

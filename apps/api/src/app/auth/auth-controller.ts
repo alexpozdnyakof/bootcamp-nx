@@ -22,6 +22,7 @@ AuthController.post(
 		}>
 	) => {
 		try {
+			console.log({ body: req.body })
 			const { username, password } = UserDTO.check(req.body)
 
 			const user = await userRepo.FindByUsername(username)
