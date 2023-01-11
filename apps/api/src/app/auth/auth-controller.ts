@@ -22,7 +22,6 @@ AuthController.post(
 		}>
 	) => {
 		try {
-			console.log({ body: req.body })
 			const { username, password } = UserDTO.check(req.body)
 
 			const user = await userRepo.FindByUsername(username)
@@ -48,7 +47,7 @@ AuthController.post(
 	'/sign-up',
 	async (
 		req: TypedRequest<{ body: Credentials }>,
-		res: TypedResponse<{ id: number }>
+		res: TypedResponse<void>
 	) => {
 		try {
 			const { username, password } = UserDTO.check(req.body)
@@ -72,7 +71,7 @@ AuthController.post(
 					httpOnly: true,
 					sameSite: 'strict',
 				})
-				.send()
+				.json()
 		} catch (error) {
 			console.log(error)
 			res.status(400).send({ code: 400, message: 'Bad Request' })

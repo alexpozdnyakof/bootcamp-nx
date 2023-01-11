@@ -58,7 +58,7 @@ TaskRouter.delete(
 		try {
 			await TaskModel.Delete(id)
 
-			res.status(204).send()
+			res.status(204).json()
 		} catch (error) {
 			console.log(`Error: ${error.message}`)
 
@@ -82,7 +82,7 @@ TaskRouter.put(
 			const dto = TaskValue.check(req.body)
 			await TaskModel.Update(id, dto)
 
-			res.status(204).send()
+			res.status(204).json()
 		} catch (error) {
 			console.log(`Error: ${error.message}`)
 
