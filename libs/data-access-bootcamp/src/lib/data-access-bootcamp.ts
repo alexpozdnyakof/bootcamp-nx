@@ -6,42 +6,80 @@ import {
 	ApiUser,
 } from '@bootcamp-nx/api-interfaces'
 
+
+type HttpClientOptions = {
+	urlPrefix: string
+}
+
+type RequestBody = { [key: string]: any }
+
+function HttpClient({ urlPrefix }: HttpClientOptions) {
+	const handleResponse = (response: Response) => {
+		if (!response.ok) throw new Error(response.statusText)
+		return response
+	}
+
+	const defaultHeaders = {
+		'Content-Type': 'application/json;charset=utf-8',
+	}
+	const withPrefix = (url: string) => urlPrefix.concat(url)
+
+	return {
+		async get<T = unknown>(url: string): Promise<T> {
+			return fetch(withPrefix(url), { headers: defaultHeaders })
+				.then(handleResponse)
+				.then(response => response.json())
+		},
+		async post<T>(url: string, body: RequestBody): Promise<T> {
+			return fetch(withPrefix(url), {
+				method: 'POST',
+				body: JSON.stringify(body),
+				headers: defaultHeaders,
+			})
+				.then(handleResponse)
+				.then(response => response.json())
+		},
+		async put<T>(url: string, body: RequestBody): Promise<T> {
+			return fetch(withPrefix(url), {
+				method: 'PUT',
+				body: JSON.stringify(body),
+				headers: defaultHeaders,
+			})
+				.then(handleResponse)
+				.then(response => response.json())
+		},
+		async delete<T = unknown>(url: string): Promise<T> {
+			return fetch(withPrefix(url), {
+				method: 'DELETE',
+				headers: defaultHeaders,
+			})
+				.then(handleResponse)
+				.then(response => response.json())
+		},
+	}
+}
+
 export function ApiBootcamp() {
-	const ROOT = '/api'
-	const getFullUrl = (endpoint: string) => ROOT.concat(endpoint)
+	const httpClient = HttpClient({ urlPrefix: '/api' })
 
 	return {
 		async Projects(): Promise<Array<ApiProject>> {
-			return fetch(getFullUrl(`/project`)).then(response =>
-				response.json()
-			)
+			return httpClient.get('/project')
 		},
 		async Project(id: number): Promise<ApiProject> {
-			return fetch(getFullUrl(`/project/${id}`)).then(response =>
-				response.json()
-			)
+			return httpClient.get(`/project/${id}`)
 		},
 		async ProjectTasks(id: number): Promise<Array<Required<ApiTask>>> {
-			return fetch(getFullUrl(`/project/${id}/tasks`)).then(response =>
-				response.json()
-			)
+			return httpClient.get(`/project/${id}/tasks`)
 		},
 		async ProjectTaskslists(id: number): Promise<Array<ApiTaskList>> {
-			return fetch(getFullUrl(`/project/${id}/tasklists`)).then(
-				response => response.json()
-			)
+			return httpClient.get(`/project/${id}/tasklists`)
 		},
 		async Task(id: number): Promise<ApiTask> {
-			return fetch(getFullUrl(`/task/${id}`)).then(response =>
-				response.json()
-			)
+			return httpClient.get(`/task/${id}`)
 		},
 		async SaveTask(dto: ApiTaskDTO): Promise<{ id: number }> {
-			return fetch(getFullUrl(`/task`), {
-				method: 'POST',
-				body: JSON.stringify(dto),
-				headers: { 'Content-Type': 'application/json;charset=utf-8' },
-			}).then(response => response.json())
+			return httpClient.post(`/task`, dto)
 		},
 		async LinkTaskToTasklist({
 			listId,
@@ -50,40 +88,25 @@ export function ApiBootcamp() {
 			listId: number
 			taskId: number
 		}): Promise<string | void> {
-			return fetch(getFullUrl(`/tasklist/${listId}/task`), {
-				method: 'POST',
-				body: JSON.stringify({
-					id: taskId,
-				}),
-				headers: { 'Content-Type': 'application/json;charset=utf-8' },
-			}).then(response => response.text())
+			return httpClient.post(`/tasklist/${listId}/task`, {
+				id: taskId,
+			})
 		},
 		async UpdateTask(id: number, dto: ApiTaskDTO): Promise<string | void> {
-			return fetch(getFullUrl(`/task/${id}`), {
-				method: 'PUT',
-				body: JSON.stringify(dto),
-				headers: { 'Content-Type': 'application/json;charset=utf-8' },
-			}).then(response => response.text())
+			return httpClient.put(`/task/${id}`, dto)
 		},
 		async DeleteTask(id: number): Promise<string | void> {
-			return fetch(getFullUrl(`/task/${id}`), {
-				method: 'DELETE',
-			}).then(response => response.text())
+			return httpClient.delete(`/task/${id}`)
 		},
 		async SignIn(credentials: {
 			username: string
 			password: string
 		}): Promise<void> {
-			return fetch(getFullUrl(`/auth/sign-in`), {
-				method: 'POST',
-				body: JSON.stringify(credentials),
-				headers: { 'Content-Type': 'application/json;charset=utf-8' },
-			}).then()
+			return httpClient.post(`/auth/sign-in`, credentials)
 		},
+
 		async CurrentUser(): Promise<ApiUser> {
-			return fetch(getFullUrl(`/auth/user`)).then(response =>
-				response.json()
-			)
+			return httpClient.get(`/auth/user`)
 		},
 	}
 }

@@ -9,6 +9,7 @@ describe('dataAccessBootcamp', () => {
 	beforeAll(() => {
 		global.fetch = jest.fn(() =>
 			Promise.resolve({
+				ok: true,
 				json: () => Promise.resolve(),
 				text: () => Promise.resolve(),
 			} as unknown as Response)
@@ -16,22 +17,34 @@ describe('dataAccessBootcamp', () => {
 	})
 	it('should fetch all projects', async () => {
 		await bootcampApi.Projects()
-		expect(global.fetch).toHaveBeenCalledWith('/api/project')
+		expect(global.fetch).toHaveBeenCalledWith(
+			'/api/project',
+			expect.any(Object)
+		)
 	})
 
 	it('should fetch project with id', async () => {
 		await bootcampApi.Project(5)
-		expect(global.fetch).toHaveBeenCalledWith('/api/project/5')
+		expect(global.fetch).toHaveBeenCalledWith(
+			'/api/project/5',
+			expect.any(Object)
+		)
 	})
 
 	it('should fetch task with id', async () => {
 		await bootcampApi.Task(17)
-		expect(global.fetch).toHaveBeenCalledWith('/api/task/17')
+		expect(global.fetch).toHaveBeenCalledWith(
+			'/api/task/17',
+			expect.any(Object)
+		)
 	})
 
 	it('should fetch linked to project tasks', async () => {
 		await bootcampApi.ProjectTaskslists(5)
-		expect(global.fetch).toHaveBeenCalledWith('/api/project/5/tasklists')
+		expect(global.fetch).toHaveBeenCalledWith(
+			'/api/project/5/tasklists',
+			expect.any(Object)
+		)
 	})
 
 	it('should fetch save task', async () => {
@@ -73,8 +86,12 @@ describe('dataAccessBootcamp', () => {
 			expect.objectContaining({ method: 'POST' })
 		)
 	})
+
 	it('should fetch current user', async () => {
 		await bootcampApi.CurrentUser()
-		expect(global.fetch).toHaveBeenCalledWith(`/api/auth/user`)
+		expect(global.fetch).toHaveBeenCalledWith(
+			`/api/auth/user`,
+			expect.any(Object)
+		)
 	})
 })
