@@ -5,14 +5,19 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import styles from './app.module.less'
 import { projectLoader, ProjectPage } from './pages/project'
 import { SignInPage } from './pages/sign-in'
-import { projectSlice } from './slices'
+import RouteGuard from './route-guard'
+import { authSlice, projectSlice } from './slices'
 import { useAppDispatch } from './store-hooks'
 import { TopBar } from './widgets'
 
 const router = createBrowserRouter([
 	{
 		path: ':id',
-		element: <ProjectPage />,
+		element: (
+			<RouteGuard>
+				<ProjectPage />
+			</RouteGuard>
+		),
 		loader: projectLoader,
 	},
 	{
@@ -26,10 +31,21 @@ export default function App() {
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
+		const getUser = async () => {
+			try {
+				const user = await api.CurrentUser()
+
+				dispatch(authSlice.actions.setUser(user))
+			} catch (error) {
+				console.log(error)
+			}
+		}
+
 		const fetchProjects = async () => {
 			const projects = await api.Projects()
 			dispatch(projectSlice.actions.setAll(projects))
 		}
+		getUser()
 
 		fetchProjects()
 	}, [api, dispatch])

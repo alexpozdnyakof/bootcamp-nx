@@ -13,7 +13,6 @@ function* signInWorker(credentials: { username: string; password: string }) {
 		const user: ApiUser = yield call(BootcampApi.CurrentUser)
 		yield put(authSlice.actions.setUser(user))
 	} catch (error) {
-		console.log(error)
 		yield put(signInFailed({ error: 'failed to sign in' }))
 	}
 }

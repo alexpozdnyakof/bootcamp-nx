@@ -6,7 +6,6 @@ import {
 	ApiUser,
 } from '@bootcamp-nx/api-interfaces'
 
-
 type HttpClientOptions = {
 	urlPrefix: string
 }

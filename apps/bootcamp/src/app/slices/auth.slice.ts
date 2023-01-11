@@ -24,3 +24,5 @@ const authSlice = createSlice({
 })
 
 export default authSlice
+
+export const selectUser = (state: RootState) => state.auth.user
