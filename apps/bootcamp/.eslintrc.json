@@ -29,7 +29,8 @@
 				"@typescript-eslint/semi": "off",
 				"@typescript-eslint/indent": "off",
 				"@typescript-eslint/comma-dangle": "off",
-				"import/prefer-default-export": "off"
+				"import/prefer-default-export": "off",
+				"react/require-default-props": "off"
 			}
 		},
 		{

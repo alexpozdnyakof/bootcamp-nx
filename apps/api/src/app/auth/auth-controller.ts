@@ -15,11 +15,7 @@ AuthController.post(
 	'/sign-in',
 	async (
 		req: TypedRequest<{ body: Credentials }>,
-		res: TypedResponse<{
-			token: string
-			id: UniqueId
-			username: string
-		}>
+		res: TypedResponse<{ message: string; code: number }>
 	) => {
 		try {
 			const { username, password } = UserDTO.check(req.body)
@@ -35,7 +31,10 @@ AuthController.post(
 					httpOnly: true,
 					sameSite: 'strict',
 				})
-				.send()
+				.json({
+					code: 200,
+					message: 'Authorized',
+				})
 		} catch (error) {
 			console.log(error)
 			res.status(403).send({ code: 403, message: error?.message })

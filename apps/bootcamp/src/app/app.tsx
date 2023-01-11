@@ -14,7 +14,10 @@ const router = createBrowserRouter([
 	{
 		path: ':id',
 		element: (
-			<RouteGuard>
+			<RouteGuard
+				redirectUrl='/sign-in'
+				canActivate={user => user === null}
+			>
 				<ProjectPage />
 			</RouteGuard>
 		),
@@ -22,7 +25,11 @@ const router = createBrowserRouter([
 	},
 	{
 		path: 'sign-in',
-		element: <SignInPage />,
+		element: (
+			<RouteGuard redirectUrl='/1' canActivate={user => user !== null}>
+				<SignInPage />
+			</RouteGuard>
+		),
 	},
 ])
 
@@ -45,6 +52,7 @@ export default function App() {
 			const projects = await api.Projects()
 			dispatch(projectSlice.actions.setAll(projects))
 		}
+
 		getUser()
 
 		fetchProjects()
