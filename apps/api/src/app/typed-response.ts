@@ -1,4 +1,4 @@
 import { Response } from 'express'
-import { ErrorResult } from './error-result'
+import { ResponseWithError } from './response-types'
 
-export type TypedResponse<T> = Response<T | ErrorResult>
+export type TypedResponse<T> = Response<T | ResponseWithError>

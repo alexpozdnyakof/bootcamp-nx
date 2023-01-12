@@ -41,7 +41,7 @@ describe('TaskController', () => {
 			.send(TASK_DTO)
 		expect(response.status).toBe(201)
 
-		const id = response.body.id
+		const id = response.body.data.id
 		expect(id).toBeDefined()
 
 		const { title, done } = (await request(App).get(`/${id}`)).body

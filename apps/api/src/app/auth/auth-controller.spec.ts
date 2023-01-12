@@ -55,7 +55,7 @@ describe('Auth Controller', () => {
 				.set('Accept', 'application/json')
 				.send({ ...CREDENTIALS, username: '123@mail.ru' })
 
-			expect(response.status).toBe(403)
+			expect(response.status).toBe(401)
 		})
 		it('should return error for user with wrong password', async () => {
 			const response = await request(App)
@@ -63,7 +63,7 @@ describe('Auth Controller', () => {
 				.set('Accept', 'application/json')
 				.send({ ...CREDENTIALS, password: '123123' })
 
-			expect(response.status).toBe(403)
+			expect(response.status).toBe(401)
 		})
 	})
 

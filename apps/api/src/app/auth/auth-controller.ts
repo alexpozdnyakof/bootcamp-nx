@@ -1,5 +1,6 @@
 import { ApiCredentials } from '@bootcamp-nx/api-interfaces'
 import { Router } from 'express'
+import { ResponseWithMessage } from '../response-types'
 import { TypedRequest } from '../typed-request'
 import { TypedResponse } from '../typed-response'
 import { UserRepo } from '../user'
@@ -15,7 +16,7 @@ AuthController.post(
 	'/sign-in',
 	async (
 		req: TypedRequest<{ body: ApiCredentials }>,
-		res: TypedResponse<{ message: string; code: number }>
+		res: TypedResponse<ResponseWithMessage>
 	) => {
 		try {
 			const { username, password } = ApiCredentialsDTO.check(req.body)
@@ -37,7 +38,7 @@ AuthController.post(
 				})
 		} catch (error) {
 			console.log(error)
-			res.status(403).send({ code: 403, message: error?.message })
+			res.status(401).send({ code: 401, message: error?.message })
 		}
 	}
 )
@@ -46,7 +47,7 @@ AuthController.post(
 	'/sign-up',
 	async (
 		req: TypedRequest<{ body: ApiCredentials }>,
-		res: TypedResponse<{ code: 201; message: string }>
+		res: TypedResponse<ResponseWithMessage>
 	) => {
 		try {
 			const { username, password } = ApiCredentialsDTO.check(req.body)

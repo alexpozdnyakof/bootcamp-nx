@@ -1,5 +1,6 @@
 import { ApiTask, ApiTaskDTO } from '@bootcamp-nx/api-interfaces'
 import { Router } from 'express'
+import { ResponseWithData } from '../response-types'
 import { TypedRequest } from '../typed-request'
 import { TypedResponse } from '../typed-response'
 import { CreateTask, TaskValue } from './task'
@@ -32,14 +33,17 @@ TaskRouter.post(
 	'/',
 	async (
 		req: TypedRequest<{ body: ApiTaskDTO }>,
-		res: TypedResponse<{ id: number }>
+		res: TypedResponse<ResponseWithData<{ id: number }>>
 	) => {
 		try {
 			console.log({ body: req.body })
 			const dto = TaskValue.check(req.body)
 			const result = await TaskModel.Save(dto)
 
-			res.status(201).send(result)
+			res.status(201).send({
+				code: 201,
+				data: result,
+			})
 		} catch (error) {
 			console.log(`Error: ${error.message}`)
 

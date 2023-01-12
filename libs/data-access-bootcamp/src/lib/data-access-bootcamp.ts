@@ -26,7 +26,9 @@ export function ApiBootcamp() {
 		async Task(id: number): Promise<ApiTask> {
 			return httpClient.get(`/task/${id}`)
 		},
-		async SaveTask(dto: ApiTaskDTO): Promise<{ id: number }> {
+		async SaveTask(
+			dto: ApiTaskDTO
+		): Promise<{ code: number; data: { id: number } }> {
 			return httpClient.post(`/task`, dto)
 		},
 		async LinkTaskToTasklist({
