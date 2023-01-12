@@ -46,7 +46,7 @@ AuthController.post(
 	'/sign-up',
 	async (
 		req: TypedRequest<{ body: Credentials }>,
-		res: TypedResponse<void>
+		res: TypedResponse<{ code: 201; message: string }>
 	) => {
 		try {
 			const { username, password } = UserDTO.check(req.body)
@@ -70,7 +70,7 @@ AuthController.post(
 					httpOnly: true,
 					sameSite: 'strict',
 				})
-				.json()
+				.json({ code: 201, message: 'Authorized' })
 		} catch (error) {
 			console.log(error)
 			res.status(400).send({ code: 400, message: 'Bad Request' })

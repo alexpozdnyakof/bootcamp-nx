@@ -6,6 +6,63 @@ import {
 	ApiUser,
 } from '@bootcamp-nx/api-interfaces'
 
+export function ApiBootcamp() {
+	const httpClient = HttpClient({ urlPrefix: '/api' })
+
+	return {
+		async Projects(): Promise<Array<ApiProject>> {
+			return httpClient.get('/project')
+		},
+		async Project(id: number): Promise<ApiProject> {
+			return httpClient.get(`/project/${id}`)
+		},
+		async ProjectTasks(id: number): Promise<Array<Required<ApiTask>>> {
+			return httpClient.get(`/project/${id}/tasks`)
+		},
+		async ProjectTaskslists(id: number): Promise<Array<ApiTaskList>> {
+			return httpClient.get(`/project/${id}/tasklists`)
+		},
+		async Task(id: number): Promise<ApiTask> {
+			return httpClient.get(`/task/${id}`)
+		},
+		async SaveTask(dto: ApiTaskDTO): Promise<{ id: number }> {
+			return httpClient.post(`/task`, dto)
+		},
+		async LinkTaskToTasklist({
+			listId,
+			taskId,
+		}: {
+			listId: number
+			taskId: number
+		}): Promise<string | void> {
+			return httpClient.post(`/tasklist/${listId}/task`, {
+				id: taskId,
+			})
+		},
+		async UpdateTask(id: number, dto: ApiTaskDTO): Promise<string | void> {
+			return httpClient.put(`/task/${id}`, dto)
+		},
+		async DeleteTask(id: number): Promise<string | void> {
+			return httpClient.delete(`/task/${id}`)
+		},
+		async SignIn(credentials: {
+			username: string
+			password: string
+		}): Promise<void> {
+			return httpClient.post(`/auth/sign-in`, credentials)
+		},
+		async SignUp(credentials: {
+			username: string
+			password: string
+		}): Promise<void> {
+			return httpClient.post(`/auth/sign-up`, credentials)
+		},
+		async CurrentUser(): Promise<ApiUser> {
+			return httpClient.get(`/auth/user`)
+		},
+	}
+}
+
 type HttpClientOptions = {
 	urlPrefix: string
 }
@@ -54,58 +111,6 @@ function HttpClient({ urlPrefix }: HttpClientOptions) {
 			})
 				.then(handleResponse)
 				.then(response => response.json())
-		},
-	}
-}
-
-export function ApiBootcamp() {
-	const httpClient = HttpClient({ urlPrefix: '/api' })
-
-	return {
-		async Projects(): Promise<Array<ApiProject>> {
-			return httpClient.get('/project')
-		},
-		async Project(id: number): Promise<ApiProject> {
-			return httpClient.get(`/project/${id}`)
-		},
-		async ProjectTasks(id: number): Promise<Array<Required<ApiTask>>> {
-			return httpClient.get(`/project/${id}/tasks`)
-		},
-		async ProjectTaskslists(id: number): Promise<Array<ApiTaskList>> {
-			return httpClient.get(`/project/${id}/tasklists`)
-		},
-		async Task(id: number): Promise<ApiTask> {
-			return httpClient.get(`/task/${id}`)
-		},
-		async SaveTask(dto: ApiTaskDTO): Promise<{ id: number }> {
-			return httpClient.post(`/task`, dto)
-		},
-		async LinkTaskToTasklist({
-			listId,
-			taskId,
-		}: {
-			listId: number
-			taskId: number
-		}): Promise<string | void> {
-			return httpClient.post(`/tasklist/${listId}/task`, {
-				id: taskId,
-			})
-		},
-		async UpdateTask(id: number, dto: ApiTaskDTO): Promise<string | void> {
-			return httpClient.put(`/task/${id}`, dto)
-		},
-		async DeleteTask(id: number): Promise<string | void> {
-			return httpClient.delete(`/task/${id}`)
-		},
-		async SignIn(credentials: {
-			username: string
-			password: string
-		}): Promise<void> {
-			return httpClient.post(`/auth/sign-in`, credentials)
-		},
-
-		async CurrentUser(): Promise<ApiUser> {
-			return httpClient.get(`/auth/user`)
 		},
 	}
 }

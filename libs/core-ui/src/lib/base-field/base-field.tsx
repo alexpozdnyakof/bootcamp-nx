@@ -150,7 +150,6 @@ export function BaseField({
 						display='flex'
 						justifyContent='spaceBetween'
 						alignItems='flexEnd'
-						paddingBottom='small'
 					>
 						<Text
 							size={variant === 'bordered' ? 'caption' : 'body'}
