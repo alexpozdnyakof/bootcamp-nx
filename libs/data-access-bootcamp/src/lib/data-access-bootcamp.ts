@@ -1,4 +1,5 @@
 import {
+	ApiCredentials,
 	ApiProject,
 	ApiTask,
 	ApiTaskDTO,
@@ -45,16 +46,10 @@ export function ApiBootcamp() {
 		async DeleteTask(id: number): Promise<string | void> {
 			return httpClient.delete(`/task/${id}`)
 		},
-		async SignIn(credentials: {
-			username: string
-			password: string
-		}): Promise<void> {
+		async SignIn(credentials: ApiCredentials): Promise<void> {
 			return httpClient.post(`/auth/sign-in`, credentials)
 		},
-		async SignUp(credentials: {
-			username: string
-			password: string
-		}): Promise<void> {
+		async SignUp(credentials: ApiCredentials): Promise<void> {
 			return httpClient.post(`/auth/sign-up`, credentials)
 		},
 		async CurrentUser(): Promise<ApiUser> {

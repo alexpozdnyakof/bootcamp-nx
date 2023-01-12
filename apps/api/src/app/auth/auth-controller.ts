@@ -1,11 +1,11 @@
+import { ApiCredentials } from '@bootcamp-nx/api-interfaces'
 import { Router } from 'express'
 import { TypedRequest } from '../typed-request'
 import { TypedResponse } from '../typed-response'
-import { User, UserDTO, UserRepo } from '../user'
+import { UserRepo } from '../user'
 import { validateEmail, webtoken } from '../utils'
+import { ApiCredentialsDTO } from './credentials'
 import { PasswordService } from './password-service'
-
-type Credentials = Pick<User, 'username' | 'password'>
 
 const AuthController = Router()
 const userRepo = UserRepo()
@@ -14,11 +14,11 @@ const passwordService = PasswordService()
 AuthController.post(
 	'/sign-in',
 	async (
-		req: TypedRequest<{ body: Credentials }>,
+		req: TypedRequest<{ body: ApiCredentials }>,
 		res: TypedResponse<{ message: string; code: number }>
 	) => {
 		try {
-			const { username, password } = UserDTO.check(req.body)
+			const { username, password } = ApiCredentialsDTO.check(req.body)
 
 			const user = await userRepo.FindByUsername(username)
 			if (typeof user == 'undefined') throw new Error('User Not Found')
@@ -45,11 +45,11 @@ AuthController.post(
 AuthController.post(
 	'/sign-up',
 	async (
-		req: TypedRequest<{ body: Credentials }>,
+		req: TypedRequest<{ body: ApiCredentials }>,
 		res: TypedResponse<{ code: 201; message: string }>
 	) => {
 		try {
-			const { username, password } = UserDTO.check(req.body)
+			const { username, password } = ApiCredentialsDTO.check(req.body)
 
 			if (!validateEmail(username)) throw new Error('Email is invalid')
 
