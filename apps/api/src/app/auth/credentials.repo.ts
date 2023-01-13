@@ -1,12 +1,12 @@
 import { database } from '../database'
-import { Credentials } from './credentials'
+import { Credential, CredentialRow } from './credentials'
 
 export default function CredentialsRepo() {
-	const tableName = 'credentials'
+	const tableName = 'credential'
 	const userRelationTableName = 'userCredential'
 
 	return {
-		async Save(dto: Credentials): Promise<{ id: number }> {
+		async Save(dto: Credential): Promise<{ id: UniqueId }> {
 			try {
 				const [id] = await database(tableName)
 					.insert(dto)
@@ -18,10 +18,26 @@ export default function CredentialsRepo() {
 			}
 		},
 		async AddUserFor(
-			dto: Record<'user_id' | 'credential_id', number>
+			dto: Record<'user_id' | 'credential_id', UniqueId>
 		): Promise<void> {
 			try {
 				await database(userRelationTableName).insert(dto)
+			} catch (error) {
+				throw new Error(error?.message)
+			}
+		},
+		async FindByUserId(userId: UniqueId): Promise<CredentialRow> {
+			try {
+				return await database
+					.select<CredentialRow>('credential.*')
+					.from(userRelationTableName)
+					.join(
+						tableName,
+						`${tableName}.id`,
+						`${userRelationTableName}.credential_id`
+					)
+					.where(`${userRelationTableName}.user_id`, userId)
+					.first()
 			} catch (error) {
 				throw new Error(error?.message)
 			}

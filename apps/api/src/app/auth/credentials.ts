@@ -6,8 +6,8 @@ export const ApiCredentialsDTO = Record({
 	password: String,
 })
 
-export type Credentials = {
+export type Credential = {
 	password: string
 }
 
-export type CredentialsRow = Row<Credentials>
+export type CredentialRow = Row<Credential>

@@ -21,12 +21,18 @@ AuthController.post(
 		res: TypedResponse<ResponseWithMessage>
 	) => {
 		try {
-			const { username } = ApiCredentialsDTO.check(req.body)
+			const { username, password } = ApiCredentialsDTO.check(req.body)
 
+			/** check is user exist */
 			const user = await userRepo.FindByUsername(username)
 			if (typeof user == 'undefined') throw new Error('User Not Found')
 
-			// await passwordService.verify(user.password, password)
+			/** find password */
+			const userCredential = await credentialRepo.FindByUserId(user.id)
+			if (typeof userCredential == 'undefined')
+				throw new Error('Credential Not Found')
+
+			await passwordService.verify(userCredential.password, password)
 
 			return res
 				.status(200)
