@@ -3,18 +3,12 @@ import { Router } from 'express'
 import { ResponseWithMessage } from '../response-types'
 import { TypedRequest } from '../typed-request'
 import { TypedResponse } from '../typed-response'
-import { UserRepo } from '../user'
-import { validateEmail, webtoken } from '../utils'
 import AuthService from './auth-service'
 import { ApiCredentialsDTO } from './credentials'
-import CredentialsRepo from './credentials.repo'
-import { PasswordService } from './password-service'
 
 const AuthController = Router()
-const userRepo = UserRepo()
-const credentialRepo = CredentialsRepo()
 const AuthRouterPrefix = 'auth'
-const passwordService = PasswordService()
+
 const authService = AuthService()
 AuthController.post(
 	'/sign-in',
@@ -51,24 +45,11 @@ AuthController.post(
 		try {
 			const { username, password } = ApiCredentialsDTO.check(req.body)
 
-			/**  check is user valid and not exist **/
-			if (!validateEmail(username)) throw new Error('Email is invalid')
-			const user = await userRepo.FindByUsername(username)
-			if (typeof user !== 'undefined')
-				throw new Error('User with this username already exist')
-			const { id: user_id } = await userRepo.Save({ username })
-
-			/**  process password and save credentials **/
-			const hashedPassword = await passwordService.hash(password)
-			const { id: credential_id } = await credentialRepo.Save({
-				password: hashedPassword,
-			})
-
-			await credentialRepo.AddUserFor({ user_id, credential_id })
-			const newUser = await userRepo.FindById(user_id)
+			await authService.SignUp({ username, password })
+			const jwtToken = await authService.SignIn({ username, password })
 
 			res.status(201)
-				.cookie('refreshToken', webtoken(newUser), {
+				.cookie('refreshToken', jwtToken, {
 					httpOnly: true,
 					sameSite: 'strict',
 				})
