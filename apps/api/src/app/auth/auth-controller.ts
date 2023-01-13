@@ -9,6 +9,7 @@ import { ApiCredentialsDTO } from './credentials'
 const AuthController = Router()
 const AuthRouterPrefix = 'auth'
 
+
 const authService = AuthService()
 AuthController.post(
 	'/sign-in',
@@ -69,15 +70,5 @@ AuthController.get('/user', (req, res) => {
 	if (req.user) res.status(200).send(req.user)
 	else res.status(401).send({ error: 'Not Authorized' })
 })
-/**
- * - [+] Store User to database when sign up
- * - [+] Hash password before store
- * - [+] Send token inside http cookie
- * - [+] Hash Password
- * - [+] Sign In
- * - [+] Sign Up
- * - [+] Logout
- * - [ ] Restore password
- */
 
 export { AuthController, AuthRouterPrefix }
