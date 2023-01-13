@@ -4,9 +4,7 @@ export default function UserRepo() {
 	const tableName = 'user'
 
 	return {
-		async Save(
-			dto: Pick<User, 'username' | 'password'>
-		): Promise<{ id: number }> {
+		async Save(dto: User): Promise<{ id: number }> {
 			try {
 				const result = await database(tableName)
 					.insert(dto)

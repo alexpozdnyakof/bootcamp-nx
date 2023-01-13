@@ -6,10 +6,12 @@ import { TypedResponse } from '../typed-response'
 import { UserRepo } from '../user'
 import { validateEmail, webtoken } from '../utils'
 import { ApiCredentialsDTO } from './credentials'
+import CredentialsRepo from './credentials.repo'
 import { PasswordService } from './password-service'
 
 const AuthController = Router()
 const userRepo = UserRepo()
+const credentialRepo = CredentialsRepo()
 const AuthRouterPrefix = 'auth'
 const passwordService = PasswordService()
 AuthController.post(
@@ -19,12 +21,12 @@ AuthController.post(
 		res: TypedResponse<ResponseWithMessage>
 	) => {
 		try {
-			const { username, password } = ApiCredentialsDTO.check(req.body)
+			const { username } = ApiCredentialsDTO.check(req.body)
 
 			const user = await userRepo.FindByUsername(username)
 			if (typeof user == 'undefined') throw new Error('User Not Found')
 
-			await passwordService.verify(user.password, password)
+			// await passwordService.verify(user.password, password)
 
 			return res
 				.status(200)
@@ -52,19 +54,21 @@ AuthController.post(
 		try {
 			const { username, password } = ApiCredentialsDTO.check(req.body)
 
+			/**  check is user valid and not exist **/
 			if (!validateEmail(username)) throw new Error('Email is invalid')
-
 			const user = await userRepo.FindByUsername(username)
-
 			if (typeof user !== 'undefined')
 				throw new Error('User with this username already exist')
+			const { id: user_id } = await userRepo.Save({ username })
 
+			/**  process password and save credentials **/
 			const hashedPassword = await passwordService.hash(password)
+			const { id: credential_id } = await credentialRepo.Save({
+				password: hashedPassword,
+			})
 
-			const dto = { username, password: hashedPassword }
-			const result = await userRepo.Save(dto)
-
-			const newUser = await userRepo.FindById(result.id)
+			await credentialRepo.AddUserFor({ user_id, credential_id })
+			const newUser = await userRepo.FindById(user_id)
 
 			res.status(201)
 				.cookie('refreshToken', webtoken(newUser), {
