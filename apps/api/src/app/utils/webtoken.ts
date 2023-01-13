@@ -1,6 +1,7 @@
 import { jwtSignature } from './jwt-signature'
 
-export function webtoken(payload: { [key: string]: unknown }) {
+export type Webtoken = string
+export function webtoken(payload: { [key: string]: unknown }): Webtoken {
 	const head = Buffer.from(
 		JSON.stringify({ alg: 'HS256', type: 'jwt' })
 	).toString('base64')

@@ -5,6 +5,7 @@ import { TypedRequest } from '../typed-request'
 import { TypedResponse } from '../typed-response'
 import { UserRepo } from '../user'
 import { validateEmail, webtoken } from '../utils'
+import AuthService from './auth-service'
 import { ApiCredentialsDTO } from './credentials'
 import CredentialsRepo from './credentials.repo'
 import { PasswordService } from './password-service'
@@ -14,6 +15,7 @@ const userRepo = UserRepo()
 const credentialRepo = CredentialsRepo()
 const AuthRouterPrefix = 'auth'
 const passwordService = PasswordService()
+const authService = AuthService()
 AuthController.post(
 	'/sign-in',
 	async (
@@ -22,21 +24,11 @@ AuthController.post(
 	) => {
 		try {
 			const { username, password } = ApiCredentialsDTO.check(req.body)
-
-			/** check is user exist */
-			const user = await userRepo.FindByUsername(username)
-			if (typeof user == 'undefined') throw new Error('User Not Found')
-
-			/** find password */
-			const userCredential = await credentialRepo.FindByUserId(user.id)
-			if (typeof userCredential == 'undefined')
-				throw new Error('Credential Not Found')
-
-			await passwordService.verify(userCredential.password, password)
+			const jwtToken = await authService.SignIn({ username, password })
 
 			return res
 				.status(200)
-				.cookie('refreshToken', webtoken(user), {
+				.cookie('refreshToken', jwtToken, {
 					httpOnly: true,
 					sameSite: 'strict',
 				})
@@ -45,7 +37,6 @@ AuthController.post(
 					message: 'Authorized',
 				})
 		} catch (error) {
-			console.log(error)
 			res.status(401).send({ code: 401, message: error?.message })
 		}
 	}
