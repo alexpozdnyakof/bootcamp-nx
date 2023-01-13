@@ -87,14 +87,6 @@ describe('dataAccessBootcamp', () => {
 		)
 	})
 
-	it('should sign up', async () => {
-		await bootcampApi.SignUp({ username: 'xae', password: '2317' })
-		expect(global.fetch).toHaveBeenCalledWith(
-			`/api/auth/sign-up`,
-			expect.objectContaining({ method: 'POST' })
-		)
-	})
-
 	it('should fetch current user', async () => {
 		await bootcampApi.CurrentUser()
 		expect(global.fetch).toHaveBeenCalledWith(

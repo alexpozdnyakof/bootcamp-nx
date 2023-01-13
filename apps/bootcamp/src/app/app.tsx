@@ -5,7 +5,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import styles from './app.module.less'
 import { projectLoader, ProjectPage } from './pages/project'
 import { SignInPage } from './pages/sign-in'
-import { SignUpPage } from './pages'
 import RouteGuard from './route-guard'
 import { authSlice, projectSlice } from './slices'
 import { useAppDispatch } from './store-hooks'
@@ -29,14 +28,6 @@ const router = createBrowserRouter([
 		element: (
 			<RouteGuard redirectUrl='/1' canActivate={user => user !== null}>
 				<SignInPage />
-			</RouteGuard>
-		),
-	},
-	{
-		path: 'sign-up',
-		element: (
-			<RouteGuard redirectUrl='/1' canActivate={user => user !== null}>
-				<SignUpPage />
 			</RouteGuard>
 		),
 	},
