@@ -1,12 +1,13 @@
 import { ApiCredentials } from '@bootcamp-nx/api-interfaces'
-import { hash, verify } from 'argon2'
 import { UserRepo } from '../user'
 import { validateEmail, Webtoken, webtoken } from '../utils'
 import CredentialsRepo from './credentials.repo'
+import { PasswordService } from './password-service'
 
 export default function AuthService() {
 	const userRepo = UserRepo()
 	const credentialRepo = CredentialsRepo()
+	const passwordService = PasswordService()
 
 	return {
 		async SignIn({
@@ -25,7 +26,7 @@ export default function AuthService() {
 				if (typeof userCredential == 'undefined')
 					throw new Error('Credential Not Found')
 
-				await verify(userCredential.password, password)
+				await passwordService.verify(userCredential.password, password)
 
 				return webtoken(user)
 			} catch (error) {
@@ -43,10 +44,9 @@ export default function AuthService() {
 				const { id: user_id } = await userRepo.Save({ username })
 
 				/**  process password and save credentials **/
-				const hashed = await hash(password)
-
+				const hashedPassword = await passwordService.hash(password)
 				const { id: credential_id } = await credentialRepo.Save({
-					password: hashed,
+					password: hashedPassword,
 				})
 
 				await credentialRepo.AddUserFor({ user_id, credential_id })
