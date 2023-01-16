@@ -3,7 +3,7 @@ import { ApiBootcamp } from '@bootcamp-nx/data-access-bootcamp'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { call, fork, put, take } from 'redux-saga/effects'
 import { authSlice } from '../../slices'
-import { signIn, signInFailed } from './auth.actions'
+import { signIn, signInFailed } from './sign-in.actions'
 
 function* signInWorker(credentials: ApiCredentials) {
 	const BootcampApi = ApiBootcamp()

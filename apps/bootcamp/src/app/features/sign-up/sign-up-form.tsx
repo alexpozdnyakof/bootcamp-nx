@@ -7,10 +7,10 @@ import {
 	Stack,
 	TextField,
 } from '@bootcamp-nx/core-ui'
-import useSignUp from './use-sign-up'
+import useSignUpForm from './use-sign-up'
 
 export default function SignUpForm() {
-	const { handleSubmit } = useSignUp()
+	const { handleSubmit } = useSignUpForm()
 	return (
 		<Box as='form' noValidate onSubmit={handleSubmit}>
 			<Stack space='xlarge'>

@@ -1,6 +1,5 @@
 import { FormEvent } from 'react'
-import { useAppDispatch } from '../../store-hooks'
-import { signIn } from './auth.actions'
+import { useAuth } from '../../process/auth'
 
 // type FormState = {
 // 	[controlName: string]: {
@@ -29,7 +28,7 @@ import { signIn } from './auth.actions'
 export type SubmitFn<T> = (state: T) => void
 
 export function useAuthForm() {
-	const dispatch = useAppDispatch()
+	const { signIn } = useAuth()
 
 	return {
 		handleSubmit(event: FormEvent) {
@@ -41,7 +40,7 @@ export function useAuthForm() {
 				password: string
 			}
 
-			dispatch(signIn({ ...formResult }))
+			signIn({ ...formResult })
 		},
 	}
 }
