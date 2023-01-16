@@ -134,7 +134,7 @@ export function BaseField({
 	const ariaInvalid = tone === 'error' ? true : undefined
 
 	return (
-		<Stack space='small' hidden={hidden}>
+		<Stack space='small' hidden={hidden} maxWidth='full'>
 			<Box
 				className={[
 					className,
@@ -150,7 +150,6 @@ export function BaseField({
 						display='flex'
 						justifyContent='spaceBetween'
 						alignItems='flexEnd'
-						paddingBottom='small'
 					>
 						<Text
 							size={variant === 'bordered' ? 'caption' : 'body'}

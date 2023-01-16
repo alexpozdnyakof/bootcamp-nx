@@ -57,7 +57,7 @@ AuthController.post(
 					httpOnly: true,
 					sameSite: 'strict',
 				})
-				.json()
+				.json({ code: 201, message: 'Authorized' })
 		} catch (error) {
 			console.log(error)
 			res.status(400).send({ code: 400, message: 'Bad Request' })
