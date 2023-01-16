@@ -42,9 +42,14 @@ export interface ApiTaskList {
 export interface ApiUser {
 	id: number
 	username: string
+	first_name: string
+	last_name: string
+	birthdate: string
 }
 
 export interface ApiCredentials {
 	username: string
 	password: string
 }
+
+export type ApiSignUp = Omit<ApiUser, 'id'> & Omit<ApiCredentials, 'username'>

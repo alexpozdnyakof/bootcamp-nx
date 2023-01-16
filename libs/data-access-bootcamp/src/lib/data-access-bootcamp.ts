@@ -7,7 +7,6 @@ import {
 	ApiUser,
 } from '@bootcamp-nx/api-interfaces'
 
-
 export function ApiBootcamp() {
 	const httpClient = HttpClient({ urlPrefix: '/api' })
 
@@ -60,7 +59,6 @@ export function ApiBootcamp() {
 		},
 	}
 }
-
 
 type HttpClientOptions = {
 	urlPrefix: string

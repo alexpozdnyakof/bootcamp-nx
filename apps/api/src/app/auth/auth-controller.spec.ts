@@ -10,6 +10,9 @@ describe('Auth Controller', () => {
 	const USER_DTO = {
 		username: 'test4@gmail.com',
 		password: 'password1',
+		first_name: 'alex',
+		last_name: 'pozdnyakof',
+		birthdate: new Date().toISOString(),
 	}
 
 	const CREDENTIALS = {

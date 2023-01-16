@@ -29,7 +29,7 @@ paths:
             produces:
                 - application/json
             parameters:
-                - $ref: '#/components/parameters/credentials'
+                - $ref: '#/components/parameters/signup'
             responses:
                 201:
                     $ref: '#/components/responses/OK'
@@ -68,6 +68,24 @@ components:
                     type: number
                     enum: [200, 201]
     parameters:
+        signup:
+            name: signup
+            description: create new user and sign in
+            in: body
+            require: true
+            schema:
+                type: object
+                properties:
+                    username:
+                        type: string
+                    first_name:
+                        type: string
+                    user_name:
+                        type: string
+                    birthdate:
+                        type: string
+                    password:
+                        type: string
         credentials:
             name: credentials
             description: auth credentials

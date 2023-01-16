@@ -1,4 +1,4 @@
-import { ApiCredentials } from '@bootcamp-nx/api-interfaces'
+import { ApiCredentials, ApiSignUp } from '@bootcamp-nx/api-interfaces'
 import { UserRepo } from '../user'
 import { validateEmail, Webtoken, webtoken } from '../utils'
 import CredentialsRepo from './credentials.repo'
@@ -31,15 +31,14 @@ export default function AuthService() {
 				throw new Error('')
 			}
 		},
-		async SignUp({ username, password }: ApiCredentials): Promise<void> {
+		async SignUp({ password, ...userDTO }: ApiSignUp): Promise<void> {
 			try {
 				/**  check is user valid and not exist **/
-				if (!validateEmail(username))
-					throw new Error('Email is invalid')
-				const user = await userRepo.FindByUsername(username)
+				const user = await userRepo.FindByUsername(userDTO.username)
 				if (typeof user !== 'undefined')
 					throw new Error('User with this username already exist')
-				const { id: user_id } = await userRepo.Save({ username })
+
+				const { id: user_id } = await userRepo.Save(userDTO)
 
 				/**  process password and save credentials **/
 				const hashedPassword = await hash(password)

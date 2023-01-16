@@ -11,3 +11,11 @@ export type Credential = {
 }
 
 export type CredentialRow = Row<Credential>
+
+export const ApiSignUpDTO = Record({
+	username: String,
+	first_name: String,
+	last_name: String,
+	birthdate: String,
+	password: String,
+})

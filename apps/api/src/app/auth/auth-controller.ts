@@ -1,14 +1,14 @@
-import { ApiCredentials } from '@bootcamp-nx/api-interfaces'
+import { ApiCredentials, ApiSignUp } from '@bootcamp-nx/api-interfaces'
 import { Router } from 'express'
 import { ResponseWithMessage } from '../response-types'
 import { TypedRequest } from '../typed-request'
 import { TypedResponse } from '../typed-response'
+import { validateEmail } from '../utils'
 import AuthService from './auth-service'
-import { ApiCredentialsDTO } from './credentials'
+import { ApiCredentialsDTO, ApiSignUpDTO } from './credentials'
 
 const AuthController = Router()
 const AuthRouterPrefix = 'auth'
-
 
 const authService = AuthService()
 AuthController.post(
@@ -40,13 +40,16 @@ AuthController.post(
 AuthController.post(
 	'/sign-up',
 	async (
-		req: TypedRequest<{ body: ApiCredentials }>,
+		req: TypedRequest<{ body: ApiSignUp }>,
 		res: TypedResponse<ResponseWithMessage>
 	) => {
 		try {
-			const { username, password } = ApiCredentialsDTO.check(req.body)
+			const signUpDTO = ApiSignUpDTO.check(req.body)
+			const { password, username } = signUpDTO
 
-			await authService.SignUp({ username, password })
+			if (!validateEmail(username)) throw new Error('Email is invalid')
+
+			await authService.SignUp(signUpDTO)
 			const jwtToken = await authService.SignIn({ username, password })
 
 			res.status(201)
