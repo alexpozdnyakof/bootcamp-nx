@@ -7,20 +7,49 @@ import {
 	Inline,
 	Button,
 } from '@bootcamp-nx/core-ui'
-import { useAuthForm } from './use-auth-form'
+import { FormEvent } from 'react'
+import { useAuth } from '../../process/auth'
+import { useForm } from '../../shared'
 
-// 'この項目は必須です' required
-// パスワード min length
+type SignInFormState = {
+	username: string
+	password: string
+}
 
 export default function SignInForm() {
-	const { handleSubmit } = useAuthForm()
+	const { signIn } = useAuth()
+	const { handleSubmit, errors } = useForm({
+		username: null,
+		password: null,
+	})
+	function submitFn(state: SignInFormState) {
+		signIn(state)
+	}
 
 	return (
-		<Box as='form' onSubmit={handleSubmit}>
+		<Box
+			as='form'
+			noValidate
+			onSubmit={(event: FormEvent) => handleSubmit(submitFn)(event)}
+		>
 			<Stack space='xlarge'>
 				<Stack space='medium'>
-					<TextField label='ユーザー名' name='username' />
-					<PasswordField label='パスワード' name='password' />
+					<TextField
+						label='ユーザー名'
+						name='username'
+						required
+						autoFocus
+						type='email'
+						tone={errors.username ? 'error' : 'neutral'}
+						message={errors.username}
+					/>
+					<PasswordField
+						label='パスワード'
+						name='password'
+						required
+						tone={errors.password ? 'error' : 'neutral'}
+						message={errors.password}
+					/>
 				</Stack>
 				<Inline>
 					<Button type='submit'>サインイン</Button>
