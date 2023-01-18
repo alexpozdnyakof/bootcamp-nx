@@ -9,6 +9,7 @@
 		"core-ui": "libs/core-ui",
 		"data-access-bootcamp": "libs/data-access-bootcamp",
 		"tasks-e2e": "apps/tasks-e2e",
-		"tasks-ui": "libs/tasks-ui"
+		"tasks-ui": "libs/tasks-ui",
+		"use-vanilla-form": "libs/use-vanilla-form"
 	}
 }
