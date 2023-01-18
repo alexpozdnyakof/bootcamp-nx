@@ -52,7 +52,7 @@ export default function useVanillaForm<T extends FormResult>() {
 				if (!isValid) {
 					setErrors(getFormErrors<T>(state.current))
 				} else {
-					fn(getFormValue(state.current))
+					fn(getFormValue<T>(state.current))
 				}
 			}
 		},

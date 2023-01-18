@@ -1,8 +1,8 @@
 import { ApiCredentials, ApiSignUp } from '@bootcamp-nx/api-interfaces'
+import { hash, verify } from 'argon2'
 import { UserRepo } from '../user'
-import { validateEmail, Webtoken, webtoken } from '../utils'
+import { Webtoken, webtoken } from '../utils'
 import CredentialsRepo from './credentials.repo'
-import { verify, hash } from 'argon2'
 export default function AuthService() {
 	const userRepo = UserRepo()
 	const credentialRepo = CredentialsRepo()
@@ -24,11 +24,13 @@ export default function AuthService() {
 				if (typeof userCredential == 'undefined')
 					throw new Error('Credential Not Found')
 
-				await verify(userCredential.password, password)
-
-				return webtoken(user)
+				if (await verify(userCredential.password, password)) {
+					return webtoken(user)
+				} else {
+					throw new Error(`Password didn't match`)
+				}
 			} catch (error) {
-				throw new Error('')
+				throw new Error(error.message)
 			}
 		},
 		async SignUp({ password, ...userDTO }: ApiSignUp): Promise<void> {

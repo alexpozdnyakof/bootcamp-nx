@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import React from 'react'
 import { FormEvent } from 'react'
 import useVanillaForm, { SubmitFn } from './use-vanilla-form'
 

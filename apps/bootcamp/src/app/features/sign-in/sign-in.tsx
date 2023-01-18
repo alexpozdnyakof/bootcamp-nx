@@ -7,9 +7,9 @@ import {
 	Inline,
 	Button,
 } from '@bootcamp-nx/core-ui'
+import { useVanillaForm } from '@bootcamp-nx/use-vanilla-form'
 import { FormEvent } from 'react'
 import { useAuth } from '../../process/auth'
-import { useForm } from '../../shared'
 
 type SignInFormState = {
 	username: string
@@ -18,10 +18,9 @@ type SignInFormState = {
 
 export default function SignInForm() {
 	const { signIn } = useAuth()
-	const { handleSubmit, errors } = useForm({
-		username: null,
-		password: null,
-	})
+	const { handleSubmit, errors, formControl } =
+		useVanillaForm<SignInFormState>()
+
 	function submitFn(state: SignInFormState) {
 		signIn(state)
 	}
@@ -36,16 +35,18 @@ export default function SignInForm() {
 				<Stack space='medium'>
 					<TextField
 						label='ユーザー名'
-						name='username'
-						required
 						autoFocus
 						type='email'
+						{...formControl('username', { required: true })}
 						tone={errors.username ? 'error' : 'neutral'}
 						message={errors.username}
 					/>
 					<PasswordField
 						label='パスワード'
-						name='password'
+						{...formControl('password', {
+							required: true,
+							minLength: 8,
+						})}
 						required
 						tone={errors.password ? 'error' : 'neutral'}
 						message={errors.password}

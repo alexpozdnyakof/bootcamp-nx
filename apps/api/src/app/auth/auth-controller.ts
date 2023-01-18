@@ -32,6 +32,7 @@ AuthController.post(
 					message: 'Authorized',
 				})
 		} catch (error) {
+			console.log(error)
 			res.status(401).send({ code: 401, message: error?.message })
 		}
 	}
