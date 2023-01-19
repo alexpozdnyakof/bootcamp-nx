@@ -108,4 +108,12 @@ describe('dataAccessBootcamp', () => {
 			expect.any(Object)
 		)
 	})
+
+	it('should  fetch logout', async () => {
+		await bootcampApi.Logout()
+		expect(global.fetch).toHaveBeenCalledWith(
+			'/api/auth/logout',
+			expect.any(Object)
+		)
+	})
 })

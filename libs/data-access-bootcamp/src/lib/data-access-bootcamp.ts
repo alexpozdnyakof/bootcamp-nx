@@ -59,6 +59,9 @@ export function ApiBootcamp() {
 		async CurrentUser(): Promise<ApiUser> {
 			return httpClient.get(`/auth/user`)
 		},
+		async Logout(): Promise<void> {
+			return httpClient.get(`/auth/logout`)
+		},
 	}
 }
 

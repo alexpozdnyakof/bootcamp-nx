@@ -3,9 +3,9 @@ import { ApiBootcamp } from '@bootcamp-nx/data-access-bootcamp'
 import { Suspense, useEffect } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import styles from './app.module.less'
+import { SignUpPage } from './pages'
 import { projectLoader, ProjectPage } from './pages/project'
 import { SignInPage } from './pages/sign-in'
-import { SignUpPage } from './pages'
 import RouteGuard from './route-guard'
 import { authSlice, projectSlice } from './slices'
 import { useAppDispatch } from './store-hooks'
@@ -50,7 +50,6 @@ export default function App() {
 		const getUser = async () => {
 			try {
 				const user = await api.CurrentUser()
-
 				dispatch(authSlice.actions.setUser(user))
 			} catch (error) {
 				console.log(error)

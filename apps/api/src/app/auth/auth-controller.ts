@@ -3,7 +3,7 @@ import { Router } from 'express'
 import { ResponseWithMessage } from '../response-types'
 import { TypedRequest } from '../typed-request'
 import { TypedResponse } from '../typed-response'
-import { validateEmail } from '../utils'
+import { ErrorWithMessage, validateEmail } from '../utils'
 import AuthService from './auth-service'
 import { ApiCredentialsDTO, ApiSignUpDTO } from './credentials'
 
@@ -67,7 +67,22 @@ AuthController.post(
 )
 
 AuthController.get('/logout', (req, res) => {
-	res.clearCookie('refreshToken').end()
+	try {
+		if (req.user) {
+			res.status(200).clearCookie('refreshToken').send({
+				code: 200,
+				message: 'Succesfull',
+			})
+		} else {
+			throw Error('Not Authorized')
+		}
+	} catch (error) {
+		const [message, status] = ErrorWithMessage(error)
+			? [error.message, 400]
+			: ['Server Error', 500]
+
+		res.status(status).send(message)
+	}
 })
 
 AuthController.get('/user', (req, res) => {

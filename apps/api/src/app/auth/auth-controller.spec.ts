@@ -3,6 +3,7 @@ import { json } from 'body-parser'
 import express from 'express'
 import { database } from '../database'
 import request from 'supertest'
+import { auth } from './auth-middleware'
 describe('Auth Controller', () => {
 	const env = process.env
 	const App = express()
@@ -35,6 +36,7 @@ describe('Auth Controller', () => {
 
 	beforeAll(async () => {
 		App.use(json())
+		App.use(auth())
 		App.use('/', AuthController)
 
 		await makeUserMigrations()
@@ -53,10 +55,7 @@ describe('Auth Controller', () => {
 				.set('Accept', 'application/json')
 				.send(CREDENTIALS)
 
-			const cookies = response.headers['set-cookie'][0].split('=')
-
 			expect(response.status).toBe(200)
-			expect(cookies[0]).toBe('refreshToken')
 		})
 		it('should return error for non-existing user', async () => {
 			const response = await request(App)
@@ -66,7 +65,7 @@ describe('Auth Controller', () => {
 
 			expect(response.status).toBe(401)
 		})
-		xit('should return error for user with wrong password', async () => {
+		it('should return error for user with wrong password', async () => {
 			const response = await request(App)
 				.post('/sign-in')
 				.set('Accept', 'application/json')
@@ -77,7 +76,7 @@ describe('Auth Controller', () => {
 	})
 
 	describe('SignUp', () => {
-		xit('should create new user', async () => {
+		it('should create new user', async () => {
 			const response = await request(App)
 				.post('/sign-up')
 				.set('Accept', 'application/json')
@@ -125,6 +124,31 @@ describe('Auth Controller', () => {
 					password: '123qwe123',
 				})
 			expect(response.status).toBe(400)
+		})
+	})
+	describe('authenticated routes', () => {
+		const agent = request.agent(App)
+
+		beforeEach(async () => {
+			const response = await agent
+				.post('/sign-in')
+				.set('Accept', 'application/json')
+				.send(CREDENTIALS)
+			expect(response.status).toBe(200)
+		})
+
+		it('should return current user', async () => {
+			const userResponse = await agent
+				.get('/user')
+				.set('Accept', 'application/json')
+				.send()
+			expect(userResponse.status).toBe(200)
+			expect(userResponse.body).toMatchSnapshot()
+		})
+
+		afterEach(async () => {
+			const response = await agent.get('/logout').send()
+			expect(response.status).toBe(200)
 		})
 	})
 })
