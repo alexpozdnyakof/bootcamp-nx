@@ -1,4 +1,4 @@
-import { Box, Heading, Stack } from '@bootcamp-nx/core-ui'
+import { Box } from '@bootcamp-nx/core-ui'
 import { SignInForm } from '../../features/sign-in'
 
 export default function SignInPage() {
@@ -12,10 +12,7 @@ export default function SignInPage() {
 			justifyContent='center'
 		>
 			<Box width='small' alignItems='center'>
-				<Stack space='xxlarge'>
-					<Heading level='1'>ブートキャンプにサインインする</Heading>
-					<SignInForm />
-				</Stack>
+				<SignInForm />
 			</Box>
 		</Box>
 	)
