@@ -1,11 +1,23 @@
 import { ApiCredentials, ApiSignUp } from '@bootcamp-nx/api-interfaces'
-import { Router } from 'express'
+import { CookieOptions, Router, Response } from 'express'
 import { ResponseWithMessage } from '../response-types'
 import { TypedRequest } from '../typed-request'
 import { TypedResponse } from '../typed-response'
 import { ErrorWithMessage, validateEmail } from '../utils'
 import AuthService from './auth-service'
 import { ApiCredentialsDTO, ApiSignUpDTO } from './credentials'
+
+function tokenCookie(token: string) {
+	return [
+		'refreshToken',
+		token,
+		{
+			httpOnly: true,
+			sameSite: 'strict',
+			maxAge: 2 * 60 * 60 * 1000,
+		} satisfies CookieOptions,
+	] as const
+}
 
 const AuthController = Router()
 const AuthRouterPrefix = 'auth'
@@ -23,10 +35,7 @@ AuthController.post(
 
 			return res
 				.status(200)
-				.cookie('refreshToken', jwtToken, {
-					httpOnly: true,
-					sameSite: 'strict',
-				})
+				.cookie(...tokenCookie(jwtToken))
 				.json({
 					code: 200,
 					message: 'Authorized',
@@ -54,10 +63,7 @@ AuthController.post(
 			const jwtToken = await authService.SignIn({ username, password })
 
 			res.status(201)
-				.cookie('refreshToken', jwtToken, {
-					httpOnly: true,
-					sameSite: 'strict',
-				})
+				.cookie(...tokenCookie(jwtToken))
 				.json({ code: 201, message: 'Authorized' })
 		} catch (error) {
 			console.log(error)
