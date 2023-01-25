@@ -1,5 +1,6 @@
 import { Inline, List, ListItem, Stack } from '@bootcamp-nx/core-ui'
-import { TaskFormExpandView, TaskListHeader } from '@bootcamp-nx/tasks-ui'
+import { TaskListHeader } from '@bootcamp-nx/tasks-ui'
+import { AddTaskFeature } from '../../features/add-task'
 import { DeleteTask } from '../../features/delete-task'
 import { EditableTaskTitle } from '../../features/editable-task-title'
 import { ToggleTask } from '../../features/toggle-task'
@@ -17,9 +18,7 @@ export function ProjectTasks() {
 						<TaskListHeader completed='0/5'>
 							{section?.title || ''}
 						</TaskListHeader>
-						<TaskFormExpandView
-							onSubmit={(title: string) => title}
-						/>
+						<AddTaskFeature projectId={Number(section.id)} />
 					</Stack>
 					<List>
 						{section.tasks.map(task => (

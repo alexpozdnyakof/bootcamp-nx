@@ -21,11 +21,12 @@ function* addTaskWorker({
 }) {
 	const BootcampApi = ApiBootcamp()
 	try {
-		const response: { id: number } = yield call(
+		const response: { data: { id: number } } = yield call(
 			BootcampApi.SaveTask,
 			createTaskDTO({ title })
 		)
-		const taskId = response.id
+		const taskId = response.data.id
+		console.log({ taskId, projectId })
 		yield call(BootcampApi.LinkTaskToTasklist, {
 			listId: projectId,
 			taskId,

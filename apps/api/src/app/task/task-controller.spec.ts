@@ -50,12 +50,12 @@ describe('TaskController', () => {
 
 	it('should delete task', async () => {
 		const response = await request(App).delete('/1')
-		expect(response.status).toBe(204)
+		expect(response.status).toBe(200)
 	})
 
 	it('should update task', async () => {
 		const response = await request(App).put('/2').send(TASK_DTO)
-		expect(response.status).toBe(204)
+		expect(response.status).toBe(200)
 
 		const { title, done } = (await request(App).get('/2')).body
 		expect({ title, done }).toEqual(TASK_DTO)

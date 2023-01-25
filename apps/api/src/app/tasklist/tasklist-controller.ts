@@ -4,6 +4,7 @@ import {
 	ApiTaskListDTO,
 } from '@bootcamp-nx/api-interfaces'
 import { Router } from 'express'
+import { ResponseWithMessage } from '../response-types'
 import { CreateTask } from '../task/task'
 import { TypedRequest } from '../typed-request'
 import { TypedResponse } from '../typed-response'
@@ -51,7 +52,7 @@ TasklistRouter.post(
 	'/:id/task',
 	async (
 		request: TypedRequest<{ params: { id: string }; body: { id: number } }>,
-		response: TypedResponse<void>
+		response: TypedResponse<ResponseWithMessage>
 	) => {
 		try {
 			const ListId = Number(request.params.id)
@@ -60,8 +61,12 @@ TasklistRouter.post(
 			await TaskListModel.IsTaskInList(ListId, TaskId)
 			await TaskListModel.AddTask(ListId, TaskId)
 
-			response.sendStatus(201)
+			response.status(201).json({
+				code: 201,
+				message: 'Ok',
+			})
 		} catch (error) {
+			console.log(error)
 			response.status(400).send({ code: 400, message: error.message })
 		}
 	}

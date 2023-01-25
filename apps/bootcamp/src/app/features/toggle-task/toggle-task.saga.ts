@@ -3,8 +3,7 @@ import { ApiBootcamp } from '@bootcamp-nx/data-access-bootcamp'
 import { createSelector, PayloadAction } from '@reduxjs/toolkit'
 import { call, fork, put, select, take } from 'redux-saga/effects'
 import { updateOneTask } from '../../slices/task.slice'
-import { deleteTaskFailed } from '../delete-task/delete-task.actions'
-import { toggleTask } from './toggle-task.actions'
+import { toggleTask, toggleTaskFailed } from './toggle-task.actions'
 
 const selectTask = createSelector(
 	[
@@ -29,7 +28,7 @@ function* toggleTaskWorker(taskId: number) {
 
 		yield put(updateOneTask(updatedTask))
 	} catch (error) {
-		yield put(deleteTaskFailed({ error: 'Failed to delete task' }))
+		yield put(toggleTaskFailed({ error: 'Failed to delete task' }))
 	}
 }
 

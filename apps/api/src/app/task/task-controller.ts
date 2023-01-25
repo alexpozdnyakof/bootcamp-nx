@@ -1,6 +1,6 @@
 import { ApiTask, ApiTaskDTO } from '@bootcamp-nx/api-interfaces'
 import { Router } from 'express'
-import { ResponseWithData } from '../response-types'
+import { ResponseWithData, ResponseWithMessage } from '../response-types'
 import { TypedRequest } from '../typed-request'
 import { TypedResponse } from '../typed-response'
 import { CreateTask, TaskValue } from './task'
@@ -62,7 +62,10 @@ TaskRouter.delete(
 		try {
 			await TaskModel.Delete(id)
 
-			res.status(204).json()
+			res.status(200).json({
+				code: 200,
+				message: 'Deleted',
+			})
 		} catch (error) {
 			console.log(`Error: ${error.message}`)
 
@@ -78,7 +81,7 @@ TaskRouter.put(
 			params: { id: string }
 			body: ApiTaskDTO
 		}>,
-		res: TypedResponse<void>
+		res: TypedResponse<ResponseWithMessage>
 	) => {
 		const id = Number(req.params.id)
 
@@ -86,10 +89,11 @@ TaskRouter.put(
 			const dto = TaskValue.check(req.body)
 			await TaskModel.Update(id, dto)
 
-			res.status(204).json()
+			res.status(200).send({
+				code: 200,
+				message: 'Updated',
+			})
 		} catch (error) {
-			console.log(`Error: ${error.message}`)
-
 			res.status(400).send({ code: 400, message: error.message })
 		}
 	}

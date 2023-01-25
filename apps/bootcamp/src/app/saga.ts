@@ -1,5 +1,5 @@
 import { all, fork } from 'redux-saga/effects'
-import addTaskWatcher from './features/add-task/add-task.saga'
+import { addTaskSaga } from './features/add-task'
 import { deleteTaskSaga } from './features/delete-task'
 import { changeTaskTitleSaga } from './features/editable-task-title'
 import { logoutSaga } from './features/logout'
@@ -8,7 +8,7 @@ import { authSaga } from './process/auth'
 
 export default function* root() {
 	yield all([
-		fork(addTaskWatcher),
+		fork(addTaskSaga),
 		fork(deleteTaskSaga),
 		fork(toggleTaskSaga),
 		fork(changeTaskTitleSaga),

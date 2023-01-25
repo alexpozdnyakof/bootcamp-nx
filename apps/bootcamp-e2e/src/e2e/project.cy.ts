@@ -1,29 +1,30 @@
 describe('project', () => {
-	before(() => {
-		cy.login('test@test.com', 'password4')
-	})
+	// before(() => {
+	// })
 	beforeEach(() => {
+		cy.task('db:seed')
+		cy.login('test@test.com', 'password4')
 		cy.visit('/1')
 	})
 
 	it('should contain info about project', () => {
 		cy.contains('ホームページのリニューアル')
-		// cy.contains('新しいフレッシュホームページの制作過程はこちら')
-		// cy.contains('2022-11-29 15:31:37')
+		cy.contains('新しいフレッシュホームページの制作過程はこちら')
+		cy.contains('2022-11-29 15:31:37')
 	})
 
-	xit('should contain all related tasklists', () => {
+	it('should contain all related tasklists', () => {
 		cy.contains('すべてのフロントエンド タスク')
 		cy.contains('すべてのバックエンド タスク')
 	})
 
-	xit('should contain all related tasks', () => {
+	it('should contain all related tasks', () => {
 		cy.contains('血液レポートのグラフが空白になっている')
 		cy.contains('無効にする|| ユーザーがアカウントを無効にできない')
 		cy.contains('プロフィール、プロフィールの編集、ポップアップ')
 	})
 
-	xit('should create new task', () => {
+	it('should create new task', () => {
 		cy.get('button:contains("タスクを作成")').first().click()
 
 		cy.get('input[aria-label="Create new task"]')
@@ -39,7 +40,7 @@ describe('project', () => {
 		cy.contains('プロジェクト ページの機能を作成する')
 	})
 
-	xit('should complete task', () => {
+	it('should complete task', () => {
 		cy.get(
 			'[aria-label="Complete 血液レポートのグラフが空白になっている"]'
 		).as('taskSwitchComplete')
@@ -61,9 +62,9 @@ describe('project', () => {
 			'true'
 		)
 	})
-	xit('should uncomplete task', () => {
+	it('should uncomplete task', () => {
 		cy.get(
-			'[aria-label="Complete 血液レポートのグラフが空白になっている"]'
+			'[aria-label="Complete 無効にする|| ユーザーがアカウントを無効にできない"]'
 		).as('taskSwitchComplete')
 
 		cy.get('@taskSwitchComplete').should(
@@ -84,18 +85,20 @@ describe('project', () => {
 		)
 	})
 
-	xit('should delete task', () => {
-		cy.contains('プロジェクト ページの機能を作成する')
+	it('should delete task', () => {
+		cy.contains('血液レポートのグラフが空白になっている')
 		cy.intercept('/api/task/*').as('deleteTaskRequest')
 		cy.get(
-			'[aria-label="Delete プロジェクト ページの機能を作成する"]'
+			'[aria-label="Delete 血液レポートのグラフが空白になっている"]'
 		).click()
 
 		cy.wait('@deleteTaskRequest')
-		cy.get('プロジェクト ページの機能を作成する').should('not.exist')
+		cy.contains('血液レポートのグラフが空白になっている').should(
+			'not.exist'
+		)
 	})
 
-	xit('should change task title', () => {
+	it('should change task title', () => {
 		cy.contains('プロフィール、プロフィールの編集、ポップアップ')
 		cy.intercept('/api/task/*').as('editTaskRequest')
 
