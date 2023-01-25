@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import {
 	Box,
-	Stack,
-	TextField,
-	PasswordField,
-	Inline,
 	Button,
 	Heading,
+	Inline,
+	PasswordField,
+	Stack,
+	TextField,
 } from '@bootcamp-nx/core-ui'
 import { useVanillaForm } from '@bootcamp-nx/use-vanilla-form'
 import { FormEvent } from 'react'
@@ -43,6 +43,7 @@ export default function SignInForm() {
 							{...formControl('username', { required: true })}
 							tone={errors.username ? 'error' : 'neutral'}
 							message={errors.username}
+							hint='ブートキャンプにサインインする'
 						/>
 						<PasswordField
 							label='パスワード'

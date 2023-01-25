@@ -67,6 +67,7 @@ const PasswordField = forwardRef<HTMLInputElement, PasswordFieldProps>(
 			maxWidth,
 			hidden,
 			'aria-describedby': ariaDescribedBy,
+			name,
 			...props
 		},
 		ref
@@ -90,6 +91,7 @@ const PasswordField = forwardRef<HTMLInputElement, PasswordFieldProps>(
 				maxWidth={maxWidth}
 				hidden={hidden}
 				aria-describedby={ariaDescribedBy}
+				name={name}
 			>
 				{extraProps => (
 					<Box
@@ -107,6 +109,7 @@ const PasswordField = forwardRef<HTMLInputElement, PasswordFieldProps>(
 						<input
 							{...props}
 							{...extraProps}
+							name={name}
 							ref={ref}
 							type={isPasswordVisible ? 'text' : 'password'}
 						/>

@@ -88,8 +88,11 @@ export default function SignUpForm() {
 							id='agreement'
 							label='ルールに同意する'
 							{...formControl('agreement', { required: true })}
+							aria-describedby='agreement-error'
 						/>
-						<Text tone='danger'>{errors.agreement}</Text>
+						<Text tone='danger' id='agreement-error'>
+							{errors.agreement}
+						</Text>
 					</Stack>
 				</Stack>
 				<Inline>

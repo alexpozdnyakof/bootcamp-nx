@@ -28,6 +28,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 			message,
 			tone,
 			variant = 'default',
+			name,
 			...props
 		},
 		ref
@@ -44,6 +45,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 				variant={variant}
 				tone={tone}
 				message={message}
+				name={name}
 			>
 				{extra => (
 					<Box
@@ -56,6 +58,7 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 						<input
 							{...props}
 							{...extra}
+							name={name}
 							type={type}
 							ref={ref}
 						></input>

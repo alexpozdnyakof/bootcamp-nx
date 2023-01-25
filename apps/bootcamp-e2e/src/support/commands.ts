@@ -10,16 +10,60 @@
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace Cypress {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  interface Chainable<Subject> {
-    login(email: string, password: string): void;
-  }
+	interface Chainable {
+		login(username: string, password: string): void
+	}
 }
 //
 // -- This is a parent command --
-Cypress.Commands.add('login', (email, password) => {
-  console.log('Custom command example: Login', email, password);
-});
+Cypress.Commands.add('login', (username: string, password: string) => {
+	cy.session(
+		[username, password],
+		() => {
+			cy.visit('/sign-in')
+			const log = Cypress.log({
+				name: 'login',
+				displayName: 'LOGIN',
+				message: [`🔐 Authenticating | ${username}`],
+				autoEnd: false,
+			})
+			cy.intercept('POST', '/api/auth/sign-in').as('signIn')
+
+			// log.snapshot('before')
+			cy.get(`input[name="username"]`).type(username)
+			cy.get(`input[name="password"]`).type(password)
+
+			cy.get('button').contains('サインイン').click({ force: true })
+			// cy.wait('@signIn').then((user: any) => {
+			//   console.log({user})
+			// 	log.set({
+			// 		consoleProps() {
+			// 			return {
+			// 				username,
+			// 				password,
+			// 				userId:
+			// 					user.response.statusCode !== 401 &&
+			// 					user.response.body.id,
+			// 			}
+			// 		},
+			// 	})
+			// log.snapshot('after')
+			// log.end()
+			// })
+
+			cy.wait('@signIn')
+			cy.url().should('contain', '/1')
+		},
+		{
+			// validate() {
+			// 	cy.request('/api/auth/user').its('status').should('eq', 200)
+			// },
+		}
+	)
+})
+
+// Cypress.Commands.add("loginStub", (username: string, password: string) => {})
+
 //
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })

@@ -42,6 +42,7 @@
 		"@babel/core": "7.12.13",
 		"@babel/preset-typescript": "7.12.13",
 		"@commitlint/cli": "^17.1.2",
+		"@ngneat/falso": "^6.4.0",
 		"@nrwl/cli": "15.0.0",
 		"@nrwl/cypress": "15.0.0",
 		"@nrwl/eslint-plugin-nx": "15.0.0",

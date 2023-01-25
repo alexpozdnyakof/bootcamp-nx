@@ -20,6 +20,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 			tone,
 			maxWidth,
 			hidden,
+			name,
 			'aria-describedby': ariaDescribedBy,
 			...props
 		},
@@ -43,10 +44,11 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 					variant === 'bordered' ? styles['bordered'] : null,
 				]}
 				maxWidth={maxWidth}
+				name={name}
 			>
 				{extra => (
 					<Box width='full' display='flex'>
-						<textarea {...props} {...extra} ref={ref} />
+						<textarea {...props} {...extra} name={name} ref={ref} />
 					</Box>
 				)}
 			</BaseField>

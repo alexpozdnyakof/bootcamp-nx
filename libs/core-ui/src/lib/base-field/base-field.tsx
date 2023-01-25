@@ -101,7 +101,7 @@ export type BaseFieldProps = {
 	}) => ReactNode
 } & Pick<
 	HtmlInputFieldProps<HTMLInputElement>,
-	'id' | 'hidden' | 'aria-describedby'
+	'id' | 'hidden' | 'aria-describedby' | 'name'
 >
 
 export type FieldComponentProps<T extends HTMLElement> = Omit<
@@ -124,10 +124,13 @@ export function BaseField({
 	variant = 'default',
 	'aria-describedby': originalAriaDescribedBy,
 	id: originalId,
+	name,
 }: BaseFieldProps) {
 	const id = useUniqueId(originalId)
-	const hintId = useUniqueId()
-	const messageId = useUniqueId()
+	const hintId = (name || id).concat('_hint')
+	const messageId = (name || id).concat('_message')
+	// const hintId = useUniqueId()
+	// const messageId = useUniqueId()
 	const ariaDescribedBy =
 		originalAriaDescribedBy ??
 		[message ? messageId : null, hintId].filter(Boolean).join(' ')

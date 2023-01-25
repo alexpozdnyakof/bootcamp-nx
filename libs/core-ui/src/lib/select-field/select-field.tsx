@@ -19,6 +19,7 @@ const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
 			children,
 			hidden,
 			'aria-describedby': ariaDescribedBy,
+			name,
 			...props
 		},
 		ref
@@ -35,6 +36,7 @@ const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
 				maxWidth={maxWidth}
 				hidden={hidden}
 				aria-describedby={ariaDescribedBy}
+				name={name}
 			>
 				{extraProps => (
 					<Box
@@ -43,7 +45,12 @@ const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
 							tone === 'error' ? styles['error'] : null,
 						]}
 					>
-						<select {...props} {...extraProps} ref={ref}>
+						<select
+							name={name}
+							{...props}
+							{...extraProps}
+							ref={ref}
+						>
 							{children}
 						</select>
 						<SelectChevron aria-hidden />

@@ -1,5 +1,5 @@
 import { ApiCredentials, ApiSignUp } from '@bootcamp-nx/api-interfaces'
-import { CookieOptions, Router, Response } from 'express'
+import { CookieOptions, Router } from 'express'
 import { ResponseWithMessage } from '../response-types'
 import { TypedRequest } from '../typed-request'
 import { TypedResponse } from '../typed-response'
