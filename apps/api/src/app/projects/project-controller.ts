@@ -1,7 +1,9 @@
 import { ApiProject, ApiTask, ApiTaskList } from '@bootcamp-nx/api-interfaces'
 import { Response, Router } from 'express'
+import { ResponseWithData } from '../response-types'
 import { CreateTask } from '../task/task'
 import { CreateTaskList } from '../tasklist'
+import { TypedResponse } from '../typed-response'
 import { CreateApiProject } from './api-project'
 import { ProjectValue } from './project'
 import ProjectModel from './project-repo'
@@ -9,17 +11,38 @@ import ProjectModel from './project-repo'
 const ProjectRouter = Router()
 const ProjectRouterPrefix = 'project'
 
-ProjectRouter.get('/', async (_, res) => {
-	try {
-		const result = await ProjectModel.GetAll()
-		res.status(200).send(result)
-	} catch (error) {
-		res.sendStatus(404)
+ProjectRouter.get(
+	'/',
+	async (req, res: TypedResponse<ResponseWithData<Array<ApiProject>>>) => {
+		try {
+			const { id } = req.user
+			const result = await ProjectModel.GetAll(id)
+			res.status(200).send({ code: 200, data: result })
+		} catch (error) {
+			res.sendStatus(404)
+		}
 	}
-})
+)
 
 ProjectRouter.get(
 	'/:id',
+	async (req, res: Response<ApiProject | { message: string }>) => {
+		const id = Number(req.params.id)
+		try {
+			const projectRow = await ProjectModel.GetOne(id)
+			if (projectRow === undefined) throw new Error('Not Found')
+
+			const ApiProject = CreateApiProject(projectRow)
+
+			res.status(200).send(ApiProject)
+		} catch (error) {
+			res.status(404).send({ message: error.message })
+		}
+	}
+)
+
+ProjectRouter.get(
+	'/:id/sections',
 	async (req, res: Response<ApiProject | { message: string }>) => {
 		const id = Number(req.params.id)
 		try {

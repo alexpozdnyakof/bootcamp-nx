@@ -12,46 +12,34 @@ export default function AuthService() {
 			username,
 			password,
 		}: ApiCredentials): Promise<Webtoken> {
-			try {
-				/** check is user exist */
-				const user = await userRepo.FindByUsername(username)
-				if (typeof user == 'undefined')
-					throw new Error('User Not Found')
+			const user = await userRepo.FindByUsername(username)
+			if (typeof user == 'undefined') throw new Error('User Not Found')
 
-				const userCredential = await credentialRepo.FindByUserId(
-					user.id
-				)
-				if (typeof userCredential == 'undefined')
-					throw new Error('Credential Not Found')
+			const userCredential = await credentialRepo.FindByUserId(user.id)
+			if (typeof userCredential == 'undefined')
+				throw new Error('Credential Not Found')
 
-				if (await verify(userCredential.password, password)) {
-					return webtoken(user)
-				} else {
-					throw new Error(`Password didn't match`)
-				}
-			} catch (error) {
-				throw new Error(error.message)
+			if (await verify(userCredential.password, password)) {
+				return webtoken(user)
+			} else {
+				throw new Error(`Password didn't match`)
 			}
 		},
 		async SignUp({ password, ...userDTO }: ApiSignUp): Promise<void> {
-			try {
-				/**  check is user valid and not exist **/
-				const user = await userRepo.FindByUsername(userDTO.username)
-				if (typeof user !== 'undefined')
-					throw new Error('User with this username already exist')
+			const user = await userRepo.FindByUsername(userDTO.username)
 
-				const { id: user_id } = await userRepo.Save(userDTO)
+			if (typeof user !== 'undefined')
+				throw new Error('User with this username already exist')
 
-				/**  process password and save credentials **/
-				const hashedPassword = await hash(password)
-				const { id: credential_id } = await credentialRepo.Save({
-					password: hashedPassword,
-				})
+			const { id: user_id } = await userRepo.Save(userDTO)
 
-				await credentialRepo.AddUserFor({ user_id, credential_id })
-			} catch (error) {
-				throw new Error(error?.message)
-			}
+			/**  process password and save credentials **/
+			const hashedPassword = await hash(password)
+			const { id: credential_id } = await credentialRepo.Save({
+				password: hashedPassword,
+			})
+
+			await credentialRepo.AddUserFor({ user_id, credential_id })
 		},
 	}
 }

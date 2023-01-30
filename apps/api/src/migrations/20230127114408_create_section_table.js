@@ -1,16 +1,19 @@
 exports.up = function (knex) {
-	return knex.schema.createTable('project', table => {
+	return knex.schema.createTable('section', table => {
 		table.increments('id').primary()
-		table.integer('owner_id').unsigned().nullable()
 		table.string('title').notNullable()
 		table.string('description').nullable()
 		table.dateTime('created').defaultTo(knex.fn.now())
 		table.dateTime('updated').defaultTo(knex.fn.now())
 
-		table.foreign('owner_id').references('user.id').deferrable('deferred')
+		table.integer('project_id').unsigned().nullable()
+		table
+			.foreign('project_id')
+			.references('project.id')
+			.deferrable('deferred')
 	})
 }
 
 exports.down = function (knex) {
-	return knex.schema.dropTable('project')
+	return knex.schema.dropTable('section')
 }

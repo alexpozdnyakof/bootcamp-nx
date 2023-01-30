@@ -19,6 +19,9 @@ function ProjectModel() {
 	}
 
 	return Object.freeze({
+		async GetSections(id: UniqueId): Promise<any> {
+			return await database
+		},
 		async GetRelatedTasklists(id: UniqueId): Promise<TaskListRow[]> {
 			return await database
 				.select<Array<TaskListRow>>('tasklist.*')
@@ -53,11 +56,12 @@ function ProjectModel() {
 			}
 		},
 
-		async GetAll(): Promise<ProjectRow[]> {
+		async GetAll(id: UniqueId): Promise<ProjectRow[]> {
 			try {
 				const result = await database
 					.select<Array<ProjectRow>>()
 					.from(tableName)
+					.where('owner_id', id)
 				return result
 			} catch (e) {
 				const err = e

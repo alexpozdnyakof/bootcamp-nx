@@ -5,45 +5,49 @@ export default function UserRepo() {
 
 	return {
 		async Save(dto: User): Promise<{ id: number }> {
-			try {
-				const result = await database(tableName)
-					.insert(dto)
-					.returning<[{ id: number }]>('id')
-				const [id] = result
-				return id
-			} catch (error) {
-				throw new Error(error?.message)
-			}
+			const result = await database(tableName)
+				.insert(dto)
+				.returning<[{ id: number }]>('id')
+			const [id] = result
+			return id
 		},
 		async FindById(id: UniqueId): Promise<UserRow> {
-			try {
-				const result = await database
-					.select<UserRow>()
-					.where({ id })
-					.from(tableName)
-					.first()
+			const result = await database
+				.select<UserRow>()
+				.where({ id })
+				.from(tableName)
+				.first()
 
-				if (typeof result === 'undefined') {
-					throw new Error('Not Found')
-				}
-
-				return result
-			} catch (error) {
-				throw new Error(error?.message)
+			if (typeof result === 'undefined') {
+				throw new Error('Not Found')
 			}
+
+			return result
 		},
 		async FindByUsername(username: string): Promise<UserRow | undefined> {
-			try {
-				const result = await database
-					.select<UserRow>()
-					.where({ username })
-					.from(tableName)
-					.first()
+			const result = await database
+				.select<UserRow>()
+				.where({ username })
+				.from(tableName)
+				.first()
 
-				return result
-			} catch (error) {
-				throw new Error(error?.message)
-			}
+			return result
 		},
 	}
+}
+
+const tableName = 'user'
+
+export async function FindUserById(id: UniqueId): Promise<UserRow> {
+	const result = await database
+		.select<UserRow>()
+		.where({ id })
+		.from(tableName)
+		.first()
+
+	if (typeof result === 'undefined') {
+		throw new Error('Not Found')
+	}
+
+	return result
 }

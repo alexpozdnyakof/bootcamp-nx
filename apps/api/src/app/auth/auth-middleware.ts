@@ -1,27 +1,24 @@
 import { Request, Response, NextFunction } from 'express'
 import { jwtSignature, parseCookie } from '../utils'
 
-export const auth = () => (req: Request, _: Response, next: NextFunction) => {
-	if (req.headers.cookie) {
+export const auth = () => (req: Request, res: Response, next: NextFunction) => {
+	try {
 		const refreshToken = getRefreshTokenFromCookie(req)
-		if (refreshToken) {
-			const [head, body, signature] = refreshToken.split('.')
+		const [head, body, signature] = refreshToken.split('.')
+		const genereatedSignature = jwtSignature(
+			head,
+			body,
+			process.env.SECRET_KEY
+		)
 
-			const genereatedSignature = jwtSignature(
-				head,
-				body,
-				process.env.SECRET_KEY
-			)
+		if (signature !== genereatedSignature) throw new Error()
+		req.user = JSON.parse(Buffer.from(body, 'base64').toString('utf8'))
 
-			if (signature === genereatedSignature) {
-				req.user = JSON.parse(
-					Buffer.from(body, 'base64').toString('utf8')
-				)
-			}
-		}
+		next()
+	} catch (error) {
+		console.log(error)
+		res.status(401).json({ code: 401, message: 'Unauthorized' })
 	}
-
-	next()
 }
 
 const getRefreshTokenFromCookie = (req: Request): string => {

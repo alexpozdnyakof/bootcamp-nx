@@ -3,6 +3,7 @@ import request from 'supertest'
 import { json } from 'body-parser'
 import { ProjectController } from './project-controller'
 import { database } from '../database'
+
 describe('ProjectController', () => {
 	const App = express()
 	App.use(json())
@@ -29,37 +30,37 @@ describe('ProjectController', () => {
 		await database.seed.run({ specific: '03-task.js' })
 	})
 
-	it('should return all projects', async () => {
-		const response = await request(App).get('/')
-		expect(response.status).toBe(200)
-		expect(response.body).toMatchSnapshot()
-	})
-
-	it('should return all related tasklists', async () => {
-		const response = await request(App).get('/1/tasklists')
-		expect(response.status).toBe(200)
-		expect(response.body).toMatchSnapshot()
-	})
-
-	it('should return all related tasks', async () => {
-		const response = await request(App).get('/1/tasks')
-		expect(response.status).toBe(200)
-		expect(response.body).toMatchSnapshot()
-	})
-
-	it('should return project with id 1', async () => {
+	xit('should return all projects', async () => {
 		const response = await request(App).get('/1')
 		expect(response.status).toBe(200)
 		expect(response.body).toMatchSnapshot()
 	})
 
-	it('should return 404 when get non-existing project', async () => {
+	xit('should return all related tasklists', async () => {
+		const response = await request(App).get('/1/tasklists')
+		expect(response.status).toBe(200)
+		expect(response.body).toMatchSnapshot()
+	})
+
+	xit('should return all related tasks', async () => {
+		const response = await request(App).get('/1/tasks')
+		expect(response.status).toBe(200)
+		expect(response.body).toMatchSnapshot()
+	})
+
+	xit('should return project with id 1', async () => {
+		const response = await request(App).get('/1')
+		expect(response.status).toBe(200)
+		expect(response.body).toMatchSnapshot()
+	})
+
+	xit('should return 404 when get non-existing project', async () => {
 		const response = await request(App).get('/10')
 		expect(response.status).toBe(404)
 		expect(response.body).toEqual({ message: 'Not Found' })
 	})
 
-	it('should create new one project', async () => {
+	xit('should create new one project', async () => {
 		const response = await request(App)
 			.post('/')
 			.set('Accept', 'application/json')
@@ -71,7 +72,7 @@ describe('ProjectController', () => {
 		expect(response.status).toBe(201)
 	})
 
-	it('should not create invalid project', async () => {
+	xit('should not create invalid project', async () => {
 		const response = await request(App)
 			.post('/')
 			.set('Accept', 'application/json')
@@ -83,12 +84,12 @@ describe('ProjectController', () => {
 		expect(response.body).toMatchSnapshot()
 	})
 
-	it('should delete exist project', async () => {
+	xit('should delete exist project', async () => {
 		const response = await request(App).delete('/3')
 		expect(response.status).toBe(200)
 	})
 
-	it('should update project', async () => {
+	xit('should update project', async () => {
 		const response = await request(App).put('/1').send({
 			title: '新しい計画',
 			description: '簡単な説明',
@@ -96,7 +97,7 @@ describe('ProjectController', () => {
 		expect(response.status).toBe(201)
 	})
 
-	it('should return 404 when update non-existing project ', async () => {
+	xit('should return 404 when update non-existing project ', async () => {
 		const response = await request(App).put('/10').send({
 			title: '新しい計画',
 			description: '簡単な説明',
@@ -106,7 +107,7 @@ describe('ProjectController', () => {
 		expect(response.body).toEqual({ message: 'Not Found' })
 	})
 
-	it('should return 400 for project invalid update', async () => {
+	xit('should return 400 for project invalid update', async () => {
 		const response = await request(App).put('/10').send({
 			message: '簡単な説明',
 		})

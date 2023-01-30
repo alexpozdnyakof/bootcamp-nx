@@ -6,6 +6,7 @@ exports.seed = async function seed(knex) {
 	await knex('task').insert([
 		{
 			id: 1,
+			owner_id: 1,
 			title: '血液レポートのグラフが空白になっている',
 			done: false,
 			created: '2022-11-29 15:31:37',
@@ -13,6 +14,7 @@ exports.seed = async function seed(knex) {
 		},
 		{
 			id: 2,
+			owner_id: 1,
 			title: '無効にする|| ユーザーがアカウントを無効にできない',
 			done: true,
 			created: '2022-11-29 15:31:37',
@@ -20,6 +22,7 @@ exports.seed = async function seed(knex) {
 		},
 		{
 			id: 3,
+			owner_id: 1,
 			title: 'プロフィール、プロフィールの編集、ポップアップ',
 			done: false,
 			created: '2022-11-29 15:31:37',
@@ -27,6 +30,7 @@ exports.seed = async function seed(knex) {
 		},
 		{
 			id: 4,
+			owner_id: 1,
 			title: '|| 私のプロフィール || ユーザーは、サインアップ時に設定された体重と身長を表示できません',
 			done: false,
 			created: '2022-11-29 15:31:37',

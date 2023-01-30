@@ -13,9 +13,9 @@ describe('ProjectRepository', () => {
 			description: '簡単な説明',
 		}
 		try {
-			const pre = await ProjectRepository.GetAll()
+			const pre = await ProjectRepository.GetAll(1)
 			await ProjectRepository.Add(dto)
-			const past = await ProjectRepository.GetAll()
+			const past = await ProjectRepository.GetAll(1)
 
 			expect(past).toHaveLength(pre.length + 1)
 			expect(past[past.length - 1]).toMatchSnapshot({

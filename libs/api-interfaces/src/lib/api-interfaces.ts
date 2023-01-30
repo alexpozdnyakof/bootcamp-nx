@@ -5,9 +5,9 @@ export interface ApiProject {
 	id: number
 	title: string
 	description: string | null
+	owner_id?: number
 	created: string
 	updated: string
-	type: 'project'
 }
 
 export interface ApiTask {

@@ -5,6 +5,7 @@ Object {
   "created": "2022-11-29 15:31:37",
   "done": false,
   "id": 1,
+  "owner_id": 1,
   "title": "血液レポートのグラフが空白になっている",
   "type": "task",
   "updated": "2022-11-29 15:31:37",

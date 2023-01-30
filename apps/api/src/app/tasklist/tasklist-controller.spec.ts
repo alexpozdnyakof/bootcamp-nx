@@ -67,6 +67,7 @@ describe('TaskListController', () => {
 			id: 4,
 			title: '|| 私のプロフィール || ユーザーは、サインアップ時に設定された体重と身長を表示できません',
 			done: false,
+			owner_id: 1,
 			created: '2022-11-29 15:31:37',
 			updated: '2022-11-29 15:31:37',
 		})
@@ -84,6 +85,7 @@ describe('TaskListController', () => {
 			id: 4,
 			title: '|| 私のプロフィール || ユーザーは、サインアップ時に設定された体重と身長を表示できません',
 			done: false,
+			owner_id: 1,
 			type: 'task',
 			created: '2022-11-29 15:31:37',
 			updated: '2022-11-29 15:31:37',

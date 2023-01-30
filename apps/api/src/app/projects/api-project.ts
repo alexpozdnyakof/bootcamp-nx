@@ -4,6 +4,5 @@ import { ProjectRow } from './project'
 export function CreateApiProject(aRow: ProjectRow): ApiProject {
 	return {
 		...aRow,
-		type: 'project',
 	} as const
 }

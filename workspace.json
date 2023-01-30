@@ -3,6 +3,7 @@
 	"version": 2,
 	"projects": {
 		"api": "apps/api",
+		"api-e2e": "apps/api-e2e",
 		"api-interfaces": "libs/api-interfaces",
 		"bootcamp": "apps/bootcamp",
 		"bootcamp-e2e": "apps/bootcamp-e2e",

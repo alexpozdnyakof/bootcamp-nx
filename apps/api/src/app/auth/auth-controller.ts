@@ -6,6 +6,7 @@ import { TypedResponse } from '../typed-response'
 import { ErrorWithMessage, validateEmail } from '../utils'
 import AuthService from './auth-service'
 import { ApiCredentialsDTO, ApiSignUpDTO } from './credentials'
+import { auth } from './auth-middleware'
 
 function tokenCookie(token: string) {
 	return [
@@ -72,7 +73,7 @@ AuthController.post(
 	}
 )
 
-AuthController.get('/logout', (req, res) => {
+AuthController.get('/logout', auth(), (req, res) => {
 	try {
 		if (req.user) {
 			res.status(200).clearCookie('refreshToken').send({
@@ -91,7 +92,7 @@ AuthController.get('/logout', (req, res) => {
 	}
 })
 
-AuthController.get('/user', (req, res) => {
+AuthController.get('/user', auth(), (req, res) => {
 	if (req.user) res.status(200).send(req.user)
 	else res.status(401).send({ error: 'Not Authorized' })
 })
