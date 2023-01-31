@@ -4,9 +4,11 @@ describe('user', () => {
 	})
 
 	it('should return user', () => {
-		cy.request('GET', `${Cypress.env('apiUrl')}/project`).then(response => {
+		cy.request('GET', `${Cypress.env('apiUrl')}/user`).then(response => {
 			expect(response.status).to.eq(200)
-			expect(response.body.data).to.eq(Cypress.env('testUsername'))
+			expect(response.body.data.username).to.eq(
+				Cypress.env('testUsername')
+			)
 		})
 	})
 })

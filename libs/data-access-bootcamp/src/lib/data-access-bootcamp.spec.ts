@@ -4,7 +4,11 @@ import { ApiBootcamp } from './data-access-bootcamp'
 describe('dataAccessBootcamp', () => {
 	const bootcampApi = ApiBootcamp()
 
-	const API_TASK_DTO: ApiTaskDTO = { title: '血液', done: false }
+	const API_TASK_DTO: ApiTaskDTO = {
+		title: '血液',
+		done: false,
+		project_id: 1,
+	}
 
 	beforeAll(() => {
 		global.fetch = jest.fn(() =>
@@ -30,35 +34,10 @@ describe('dataAccessBootcamp', () => {
 			expect.any(Object)
 		)
 	})
-
-	it('should fetch task with id', async () => {
-		await bootcampApi.Task(17)
-		expect(global.fetch).toHaveBeenCalledWith(
-			'/api/task/17',
-			expect.any(Object)
-		)
-	})
-
-	it('should fetch linked to project tasks', async () => {
-		await bootcampApi.ProjectTaskslists(5)
-		expect(global.fetch).toHaveBeenCalledWith(
-			'/api/project/5/tasklists',
-			expect.any(Object)
-		)
-	})
-
 	it('should fetch save task', async () => {
 		await bootcampApi.SaveTask(API_TASK_DTO)
 		expect(global.fetch).toHaveBeenCalledWith(
 			`/api/task`,
-			expect.objectContaining({ method: 'POST' })
-		)
-	})
-
-	it('should fetch task to list linking', async () => {
-		await bootcampApi.LinkTaskToTasklist({ listId: 23, taskId: 17 })
-		expect(global.fetch).toHaveBeenCalledWith(
-			`/api/tasklist/23/task`,
 			expect.objectContaining({ method: 'POST' })
 		)
 	})

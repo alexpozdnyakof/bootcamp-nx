@@ -35,7 +35,18 @@ paths:
                     $ref: '#/components/responses/OK'
                 400:
                     $ref: '#/components/responses/BadRequest'
-
+    /auth/logout:
+        post:
+            description: Logout
+            tags:
+                - Auth
+            produces:
+                - application/json
+            responses:
+                200:
+                    $ref: '#/components/responses/OK'
+                400:
+                    $ref: '#/components/responses/BadRequest'
 components:
     schemas:
         ResponseWithError:
@@ -120,3 +131,5 @@ components:
 tags:
     - name: Auth
       description: Authorization and Authentication
+    - name: Project
+      description: Projects

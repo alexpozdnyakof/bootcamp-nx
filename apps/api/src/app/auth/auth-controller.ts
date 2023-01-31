@@ -1,12 +1,10 @@
 import { ApiCredentials, ApiSignUp } from '@bootcamp-nx/api-interfaces'
 import { CookieOptions, Router } from 'express'
-import { ResponseWithMessage } from '../response-types'
-import { TypedRequest } from '../typed-request'
-import { TypedResponse } from '../typed-response'
+import { Record, String } from 'runtypes'
+import { ResponseWithMessage, TypedRequest, TypedResponse } from '../types'
 import { ErrorWithMessage, validateEmail } from '../utils'
-import AuthService from './auth-service'
-import { ApiCredentialsDTO, ApiSignUpDTO } from './credentials'
 import { auth } from './auth-middleware'
+import AuthService from './auth-service'
 
 function tokenCookie(token: string) {
 	return [
@@ -31,7 +29,11 @@ AuthController.post(
 		res: TypedResponse<ResponseWithMessage>
 	) => {
 		try {
-			const { username, password } = ApiCredentialsDTO.check(req.body)
+			const { username, password } = Record({
+				username: String,
+				password: String,
+			}).check(req.body)
+
 			const jwtToken = await authService.SignIn({ username, password })
 
 			return res
@@ -55,9 +57,15 @@ AuthController.post(
 		res: TypedResponse<ResponseWithMessage>
 	) => {
 		try {
-			const signUpDTO = ApiSignUpDTO.check(req.body)
-			const { password, username } = signUpDTO
+			const signUpDTO = Record({
+				username: String,
+				first_name: String,
+				last_name: String,
+				birthdate: String,
+				password: String,
+			}).check(req.body)
 
+			const { password, username } = signUpDTO
 			if (!validateEmail(username)) throw new Error('Email is invalid')
 
 			await authService.SignUp(signUpDTO)

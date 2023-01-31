@@ -1,23 +1,23 @@
 import { ApiCredentials, ApiSignUp } from '@bootcamp-nx/api-interfaces'
+import { PrismaClient } from '@prisma/client'
 import { hash, verify } from 'argon2'
-import { UserRepo } from '../user'
 import { Webtoken, webtoken } from '../utils'
-import CredentialsRepo from './credentials.repo'
 export default function AuthService() {
-	const userRepo = UserRepo()
-	const credentialRepo = CredentialsRepo()
+	const prisma = new PrismaClient()
 
 	return {
 		async SignIn({
 			username,
 			password,
 		}: ApiCredentials): Promise<Webtoken> {
-			const user = await userRepo.FindByUsername(username)
+			const user = await prisma.user.findUnique({
+				where: { username },
+			})
 			if (typeof user == 'undefined') throw new Error('User Not Found')
 
-			const userCredential = await credentialRepo.FindByUserId(user.id)
-			if (typeof userCredential == 'undefined')
-				throw new Error('Credential Not Found')
+			const userCredential = await prisma.credential.findUnique({
+				where: { user_id: user.id },
+			})
 
 			if (await verify(userCredential.password, password)) {
 				return webtoken(user)
@@ -26,20 +26,25 @@ export default function AuthService() {
 			}
 		},
 		async SignUp({ password, ...userDTO }: ApiSignUp): Promise<void> {
-			const user = await userRepo.FindByUsername(userDTO.username)
-
-			if (typeof user !== 'undefined')
-				throw new Error('User with this username already exist')
-
-			const { id: user_id } = await userRepo.Save(userDTO)
-
-			/**  process password and save credentials **/
-			const hashedPassword = await hash(password)
-			const { id: credential_id } = await credentialRepo.Save({
-				password: hashedPassword,
+			const existUser = await prisma.user.findUnique({
+				where: { username: userDTO.username },
 			})
 
-			await credentialRepo.AddUserFor({ user_id, credential_id })
+			if (existUser !== null)
+				throw new Error('User with this username already exist')
+
+			const hashed = await hash(password)
+
+			await prisma.user.create({
+				data: {
+					...userDTO,
+					credential: {
+						create: {
+							password: hashed,
+						},
+					},
+				},
+			})
 		},
 	}
 }

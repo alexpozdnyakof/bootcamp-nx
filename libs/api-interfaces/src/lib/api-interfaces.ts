@@ -5,24 +5,24 @@ export interface ApiProject {
 	id: number
 	title: string
 	description: string | null
-	owner_id?: number
-	created: string
-	updated: string
+	owner_id: number
+	created: Date
+	updated: Date
 }
 
 export interface ApiTask {
 	id: number
 	title: string
 	done: boolean
-	created: string
-	updated: string
-	tasklist_id?: number
-	type: 'task'
+	created: Date
+	updated: Date
+	project_id: number
 }
 
 export interface ApiTaskDTO {
 	title: string
 	done: boolean
+	project_id: number
 }
 
 export interface ApiTaskListDTO {
@@ -44,7 +44,7 @@ export interface ApiUser {
 	username: string
 	first_name: string
 	last_name: string
-	birthdate: string
+	birthdate: Date | string
 }
 
 export interface ApiCredentials {
@@ -53,3 +53,13 @@ export interface ApiCredentials {
 }
 
 export type ApiSignUp = Omit<ApiUser, 'id'> & Omit<ApiCredentials, 'username'>
+
+export type ResponseWithMessage = {
+	code: number
+	message: string
+}
+
+export type ResponseWithData<T> = {
+	code: number
+	data: T
+}

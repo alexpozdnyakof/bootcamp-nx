@@ -1,65 +1,6 @@
-import { Prisma, PrismaClient, PrismaPromise } from '@prisma/client'
-import { Router } from 'express'
+import { PrismaClient, Prisma } from '@prisma/client'
 
-const TestRouteController = Router()
-const TestRouteControllerPrefix = 'test'
 const prisma = new PrismaClient()
-
-TestRouteController.post('/seed', async (req, res) => {
-	try {
-		const transactions: PrismaPromise<any>[] = []
-		transactions.push(prisma.$executeRaw`PRAGMA foreign_keys = OFF;`)
-
-		// const tablenames = await prisma.$queryRaw<
-		// 	Array<{ tbl_name: string }>
-		// >`SELECT tbl_name FROM sqlite_master;`
-		const tablenames = [
-			{ tbl_name: 'Credential' },
-			{ tbl_name: 'Credential' },
-			{ tbl_name: 'Task' },
-			{ tbl_name: 'Project' },
-			{ tbl_name: 'User' },
-			{ tbl_name: 'User' },
-		]
-		tablenames
-			.map(({ tbl_name }): string => tbl_name)
-			.filter(
-				tbl_name =>
-					tbl_name !== '_prisma_migrations' &&
-					tbl_name !== 'sqlite_sequence'
-			)
-			.forEach(tbl_name => {
-				transactions.push(
-					prisma.$executeRawUnsafe(
-						`DELETE FROM sqlite_sequence WHERE name="${tbl_name}";`
-					)
-				)
-				transactions.push(
-					prisma.$executeRawUnsafe(`DELETE FROM ${tbl_name};`)
-				)
-			})
-
-		transactions.push(prisma.$executeRaw`PRAGMA foreign_keys = ON;`)
-		await prisma.$transaction(transactions)
-
-		console.log(`Start seeding ...`)
-		for (const u of userData) {
-			const user = await prisma.user.create({
-				data: u,
-			})
-
-			console.log(`Created user with id: ${user.id}`)
-		}
-		console.log(`Seeding finished.`)
-		// await database.seed.run()
-		res.sendStatus(200)
-	} catch (e) {
-		console.log(e)
-		res.sendStatus(500)
-	}
-})
-
-export { TestRouteController, TestRouteControllerPrefix }
 
 const userData: Prisma.UserCreateInput[] = [
 	{
@@ -153,3 +94,25 @@ const userData: Prisma.UserCreateInput[] = [
 		},
 	},
 ]
+
+export async function main() {
+	console.log(`Start seeding ...`)
+	for (const u of userData) {
+		const user = await prisma.user.create({
+			data: u,
+		})
+
+		console.log(`Created user with id: ${user.id}`)
+	}
+	console.log(`Seeding finished.`)
+}
+
+main()
+	.then(async () => {
+		await prisma.$disconnect()
+	})
+	.catch(async e => {
+		console.error(e)
+		await prisma.$disconnect()
+		process.exit(1)
+	})
