@@ -5,7 +5,7 @@ import {
 	PayloadAction,
 } from '@reduxjs/toolkit'
 
-const entityAdapter = createEntityAdapter<Required<ApiTask>>({
+const entityAdapter = createEntityAdapter<ApiTask>({
 	selectId: task => task.id,
 })
 const initialState = entityAdapter.getInitialState()

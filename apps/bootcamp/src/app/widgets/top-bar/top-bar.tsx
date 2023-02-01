@@ -1,6 +1,6 @@
 import { Box, Text } from '@bootcamp-nx/core-ui'
 import { ReactNode } from 'react'
-import { Logout } from '../../features/logout'
+import { LogoutButton } from '../../process/auth'
 import { selectUser } from '../../slices/auth.slice'
 import { useAppSelector } from '../../store-hooks'
 import styles from './top-bar.module.less'
@@ -25,7 +25,7 @@ export function TopBar() {
 				見出し
 			</Text>
 			<Box flexGrow={1} />
-			{currentUser && <Logout />}
+			{currentUser && <LogoutButton />}
 		</Box>
 	)
 }

@@ -16,6 +16,16 @@ describe('task', () => {
 		})
 	})
 
+	it('should return one tasks', () => {
+		cy.request({
+			method: 'GET',
+			url: `${Cypress.env('apiUrl')}/task/1`,
+		}).then(response => {
+			expect(response.status).to.eq(200)
+			response.body.data.forEach(task => expect(task.id).to.eq(1))
+		})
+	})
+
 	it('should create new task', () => {
 		const newTask = {
 			title: randFish(),

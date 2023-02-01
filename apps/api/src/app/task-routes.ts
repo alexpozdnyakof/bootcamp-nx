@@ -1,4 +1,4 @@
-import { ApiTaskDTO } from '@bootcamp-nx/api-interfaces'
+import { ApiTask, ApiTaskDTO } from '@bootcamp-nx/api-interfaces'
 import { PrismaClient } from '@prisma/client'
 import { Router } from 'express'
 import {
@@ -12,6 +12,26 @@ import { TypedRequest, TypedResponse } from './types'
 const TaskRouter = Router()
 const TaskRouterPrefix = 'task'
 const prisma = new PrismaClient()
+
+TaskRouter.get(
+	'/:id',
+	async (
+		req: TypedRequest<{ params: { id: string } }>,
+		res: TypedResponse<ApiTask>
+	) => {
+		const id = Number(req.params.id)
+		try {
+			const task = await prisma.task.findUnique({ where: { id } })
+			res.status(200).json({
+				code: 200,
+				data: task,
+			})
+		} catch (error) {
+			console.log(`Error: ${error.message}`)
+			res.status(400).send({ code: 400, message: 'Bad Request' })
+		}
+	}
+)
 
 TaskRouter.post(
 	'/',

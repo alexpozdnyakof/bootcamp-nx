@@ -1,7 +1,11 @@
-import { ApiCredentials, ApiSignUp } from '@bootcamp-nx/api-interfaces'
+import {
+	ApiCredentials,
+	ApiSignUp,
+	ResponseWithMessage,
+} from '@bootcamp-nx/api-interfaces'
 import { CookieOptions, Router } from 'express'
 import { Record, String } from 'runtypes'
-import { ResponseWithMessage, TypedRequest, TypedResponse } from '../types'
+import { TypedRequest, TypedResponse } from '../types'
 import { ErrorWithMessage, validateEmail } from '../utils'
 import { auth } from './auth-middleware'
 import AuthService from './auth-service'
@@ -98,11 +102,6 @@ AuthController.get('/logout', auth(), (req, res) => {
 
 		res.status(status).send(message)
 	}
-})
-
-AuthController.get('/user', auth(), (req, res) => {
-	if (req.user) res.status(200).send(req.user)
-	else res.status(401).send({ error: 'Not Authorized' })
 })
 
 export { AuthController, AuthRouterPrefix }

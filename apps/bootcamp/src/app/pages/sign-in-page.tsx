@@ -1,5 +1,5 @@
 import { Box } from '@bootcamp-nx/core-ui'
-import { SignInForm } from '../../features/sign-in'
+import { SignInForm } from '../process/auth'
 
 export default function SignInPage() {
 	return (

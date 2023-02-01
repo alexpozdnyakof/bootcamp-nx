@@ -1,16 +1,9 @@
-import { ApiTask, ApiTaskDTO } from '@bootcamp-nx/api-interfaces'
+import { ApiTask, ResponseWithData } from '@bootcamp-nx/api-interfaces'
 import { ApiBootcamp } from '@bootcamp-nx/data-access-bootcamp'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { call, fork, put, take } from 'redux-saga/effects'
 import { taskSlice } from '../../slices'
 import { loadTask, loadTaskFailed } from './add-task.actions'
-
-function createTaskDTO({ title }: { title: string }): ApiTaskDTO {
-	return {
-		title,
-		done: false,
-	}
-}
 
 function* addTaskWorker({
 	projectId,
@@ -23,20 +16,20 @@ function* addTaskWorker({
 	try {
 		const response: { data: { id: number } } = yield call(
 			BootcampApi.SaveTask,
-			createTaskDTO({ title })
+			{
+				title,
+				project_id: projectId,
+				done: false,
+			}
 		)
 		const taskId = response.data.id
-		console.log({ taskId, projectId })
-		yield call(BootcampApi.LinkTaskToTasklist, {
-			listId: projectId,
-			taskId,
-		})
 
-		const task: ApiTask = yield call(BootcampApi.Task, taskId)
-
-		yield put(
-			taskSlice.actions.addTask({ ...task, tasklist_id: projectId })
+		const responseTask: ResponseWithData<ApiTask> = yield call(
+			BootcampApi.GetTask,
+			taskId
 		)
+
+		yield put(taskSlice.actions.addTask(responseTask.data))
 	} catch (error) {
 		yield put(loadTaskFailed({ error: 'load to failed tasks' }))
 	}

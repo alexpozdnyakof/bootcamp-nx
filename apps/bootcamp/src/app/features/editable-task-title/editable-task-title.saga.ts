@@ -1,4 +1,4 @@
-import { ApiTask } from '@bootcamp-nx/api-interfaces'
+import { ApiTask, ResponseWithData } from '@bootcamp-nx/api-interfaces'
 import { ApiBootcamp } from '@bootcamp-nx/data-access-bootcamp'
 import { createSelector, PayloadAction } from '@reduxjs/toolkit'
 import { call, fork, put, select, take } from 'redux-saga/effects'
@@ -19,15 +19,16 @@ const selectTask = createSelector(
 const BootcampApi = ApiBootcamp()
 
 function* changeTaskTitleWorker({ id, title }: { id: number; title: string }) {
-	const task: Required<ApiTask> = yield select(state => selectTask(state, id))
-	const taskDTO = { title, done: task.done }
+	const task: ApiTask = yield select(state => selectTask(state, id))
+	const taskDTO = { title, done: task.done, project_id: task.project_id }
 
 	try {
 		yield call(BootcampApi.UpdateTask, id, taskDTO)
-
-		const updatedTask: ApiTask = yield call(BootcampApi.Task, id)
-
-		yield put(updateOneTask(updatedTask))
+		const response: ResponseWithData<ApiTask> = yield call(
+			BootcampApi.GetTask,
+			id
+		)
+		yield put(updateOneTask(response.data))
 	} catch (error) {
 		yield put(
 			changeTaskTitleFailed({ error: 'Failed to update task title' })

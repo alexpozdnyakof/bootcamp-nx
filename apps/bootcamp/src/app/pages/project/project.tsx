@@ -1,8 +1,8 @@
-import { ApiTask, ApiTaskList } from '@bootcamp-nx/api-interfaces'
+import { ApiProject, ApiTask } from '@bootcamp-nx/api-interfaces'
 import { Box, Stack } from '@bootcamp-nx/core-ui'
 import { useEffect } from 'react'
 import { useLoaderData } from 'react-router-dom'
-import { projectSlice, sectionSlice, taskSlice } from '../../slices'
+import { projectSlice, taskSlice } from '../../slices'
 import { useAppDispatch } from '../../store-hooks'
 import { SideMenu } from '../../widgets'
 import ProjectSummary from './project-summary'
@@ -10,9 +10,9 @@ import { ProjectTasks } from './project-tasks'
 import styles from './project.module.css'
 
 export default function ProjectPage() {
-	const [tasks, sections, projectId] = useLoaderData() as [
-		Array<Required<ApiTask>>,
-		Array<ApiTaskList>,
+	const [tasks, projects, projectId] = useLoaderData() as [
+		Array<ApiTask>,
+		Array<ApiProject>,
 		number
 	]
 
@@ -20,9 +20,9 @@ export default function ProjectPage() {
 
 	useEffect(() => {
 		dispatch(taskSlice.actions.setAll(tasks))
-		dispatch(sectionSlice.actions.setAll(sections))
+		dispatch(projectSlice.actions.setAll(projects))
 		dispatch(projectSlice.actions.setActive({ id: projectId }))
-	}, [dispatch, sections, tasks, projectId])
+	}, [dispatch, projects, tasks, projectId])
 
 	return (
 		<Box className={styles['app-layout']}>

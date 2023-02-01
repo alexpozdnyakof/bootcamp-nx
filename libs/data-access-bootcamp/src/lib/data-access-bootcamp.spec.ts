@@ -83,7 +83,7 @@ describe('dataAccessBootcamp', () => {
 	it('should fetch current user', async () => {
 		await bootcampApi.CurrentUser()
 		expect(global.fetch).toHaveBeenCalledWith(
-			`/api/auth/user`,
+			`/api/user`,
 			expect.any(Object)
 		)
 	})

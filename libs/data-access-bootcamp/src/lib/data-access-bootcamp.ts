@@ -27,6 +27,10 @@ export function ApiBootcamp() {
 		): Promise<{ code: number; data: { id: number } }> {
 			return httpClient.post(`/task`, dto)
 		},
+
+		async GetTask(id: number): Promise<ResponseWithData<ApiTask>> {
+			return httpClient.get(`/task/${id}`)
+		},
 		async UpdateTask(
 			id: number,
 			dto: ApiTaskDTO
@@ -45,7 +49,7 @@ export function ApiBootcamp() {
 			return httpClient.post(`/auth/sign-up`, signUpDTO)
 		},
 		async CurrentUser(): Promise<ResponseWithData<ApiUser>> {
-			return httpClient.get(`/auth/user`)
+			return httpClient.get(`/user`)
 		},
 		async Logout(): Promise<ResponseWithMessage> {
 			return httpClient.get(`/auth/logout`)

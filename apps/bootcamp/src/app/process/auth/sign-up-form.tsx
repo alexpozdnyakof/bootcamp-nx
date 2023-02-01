@@ -6,12 +6,13 @@ import {
 	Inline,
 	PasswordField,
 	Stack,
-	TextField,
 	Text,
+	TextField,
 } from '@bootcamp-nx/core-ui'
 import { useVanillaForm } from '@bootcamp-nx/use-vanilla-form'
 import { FormEvent } from 'react'
-import { useAuth } from '../../process/auth'
+import { useAppDispatch } from '../../store-hooks'
+import { signUp } from './auth-actions'
 
 type SignUpFormState = {
 	username: string
@@ -24,13 +25,13 @@ type SignUpFormState = {
 }
 
 export default function SignUpForm() {
-	const { signUp } = useAuth()
+	const dispatch = useAppDispatch()
 	const { handleSubmit, errors, formControl } =
 		useVanillaForm<SignUpFormState>()
 
 	function submitFn(state: SignUpFormState) {
 		const { repeatPassword, agreement, ...signUpDto } = state
-		signUp(signUpDto)
+		dispatch(signUp(signUpDto))
 	}
 
 	return (

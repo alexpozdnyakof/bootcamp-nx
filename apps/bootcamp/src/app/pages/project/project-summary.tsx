@@ -12,7 +12,6 @@ export default function ProjectSummary() {
 		<Box>
 			<Heading level={1}>{project?.title}</Heading>
 			<Text>{project?.description}</Text>
-			<Text>{project?.updated}</Text>
 		</Box>
 	)
 }

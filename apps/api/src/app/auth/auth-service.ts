@@ -13,6 +13,8 @@ export default function AuthService() {
 			const user = await prisma.user.findUnique({
 				where: { username },
 			})
+
+			console.log(user)
 			if (typeof user == 'undefined') throw new Error('User Not Found')
 
 			const userCredential = await prisma.credential.findUnique({

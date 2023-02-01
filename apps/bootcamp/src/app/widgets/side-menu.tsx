@@ -14,8 +14,10 @@ export default function SideMenu() {
 			</Text>
 			<List>
 				{projects.map(([id, entity]) => (
-					<ListItem key={`${entity?.type}-${id}`}>
-						<Text size='body'>{entity?.title}</Text>
+					<ListItem key={`${id}`}>
+						<Text size='body' lineClamp={1}>
+							{entity?.title}
+						</Text>
 					</ListItem>
 				))}
 			</List>

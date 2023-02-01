@@ -1,5 +1,5 @@
 import { Box, Heading, Stack } from '@bootcamp-nx/core-ui'
-import { SignUpForm } from '../features/sign-up'
+import { SignUpForm } from '../process/auth'
 
 export default function SignUpPage() {
 	return (

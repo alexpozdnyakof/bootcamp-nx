@@ -20,7 +20,6 @@
 			"@bootcamp-nx/data-access-bootcamp": [
 				"libs/data-access-bootcamp/src/index.ts"
 			],
-			"@bootcamp-nx/tasks-ui": ["libs/tasks-ui/src/index.ts"],
 			"@bootcamp-nx/use-vanilla-form": [
 				"libs/use-vanilla-form/src/index.ts"
 			]
