@@ -1,3 +1,5 @@
+export * from './lib/menu-item'
+export * from './lib/menu'
 export * from './lib/expand-view'
 export * from './lib/switch-complete'
 export * from './lib/editable-text'

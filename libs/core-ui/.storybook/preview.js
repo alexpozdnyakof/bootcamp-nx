@@ -1,4 +1,4 @@
-import '../src/lib/styles.less'
+import '../src/lib/styles.css'
 import { useDarkMode } from 'storybook-dark-mode'
 
 import { DocsContainer } from './docs-container'

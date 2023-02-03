@@ -1,4 +1,5 @@
-import { List, ListItem, Stack, Text } from '@bootcamp-nx/core-ui'
+import { Menu, MenuItem, Text } from '@bootcamp-nx/core-ui'
+import { Link } from 'react-router-dom'
 import { RootState } from '../store'
 import { useAppSelector } from '../store-hooks'
 
@@ -8,19 +9,16 @@ export default function SideMenu() {
 	)
 
 	return (
-		<Stack space='small'>
-			<Text size='subtitle' weight='bold'>
-				プロジェクト
-			</Text>
-			<List>
-				{projects.map(([id, entity]) => (
-					<ListItem key={`${id}`}>
+		<Menu>
+			{projects.map(([id, project]) => (
+				<Link to={`/${id}`} key={`${id}`}>
+					<MenuItem>
 						<Text size='body' lineClamp={1}>
-							{entity?.title}
+							{project?.title}
 						</Text>
-					</ListItem>
-				))}
-			</List>
-		</Stack>
+					</MenuItem>
+				</Link>
+			))}
+		</Menu>
 	)
 }
