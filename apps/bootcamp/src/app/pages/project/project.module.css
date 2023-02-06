@@ -11,7 +11,7 @@
 }
 
 .app-menu {
-	padding: var(--bootcamp-spacing-small) 0;
+	padding: var(--bootcamp-spacing-small) var(--bootcamp-spacing-large);
 }
 
 .app-tasklists {

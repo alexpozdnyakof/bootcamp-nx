@@ -19,7 +19,10 @@
 					"apps/bootcamp/src/favicon.ico",
 					"apps/bootcamp/src/assets"
 				],
-				"styles": ["apps/bootcamp/src/styles.less"],
+				"styles": [
+					"libs/core-ui/src/lib/styles.less",
+					"apps/bootcamp/src/styles.less"
+				],
 				"scripts": [],
 				"webpackConfig": "@nrwl/react/plugins/webpack"
 			},

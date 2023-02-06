@@ -1,11 +1,18 @@
 .menu-item {
-	padding: var(--bootcamp-spacing-xsmall) var(--bootcamp-spacing-xlarge)
-		var(--bootcamp-spacing-xsmall) var(--bootcamp-spacing-xlarge);
+	padding: var(--bootcamp-spacing-xsmall) var(--bootcamp-spacing-small)
+		var(--bootcamp-spacing-xsmall) var(--bootcamp-spacing-medium);
 	border-radius: var(--bootcamp-border-radius-small);
 	transition: background-color 0.15s cubic-bezier(0.075, 0.82, 0.165, 1);
-	height: 32px;
+	height: var(--bootcamp-height-small);
+	display: flex;
+	align-items: center;
+	cursor: pointer;
 }
 
-.menu-item:hover {
+.menu-item:not(.menu-item_selected):hover {
+	background-color: var(--bootcamp-bg-selected);
+}
+
+.menu-item_selected {
 	background-color: var(--bootcamp-bg-selected);
 }

@@ -1,2 +1,2 @@
-export { default as SideMenu } from './side-menu'
-export { default as TopBar } from './top-bar/top-bar'
+export { default as ProjectsMenu } from './projects-menu'
+export { default as TopBar } from './top-bar'

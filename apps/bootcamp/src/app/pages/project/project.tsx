@@ -1,10 +1,10 @@
 import { ApiProject, ApiTask } from '@bootcamp-nx/api-interfaces'
 import { Box, Stack } from '@bootcamp-nx/core-ui'
-import { useEffect } from 'react'
-import { useLoaderData } from 'react-router-dom'
+import { useCallback, useEffect } from 'react'
+import { useLoaderData, useNavigate } from 'react-router-dom'
 import { projectSlice, taskSlice } from '../../slices'
 import { useAppDispatch } from '../../store-hooks'
-import { SideMenu } from '../../widgets'
+import { ProjectsMenu } from '../../widgets'
 import ProjectSummary from './project-summary'
 import { ProjectTasks } from './project-tasks'
 import styles from './project.module.css'
@@ -17,6 +17,14 @@ export default function ProjectPage() {
 	]
 
 	const dispatch = useAppDispatch()
+	const navigate = useNavigate()
+
+	const onSelectProject = useCallback(
+		(selectedId: string) => {
+			navigate(`/${selectedId}`)
+		},
+		[navigate]
+	)
 
 	useEffect(() => {
 		dispatch(taskSlice.actions.setAll(tasks))
@@ -28,7 +36,10 @@ export default function ProjectPage() {
 		<Box className={styles['app-layout']}>
 			<Box className={styles['app-menu']}>
 				<Box style={{ height: '24px' }} />
-				<SideMenu />
+				<ProjectsMenu
+					activeProjectId={projectId}
+					onSelect={onSelectProject}
+				/>
 			</Box>
 			<Box>
 				<Box className={styles['app-layout-content']}>

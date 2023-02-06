@@ -1,7 +1,6 @@
 import { Box } from '@bootcamp-nx/core-ui'
 import { Suspense } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import styles from './app.module.less'
 import useInit from './init'
 import { SignInPage, SignUpPage } from './pages'
 import { projectLoader, ProjectPage } from './pages/project'
@@ -45,7 +44,7 @@ export default function App() {
 	return (
 		<>
 			<TopBar />
-			<Box className={styles['app-layout']}>
+			<Box width='full'>
 				<Suspense fallback={<Box>Loading ...</Box>}>
 					<RouterProvider router={router} />
 				</Suspense>
