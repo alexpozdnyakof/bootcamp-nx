@@ -61,7 +61,7 @@ describe('Text', () => {
 		)
 		const textElement = screen.getByTestId('text-element')
 
-		const weights = ['semibold', 'bold'] as const
+		const weights = ['extrabold', 'bold'] as const
 
 		expect(textElement).not.toHaveClass('weight-regular')
 		weights.forEach(weight => {

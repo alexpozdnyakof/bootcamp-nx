@@ -14,7 +14,8 @@ function ComponentUnderTest({
 }: {
 	submitCallback?: SubmitFn<FormState>
 }) {
-	const { errors, formControl, handleSubmit } = useVanillaForm<FormState>()
+	const { errors, formControl, handleSubmit, resetErrors } =
+		useVanillaForm<FormState>()
 	return (
 		<>
 			<form
@@ -44,6 +45,7 @@ function ComponentUnderTest({
 				/>
 				<button type='submit'>サインイン</button>
 			</form>
+			<button onClick={() => resetErrors()}>リセット</button>
 			<div data-testid='hostname'>{errors.hostname}</div>
 			<div data-testid='ipaddress'>{errors.ipaddress}</div>
 			<div data-testid='optional'>{errors.optional}</div>
@@ -122,5 +124,23 @@ describe('UseVanillaForm', () => {
 			ipaddress: '127.0.0.1',
 			optional: '',
 		})
+	})
+
+	it('should reset errors', async () => {
+		render(<ComponentUnderTest />)
+		const hostnameErrors = screen.getByTestId('hostname')
+		const ipaddressErrors = screen.getByTestId('ipaddress')
+
+		await userEvent.click(
+			screen.getByRole('button', { name: 'サインイン' })
+		)
+
+		expect(hostnameErrors.textContent).toBe('Constraints not satisfied')
+		expect(ipaddressErrors.textContent).toBe('Constraints not satisfied')
+
+		await userEvent.click(screen.getByRole('button', { name: 'リセット' }))
+
+		expect(hostnameErrors.textContent).toBe('')
+		expect(ipaddressErrors.textContent).toBe('')
 	})
 })

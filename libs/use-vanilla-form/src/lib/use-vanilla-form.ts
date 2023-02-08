@@ -8,7 +8,7 @@ type FormResult = {
 }
 
 type State<T> = {
-	[K in keyof T]: RefObject<HTMLInputElement>
+	[K in keyof T]: RefObject<HTMLInputElement | HTMLTextAreaElement>
 }
 
 type Errors<T> = {
@@ -32,6 +32,9 @@ export type SubmitFn<T extends FormResult> = (state: T) => void
 export default function useVanillaForm<T extends FormResult>() {
 	const state = useRef({} as State<T>)
 	const [errors, setErrors] = useState({} as Errors<T>)
+	const resetErrors = () => {
+		setErrors({} as Errors<T>)
+	}
 
 	return {
 		formControl(name: keyof T, options?: ControlOptions) {
@@ -57,6 +60,7 @@ export default function useVanillaForm<T extends FormResult>() {
 			}
 		},
 		errors,
+		resetErrors,
 	}
 }
 

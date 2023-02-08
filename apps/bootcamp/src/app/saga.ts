@@ -1,4 +1,5 @@
 import { all, fork } from 'redux-saga/effects'
+import { addProjectSaga } from './features/add-project'
 import { addTaskSaga } from './features/add-task'
 import { deleteTaskSaga } from './features/delete-task'
 import { changeTaskTitleSaga } from './features/editable-task-title'
@@ -11,6 +12,7 @@ export default function* root() {
 		fork(deleteTaskSaga),
 		fork(toggleTaskSaga),
 		fork(changeTaskTitleSaga),
+		fork(addProjectSaga),
 		fork(authSaga),
 	])
 }

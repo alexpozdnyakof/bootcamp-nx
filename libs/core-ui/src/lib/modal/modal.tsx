@@ -1,15 +1,16 @@
-import { ReactElement, ReactNode } from 'react'
-import { Box } from '../box'
-import { Button } from '../button'
+import { ReactNode } from 'react'
 import FocusLock from 'react-focus-lock'
+import { Box } from '../box'
+import { BoxMaxMinWidth } from '../box/box'
+import { Button } from '../button'
+import { Heading } from '../heading'
+import { Icon } from '../icon'
+import { Inline } from '../inline'
+import { KeyCapturer } from '../key-capturer'
 import { Portal } from '../portal'
 import { PortalProps, registerPortalRoot } from '../portal/portal'
+import { Toolbar } from '../toolbar'
 import styles from './modal.module.less'
-import { KeyCapturer } from '../key-capturer'
-import { BoxMaxMinWidth } from '../box/box'
-import { Inline } from '../inline'
-import { totalmem } from 'os'
-import { Heading } from '../heading'
 
 const Center = ({ children }: { children: ReactNode }) => {
 	return <Box className={styles['center']}>{children}</Box>
@@ -62,22 +63,37 @@ export function Modal({
 							<Box className={styles['dialog-guts']}>
 								<Box className={styles['dialog-header']}>
 									{title && (
-										<Heading level={1} size='larger'>
-											{title}
-										</Heading>
+										<Heading level={1}>{title}</Heading>
 									)}
-									<Button
-										onClick={onClose}
-										variant='tertiary'
-									>
-										閉じる
-									</Button>
+									{onClose && (
+										<Box
+											marginRight='-xlarge'
+											marginTop='-xlarge'
+										>
+											<Button
+												onClick={onClose}
+												variant='quaternary'
+												size='small'
+												aria-label={`Close ${
+													title ?? ''
+												} modal window`}
+											>
+												<Icon size='medium'>close</Icon>
+											</Button>
+										</Box>
+									)}
 								</Box>
 								<Box className={styles['dialog-content']}>
 									{children}
 								</Box>
 								<Box className={styles['dialog-footer']}>
-									<Inline space='small'>{buttons}</Inline>
+									{buttons && (
+										<Toolbar>
+											<Inline space='small'>
+												{buttons}
+											</Inline>
+										</Toolbar>
+									)}
 								</Box>
 							</Box>
 						</Box>

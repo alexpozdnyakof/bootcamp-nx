@@ -4,6 +4,7 @@
 
 .auxiliaryLabel {
 	text-align: right;
+	font-size: var(--bootcamp-font-size-caption);
 }
 
 .container label,
@@ -36,24 +37,15 @@
 	border-color: var(--bootcamp-alert-tone-critical-border) !important;
 }
 
-.container.bordered .primaryLabel {
-	font-weight: 500;
-}
-
-.container.bordered .auxiliaryLabel {
-	font-size: var(--bootcamp-font-size-caption);
-}
-
-.container:not(.bordered) .primaryLabel {
+.primaryLabel {
 	font-weight: var(--bootcamp-font-weight-strong);
-}
-
-.container:not(.bordered) .auxiliaryLabel {
-	font-size: var(--bootcamp-font-size-body);
+	font-size: var(--bootcamp-font-size-copy);
 }
 
 .secondaryLabel {
 	color: var(--bootcamp-content-secondary);
+	font-weight: var(--bootcamp-font-weight-strong);
+	font-size: var(--bootcamp-font-size-copy);
 }
 
 .messageIcon {

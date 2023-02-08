@@ -27,6 +27,9 @@ const projectSlice = createSlice({
 		setAll(state, action: PayloadAction<Array<ApiProject>>) {
 			entityAdapter.setAll(state, action.payload)
 		},
+		addOne(state, action: PayloadAction<ApiProject>) {
+			entityAdapter.addOne(state, action.payload)
+		},
 	},
 })
 

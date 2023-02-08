@@ -44,7 +44,7 @@ export default function App() {
 	return (
 		<>
 			<TopBar />
-			<Box width='full'>
+			<Box width='full' height='full'>
 				<Suspense fallback={<Box>Loading ...</Box>}>
 					<RouterProvider router={router} />
 				</Suspense>

@@ -1,5 +1,6 @@
 import {
 	ApiCredentials,
+	ApiNewProject,
 	ApiProject,
 	ApiSignUp,
 	ApiTask,
@@ -18,6 +19,11 @@ export function ApiBootcamp() {
 		},
 		async Project(id: number): Promise<ResponseWithData<ApiProject>> {
 			return httpClient.get(`/project/${id}`)
+		},
+		async SaveProject(
+			newProject: ApiNewProject
+		): Promise<ResponseWithData<{ id: number }>> {
+			return httpClient.post(`/project`, newProject)
 		},
 		async ProjectTasks(id: number): Promise<ResponseWithData<ApiTask[]>> {
 			return httpClient.get(`/project/${id}/tasks`)

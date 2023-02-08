@@ -1,13 +1,13 @@
 import { ApiProject, ApiTask } from '@bootcamp-nx/api-interfaces'
-import { Box, Stack } from '@bootcamp-nx/core-ui'
+import { Box, Drawer, Stack } from '@bootcamp-nx/core-ui'
 import { useCallback, useEffect } from 'react'
 import { useLoaderData, useNavigate } from 'react-router-dom'
+import { AddProject } from '../../features/add-project'
 import { projectSlice, taskSlice } from '../../slices'
 import { useAppDispatch } from '../../store-hooks'
 import { ProjectsMenu } from '../../widgets'
 import ProjectSummary from './project-summary'
 import { ProjectTasks } from './project-tasks'
-import styles from './project.module.css'
 
 export default function ProjectPage() {
 	const [tasks, projects, projectId] = useLoaderData() as [
@@ -33,28 +33,28 @@ export default function ProjectPage() {
 	}, [dispatch, projects, tasks, projectId])
 
 	return (
-		<Box className={styles['app-layout']}>
-			<Box className={styles['app-menu']}>
-				<Box style={{ height: '24px' }} />
+		<>
+			<Drawer>
+				<Box style={{ height: '64px' }} />
 				<ProjectsMenu
+					actions={<AddProject />}
 					activeProjectId={projectId}
 					onSelect={onSelectProject}
 				/>
-			</Box>
-			<Box>
-				<Box className={styles['app-layout-content']}>
-					<Box className={styles['app-tasklists']}>
-						<Box width='full'>
-							<Stack space='xlarge'>
-								<ProjectSummary />
-								<Stack space='large'>
-									<ProjectTasks />
-								</Stack>
-							</Stack>
-						</Box>
+			</Drawer>
+
+			<Box width='full' display='flex' paddingX='large'>
+				<Box maxWidth='large' width='full' style={{ margin: '0 auto' }}>
+					<Box style={{ height: '48px' }} />
+
+					<Box width='full'>
+						<Stack space='large'>
+							<ProjectSummary />
+							<ProjectTasks />
+						</Stack>
 					</Box>
 				</Box>
 			</Box>
-		</Box>
+		</>
 	)
 }

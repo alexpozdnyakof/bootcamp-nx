@@ -1,4 +1,6 @@
 import { screen, render } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { Button } from '../button'
 
 import Modal from './modal'
 
@@ -67,5 +69,77 @@ describe('Modal', () => {
 		expect(dialogElement).not.toHaveClass('width-medium')
 		expect(dialogElement).not.toHaveClass('width-large')
 		expect(dialogElement).toHaveClass('width-xlarge')
+	})
+
+	it('should show close button when onClose callback passed', () => {
+		const onClose = jest.fn()
+		const { rerender } = render(
+			<Modal title='モーダルウィンドウ'>モーダルウィンドウ!</Modal>
+		)
+
+		const closeButton = screen.queryByRole('button', {
+			name: 'Close モーダルウィンドウ modal window',
+		})
+
+		expect(closeButton).toBeNull()
+
+		rerender(
+			<Modal title='モーダルウィンドウ' onClose={onClose}>
+				モーダルウィンドウ!
+			</Modal>
+		)
+
+		expect(closeButton).toBeDefined()
+	})
+
+	it('should call onClose callback', async () => {
+		const onClose = jest.fn()
+		render(<Modal onClose={onClose}>モーダルウィンドウ!</Modal>)
+
+		await userEvent.click(
+			screen.getByRole('button', {
+				name: 'Close modal window',
+			})
+		)
+
+		expect(onClose).toHaveBeenCalled()
+	})
+
+	it('should render title', async () => {
+		const { rerender } = render(
+			<Modal>
+				<div />
+			</Modal>
+		)
+
+		expect(screen.queryByText('モーダルウィンドウ')).not.toBeInTheDocument()
+
+		rerender(
+			<Modal title='モーダルウィンドウ'>
+				<div />
+			</Modal>
+		)
+
+		expect(screen.getByText('モーダルウィンドウ')).toBeInTheDocument()
+	})
+
+	it('should render buttons toolbar', async () => {
+		const { rerender } = render(
+			<Modal>
+				<div />
+			</Modal>
+		)
+
+		expect(
+			screen.queryByRole('button', { name: 'モ' })
+		).not.toBeInTheDocument()
+
+		rerender(
+			<Modal buttons={<Button>モ</Button>}>
+				<div />
+			</Modal>
+		)
+
+		expect(screen.queryByRole('button', { name: 'モ' })).toBeInTheDocument()
 	})
 })

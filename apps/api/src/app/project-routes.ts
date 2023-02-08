@@ -1,8 +1,8 @@
-import { ApiProject, ApiTask } from '@bootcamp-nx/api-interfaces'
+import { ApiNewProject, ApiProject, ApiTask } from '@bootcamp-nx/api-interfaces'
 import { PrismaClient } from '@prisma/client'
 import { Router } from 'express'
 import { Record, String } from 'runtypes'
-import { TypedResponse } from './types'
+import { TypedRequest, TypedResponse } from './types'
 
 const ProjectRouter = Router()
 const ProjectRouterPrefix = 'project'
@@ -47,24 +47,30 @@ ProjectRouter.get('/:id/tasks', async (req, res: TypedResponse<ApiTask[]>) => {
 	}
 })
 
-ProjectRouter.post('/', async (req, res: TypedResponse) => {
-	try {
-		const newProject = Record({
-			title: String,
-			description: String,
-		}).check(req.body)
+ProjectRouter.post(
+	'/',
+	async (
+		req: TypedRequest<{ body: ApiNewProject }>,
+		res: TypedResponse<{ id: number }>
+	) => {
+		try {
+			const newProject = Record({
+				title: String,
+				description: String,
+			}).check(req.body)
 
-		await prisma.project.create({
-			data: {
-				...newProject,
-				owner_id: req.user.id,
-			},
-		})
+			const result = await prisma.project.create({
+				data: {
+					...newProject,
+					owner_id: req.user.id,
+				},
+			})
 
-		res.status(201).send({ code: 201, message: 'Created' })
-	} catch (error) {
-		res.status(400).send({ code: 400, message: error.message })
+			res.status(201).send({ code: 201, data: result })
+		} catch (error) {
+			res.status(400).send({ code: 400, message: error.message })
+		}
 	}
-})
+)
 
 export { ProjectRouter, ProjectRouterPrefix }

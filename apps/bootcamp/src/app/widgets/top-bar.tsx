@@ -12,8 +12,8 @@ export function TopBar() {
 	const currentUser = useAppSelector(selectUser)
 
 	return (
-		<AppBar>
-			<Toolbar>
+		<AppBar position='fixed'>
+			<Toolbar gutter='xxlarge' size='large'>
 				<Text size='subtitle' weight='bold' tone='positive'>
 					見出し
 				</Text>

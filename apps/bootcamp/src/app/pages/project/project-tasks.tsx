@@ -33,7 +33,9 @@ export function ProjectTasks() {
 				{(toggleExpand, expanded) => (
 					<>
 						{!expanded && (
-							<Button onClick={toggleExpand}>タスクを作成</Button>
+							<Button onClick={toggleExpand} variant='tertiary'>
+								タスクを作成
+							</Button>
 						)}
 						{expanded && (
 							<AddTaskFeature

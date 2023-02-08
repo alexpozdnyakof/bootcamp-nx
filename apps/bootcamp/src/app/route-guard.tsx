@@ -1,4 +1,5 @@
 import { ApiUser } from '@bootcamp-nx/api-interfaces'
+import { Box } from '@bootcamp-nx/core-ui'
 import { ReactNode, useLayoutEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { selectUser } from './slices/auth.slice'
@@ -23,5 +24,9 @@ export default function RouteGuard({
 		}
 	}, [user, navigate, redirectUrl, canActivate])
 
-	return <div>{children}</div>
+	return (
+		<Box width='full' height='full' display='flex'>
+			{children}
+		</Box>
+	)
 }

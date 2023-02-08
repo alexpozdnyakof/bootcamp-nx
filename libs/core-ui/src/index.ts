@@ -1,3 +1,5 @@
+export * from './lib/drawer'
+export * from './lib/modal'
 export * from './lib/toolbar'
 export * from './lib/app-bar'
 export * from './lib/menu-item'

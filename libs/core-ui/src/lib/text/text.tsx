@@ -15,7 +15,7 @@ export interface TextProps {
 	/**
 	 * @default 'regular'
 	 */
-	weight?: 'regular' | 'semibold' | 'bold'
+	weight?: 'regular' | 'bold' | 'extrabold'
 	/**
 	 * @default undefined
 	 */

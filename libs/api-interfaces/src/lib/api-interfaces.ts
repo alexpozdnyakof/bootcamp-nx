@@ -10,6 +10,11 @@ export interface ApiProject {
 	updated: Date
 }
 
+export interface ApiNewProject {
+	title: string
+	description?: string
+}
+
 export interface ApiTask {
 	id: number
 	title: string
