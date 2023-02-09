@@ -2,14 +2,14 @@
 import { Button, Icon, Modal, Stack, TextField } from '@bootcamp-nx/core-ui'
 import { useVanillaForm } from '@bootcamp-nx/use-vanilla-form'
 import { FormEvent, useRef, useState } from 'react'
-import { useAppDispatch } from '../../store-hooks'
-import { addProject } from './add-project.action'
+import { createProject } from '../slices/project.slice'
+import { useAppDispatch } from '../store-hooks'
 
 type NewProjectFormState = {
 	title: string
 	description: string | undefined
 }
-export default function AddProject() {
+export function AddProject() {
 	const [isOpen, setOpen] = useState<boolean>(false)
 	const dispatch = useAppDispatch()
 	const ref = useRef<HTMLFormElement>(null)
@@ -20,7 +20,7 @@ export default function AddProject() {
 	const toggleModal = () => setOpen(o => !o)
 
 	const submitFn = (state: NewProjectFormState) => {
-		dispatch(addProject(state))
+		dispatch(createProject(state))
 		toggleModal()
 	}
 

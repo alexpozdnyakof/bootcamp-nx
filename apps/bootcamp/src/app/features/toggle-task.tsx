@@ -1,9 +1,9 @@
 import { ApiTask } from '@bootcamp-nx/api-interfaces'
 import { SwitchComplete } from '@bootcamp-nx/core-ui'
-import { useAppDispatch } from '../../store-hooks'
-import { toggleTask } from './toggle-task.actions'
+import { toggleTaskThunk } from '../slices/task.slice'
+import { useAppDispatch } from '../store-hooks'
 
-export default function ToggleTask({
+export function ToggleTask({
 	done,
 	id,
 	title,
@@ -14,7 +14,7 @@ export default function ToggleTask({
 		<SwitchComplete
 			done={done}
 			aria-label={'Complete '.concat(title)}
-			onClick={() => dispatch(toggleTask({ id }))}
+			onClick={() => dispatch(toggleTaskThunk(id))}
 		/>
 	)
 }

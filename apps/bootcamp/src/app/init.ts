@@ -12,6 +12,7 @@ export default function useInit() {
 				const user = (await api.CurrentUser()).data
 				dispatch(authSlice.actions.setUser(user))
 			} catch (error) {
+				// eslint-disable-next-line no-console
 				console.log(error)
 			}
 		}

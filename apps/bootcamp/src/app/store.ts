@@ -1,10 +1,14 @@
 /* eslint-disable @typescript-eslint/dot-notation */
-import { configureStore } from '@reduxjs/toolkit'
-import createSagaMiddleware from 'redux-saga'
-import root from './saga'
+import { ApiBootcamp } from '@bootcamp-nx/data-access-bootcamp'
+import { configureStore, Middleware } from '@reduxjs/toolkit'
 import { authSlice, projectSlice, taskSlice } from './slices'
 
-const sagaMiddleware = createSagaMiddleware()
+const logger: Middleware = store => next => action => {
+	console.log('dispatching', action)
+	const result = next(action)
+	console.log('next state', store.getState())
+	return result
+}
 
 export const store = configureStore({
 	reducer: {
@@ -13,11 +17,13 @@ export const store = configureStore({
 		[authSlice.name]: authSlice.reducer,
 	},
 	middleware: getDefaultMiddleware =>
-		getDefaultMiddleware().concat(sagaMiddleware),
+		getDefaultMiddleware({
+			thunk: {
+				extraArgument: ApiBootcamp(),
+			},
+		}).concat([logger]),
 	devTools: process.env['NODE_ENV'] !== 'production',
 })
-
-sagaMiddleware.run(root)
 
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>

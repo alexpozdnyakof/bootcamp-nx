@@ -1,20 +1,18 @@
-import { ApiProject, ApiTask } from '@bootcamp-nx/api-interfaces'
 import { Box, Drawer, Stack } from '@bootcamp-nx/core-ui'
 import { useCallback, useEffect } from 'react'
-import { useLoaderData, useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { AddProject } from '../../features/add-project'
-import { projectSlice, taskSlice } from '../../slices'
+import { projectSlice } from '../../slices'
+import { fetchProjects } from '../../slices/project.slice'
+import { fetchProjectTasks } from '../../slices/task.slice'
 import { useAppDispatch } from '../../store-hooks'
 import { ProjectsMenu } from '../../widgets'
 import ProjectSummary from './project-summary'
 import { ProjectTasks } from './project-tasks'
 
 export default function ProjectPage() {
-	const [tasks, projects, projectId] = useLoaderData() as [
-		Array<ApiTask>,
-		Array<ApiProject>,
-		number
-	]
+	const { id } = useParams()
+	const projectId = Number(id)
 
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
@@ -27,10 +25,10 @@ export default function ProjectPage() {
 	)
 
 	useEffect(() => {
-		dispatch(taskSlice.actions.setAll(tasks))
-		dispatch(projectSlice.actions.setAll(projects))
+		dispatch(fetchProjects())
+		dispatch(fetchProjectTasks(projectId))
 		dispatch(projectSlice.actions.setActive({ id: projectId }))
-	}, [dispatch, projects, tasks, projectId])
+	}, [dispatch, projectId])
 
 	return (
 		<>

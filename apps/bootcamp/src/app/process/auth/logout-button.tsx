@@ -1,8 +1,8 @@
 import { Button } from '@bootcamp-nx/core-ui'
+import { signOutThunk } from '../../slices/auth.slice'
 import { useAppDispatch } from '../../store-hooks'
-import { logout } from './auth-actions'
 
 export default function LogoutButton() {
 	const dispatch = useAppDispatch()
-	return <Button onClick={() => dispatch(logout())}>ログアウト</Button>
+	return <Button onClick={() => dispatch(signOutThunk())}>ログアウト</Button>
 }

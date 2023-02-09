@@ -8,10 +8,10 @@ import {
 	TextField,
 } from '@bootcamp-nx/core-ui'
 import { useEffect, useRef } from 'react'
-import { useAppDispatch } from '../../store-hooks'
-import { loadTask } from './add-task.actions'
+import { addTaskThunk } from '../slices/task.slice'
+import { useAppDispatch } from '../store-hooks'
 
-export default function AddTaskFeature({
+export function AddTaskFeature({
 	projectId,
 	onClear,
 }: {
@@ -34,7 +34,7 @@ export default function AddTaskFeature({
 	const submitForm = () => {
 		const title = ref.current?.value
 		if (!title) return
-		dispatch(loadTask({ title, projectId }))
+		dispatch(addTaskThunk({ title, projectId }))
 		cancelForm()
 	}
 

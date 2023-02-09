@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import useInit from './init'
 import { SignInPage, SignUpPage } from './pages'
-import { projectLoader, ProjectPage } from './pages/project'
+import { ProjectPage } from './pages/project'
 import RouteGuard from './route-guard'
 import { TopBar } from './widgets'
 
@@ -18,7 +18,6 @@ const router = createBrowserRouter([
 				<ProjectPage />
 			</RouteGuard>
 		),
-		loader: projectLoader,
 	},
 	{
 		path: 'sign-in',

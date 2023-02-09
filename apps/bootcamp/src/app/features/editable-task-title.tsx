@@ -1,9 +1,9 @@
 import { ApiTask } from '@bootcamp-nx/api-interfaces'
 import { EditableText } from '@bootcamp-nx/core-ui'
-import { useAppDispatch } from '../../store-hooks'
-import { changeTaskTitle } from './editable-task-title.actions'
+import { changeTaskTitleThunk } from '../slices/task.slice'
+import { useAppDispatch } from '../store-hooks'
 
-export default function EditableTaskTitle({
+export function EditableTaskTitle({
 	id,
 	title,
 }: Pick<ApiTask, 'id' | 'title'>) {
@@ -11,7 +11,7 @@ export default function EditableTaskTitle({
 	return (
 		<EditableText
 			onChange={newText => {
-				dispatch(changeTaskTitle({ id, title: newText }))
+				dispatch(changeTaskTitleThunk({ taskId: id, title: newText }))
 			}}
 			aria-label={`Edit ${title}`}
 		>

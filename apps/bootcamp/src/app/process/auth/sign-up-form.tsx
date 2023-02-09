@@ -11,8 +11,8 @@ import {
 } from '@bootcamp-nx/core-ui'
 import { useVanillaForm } from '@bootcamp-nx/use-vanilla-form'
 import { FormEvent } from 'react'
+import { signUpThunk } from '../../slices/auth.slice'
 import { useAppDispatch } from '../../store-hooks'
-import { signUp } from './auth-actions'
 
 type SignUpFormState = {
 	username: string
@@ -31,7 +31,7 @@ export default function SignUpForm() {
 
 	function submitFn(state: SignUpFormState) {
 		const { repeatPassword, agreement, ...signUpDto } = state
-		dispatch(signUp(signUpDto))
+		dispatch(signUpThunk(signUpDto))
 	}
 
 	return (

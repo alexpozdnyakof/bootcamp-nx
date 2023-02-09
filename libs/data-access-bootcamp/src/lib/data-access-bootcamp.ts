@@ -63,6 +63,8 @@ export function ApiBootcamp() {
 	}
 }
 
+export type IApiBootcamp = ReturnType<typeof ApiBootcamp>
+
 type HttpClientOptions = {
 	urlPrefix: string
 }

@@ -10,8 +10,8 @@ import {
 } from '@bootcamp-nx/core-ui'
 import { useVanillaForm } from '@bootcamp-nx/use-vanilla-form'
 import { FormEvent } from 'react'
+import { signInThunk } from '../../slices/auth.slice'
 import { useAppDispatch } from '../../store-hooks'
-import { signIn } from './auth-actions'
 
 type SignInFormState = {
 	username: string
@@ -25,7 +25,7 @@ export default function SignInForm() {
 		useVanillaForm<SignInFormState>()
 
 	function submitFn(state: SignInFormState) {
-		dispatch(signIn(state))
+		dispatch(signInThunk(state))
 	}
 
 	return (
