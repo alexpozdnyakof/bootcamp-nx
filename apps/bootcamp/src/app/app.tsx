@@ -3,26 +3,46 @@ import { Suspense } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import useInit from './init'
 import { SignInPage, SignUpPage } from './pages'
-import { ProjectPage } from './pages/project'
+import ProjectsPage, { ProjectView } from './pages/projects-page'
 import RouteGuard from './route-guard'
 import { TopBar } from './widgets'
 
 const router = createBrowserRouter([
 	{
-		path: ':id',
+		path: 'projects',
 		element: (
 			<RouteGuard
 				redirectUrl='/sign-in'
 				canActivate={user => user === null}
 			>
-				<ProjectPage />
+				<ProjectsPage />
+			</RouteGuard>
+		),
+		children: [
+			{
+				path: ':id',
+				element: <ProjectView />,
+			},
+		],
+	},
+	{
+		path: '/',
+		element: (
+			<RouteGuard
+				redirectUrl='/projects'
+				canActivate={user => user !== null}
+			>
+				<SignInPage />
 			</RouteGuard>
 		),
 	},
 	{
 		path: 'sign-in',
 		element: (
-			<RouteGuard redirectUrl='/1' canActivate={user => user !== null}>
+			<RouteGuard
+				redirectUrl='/projects'
+				canActivate={user => user !== null}
+			>
 				<SignInPage />
 			</RouteGuard>
 		),
@@ -30,7 +50,10 @@ const router = createBrowserRouter([
 	{
 		path: 'sign-up',
 		element: (
-			<RouteGuard redirectUrl='/1' canActivate={user => user !== null}>
+			<RouteGuard
+				redirectUrl='/projects'
+				canActivate={user => user !== null}
+			>
 				<SignUpPage />
 			</RouteGuard>
 		),

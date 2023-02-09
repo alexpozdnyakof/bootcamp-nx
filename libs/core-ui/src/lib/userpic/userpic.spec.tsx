@@ -97,7 +97,7 @@ describe('Userpic', () => {
 				/>
 			)
 			const userpic = screen.getByTestId('userpic')
-			expect(userpic).toHaveStyle({ backgroundColor: '#fcc652' })
+			expect(userpic).toHaveStyle({ backgroundColor: '#363457' })
 		})
 
 		it('set first color if first email part is empty', () => {
@@ -110,7 +110,7 @@ describe('Userpic', () => {
 				/>
 			)
 			const userpic = screen.getByTestId('userpic')
-			expect(userpic).toHaveStyle({ backgroundColor: '#fcc652' })
+			expect(userpic).toHaveStyle({ backgroundColor: '#363457' })
 		})
 
 		it('set color in colors range for given valid email', () => {
@@ -123,7 +123,7 @@ describe('Userpic', () => {
 				/>
 			)
 			const userpic = screen.getByTestId('userpic')
-			expect(userpic).toHaveStyle({ backgroundColor: '#e9952c' })
+			expect(userpic).toHaveStyle({ backgroundColor: '#735290' })
 		})
 
 		it('set same color for same emails', () => {
@@ -136,7 +136,7 @@ describe('Userpic', () => {
 				/>
 			)
 			const userpic = screen.getByTestId('userpic')
-			expect(userpic).toHaveStyle({ backgroundColor: '#e9952c' })
+			expect(userpic).toHaveStyle({ backgroundColor: '#735290' })
 
 			rerender(
 				<Userpic
@@ -146,7 +146,7 @@ describe('Userpic', () => {
 					}}
 				/>
 			)
-			expect(userpic).toHaveStyle({ backgroundColor: '#e9952c' })
+			expect(userpic).toHaveStyle({ backgroundColor: '#735290' })
 		})
 	})
 	it('renders a background image when imageUrl prop passed', () => {

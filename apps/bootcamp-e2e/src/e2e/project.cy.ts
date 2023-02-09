@@ -4,7 +4,7 @@ describe('project', () => {
 	beforeEach(() => {
 		cy.task('db:seed')
 		cy.login('test@test.com', 'password4')
-		cy.visit('/1')
+		cy.visit('/projects/1')
 	})
 
 	it('should contain info about project', () => {

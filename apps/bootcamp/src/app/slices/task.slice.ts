@@ -140,3 +140,12 @@ export default taskSlice
 
 export const { setAll, addTask, removeOneTask, updateOneTask } =
 	taskSlice.actions
+
+export const selectTasks = (state: RootState) =>
+	Object.entries(state.tasks.entities).map(
+		([taskId, task]) =>
+			({
+				id: Number(taskId),
+				...task,
+			} as ApiTask)
+	)

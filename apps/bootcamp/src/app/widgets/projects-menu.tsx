@@ -4,18 +4,18 @@ import { RootState } from '../store'
 import { useAppSelector } from '../store-hooks'
 
 type ProjectsMenuProps = {
-	activeProjectId?: number
 	onSelect?: (selectedId: string) => void
 	actions?: ReactNode
 }
-export default function ProjectsMenu({
-	activeProjectId,
-	onSelect,
-	actions,
-}: ProjectsMenuProps) {
+export default function ProjectsMenu({ onSelect, actions }: ProjectsMenuProps) {
 	const projects = useAppSelector((state: RootState) =>
 		Object.entries(state.projects.entities)
 	)
+
+	const selectedId = useAppSelector(
+		(state: RootState) => state.projects.activeId
+	)
+
 	return (
 		<Stack space='small'>
 			<Toolbar gutter='medium'>
@@ -32,8 +32,8 @@ export default function ProjectsMenu({
 					<MenuItem
 						key={`${id}`}
 						selected={
-							activeProjectId !== undefined &&
-							activeProjectId === Number(id)
+							selectedId !== undefined &&
+							selectedId === Number(id)
 						}
 						onClick={() => onSelect?.(id)}
 					>

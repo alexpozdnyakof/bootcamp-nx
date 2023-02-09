@@ -34,9 +34,11 @@ export const fetchProjects = createAsyncThunk(
 const entityAdapter = createEntityAdapter<ApiProject>({
 	selectId: project => project.id,
 })
+
 const initialState = entityAdapter.getInitialState<{ activeId: number | null }>(
 	{ activeId: null }
 )
+
 export type ProjectSliceState = typeof initialState
 
 const projectSlice = createSlice({
@@ -63,7 +65,13 @@ const projectSlice = createSlice({
 			})
 			.addCase(fetchProjects.fulfilled, (state, action) => {
 				entityAdapter.setAll(state, action.payload)
+				if (action.payload.length > 0) {
+					state.activeId = action.payload[0].id
+				}
 			}),
 })
 
 export default projectSlice
+
+export const selectActiveProjectId = (state: RootState) =>
+	state.projects.activeId
