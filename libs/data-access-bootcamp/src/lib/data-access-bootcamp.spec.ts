@@ -10,7 +10,7 @@ describe('dataAccessBootcamp', () => {
 		project_id: 1,
 	}
 
-	beforeAll(() => {
+	beforeEach(() => {
 		global.fetch = jest.fn(() =>
 			Promise.resolve({
 				ok: true,
@@ -92,6 +92,13 @@ describe('dataAccessBootcamp', () => {
 		await bootcampApi.Logout()
 		expect(global.fetch).toHaveBeenCalledWith(
 			'/api/auth/logout',
+			expect.any(Object)
+		)
+	})
+	it('should search with params', async () => {
+		await bootcampApi.Search({ title: '123' })
+		expect(global.fetch).toHaveBeenCalledWith(
+			'/api/search?title=123',
 			expect.any(Object)
 		)
 	})

@@ -1,6 +1,9 @@
 import { ApiBootcamp } from '@bootcamp-nx/data-access-bootcamp'
+import { Unsubscribe } from '@reduxjs/toolkit'
 import { useEffect } from 'react'
 import { authSlice } from './slices'
+import { setupSearchListeners } from './slices/search-fx'
+import { appStartListening } from './store'
 import { useAppDispatch } from './store-hooks'
 
 export default function useInit() {
@@ -18,4 +21,12 @@ export default function useInit() {
 		}
 		getUser()
 	}, [api, dispatch])
+
+	useEffect(() => {
+		const subscriptions: Unsubscribe[] = [
+			setupSearchListeners(appStartListening),
+		]
+
+		return () => subscriptions.forEach(unsubscribe => unsubscribe())
+	}, [])
 }

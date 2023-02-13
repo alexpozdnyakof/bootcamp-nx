@@ -9,6 +9,7 @@ import {
 	ResponseWithData,
 	ResponseWithMessage,
 } from '@bootcamp-nx/api-interfaces'
+import compose from './compose'
 
 export function ApiBootcamp() {
 	const httpClient = HttpClient({ urlPrefix: '/api' })
@@ -60,6 +61,11 @@ export function ApiBootcamp() {
 		async Logout(): Promise<ResponseWithMessage> {
 			return httpClient.get(`/auth/logout`)
 		},
+		async Search(params: {
+			title: string
+		}): Promise<ResponseWithData<Required<ApiProject | ApiTask>[]>> {
+			return httpClient.get(`/search`, params)
+		},
 	}
 }
 
@@ -71,6 +77,8 @@ type HttpClientOptions = {
 
 type RequestBody = { [key: string]: any }
 
+type SearchParams = { [key: string]: any }
+
 function HttpClient({ urlPrefix }: HttpClientOptions) {
 	const handleResponse = (response: Response) => {
 		if (!response.ok) throw new Error(response.statusText)
@@ -81,10 +89,21 @@ function HttpClient({ urlPrefix }: HttpClientOptions) {
 		'Content-Type': 'application/json;charset=utf-8',
 	}
 	const withPrefix = (url: string) => urlPrefix.concat(url)
+	const withSearchParams = (params?: SearchParams) => (url: string) =>
+		url.concat(params ? `?${new URLSearchParams(params).toString()}` : '')
 
+	const createUrl = (params?: SearchParams) =>
+		compose(withPrefix, withSearchParams(params))
+
+	// compose
 	return {
-		async get<T = unknown>(url: string): Promise<T> {
-			return fetch(withPrefix(url), { headers: defaultHeaders })
+		async get<T = unknown>(
+			urlPart: string,
+			params?: SearchParams
+		): Promise<T> {
+			return fetch(createUrl(params)(urlPart), {
+				headers: defaultHeaders,
+			})
 				.then(handleResponse)
 				.then(response => response.json())
 		},

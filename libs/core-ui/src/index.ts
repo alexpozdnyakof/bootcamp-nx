@@ -1,3 +1,4 @@
+export * from './lib/portal'
 export * from './lib/drawer'
 export * from './lib/modal'
 export * from './lib/toolbar'

@@ -1,15 +1,15 @@
 import { ApiTask } from '@bootcamp-nx/api-interfaces'
 import { Button, Icon } from '@bootcamp-nx/core-ui'
-import { deleteTaskThunk } from '../slices/task.slice'
-import { useAppDispatch } from '../store-hooks'
+import { useDeleteTaskMutation } from '../slices/api.slice'
 
 export function DeleteTask({ id, ...props }: Pick<ApiTask, 'id'>) {
-	const dispatch = useAppDispatch()
+	const [deleteTask] = useDeleteTaskMutation()
+
 	return (
 		<Button
 			size='small'
 			variant='quaternary'
-			onClick={() => dispatch(deleteTaskThunk(id))}
+			onClick={() => deleteTask(id)}
 			icon={<Icon size='small'>delete</Icon>}
 			{...props}
 		/>

@@ -8,6 +8,7 @@ import {
 	Inline,
 	List,
 	ListItem,
+	Loader,
 	Stack,
 	Text,
 } from '@bootcamp-nx/core-ui'
@@ -18,8 +19,8 @@ import { AddTaskFeature } from '../features/add-task'
 import { DeleteTask } from '../features/delete-task'
 import { EditableTaskTitle } from '../features/editable-task-title'
 import { ToggleTask } from '../features/toggle-task'
+import { useGetTasksQuery } from '../slices/api.slice'
 import projectSlice, { fetchProjects } from '../slices/project.slice'
-import { fetchProjectTasks, selectTasks } from '../slices/task.slice'
 import { useAppDispatch, useAppSelector } from '../store-hooks'
 import { ProjectsMenu } from '../widgets'
 
@@ -45,7 +46,7 @@ function ExpandableTaskForm({ projectId }: { projectId: number }) {
 	)
 }
 
-function TaskList({ tasks }: { tasks: Array<ApiTask> }) {
+function TaskList({ tasks = [] }: { tasks: Array<ApiTask> }) {
 	return (
 		<List>
 			{tasks.map(task => (
@@ -73,17 +74,20 @@ function TaskList({ tasks }: { tasks: Array<ApiTask> }) {
 }
 
 export function ProjectView() {
-	const dispatch = useAppDispatch()
+	// const dispatch = useAppDispatch()
 	const { id } = useParams()
+
+	const { data: tasks, isLoading, isSuccess } = useGetTasksQuery(Number(id))
+	console.log({ tasks })
 
 	const projectId = Number(id)
 
 	const project = useAppSelector(state => state.projects.entities[projectId])
-	const tasks = useAppSelector(selectTasks)
+	// const tasks = useAppSelector(selectTasks)
 
-	useEffect(() => {
-		dispatch(fetchProjectTasks(Number(projectId)))
-	}, [dispatch, projectId])
+	// useEffect(() => {
+	// 	dispatch(fetchProjectTasks(Number(projectId)))
+	// }, [dispatch, projectId])
 
 	return (
 		<Stack space='large'>
@@ -93,7 +97,8 @@ export function ProjectView() {
 			</Stack>
 			<Stack space='large'>
 				<ExpandableTaskForm projectId={projectId} />
-				<TaskList tasks={tasks} />
+				{isSuccess && <TaskList tasks={tasks.data} />}
+				{isLoading && <Loader />}
 			</Stack>
 		</Stack>
 	)

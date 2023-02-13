@@ -8,6 +8,7 @@ export interface ApiProject {
 	owner_id: number
 	created: Date
 	updated: Date
+	type?: 'project'
 }
 
 export interface ApiNewProject {
@@ -22,6 +23,7 @@ export interface ApiTask {
 	created: Date
 	updated: Date
 	project_id: number
+	type?: 'task'
 }
 
 export interface ApiTaskDTO {

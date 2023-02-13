@@ -8,8 +8,7 @@ import {
 	TextField,
 } from '@bootcamp-nx/core-ui'
 import { useEffect, useRef } from 'react'
-import { addTaskThunk } from '../slices/task.slice'
-import { useAppDispatch } from '../store-hooks'
+import { useAddTaskMutation } from '../slices/api.slice'
 
 export function AddTaskFeature({
 	projectId,
@@ -18,8 +17,9 @@ export function AddTaskFeature({
 	projectId: number
 	onClear?: () => void
 }) {
-	const dispatch = useAppDispatch()
+	// const dispatch = useAppDispatch()
 	const ref = useRef<HTMLInputElement>(null)
+	const [addTask] = useAddTaskMutation()
 
 	useEffect(() => {
 		ref.current?.focus()
@@ -34,7 +34,8 @@ export function AddTaskFeature({
 	const submitForm = () => {
 		const title = ref.current?.value
 		if (!title) return
-		dispatch(addTaskThunk({ title, projectId }))
+		addTask({ title, done: false, project_id: projectId })
+		// dispatch(addTaskThunk({ title, projectId }))
 		cancelForm()
 	}
 

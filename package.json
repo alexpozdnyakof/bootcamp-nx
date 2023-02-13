@@ -18,7 +18,7 @@
 	"private": true,
 	"dependencies": {
 		"@prisma/client": "^4.9.0",
-		"@reduxjs/toolkit": "1.9.0",
+		"@reduxjs/toolkit": "^1.9.2",
 		"argon2": "^0.30.2",
 		"body-parser": "^1.20.1",
 		"classnames": "^2.3.2",
