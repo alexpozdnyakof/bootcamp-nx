@@ -3,18 +3,20 @@ import {
 	ApiTaskDTO,
 	ResponseWithData,
 } from '@bootcamp-nx/api-interfaces'
-import { ApiBootcamp } from '@bootcamp-nx/data-access-bootcamp'
+import { IApiBootcamp } from '@bootcamp-nx/data-access-bootcamp'
 import { makeAutoObservable } from 'mobx'
 
-export function createTodoStore(todos: Array<ApiTask> = []) {
-	const api = ApiBootcamp()
+export function createTodoStore(
+	agent: IApiBootcamp,
+	todos: Array<ApiTask> = []
+) {
 	const store = {
 		todos,
 		*add(todo: ApiTaskDTO) {
 			try {
 				const response: ResponseWithData<{ id: number }> =
-					yield api.SaveTask(todo)
-				const { data }: ResponseWithData<ApiTask> = yield api.GetTask(
+					yield agent.SaveTask(todo)
+				const { data }: ResponseWithData<ApiTask> = yield agent.GetTask(
 					response.data.id
 				)
 				this.todos.push(data)
@@ -24,7 +26,7 @@ export function createTodoStore(todos: Array<ApiTask> = []) {
 		},
 		*delete(id: number) {
 			try {
-				yield api.DeleteTask(id)
+				yield agent.DeleteTask(id)
 				this.todos = this.todos.filter(todo => todo.id !== id)
 			} catch (error) {
 				console.error({ error })
@@ -48,7 +50,7 @@ export function createTodoStore(todos: Array<ApiTask> = []) {
 		*fetch(projectId: number) {
 			try {
 				const response: ResponseWithData<Array<ApiTask>> =
-					yield api.ProjectTasks(projectId)
+					yield agent.ProjectTasks(projectId)
 				this.todos = response.data
 			} catch (error) {
 				console.error(error)
@@ -57,13 +59,13 @@ export function createTodoStore(todos: Array<ApiTask> = []) {
 		*update(todo: ApiTask) {
 			try {
 				console.log({ todo })
-				yield api.UpdateTask(todo.id, {
+				yield agent.UpdateTask(todo.id, {
 					title: todo.title,
 					done: todo.done,
 					project_id: todo.project_id,
 				})
 
-				const response: ResponseWithData<ApiTask> = yield api.GetTask(
+				const response: ResponseWithData<ApiTask> = yield agent.GetTask(
 					todo.id
 				)
 				this.todos = this.todos.map(t =>

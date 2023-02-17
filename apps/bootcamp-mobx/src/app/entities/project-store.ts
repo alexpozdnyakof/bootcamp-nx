@@ -3,15 +3,14 @@ import {
 	ApiProject,
 	ResponseWithData,
 } from '@bootcamp-nx/api-interfaces'
-import { ApiBootcamp } from '@bootcamp-nx/data-access-bootcamp'
+import { IApiBootcamp } from '@bootcamp-nx/data-access-bootcamp'
 import { makeAutoObservable } from 'mobx'
 
 export function createProjectStore(
+	agent: IApiBootcamp,
 	projects: Array<ApiProject> = [],
 	selectedId: number | null = null
 ) {
-	const api = ApiBootcamp()
-
 	const store = {
 		projects,
 		selectedId,
@@ -24,9 +23,9 @@ export function createProjectStore(
 		*add(project: ApiNewProject) {
 			try {
 				const response: ResponseWithData<{ id: number }> =
-					yield api.SaveProject(project)
+					yield agent.SaveProject(project)
 				const { data }: ResponseWithData<ApiProject> =
-					yield api.Project(response.data.id)
+					yield agent.Project(response.data.id)
 				this.projects.push(data)
 			} catch (error) {
 				console.error(error)
@@ -35,7 +34,7 @@ export function createProjectStore(
 		*fetch() {
 			try {
 				const response: ResponseWithData<Array<ApiProject>> =
-					yield api.Projects()
+					yield agent.Projects()
 				this.projects = response.data
 			} catch (error) {
 				console.error(error)

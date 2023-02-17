@@ -4,12 +4,13 @@ import {
 	ApiUser,
 	ResponseWithData,
 } from '@bootcamp-nx/api-interfaces'
-import { ApiBootcamp } from '@bootcamp-nx/data-access-bootcamp'
+import { IApiBootcamp } from '@bootcamp-nx/data-access-bootcamp'
 import { autorun, makeAutoObservable } from 'mobx'
 
-export function createAuthStore(user: ApiUser | null = null) {
-	const api = ApiBootcamp()
-
+export function createAuthStore(
+	agent: IApiBootcamp,
+	user: ApiUser | null = null
+) {
 	const store = {
 		user,
 		setUser(user: ApiUser) {
@@ -23,7 +24,7 @@ export function createAuthStore(user: ApiUser | null = null) {
 		},
 		*signIn(credentials: ApiCredentials) {
 			try {
-				yield api.SignIn(credentials)
+				yield agent.SignIn(credentials)
 				this.fetchUser()
 			} catch (error) {
 				console.log(error)
@@ -31,7 +32,7 @@ export function createAuthStore(user: ApiUser | null = null) {
 		},
 		*signUp(credentials: ApiSignUp) {
 			try {
-				yield api.SignUp(credentials)
+				yield agent.SignUp(credentials)
 				this.fetchUser()
 			} catch (error) {
 				console.log(error)
@@ -40,7 +41,7 @@ export function createAuthStore(user: ApiUser | null = null) {
 		*fetchUser() {
 			try {
 				const response: ResponseWithData<ApiUser> =
-					yield api.CurrentUser()
+					yield agent.CurrentUser()
 				this.setUser(response.data)
 			} catch (error) {
 				console.error(error)
