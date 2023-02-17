@@ -7,6 +7,8 @@
 		"api-interfaces": "libs/api-interfaces",
 		"bootcamp": "apps/bootcamp",
 		"bootcamp-e2e": "apps/bootcamp-e2e",
+		"bootcamp-mobx": "apps/bootcamp-mobx",
+		"bootcamp-mobx-e2e": "apps/bootcamp-mobx-e2e",
 		"core-ui": "libs/core-ui",
 		"data-access-bootcamp": "libs/data-access-bootcamp",
 		"use-vanilla-form": "libs/use-vanilla-form"

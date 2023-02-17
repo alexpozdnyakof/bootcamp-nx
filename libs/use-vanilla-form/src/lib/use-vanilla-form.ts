@@ -52,9 +52,9 @@ export default function useVanillaForm<T extends FormResult>() {
 				const form = event.target as HTMLFormElement
 				const isValid = form.checkValidity()
 
-				if (!isValid) {
-					setErrors(getFormErrors<T>(state.current))
-				} else {
+				setErrors(getFormErrors<T>(state.current))
+
+				if (isValid) {
 					fn(getFormValue<T>(state.current))
 				}
 			}

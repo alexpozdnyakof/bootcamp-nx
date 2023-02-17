@@ -1,0 +1,73 @@
+{
+	"name": "bootcamp-mobx",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "apps/bootcamp-mobx/src",
+	"projectType": "application",
+	"targets": {
+		"build": {
+			"executor": "@nrwl/vite:build",
+			"outputs": ["{options.outputPath}"],
+			"defaultConfiguration": "production",
+			"options": {
+				"outputPath": "dist/apps/bootcamp-mobx"
+			},
+			"configurations": {
+				"development": {
+					"mode": "development"
+				},
+				"production": {
+					"mode": "production"
+				}
+			}
+		},
+		"serve": {
+			"executor": "@nrwl/vite:dev-server",
+			"defaultConfiguration": "development",
+			"options": {
+				"buildTarget": "bootcamp-mobx:build",
+				"proxyConfig": "apps/bootcamp/proxy.conf.json"
+			},
+			"configurations": {
+				"development": {
+					"buildTarget": "bootcamp-mobx:build:development",
+					"hmr": true
+				},
+				"production": {
+					"buildTarget": "bootcamp-mobx:build:production",
+					"hmr": false
+				}
+			}
+		},
+		"preview": {
+			"executor": "@nrwl/vite:preview-server",
+			"defaultConfiguration": "development",
+			"options": {
+				"buildTarget": "bootcamp-mobx:build"
+			},
+			"configurations": {
+				"development": {
+					"buildTarget": "bootcamp-mobx:build:development"
+				},
+				"production": {
+					"buildTarget": "bootcamp-mobx:build:production"
+				}
+			}
+		},
+		"test": {
+			"executor": "@nrwl/vite:test",
+			"outputs": ["coverage/apps/bootcamp-mobx"],
+			"options": {
+				"passWithNoTests": true,
+				"reportsDirectory": "../../coverage/apps/bootcamp-mobx"
+			}
+		},
+		"lint": {
+			"executor": "@nrwl/linter:eslint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["apps/bootcamp-mobx/**/*.{ts,tsx,js,jsx}"]
+			}
+		}
+	},
+	"tags": []
+}

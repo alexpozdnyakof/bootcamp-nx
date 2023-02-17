@@ -63,6 +63,7 @@
 			"application": {
 				"style": "less",
 				"linter": "eslint",
+				"bundler": "vite",
 				"babel": true
 			},
 			"component": {
